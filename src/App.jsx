@@ -52,11 +52,6 @@ function App() {
         {view === 'presentation' && <PresentationPage />}
       </main>
 
-      <style dangerouslySetInnerHTML={{ __html: `
-        .app-container {
-          min-height: 100vh;
-        }
-      ` }} />
     </div>
   );
 }
