@@ -11,6 +11,7 @@ import {
   Truck, 
   ShieldCheck,
   MessageCircle,
+  MessageSquare,
   X,
   Plus,
   Minus,

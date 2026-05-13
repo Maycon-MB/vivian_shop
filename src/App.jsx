@@ -6,7 +6,9 @@ import AdminDashboard from './components/AdminDashboard'
 function App() {
   const [view, setView] = useState(() => {
     const hash = window.location.hash
-    if (hash === '#proposta') return 'presentation'
+    const presentationSections = ['#proposta', '#inicio', '#experiencia', '#confianca', '#instagram', '#comparacao', '#logistica', '#investimento', '#faq']
+    
+    if (presentationSections.includes(hash)) return 'presentation'
     if (hash === '#admin') return 'admin'
     return 'landing'
   })
