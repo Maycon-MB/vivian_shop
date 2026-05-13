@@ -1,0 +1,347 @@
+import React, { useState } from 'react';
+import { 
+  ShoppingCart, 
+  Heart, 
+  Search, 
+  Instagram, 
+  Facebook, 
+  ArrowRight, 
+  Star, 
+  CreditCard, 
+  Truck, 
+  ShieldCheck,
+  MessageCircle,
+  X,
+  Plus,
+  Minus,
+  Check,
+  CheckCircle
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
+import ProductCard from './landing/ProductCard';
+import CartModal from './landing/CartModal';
+import CheckoutModal from './landing/CheckoutModal';
+
+const products = [
+  {
+    id: 1,
+    name: "Planner Luxury 2026",
+    category: "Papelaria",
+    price: 189.90,
+    image: "https://images.unsplash.com/photo-1583521214690-73421a1829a9?q=80&w=800&auto=format&fit=crop",
+    tag: "Best Seller",
+    description: "Capa dura com toque soft, papel 120g que não vaza tinta."
+  },
+  {
+    id: 2,
+    name: "Kit Stickers Minimalistas",
+    category: "Papelaria",
+    price: 45.00,
+    image: "https://images.unsplash.com/photo-1591522810850-58128c5fb089?q=80&w=800&auto=format&fit=crop",
+    tag: "Novo",
+    description: "Vinil fosco de alta qualidade para seu bullet journal."
+  },
+  {
+    id: 3,
+    name: "Bloco de Notas Floral",
+    category: "Papelaria",
+    price: 32.50,
+    image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?q=80&w=800&auto=format&fit=crop",
+    tag: "Artesanal",
+    description: "Papel pólen amarelado, ideal para desenhos e escrita fluida."
+  },
+  {
+    id: 4,
+    name: "Apostila Alfabetização Autista",
+    category: "Atividades Adaptadas",
+    price: 97.00,
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
+    tag: "Educação",
+    description: "Material estruturado com suporte visual para crianças neurodivergentes."
+  },
+  {
+    id: 5,
+    name: "Kit Rotina Visual Imantada",
+    category: "Atividades Adaptadas",
+    price: 125.00,
+    image: "/rotina_visual_premium_1778703012017.png",
+    tag: "Inclusão",
+    description: "Quadro de rotina magnético para previsibilidade diária."
+  },
+  {
+    id: 6,
+    name: "Jogo das Emoções",
+    category: "Atividades Adaptadas",
+    price: 58.00,
+    image: "/jogo_emocoes_premium_1778702950986.png",
+    tag: "Social",
+    description: "Atividade lúdica para identificação de sentimentos."
+  }
+];
+
+const LandingPage = () => {
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('Todas');
+
+  const addToCart = (product) => {
+    setCart([...cart, { ...product, cartId: Date.now() }]);
+    setShowToast(true);
+  };
+
+  const removeFromCart = (cartId) => {
+    setCart(cart.filter(item => item.cartId !== cartId));
+  };
+
+  const cartTotal = cart.reduce((acc, curr) => acc + curr.price, 0);
+
+  const filteredProducts = activeCategory === 'Todas' 
+    ? products 
+    : products.filter(p => p.category === activeCategory);
+
+  return (
+    <div className="landing-page" style={{ backgroundColor: '#FAF9FB', minHeight: '100vh' }}>
+      {/* Navbar Premium */}
+      <Navbar expand="lg" fixed="top" className="bg-white bg-opacity-90 backdrop-blur border-bottom py-3 shadow-sm" style={{ zIndex: 1050 }}>
+        <Container>
+          <Navbar.Brand href="#" style={{ fontFamily: 'Playfair Display', fontSize: '28px', fontWeight: 900 }}>
+            Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold" style={{ fontSize: '11px', letterSpacing: '2px' }}>
+              {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
+                <button 
+                    key={cat} 
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-4 py-2 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
+                    style={activeCategory === cat ? { backgroundColor: '#9B89B3' } : {}}
+                >
+                    {cat}
+                </button>
+              ))}
+            </Nav>
+            <div className="d-flex align-items-center gap-4">
+              <Search size={20} className="text-muted cursor-pointer" />
+              <div className="position-relative cursor-pointer" onClick={() => setShowCart(true)}>
+                <ShoppingCart size={22} className="text-dark" />
+                <AnimatePresence>
+                  {cart.length > 0 && (
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="position-absolute top-0 start-100 translate-middle"
+                    >
+                        <Badge pill bg="primary" style={{ backgroundColor: '#9B89B3', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            {cart.length}
+                        </Badge>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      {/* Hero Section */}
+      <section style={{ paddingTop: '180px', paddingBottom: '120px', background: 'radial-gradient(circle at top right, #F0EDF5, #FAF9FB)' }}>
+        <Container>
+          <Row className="align-items-center">
+            <Col lg={6} className="mb-5 mb-lg-0">
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(155, 137, 179, 0.1)', color: '#9B89B3', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
+                    BOUTIQUE VIVIAN: PAPELARIA & INCLUSÃO
+                </div>
+                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Playfair Display', color: '#2D2438', lineHeight: 1.1 }}>
+                  Design que acolhe e <br/>
+                  <span style={{ color: '#9B89B3' }}>organiza</span> vidas.
+                </h1>
+                <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: '20px' }}>
+                  Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
+                </p>
+                <div className="d-flex gap-3">
+                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#2D2438' }} onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}>
+                    Ver Coleções
+                  </Button>
+                  <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
+                    <MessageSquare size={18}/> Mensagem
+                  </Button>
+                </div>
+                
+                <div className="mt-5 pt-4 border-top border-light d-flex align-items-center gap-4">
+                    <div className="d-flex -space-x-2">
+                        {[1,2,3].map(i => (
+                            <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="rounded-circle border border-2 border-white shadow-sm" style={{ width: '40px', height: '40px', marginLeft: i > 1 ? '-12px' : '0' }} alt="Avatar" />
+                        ))}
+                    </div>
+                    <div className="small">
+                        <div className="fw-black text-dark">+2.400 Pedidos Entregues</div>
+                        <div className="text-muted">Avaliação 4.9/5 nas redes sociais</div>
+                    </div>
+                </div>
+              </motion.div>
+            </Col>
+            <Col lg={6}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1 }}
+                className="position-relative"
+              >
+                <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
+                  <img src="/hero_boutique_vivian_1778705287616.png" alt="Hero" className="w-100" />
+                </div>
+                <div className="position-absolute bottom-0 start-0 m-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '280px' }}>
+                  <div className="d-flex gap-1 mb-2 text-warning">
+                    {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                  </div>
+                  <p className="small fw-bold mb-1">"O material adaptado mudou a forma como meu filho estuda. Gratidão pelo trabalho!"</p>
+                  <span className="small text-muted">- Marina, Mãe Atípica</span>
+                </div>
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+
+      {/* Featured Catalog */}
+      <section id="catalog" className="section-padding">
+        <Container>
+          <div className="d-flex justify-content-between align-items-end mb-5">
+            <div>
+              <div className="d-flex align-items-center gap-2 mb-2" style={{ color: '#9B89B3' }}>
+                <div style={{ width: '40px', height: '1px', backgroundColor: '#9B89B3' }}></div>
+                <span className="small fw-black text-uppercase ls-widest">Coleções 2026</span>
+              </div>
+              <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Playfair Display' }}>Nosso Catálogo</h2>
+            </div>
+            <div className="d-none d-md-flex gap-2">
+              {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
+                <Button 
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  variant={activeCategory === cat ? 'dark' : 'outline-secondary'}
+                  className="rounded-pill px-4 fw-bold small text-uppercase"
+                  style={{ fontSize: '10px' }}
+                >
+                  {cat}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <Row className="g-4">
+            <AnimatePresence mode="popLayout">
+              {filteredProducts.map((product) => (
+                <Col lg={4} md={6} key={product.id}>
+                  <ProductCard product={product} addToCart={addToCart} />
+                </Col>
+              ))}
+            </AnimatePresence>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Trust & Authority Section */}
+      <section className="section-padding" style={{ backgroundColor: '#FAF9FB' }}>
+        <Container>
+          <Row className="justify-content-center text-center mb-5">
+            <Col lg={8}>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Playfair Display' }}>Sua Compra é <span style={{ color: '#9B89B3' }}>Segura</span></h2>
+              <p className="text-muted fs-5">
+                Sabemos que confiança se conquista. Por isso, a Boutique Vivian utiliza as tecnologias de pagamento mais seguras do Brasil, garantindo a proteção total dos seus dados.
+              </p>
+            </Col>
+          </Row>
+          <Row className="g-4">
+            <Col md={4}>
+              <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
+                <div className="bg-success bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><ShieldCheck size={32} color="#198754" /></div>
+                <h4 className="fw-black fs-5 mb-3">Segurança Bancária</h4>
+                <p className="small text-muted mb-0">Pagamentos processados via Mercado Pago. Seus dados de cartão nunca são salvos em nosso sistema.</p>
+              </div>
+            </Col>
+            <Col md={4}>
+              <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
+                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#9B89B3" /></div>
+                <h4 className="fw-black fs-5 mb-3">Suporte Real</h4>
+                <p className="small text-muted mb-0">Dúvidas sobre o material ou personalização? Vivian atende pessoalmente cada cliente no WhatsApp.</p>
+              </div>
+            </Col>
+            <Col md={4}>
+              <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
+                <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#D4880A" /></div>
+                <h4 className="fw-black fs-5 mb-3">Qualidade Artesanal</h4>
+                <p className="small text-muted mb-0">Cada peça é produzida com o carinho e o rigor técnico que sua família merece. Satisfação 100% garantida.</p>
+              </div>
+            </Col>
+          </Row>
+          <div className="mt-5 pt-4 d-flex justify-content-center gap-5 grayscale opacity-50">
+              <img src="https://logodownload.org/wp-content/uploads/2019/08/mercado-pago-logo.png" style={{ height: '30px' }} alt="Mercado Pago" />
+              <img src="https://logodownload.org/wp-content/uploads/2014/05/correios-logo-1.png" style={{ height: '30px' }} alt="Correios" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pix_logo.svg/2560px-Pix_logo.svg.png" style={{ height: '30px' }} alt="Pix" />
+          </div>
+        </Container>
+      </section>
+
+      {/* Modals & Cart */}
+      <CartModal 
+        show={showCart} 
+        onHide={() => setShowCart(false)} 
+        cart={cart} 
+        removeFromCart={removeFromCart} 
+        cartTotal={cartTotal} 
+        onCheckout={() => { setShowCart(false); setShowCheckout(true); }}
+      />
+
+      <CheckoutModal 
+        show={showCheckout} 
+        onHide={() => setShowCheckout(false)} 
+        cart={cart} 
+        cartTotal={cartTotal} 
+        onComplete={() => {
+            setShowCheckout(false);
+            setCart([]);
+            alert('Simulação de Pagamento Concluída! O pedido apareceria instantaneamente no seu Painel ADM.');
+        }}
+      />
+
+      <ToastContainer position="bottom-center" className="p-5" style={{ zIndex: 2000 }}>
+        <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide className="border-0 shadow-lg rounded-pill bg-dark text-white">
+          <Toast.Body className="py-3 px-4 d-flex align-items-center justify-content-center gap-2 fw-bold">
+            <Check size={18} className="text-success" /> Produto adicionado ao carrinho!
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+
+      {/* Footer Boutique */}
+      <footer className="py-5 bg-dark text-white">
+        <Container className="py-5 text-center">
+          <div className="mb-4" style={{ fontFamily: 'Playfair Display', fontSize: '32px', fontWeight: 900 }}>
+            Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
+          </div>
+          <p className="text-white-50 mb-5 mx-auto" style={{ maxWidth: '500px' }}>Transformando a rotina através do design inclusivo e da organização artesanal.</p>
+          <div className="d-flex justify-content-center gap-4 mb-5">
+            <Instagram size={24} className="cursor-pointer text-white-50 hover:text-white" />
+            <Facebook size={24} className="cursor-pointer text-white-50 hover:text-white" />
+            <MessageCircle size={24} className="cursor-pointer text-white-50 hover:text-white" />
+          </div>
+          <div className="pt-5 border-top border-secondary text-white-50 small">
+            &copy; 2026 Vivian Boutique Store. Uma experiência Projeto Autônomo.
+          </div>
+        </Container>
+      </footer>
+    </div>
+  );
+};
+
+export default LandingPage;
