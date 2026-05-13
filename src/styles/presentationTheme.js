@@ -31,8 +31,8 @@ export const pTheme = {
     card: '32px',
   },
   shadows: {
-    card:     '0 15px 35px rgba(155,137,179,0.12)', // Sombra lilás consistente
-    elevated: '0 30px 60px rgba(155,137,179,0.18)',
+    card:     '0 15px 35px rgba(155,137,179,0.18)', // Opacidade aumentada
+    elevated: '0 30px 60px rgba(155,137,179,0.25)', // Opacidade aumentada
     lavender: '0 10px 20px rgba(155,137,179,0.2)',
   },
 };

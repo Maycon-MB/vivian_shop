@@ -56,9 +56,9 @@ function App() {
         .app-container {
           min-height: 100vh;
         }
-      `}} />
+      ` }} />
     </div>
-  )
+  );
 }
 
 export default App
