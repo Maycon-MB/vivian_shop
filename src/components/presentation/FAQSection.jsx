@@ -32,7 +32,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section style={{ padding: '100px 20px', backgroundColor: colors.white }}>
+    <section style={{ padding: 'clamp(60px, 10vw, 100px) 20px', backgroundColor: colors.white }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
@@ -45,7 +45,7 @@ const FAQSection = () => {
             Perguntas Frequentes
           </h2>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: colors.textMuted,
             lineHeight: '1.6'
           }}>
@@ -72,14 +72,14 @@ const FAQSection = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '24px',
+                  padding: 'clamp(16px, 3vw, 24px)',
                   backgroundColor: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   textAlign: 'left',
                   color: colors.textDark,
                   fontFamily: fonts.heading,
-                  fontSize: '1.2rem',
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   fontWeight: '600'
                 }}
               >

@@ -15,7 +15,7 @@ const InstagramStrategy = () => {
   ];
 
   return (
-    <section style={{ padding: '160px 20px', position: 'relative' }}>
+    <section style={{ padding: 'clamp(60px, 10vw, 160px) 20px', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '60px' }}>
         
         <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
@@ -35,14 +35,14 @@ const InstagramStrategy = () => {
           </div>
           <h2 style={{
             fontFamily: fonts.heading,
-            fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
             color: colors.primary,
             marginBottom: '24px',
           }}>
             O Instagram como Motor de Vendas
           </h2>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: colors.textMuted,
             lineHeight: '1.6'
           }}>
@@ -50,14 +50,9 @@ const InstagramStrategy = () => {
           </p>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(300px, 400px) 1fr',
-          gap: '60px',
-          alignItems: 'start'
-        }}>
+        <div className="d-flex flex-column flex-lg-row gap-4 gap-lg-5 align-items-start">
           {/* Menu Lateral */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div className="w-100" style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
             {tabs.map((tab, idx) => (
               <button
                 key={idx}
@@ -91,10 +86,10 @@ const InstagramStrategy = () => {
           </div>
 
           {/* Conteúdo Dinâmico */}
-          <div style={{
+          <div className="w-100" style={{
             backgroundColor: colors.white,
             borderRadius: '32px',
-            padding: '60px 40px',
+            padding: 'clamp(24px, 5vw, 60px) clamp(20px, 4vw, 40px)',
             minHeight: '400px',
             border: '2px solid #9B89B3',
             boxShadow: pTheme.shadows.card,

@@ -10,7 +10,9 @@ import {
   Eye, 
   Printer,
   User,
-  Send
+  Send,
+  Menu,
+  X
 } from 'lucide-react';
 import { Row, Col, Card, Button, Modal, Form, Toast, ToastContainer } from 'react-bootstrap';
 import Sidebar from './dashboard/Sidebar';
@@ -29,6 +31,7 @@ const AdminDashboard = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
   const [approving, setApproving] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [orders, setOrders] = useState([
     { id: '#4829', customer: 'Mariana Silva', items: 'Apostila Alfabetização + 2 Stickers', total: 187.00, status: 'Pronto p/ Envio', date: 'Hoje, 14:20', niche: 'Ativ. Adaptadas' },
@@ -105,30 +108,39 @@ const AdminDashboard = () => {
 
   return (
     <div className="d-flex" style={{ minHeight: '100vh', backgroundColor: '#F0F2F5', color: '#2D2438' }}>
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="flex-grow-1 p-5 overflow-auto">
+      <div className="flex-grow-1 p-3 p-md-5 overflow-auto w-100">
         {activeTab === 'dashboard' && (
           <>
-            <header className="d-flex justify-content-between align-items-center mb-5">
-              <div>
-                <h1 className="fw-black fs-2 mb-1" style={{ fontFamily: 'Playfair Display' }}>Bem-vinda, Vivian</h1>
-                <p className="text-muted mb-0">Gestão integrada: Papelaria + Atividades Adaptadas.</p>
+            <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-5">
+              <div className="d-flex align-items-center gap-3">
+                <Button 
+                  variant="link" 
+                  className="p-0 text-dark mobile-only" 
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <Menu size={24} />
+                </Button>
+                <div>
+                  <h1 className="fw-black fs-2 mb-1" style={{ fontFamily: 'Playfair Display' }}>Bem-vinda, Vivian</h1>
+                  <p className="text-muted mb-0 small">Gestão integrada: Papelaria + Atividades.</p>
+                </div>
               </div>
-              <div className="d-flex gap-3">
-                <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-4 rounded-pill fw-bold d-flex align-items-center gap-2">
-                    <Plus size={18}/> Novo Produto
+              <div className="d-flex flex-wrap gap-2">
+                <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-3 px-md-4 rounded-pill fw-bold d-flex align-items-center gap-2 small">
+                    <Plus size={18}/> <span className="d-none d-sm-inline">Novo Produto</span>
                 </Button>
-                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-4 rounded-pill fw-bold d-flex align-items-center gap-2" style={{ color: '#9B89B3', borderColor: '#9B89B3' }}>
-                    <CheckCircle size={18}/> Lançar Venda
+                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 px-md-4 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#9B89B3', borderColor: '#9B89B3' }}>
+                    <CheckCircle size={18}/> <span className="d-none d-sm-inline">Lançar Venda</span>
                 </Button>
-                <Button onClick={() => window.open('/', '_blank')} variant="primary" className="px-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2" style={{ backgroundColor: '#9B89B3', borderColor: '#9B89B3' }}>
-                    <Eye size={18}/> Ver Lojas
+                <Button onClick={() => window.open('/', '_blank')} variant="primary" className="px-3 px-md-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#9B89B3', borderColor: '#9B89B3' }}>
+                    <Eye size={18}/> <span className="d-none d-sm-inline">Ver Lojas</span>
                 </Button>
               </div>
             </header>
 
-            <Row className="g-4 mb-5">
+            <Row className="g-3 g-md-4 mb-5">
               {stats.map((stat, i) => (
                 <Col xl={3} md={6} key={i}>
                   <StatsCard {...stat} />
@@ -138,23 +150,27 @@ const AdminDashboard = () => {
 
             <Row className="g-4">
               <Col lg={8}>
-                <Card className="border-0 rounded-5 shadow-sm p-5 bg-white mb-4">
-                  <div className="d-flex justify-content-between align-items-center mb-5">
+                <Card className="border-0 rounded-5 shadow-sm p-4 p-md-5 bg-white mb-4">
+                  <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
                     <h3 className="fw-black fs-4 mb-0">Receita por Nicho</h3>
                     <div className="d-flex gap-2 text-muted small fw-bold">
                         <span className="d-flex align-items-center gap-1"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#9B89B3' }}></div> Papelaria</span>
                         <span className="d-flex align-items-center gap-1 ms-3"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#B8E2D4' }}></div> Atividades</span>
                     </div>
                   </div>
-                  <ReactECharts option={salesChartOption} style={{ height: '380px' }} />
+                  <div style={{ width: '100%', overflowX: 'auto' }}>
+                    <ReactECharts option={salesChartOption} style={{ height: '380px', minWidth: '500px' }} />
+                  </div>
                 </Card>
 
-                <Card className="border-0 rounded-5 shadow-sm p-5 bg-white">
+                <Card className="border-0 rounded-5 shadow-sm p-4 p-md-5 bg-white mb-4 mb-lg-0 overflow-hidden">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <h3 className="fw-black fs-4 mb-0">Pedidos Recentes</h3>
-                        <Button variant="link" className="text-primary fw-bold text-decoration-none">Ver todos</Button>
+                        <Button variant="link" className="text-primary fw-bold text-decoration-none p-0">Ver todos</Button>
                     </div>
-                    <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
+                    <div className="table-responsive">
+                      <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
+                    </div>
                 </Card>
               </Col>
               <Col lg={4}>

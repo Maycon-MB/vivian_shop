@@ -18,6 +18,23 @@
   /* Fontes */
   --font-main: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
+
+  /* Spacing */
+  --section-padding: 160px;
+  --container-padding: 24px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --section-padding: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-padding: 60px;
+    --container-padding: 16px;
+  }
 }
 
 * {
@@ -32,17 +49,18 @@ body {
   color: var(--pl-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Utilitários Globais */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--container-padding);
 }
 
 .section-padding {
-  padding: 160px 0;
+  padding: var(--section-padding) 0;
 }
 
 .glass {
@@ -80,7 +98,58 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7d6a99;
+  background: var(--pl-dark);
+}
+
+/* Presentation Navbar */
+.presentation-nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  background-color: rgba(13,10,20,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(155,137,179,0.2);
+  display: flex;
+  gap: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  max-width: 90vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.presentation-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.presentation-nav a {
+  text-decoration: none;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 992px) {
+  .presentation-nav {
+    gap: 24px;
+    padding: 10px 28px;
+    max-width: none;
+  }
+  
+  .presentation-nav a {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+  }
 }
 
 /* Botão Flutuante (Switcher) */
@@ -143,7 +212,60 @@ body {
   background: white;
 }
 
-/* Card Estilo Proposta */
+/* Utilitários de Responsividade */
+@media (max-width: 991px) {
+  .desktop-only { display: none !important; }
+  .mobile-full { width: 100% !important; }
+  
+  .price-card {
+    padding: 32px 24px;
+  }
+
+  .display-1, .display-2 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-only { display: none !important; }
+}
+
+@media (max-width: 767px) {
+  .view-switcher {
+    bottom: 16px;
+    padding: 6px;
+    gap: 4px;
+    width: 90%;
+    max-width: 350px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+  }
+
+  .switcher-btn {
+    padding: 8px 12px;
+    font-size: 9px;
+  }
+}
+
+/* Sidebar Responsive */
+.sidebar-nav {
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .sidebar-nav {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    height: 100vh;
+  }
+
+  .sidebar-nav.open {
+    left: 0;
+  }
+}
+
 .price-card {
   padding: 48px;
   border-radius: 32px;

@@ -7,8 +7,8 @@ const { colors, fonts } = pTheme;
 
 const LogisticsAutomation = () => {
   return (
-    <section style={{ padding: '160px 20px', position: 'relative' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '80px' }}>
+    <section style={{ padding: 'clamp(60px, 10vw, 160px) 20px', position: 'relative' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)' }}>
         
         <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
           <div style={{
@@ -27,14 +27,14 @@ const LogisticsAutomation = () => {
           </div>
           <h2 style={{
             fontFamily: fonts.heading,
-            fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
             color: colors.primary,
             marginBottom: '24px',
           }}>
             Logística Sem Elo7
           </h2>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: colors.textMuted,
             lineHeight: '1.6'
           }}>
@@ -52,7 +52,7 @@ const LogisticsAutomation = () => {
             whileHover={{ y: -5 }}
             style={{
               backgroundColor: colors.white,
-              padding: '40px',
+              padding: 'clamp(24px, 4vw, 40px)',
               borderRadius: '32px',
               border: '2px solid #9B89B3',
               boxShadow: pTheme.shadows.card,
@@ -80,7 +80,7 @@ const LogisticsAutomation = () => {
             whileHover={{ y: -5 }}
             style={{
               backgroundColor: colors.white,
-              padding: '40px',
+              padding: 'clamp(24px, 4vw, 40px)',
               borderRadius: '32px',
               border: '2px solid #9B89B3',
               boxShadow: pTheme.shadows.card,

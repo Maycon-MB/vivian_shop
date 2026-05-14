@@ -60,37 +60,14 @@ const PresentationPage = () => {
     }}>
 
       {/* ── Navbar flutuante pill ── */}
-      <nav style={{
-        position: 'fixed',
-        top: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 2000,
-        backgroundColor: 'rgba(13,10,20,0.85)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        padding: '10px 28px',
-        borderRadius: '50px',
-        border: `1px solid ${colors.border}`,
-        display: 'flex',
-        gap: '24px',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.4)',
-        whiteSpace: 'nowrap',
-      }}>
+      <nav className="presentation-nav">
         {navLinks.map(link => (
           <a
             key={link.id}
             href={`#${link.id}`}
             style={{
-              textDecoration: 'none',
               color: activeNav === link.id ? colors.lavender : 'rgba(255,255,255,0.55)',
-              fontSize: '0.72rem',
-              fontWeight: '700',
-              textTransform: 'uppercase',
-              letterSpacing: '1.5px',
-              transition: 'all 0.3s ease',
               borderBottom: activeNav === link.id ? `2px solid ${colors.lavender}` : '2px solid transparent',
-              paddingBottom: '2px',
             }}
           >
             {link.label}

@@ -52,13 +52,13 @@ const plans = [
 
 const PricingSection = () => {
   return (
-    <section id="planos" className="py-5" style={{ backgroundColor: colors.bg }}>
-      <Container className="py-5">
+    <section id="planos" style={{ padding: 'clamp(60px, 10vw, 120px) 0', backgroundColor: colors.bg }}>
+      <Container>
         <div className="text-center mb-5">
-          <h2 className="display-4 fw-bold mb-3" style={{ color: colors.primary, fontFamily: fonts.heading }}>
+          <h2 className="fw-bold mb-3" style={{ color: colors.primary, fontFamily: fonts.heading, fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
             Investimento <span style={{ color: colors.cta }}>Estratégico</span>
           </h2>
-          <p className="lead mx-auto" style={{ color: colors.textMuted, maxWidth: '700px' }}>
+          <p className="lead mx-auto" style={{ color: colors.textMuted, maxWidth: '700px', fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}>
             Construa seu patrimônio digital. Escolha o escopo ideal para decolar a sua marca e se livrar das taxas abusivas.
           </p>
         </div>
@@ -92,7 +92,7 @@ const PricingSection = () => {
                     e.currentTarget.style.boxShadow = pTheme.shadows.card;
                   }}
                 >
-                  <Card.Body className="p-5 d-flex flex-column position-relative">
+                  <Card.Body className="p-4 p-md-5 d-flex flex-column position-relative">
                     
                     <div className="text-center mb-4 mt-3">
                       <h3 className="h5 fw-bold text-uppercase mb-3" style={{ color: colors.primary, letterSpacing: '1px' }}>
@@ -100,7 +100,7 @@ const PricingSection = () => {
                       </h3>
                       <div className="d-flex align-items-center justify-content-center gap-1 mb-2">
                         <span className="fs-4 fw-bold" style={{ color: colors.primary }}>R$</span>
-                        <span className="display-4 fw-black" style={{ color: colors.primary, letterSpacing: '-2px' }}>
+                        <span className="display-4 fw-black" style={{ color: colors.primary, letterSpacing: '-2px', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)' }}>
                           {plan.price}
                         </span>
                       </div>

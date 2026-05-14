@@ -12,10 +12,10 @@ const HeroSection = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '160px 20px',
+      padding: 'clamp(80px, 15vw, 160px) 20px',
       position: 'relative',
     }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', zIndex: 1 }}>
+      <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto', textAlign: 'center', zIndex: 1 }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

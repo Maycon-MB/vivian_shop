@@ -8,23 +8,23 @@ const { colors, fonts } = pTheme;
 
 const ComparisonSection = () => {
   return (
-    <section style={{ padding: '160px 20px', backgroundColor: colors.bg }}>
+    <section style={{ padding: 'clamp(60px, 10vw, 160px) 20px', backgroundColor: colors.bg }}>
       <Container>
         <div className="text-center mb-5">
-          <h2 style={{ fontFamily: fonts.heading, fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', color: colors.primary }}>
+          <h2 style={{ fontFamily: fonts.heading, fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: colors.primary }}>
             Por que sair da <span style={{ color: colors.cta }}>Dependência?</span>
           </h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+          <p className="lead text-muted mx-auto" style={{ maxWidth: '700px', fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}>
             Veja a diferença entre ser apenas um inquilino em um marketplace e ser dono do seu próprio terreno.
           </p>
         </div>
 
         <Row className="g-4">
-          <Col md={6}>
+          <Col lg={6}>
             <Card style={{ 
               borderRadius: '32px', 
               border: '2px solid #9B89B3', 
-              padding: '40px',
+              padding: 'clamp(24px, 5vw, 40px)',
               backgroundColor: colors.white,
               boxShadow: pTheme.shadows.card,
               height: '100%'
@@ -54,11 +54,11 @@ const ComparisonSection = () => {
             </Card>
           </Col>
 
-          <Col md={6}>
+          <Col lg={6}>
             <Card style={{ 
               borderRadius: '32px', 
               border: '2px solid #9B89B3', 
-              padding: '40px',
+              padding: 'clamp(24px, 5vw, 40px)',
               backgroundColor: colors.white,
               boxShadow: pTheme.shadows.card,
               height: '100%'

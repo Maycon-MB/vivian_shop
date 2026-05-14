@@ -66,7 +66,7 @@ const products = [
     name: "Kit Rotina Visual Imantada",
     category: "Atividades Adaptadas",
     price: 125.00,
-    image: "/rotina_visual_premium_1778703012017.png",
+    image: `${import.meta.env.BASE_URL}rotina_visual_premium_1778703012017.png`,
     tag: "Inclusão",
     description: "Quadro de rotina magnético para previsibilidade diária."
   },
@@ -75,7 +75,7 @@ const products = [
     name: "Jogo das Emoções",
     category: "Atividades Adaptadas",
     price: 58.00,
-    image: "/jogo_emocoes_premium_1778702950986.png",
+    image: `${import.meta.env.BASE_URL}jogo_emocoes_premium_1778702950986.png`,
     tag: "Social",
     description: "Atividade lúdica para identificação de sentimentos."
   }
@@ -108,24 +108,24 @@ const LandingPage = () => {
       {/* Navbar Premium */}
       <Navbar expand="lg" fixed="top" className="bg-white bg-opacity-90 backdrop-blur border-bottom py-3 shadow-sm" style={{ zIndex: 1050 }}>
         <Container>
-          <Navbar.Brand href="#" style={{ fontFamily: 'Playfair Display', fontSize: '28px', fontWeight: 900 }}>
+          <Navbar.Brand href="#" style={{ fontFamily: 'Playfair Display', fontSize: '24px', fontWeight: 900 }}>
             Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold" style={{ fontSize: '11px', letterSpacing: '2px' }}>
+            <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold py-4 py-lg-0" style={{ fontSize: '11px', letterSpacing: '2px' }}>
               {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
                 <button 
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
+                    className={`px-4 py-2 mb-2 mb-lg-0 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
                     style={activeCategory === cat ? { backgroundColor: '#9B89B3' } : {}}
                 >
                     {cat}
                 </button>
               ))}
             </Nav>
-            <div className="d-flex align-items-center gap-4">
+            <div className="d-flex align-items-center justify-content-center justify-content-lg-end gap-4 pb-4 pb-lg-0">
               <Search size={20} className="text-muted cursor-pointer" />
               <div className="position-relative cursor-pointer" onClick={() => setShowCart(true)}>
                 <ShoppingCart size={22} className="text-dark" />
@@ -150,10 +150,10 @@ const LandingPage = () => {
       </Navbar>
 
       {/* Hero Section */}
-      <section style={{ paddingTop: '180px', paddingBottom: '120px', background: 'radial-gradient(circle at top right, #F0EDF5, #FAF9FB)' }}>
+      <section className="section-padding" style={{ paddingTop: '140px', background: 'radial-gradient(circle at top right, #F0EDF5, #FAF9FB)' }}>
         <Container>
           <Row className="align-items-center">
-            <Col lg={6} className="mb-5 mb-lg-0">
+            <Col lg={6} className="mb-5 mb-lg-0 text-center text-lg-start">
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -166,25 +166,25 @@ const LandingPage = () => {
                   Design que acolhe e <br/>
                   <span style={{ color: '#9B89B3' }}>organiza</span> vidas.
                 </h1>
-                <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: '20px' }}>
+                <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: 'clamp(16px, 4vw, 20px)' }}>
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
                 </p>
-                <div className="d-flex gap-3">
+                <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
                   <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#2D2438' }} onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}>
                     Ver Coleções
                   </Button>
-                  <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
+                  <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
                     <MessageSquare size={18}/> Mensagem
                   </Button>
                 </div>
                 
-                <div className="mt-5 pt-4 border-top border-light d-flex align-items-center gap-4">
+                <div className="mt-5 pt-4 border-top border-light d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-lg-start gap-4">
                     <div className="d-flex -space-x-2">
                         {[1,2,3].map(i => (
                             <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="rounded-circle border border-2 border-white shadow-sm" style={{ width: '40px', height: '40px', marginLeft: i > 1 ? '-12px' : '0' }} alt="Avatar" />
                         ))}
                     </div>
-                    <div className="small">
+                    <div className="small text-center text-sm-start">
                         <div className="fw-black text-dark">+2.400 Pedidos Entregues</div>
                         <div className="text-muted">Avaliação 4.9/5 nas redes sociais</div>
                     </div>
@@ -199,7 +199,7 @@ const LandingPage = () => {
                 className="position-relative"
               >
                 <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
-                  <img src="/hero_boutique_vivian_1778705287616.png" alt="Hero" className="w-100" />
+                  <img src={`${import.meta.env.BASE_URL}hero_boutique_vivian_1778705287616.png`} alt="Hero" className="w-100" />
                 </div>
                 <div className="position-absolute bottom-0 start-0 m-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '280px' }}>
                   <div className="d-flex gap-1 mb-2 text-warning">
@@ -218,15 +218,15 @@ const LandingPage = () => {
       {/* Featured Catalog */}
       <section id="catalog" className="section-padding">
         <Container>
-          <div className="d-flex justify-content-between align-items-end mb-5">
-            <div>
-              <div className="d-flex align-items-center gap-2 mb-2" style={{ color: '#9B89B3' }}>
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
+            <div className="mb-4 mb-md-0">
+              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#9B89B3' }}>
                 <div style={{ width: '40px', height: '1px', backgroundColor: '#9B89B3' }}></div>
                 <span className="small fw-black text-uppercase ls-widest">Coleções 2026</span>
               </div>
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Playfair Display' }}>Nosso Catálogo</h2>
             </div>
-            <div className="d-none d-md-flex gap-2">
+            <div className="d-flex flex-wrap justify-content-center gap-2">
               {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
                 <Button 
                   key={cat}
@@ -243,7 +243,7 @@ const LandingPage = () => {
           <Row className="g-4">
             <AnimatePresence mode="popLayout">
               {filteredProducts.map((product) => (
-                <Col lg={4} md={6} key={product.id}>
+                <Col lg={4} sm={6} key={product.id}>
                   <ProductCard product={product} addToCart={addToCart} />
                 </Col>
               ))}
@@ -286,10 +286,10 @@ const LandingPage = () => {
               </div>
             </Col>
           </Row>
-          <div className="mt-5 pt-4 d-flex justify-content-center gap-5 grayscale opacity-50">
-              <img src="https://logodownload.org/wp-content/uploads/2019/08/mercado-pago-logo.png" style={{ height: '30px' }} alt="Mercado Pago" />
-              <img src="https://logodownload.org/wp-content/uploads/2014/05/correios-logo-1.png" style={{ height: '30px' }} alt="Correios" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Pix_logo.svg/2560px-Pix_logo.svg.png" style={{ height: '30px' }} alt="Pix" />
+          <div className="mt-5 pt-4 d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Mercado_Pago.svg" style={{ height: '32px', maxWidth: '160px', objectFit: 'contain' }} alt="Mercado Pago" />
+              <img src="https://logodownload.org/wp-content/uploads/2014/05/correios-logo-1.png" style={{ height: '28px', maxWidth: '120px', objectFit: 'contain' }} alt="Correios" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Pix_%28Brazil%29_logo.svg" style={{ height: '32px', maxWidth: '80px', objectFit: 'contain' }} alt="Pix" />
           </div>
         </Container>
       </section>

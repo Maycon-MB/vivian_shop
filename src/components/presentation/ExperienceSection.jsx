@@ -30,20 +30,20 @@ const benefits = [
 
 const ExperienceSection = () => {
   return (
-    <section style={{ padding: '160px 20px', position: 'relative' }}>
+    <section style={{ padding: 'clamp(60px, 10vw, 160px) 20px', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
           <h2 style={{
             fontFamily: fonts.heading,
-            fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
             color: colors.primary,
             marginBottom: '24px',
           }}>
             A Visão do Novo Negócio
           </h2>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: colors.textMuted,
             maxWidth: '600px',
             margin: '0 auto',
@@ -68,7 +68,7 @@ const ExperienceSection = () => {
               style={{
                 backgroundColor: colors.white,
                 borderRadius: '32px',
-                padding: '40px 30px',
+                padding: 'clamp(24px, 4vw, 40px) 30px',
                 border: '2px solid #9B89B3',
                 boxShadow: pTheme.shadows.card,
               }}
