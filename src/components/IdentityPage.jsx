@@ -117,6 +117,12 @@ const useHighlightOnScroll = () => {
 const IdentityPage = () => {
   const rootRef = useHighlightOnScroll();
 
+  /* Rola sem escrever no endereço: o hash é do roteador do App, e sujá-lo
+     aqui faria a página recarregar em outra view. */
+  const scrollToLines = () => {
+    document.getElementById('linhas')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="identity" ref={rootRef}>
       <header className="masthead">
@@ -136,7 +142,7 @@ const IdentityPage = () => {
             <div className="ghost">foto do produto</div>
             <div className="ghost">foto do produto</div>
           </div>
-          <a className="go" href="#linhas">Ver papelaria →</a>
+          <button type="button" className="go" onClick={scrollToLines}>Ver papelaria →</button>
         </div>
 
         <div className="spine" aria-hidden="true">
@@ -152,7 +158,7 @@ const IdentityPage = () => {
             <div className="ghost">foto do produto</div>
             <div className="ghost">foto do produto</div>
           </div>
-          <a className="go" href="#linhas">Ver atividades →</a>
+          <button type="button" className="go" onClick={scrollToLines}>Ver atividades →</button>
         </div>
       </div>
 

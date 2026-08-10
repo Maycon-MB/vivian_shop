@@ -108,7 +108,14 @@ const LandingPage = () => {
       {/* Navbar Premium */}
       <Navbar expand="lg" fixed="top" className="bg-white bg-opacity-90 backdrop-blur border-bottom py-3 shadow-sm" style={{ zIndex: 1050 }}>
         <Container>
-          <Navbar.Brand href="#" style={{ fontFamily: 'Fraunces', fontSize: '24px', fontWeight: 900 }}>
+          {/* Sem href: o hash pertence ao roteador do App, e escrever '#'
+              aqui trocaria a view ao recarregar. */}
+          <Navbar.Brand
+            as="button"
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            style={{ fontFamily: 'Fraunces', fontSize: '24px', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
+          >
             Vivian<span style={{ color: "#2E9B96" }}> Quintella</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -170,7 +177,7 @@ const LandingPage = () => {
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
                 </p>
                 <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
-                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#12305B' }} onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}>
+                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#12305B' }} onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}>
                     Ver Coleções
                   </Button>
                   <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
