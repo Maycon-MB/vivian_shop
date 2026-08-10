@@ -208,6 +208,10 @@ body {
   color: var(--pl-gold);
 }
 
+.switcher-btn.ident {
+  color: #12305B;
+}
+
 .switcher-btn:hover:not(.active) {
   background: white;
 }

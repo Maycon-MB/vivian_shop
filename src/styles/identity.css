@@ -1,0 +1,460 @@
+/* ==========================================================================
+   Identidade da loja — Feito para Você & Projeto Educar
+   --------------------------------------------------------------------------
+   Sistema visual da loja. Tudo escopado sob `.identity` para não colidir
+   com o Bootstrap carregado globalmente em main.jsx.
+
+   Conceito: a loja é um caderno. A pauta é a grade real do layout, não
+   textura de fundo. Tema escuro = lousa.
+   ========================================================================== */
+
+.identity {
+  --paper:      #FBFAF7;
+  --surface:    #FFFFFF;
+  --ink:        #12305B;
+  --ink-soft:   #4A6183;
+  --rule:       #A8C6E8;
+  --rule-faint: #DCE9F6;
+  --chalk:      #2E9B96;
+  --heart:      #C4436B;
+  --marker:     #FFD400;
+  --marker-ink: #12305B;
+  --shadow:     0 1px 2px rgba(18, 48, 91, .06), 0 8px 24px rgba(18, 48, 91, .06);
+
+  --display: 'Fraunces', Georgia, 'Iowan Old Style', serif;
+  --body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --measure: 62ch;
+  --gutter: clamp(20px, 5vw, 64px);
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: clamp(16px, 1.05vw, 17px);
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  .identity {
+    --paper:      #1B2723;
+    --surface:    #223029;
+    --ink:        #F2EFE4;
+    --ink-soft:   #AEBCB2;
+    --rule:       #4E6A60;
+    --rule-faint: #33453D;
+    --chalk:      #74D6C9;
+    --heart:      #F294A8;
+    --shadow:     0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+  }
+}
+
+.identity *,
+.identity *::before,
+.identity *::after { box-sizing: border-box; }
+
+.identity h1,
+.identity h2,
+.identity h3,
+.identity h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
+  margin: 0;
+  color: var(--ink);
+}
+
+.identity p { margin: 0; max-width: var(--measure); }
+
+.identity a { color: inherit; }
+
+.identity :focus-visible {
+  outline: 2px solid var(--chalk);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.identity .wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.identity .eyebrow {
+  font-family: var(--body);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* A pauta do caderno: grade de 32px que alinha o conteúdo. */
+.identity .ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    var(--rule-faint) 31px,
+    var(--rule-faint) 32px
+  );
+}
+
+/* ── Assinatura: o marca-texto ──────────────────────────────────────────── */
+.identity .mark {
+  background-image: linear-gradient(var(--marker), var(--marker));
+  background-repeat: no-repeat;
+  background-size: 0% 88%;
+  background-position: 0 92%;
+  border-radius: .18em .45em .22em .38em;
+  padding: 0 .12em;
+  margin: 0 -.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size .55s cubic-bezier(.22, .61, .36, 1);
+}
+
+.identity .mark.on { background-size: 100% 88%; }
+
+/* No tema lousa o texto marcado vira tinta escura: o amarelo continua o
+   mesmo, então o contraste tem que vir do texto. */
+@media (prefers-color-scheme: dark) {
+  .identity .mark.on { color: var(--marker-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .identity .mark { transition: none; background-size: 100% 88%; }
+  .identity * { animation: none !important; }
+}
+
+/* ── Cabeçalho ──────────────────────────────────────────────────────────── */
+.identity .masthead {
+  border-bottom: 1px solid var(--rule);
+  padding-top: 28px;
+}
+
+.identity .masthead .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.identity .masthead h1 { font-size: clamp(21px, 2.4vw, 27px); }
+
+.identity .masthead .meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Hero: duas páginas do mesmo caderno ────────────────────────────────── */
+.identity .spread {
+  display: grid;
+  grid-template-columns: 1fr 44px 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+
+.identity .page {
+  padding: clamp(36px, 5vw, 72px) clamp(20px, 4vw, 52px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.identity .page .line { width: 54px; height: 3px; border-radius: 2px; }
+.identity .page--stationery .line { background: var(--chalk); }
+.identity .page--education .line { background: var(--marker); }
+
+.identity .page h2 { font-size: clamp(30px, 4.2vw, 46px); }
+.identity .page--stationery h2 { color: var(--chalk); }
+
+.identity .page .tagline { color: var(--ink-soft); font-size: 15px; }
+
+.identity .spine {
+  background: var(--surface);
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 22px;
+  padding-block: 40px;
+}
+
+.identity .spine i {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  box-shadow: inset 0 1px 2px rgba(18, 48, 91, .28);
+}
+
+.identity .ghost-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.identity .ghost {
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--rule);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--surface);
+  text-align: center;
+  padding: 8px;
+}
+
+.identity .go {
+  margin-top: auto;
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  width: fit-content;
+  border-bottom: 2px solid transparent;
+}
+
+.identity .page--stationery .go { color: var(--chalk); }
+.identity .page--education .go { color: var(--ink); }
+.identity .go:hover,
+.identity .go:focus-visible { border-bottom-color: currentColor; }
+
+@media (max-width: 760px) {
+  .identity .spread { grid-template-columns: 1fr; }
+  .identity .spine {
+    grid-auto-flow: column;
+    justify-content: center;
+    align-content: center;
+    gap: 18px;
+    padding-block: 14px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+/* ── Seções ─────────────────────────────────────────────────────────────── */
+.identity section { border-bottom: 1px solid var(--rule); }
+.identity section > .wrap { padding-block: clamp(44px, 6vw, 84px); }
+
+.identity .sec-head { display: grid; gap: 12px; margin-bottom: 36px; }
+.identity .sec-head h2 { font-size: clamp(25px, 3.2vw, 35px); }
+.identity .sec-head p { color: var(--ink-soft); }
+
+.identity .grid-2 {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.identity .card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 26px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  box-shadow: var(--shadow);
+}
+
+.identity .card h3 { font-size: 19px; }
+.identity .card p { font-size: 14.5px; color: var(--ink-soft); }
+
+/* ── Paleta ─────────────────────────────────────────────────────────────── */
+.identity .swatches {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(192px, 1fr));
+}
+
+.identity .swatch {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.identity .swatch .fill { height: 84px; }
+.identity .swatch .info { padding: 13px 15px; display: grid; gap: 3px; }
+.identity .swatch .name { font-weight: 700; font-size: 14px; }
+
+.identity .swatch .hex {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+
+.identity .swatch .use { font-size: 12.5px; color: var(--ink-soft); line-height: 1.45; }
+
+/* ── Espécimen tipográfico ──────────────────────────────────────────────── */
+.identity .specimen { display: grid; gap: 26px; }
+
+.identity .spec-row {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 22px;
+  align-items: start;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.identity .spec-row:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.identity .spec-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+  font-weight: 700;
+  padding-top: 6px;
+}
+
+.identity .spec-display {
+  font-family: var(--display);
+  font-size: clamp(30px, 4.6vw, 52px);
+  line-height: 1.05;
+}
+
+.identity .spec-body { font-size: 17px; }
+
+.identity .spec-util {
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  letter-spacing: .02em;
+}
+
+.identity .spec-note {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+@media (max-width: 640px) {
+  .identity .spec-row { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ── Cards de produto ───────────────────────────────────────────────────── */
+.identity .products {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+}
+
+.identity .product {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+}
+
+.identity .product .thumb {
+  aspect-ratio: 5 / 4;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule);
+}
+
+.identity .product--st .thumb { background: color-mix(in srgb, var(--chalk) 12%, var(--surface)); }
+.identity .product--ed .thumb { background: color-mix(in srgb, var(--marker) 20%, var(--surface)); }
+
+.identity .product .body { padding: 15px 16px 18px; display: grid; gap: 7px; }
+
+.identity .product .badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  width: fit-content;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+
+.identity .product--st .badge { background: var(--chalk); color: #FFFFFF; }
+.identity .product--ed .badge { background: var(--marker); color: var(--marker-ink); }
+
+.identity .product h4 {
+  font-family: var(--body);
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.identity .product .price {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.identity .product .stock { font-size: 12.5px; color: var(--ink-soft); }
+
+/* ── Perguntas em aberto ────────────────────────────────────────────────── */
+.identity .asks { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+
+.identity .asks li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--rule-faint);
+  align-items: start;
+}
+
+.identity .asks li:last-child { border-bottom: 0; }
+
+.identity .asks .n {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 14px;
+  padding-top: 2px;
+}
+
+.identity .asks strong { display: block; font-size: 15.5px; }
+.identity .asks span { font-size: 14px; color: var(--ink-soft); }
+
+/* ── Nota lateral ───────────────────────────────────────────────────────── */
+.identity .note {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--chalk);
+  border-radius: 8px;
+  padding: 18px 20px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin-top: 26px;
+  max-width: 78ch;
+}
+
+.identity .note strong { color: var(--ink); }
+
+/* ── Rodapé ─────────────────────────────────────────────────────────────── */
+.identity footer { padding-block: 40px 96px; }
+.identity footer p { font-size: 13.5px; color: var(--ink-soft); }
