@@ -1,45 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import LandingPage from './components/LandingPage'
-import PresentationPage from './components/PresentationPage'
 import AdminDashboard from './components/AdminDashboard'
+import HowItWorksPage from './components/HowItWorksPage'
 import IdentityPage from './components/IdentityPage'
 
 /**
- * Seções internas da página de proposta. Quando o endereço aponta para uma
- * delas, a proposta é a view carregada — assim links antigos continuam
- * funcionando.
+ * Views do protótipo.
+ *
+ * A proposta comercial saiu: o contrato já está fechado, e uma página de
+ * venda no meio do projeto só confunde quem já comprou. O componente
+ * continua no repositório (components/PresentationPage.jsx), fora do
+ * roteamento.
  */
-const PRESENTATION_SECTIONS = [
-  '#proposta', '#inicio', '#experiencia', '#confianca',
-  '#instagram', '#comparacao', '#logistica', '#investimento', '#faq',
+const VIEWS = [
+  { id: 'landing', label: 'Loja', hash: '', className: 'landing' },
+  { id: 'admin', label: 'Painel', hash: '#painel', className: 'admin' },
+  { id: 'how', label: 'Como funciona', hash: '#como-funciona', className: 'how' },
+  { id: 'identity', label: 'Identidade', hash: '#identidade', className: 'ident' },
 ]
 
-/**
- * A loja é o que abre no endereço raiz — é o que a cliente quer ver.
- * A página de identidade visual fica disponível em #identidade, como
- * referência de projeto.
- */
 const resolveInitialView = () => {
-  const hash = window.location.hash
-
-  if (PRESENTATION_SECTIONS.includes(hash)) return 'presentation'
-  if (hash === '#admin') return 'admin'
-  if (hash === '#identidade') return 'identity'
-  return 'landing'
-}
-
-const VIEW_HASH = {
-  landing: '',
-  admin: '#admin',
-  presentation: '#proposta',
-  identity: '#identidade',
+  const match = VIEWS.find((view) => view.hash && view.hash === window.location.hash)
+  return match ? match.id : 'landing'
 }
 
 function App() {
   const [view, setView] = useState(resolveInitialView)
 
   useEffect(() => {
-    const hash = VIEW_HASH[view]
+    const hash = VIEWS.find((item) => item.id === view)?.hash
 
     if (hash) {
       window.location.hash = hash
@@ -50,39 +39,24 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Navegação entre as views do protótipo. */}
-      <div className="view-switcher">
-        <button
-          onClick={() => setView('landing')}
-          className={`switcher-btn landing ${view === 'landing' ? 'active' : ''}`}
-        >
-          Loja Demo
-        </button>
-        <button
-          onClick={() => setView('admin')}
-          className={`switcher-btn admin ${view === 'admin' ? 'active' : ''}`}
-        >
-          Painel ADM
-        </button>
-        <button
-          onClick={() => setView('presentation')}
-          className={`switcher-btn presentation ${view === 'presentation' ? 'active' : ''}`}
-        >
-          Proposta
-        </button>
-        <button
-          onClick={() => setView('identity')}
-          className={`switcher-btn ident ${view === 'identity' ? 'active' : ''}`}
-        >
-          Identidade
-        </button>
-      </div>
+      <nav className="view-switcher" aria-label="Áreas do projeto">
+        {VIEWS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setView(item.id)}
+            className={`switcher-btn ${item.className} ${view === item.id ? 'active' : ''}`}
+            aria-current={view === item.id ? 'page' : undefined}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
 
       <main>
-        {view === 'identity' && <IdentityPage />}
         {view === 'landing' && <LandingPage />}
         {view === 'admin' && <AdminDashboard />}
-        {view === 'presentation' && <PresentationPage />}
+        {view === 'how' && <HowItWorksPage />}
+        {view === 'identity' && <IdentityPage />}
       </main>
     </div>
   );
