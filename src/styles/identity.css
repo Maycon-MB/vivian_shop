@@ -455,6 +455,168 @@
 
 .identity .note strong { color: var(--ink); }
 
+/* ── Fluxo do pedido ────────────────────────────────────────────────────── */
+.identity .flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.identity .flow-step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 20px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.identity .flow-step:last-child { padding-bottom: 0; }
+
+/* A linha que liga um passo ao próximo — o pedido andando. */
+.identity .flow-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 40px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--rule);
+}
+
+.identity .flow-marker {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--rule);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.identity .flow-n {
+  font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.identity .flow-body { display: grid; gap: 7px; padding-top: 3px; align-content: start; }
+.identity .flow-body h3 { font-size: 19px; }
+.identity .flow-body p { font-size: 14.5px; color: var(--ink-soft); }
+
+.identity .actor {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  width: fit-content;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+
+.identity .actor.by-system { background: var(--chalk); color: #FFFFFF; }
+.identity .actor.by-vivian { background: var(--marker); color: var(--marker-ink); }
+.identity .actor.by-buyer {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+/* ── Tabela de rotina ───────────────────────────────────────────────────── */
+.identity .routine {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14.5px;
+}
+
+.identity .routine th,
+.identity .routine td {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--rule-faint);
+  vertical-align: top;
+}
+
+.identity .routine thead th {
+  font-family: var(--body);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule);
+  padding-top: 0;
+}
+
+.identity .routine tbody th {
+  font-family: var(--body);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.identity .routine .time {
+  font-variant-numeric: tabular-nums;
+  color: var(--chalk);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.identity .routine .note-cell { color: var(--ink-soft); }
+
+@media (max-width: 640px) {
+  .identity .routine .note-cell { display: none; }
+}
+
+/* ── Custos ─────────────────────────────────────────────────────────────── */
+.identity .cost-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.identity .cost-when {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ── Lista do que fica para depois ──────────────────────────────────────── */
+.identity .later {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  max-width: 78ch;
+}
+
+.identity .later li {
+  padding: 14px 0 14px 26px;
+  border-bottom: 1px solid var(--rule-faint);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  position: relative;
+}
+
+.identity .later li:last-child { border-bottom: 0; }
+
+.identity .later li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 21px;
+  width: 12px;
+  height: 2px;
+  background: var(--rule);
+}
+
 /* ── Rodapé ─────────────────────────────────────────────────────────────── */
 .identity footer { padding-block: 40px 96px; }
 .identity footer p { font-size: 13.5px; color: var(--ink-soft); }

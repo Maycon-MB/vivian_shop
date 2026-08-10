@@ -183,39 +183,23 @@ body {
   transition: all 0.3s ease;
 }
 
-.switcher-btn.active.landing {
-  background: var(--pl-lavender);
+.switcher-btn.active {
+  background: var(--pl-dark);
   color: white;
 }
 
-.switcher-btn.active.admin {
-  background: var(--pl-lavender);
-  color: white;
-}
-
-.switcher-btn.active.presentation {
-  background: var(--pl-gold);
-  color: white;
-}
-
-.switcher-btn:not(.active).landing {
-  color: var(--pl-lavender);
-}
-
-.switcher-btn:not(.active).admin {
-  color: var(--pl-lavender);
-}
-
-.switcher-btn:not(.active).presentation {
-  color: var(--pl-gold);
-}
-
-.switcher-btn.ident {
-  color: #12305B;
+.switcher-btn:not(.active) {
+  background: transparent;
+  color: var(--pl-dark);
 }
 
 .switcher-btn:hover:not(.active) {
   background: white;
+}
+
+.switcher-btn:focus-visible {
+  outline: 2px solid var(--pl-lavender);
+  outline-offset: 2px;
 }
 
 /* Utilitários de Responsividade */
