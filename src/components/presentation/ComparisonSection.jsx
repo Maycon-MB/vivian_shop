@@ -23,7 +23,7 @@ const ComparisonSection = () => {
           <Col lg={6}>
             <Card style={{ 
               borderRadius: '32px', 
-              border: '2px solid #9B89B3', 
+              border: '2px solid #2E9B96', 
               padding: 'clamp(24px, 5vw, 40px)',
               backgroundColor: colors.white,
               boxShadow: pTheme.shadows.card,
@@ -57,7 +57,7 @@ const ComparisonSection = () => {
           <Col lg={6}>
             <Card style={{ 
               borderRadius: '32px', 
-              border: '2px solid #9B89B3', 
+              border: '2px solid #2E9B96', 
               padding: 'clamp(24px, 5vw, 40px)',
               backgroundColor: colors.white,
               boxShadow: pTheme.shadows.card,

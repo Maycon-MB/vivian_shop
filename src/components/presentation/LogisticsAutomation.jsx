@@ -54,7 +54,7 @@ const LogisticsAutomation = () => {
               backgroundColor: colors.white,
               padding: 'clamp(24px, 4vw, 40px)',
               borderRadius: '32px',
-              border: '2px solid #9B89B3',
+              border: '2px solid #2E9B96',
               boxShadow: pTheme.shadows.card,
             }}
           >
@@ -82,7 +82,7 @@ const LogisticsAutomation = () => {
               backgroundColor: colors.white,
               padding: 'clamp(24px, 4vw, 40px)',
               borderRadius: '32px',
-              border: '2px solid #9B89B3',
+              border: '2px solid #2E9B96',
               boxShadow: pTheme.shadows.card,
             }}
           >

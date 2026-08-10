@@ -1,23 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
 
 :root {
-  /* Cores PapeLivre */
-  --pl-lavender: #9B89B3;
-  --pl-mint: #B8E2D4;
-  --pl-dark: #2D2438;
-  --pl-light: #F9F7FA;
+  /* Paleta da loja — ver docs/superpowers/specs/2026-08-10-identidade-visual-design.md
+     Cada cor saiu de uma das duas logos da cliente. */
+  --pl-lavender: #2E9B96;  /* verde-água: acento Feito para Você */
+  --pl-mint: #FFD400;      /* amarelo: acento Projeto Educar */
+  --pl-dark: #12305B;      /* tinta: texto e marca */
+  --pl-light: #FBFAF7;     /* papel: fundo */
   --pl-white: #ffffff;
-  --pl-gray: #9ca3af;
-  --pl-gold: #D4880A;
+  --pl-gray: #6B7C8F;
+  --pl-gold: #C4436B;      /* rosa: promoções e avisos */
+  --pl-rule: #A8C6E8;      /* pauta: bordas e divisórias */
 
   /* Glassmorphism */
   --glass: rgba(255, 255, 255, 0.7);
-  --glass-dark: rgba(45, 36, 56, 0.8);
+  --glass-dark: rgba(18, 48, 91, 0.8);
   --glass-border: rgba(255, 255, 255, 0.2);
 
   /* Fontes */
-  --font-main: 'Inter', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-main: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
 
   /* Spacing */
   --section-padding: 160px;
@@ -108,12 +110,12 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 2000;
-  background-color: rgba(13,10,20,0.85);
+  background-color: rgba(9,24,46,0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 10px 20px;
   border-radius: 50px;
-  border: 1px solid rgba(155,137,179,0.2);
+  border: 1px solid rgba(46,155,150,0.2);
   display: flex;
   gap: 16px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
@@ -290,8 +292,8 @@ body {
   justify-content: center;
   width: 18px;
   height: 18px;
-  background-color: rgba(155, 137, 179, 0.1);
-  color: #9B89B3;
+  background-color: rgba(46, 155, 150, 0.1);
+  color: #2E9B96;
   border-radius: 50%;
   font-size: 10px;
   font-weight: bold;
@@ -301,7 +303,7 @@ body {
 }
 
 .info-icon:hover {
-  background-color: #9B89B3;
+  background-color: #2E9B96;
   color: white;
 }
 
@@ -313,7 +315,7 @@ body {
 .premium-card:hover {
   transform: translateY(-12px);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1) !important;
-  border-color: #9B89B3;
+  border-color: #2E9B96;
 }
 
 .product-image-container {

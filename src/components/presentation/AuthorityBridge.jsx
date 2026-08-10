@@ -40,7 +40,7 @@ const AuthorityBridge = () => {
           {/* Pilar 1 */}
           <motion.div
             whileHover={{ y: -5 }}
-            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #9B89B3', boxShadow: pTheme.shadows.card }}
+            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #2E9B96', boxShadow: pTheme.shadows.card }}
           >
             <Lock size={32} color={colors.lavender} style={{ marginBottom: '20px' }} />
             <h3 style={{ fontFamily: fonts.heading, fontSize: '1.4rem', color: colors.textDark, marginBottom: '12px' }}>
@@ -54,7 +54,7 @@ const AuthorityBridge = () => {
           {/* Pilar 2 */}
           <motion.div
             whileHover={{ y: -5 }}
-            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #9B89B3', boxShadow: pTheme.shadows.card }}
+            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #2E9B96', boxShadow: pTheme.shadows.card }}
           >
             <HeartHandshake size={32} color={colors.gold} style={{ marginBottom: '20px' }} />
             <h3 style={{ fontFamily: fonts.heading, fontSize: '1.4rem', color: colors.textDark, marginBottom: '12px' }}>
@@ -68,7 +68,7 @@ const AuthorityBridge = () => {
           {/* Pilar 3 */}
           <motion.div
             whileHover={{ y: -5 }}
-            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #9B89B3', boxShadow: pTheme.shadows.card }}
+            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #2E9B96', boxShadow: pTheme.shadows.card }}
           >
             <ShieldCheck size={32} color={colors.mint} style={{ marginBottom: '20px' }} />
             <h3 style={{ fontFamily: fonts.heading, fontSize: '1.4rem', color: colors.textDark, marginBottom: '12px' }}>
@@ -82,7 +82,7 @@ const AuthorityBridge = () => {
           {/* Pilar 4 */}
           <motion.div
             whileHover={{ y: -5 }}
-            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #9B89B3', boxShadow: pTheme.shadows.card }}
+            style={{ padding: 'clamp(24px, 4vw, 32px)', backgroundColor: colors.bg, borderRadius: '32px', border: '2px solid #2E9B96', boxShadow: pTheme.shadows.card }}
           >
             <Search size={32} color={colors.primary} style={{ marginBottom: '20px' }} />
             <h3 style={{ fontFamily: fonts.heading, fontSize: '1.4rem', color: colors.textDark, marginBottom: '12px' }}>

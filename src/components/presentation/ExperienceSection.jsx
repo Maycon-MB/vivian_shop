@@ -9,7 +9,7 @@ const benefits = [
   {
     icon: <Store size={32} color={colors.lavender} />,
     title: 'Lojas Unificadas',
-    desc: 'Suas duas lojas (Papelaria e Atividades Adaptadas) em um único ambiente, fortalecendo sua marca de forma profissional e coesa.'
+    desc: 'Suas duas lojas (Feito para Você e Projeto Educar) em um único ambiente, fortalecendo sua marca de forma profissional e coesa.'
   },
   {
     icon: <MessageSquare size={32} color={colors.gold} />,
@@ -69,7 +69,7 @@ const ExperienceSection = () => {
                 backgroundColor: colors.white,
                 borderRadius: '32px',
                 padding: 'clamp(24px, 4vw, 40px) 30px',
-                border: '2px solid #9B89B3',
+                border: '2px solid #2E9B96',
                 boxShadow: pTheme.shadows.card,
               }}
             >

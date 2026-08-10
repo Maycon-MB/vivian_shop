@@ -15,8 +15,8 @@ const faqs = [
     a: "O painel administrativo que eu configuro permite gerar as etiquetas de frete (Correios/Jadlog etc.) e a declaração de conteúdo com poucos cliques, tudo integrado, sem dor de cabeça."
   },
   {
-    q: "Vou conseguir juntar as duas lojas (Papelaria e Atividades)?",
-    a: "Sim! Eu crio categorias bem definidas no menu principal do site, separando 'Papelaria Personalizada' e 'Atividades Adaptadas', mantendo tudo organizado em um único endereço web."
+    q: "Vou conseguir juntar as duas lojas (Feito para Você e Projeto Educar)?",
+    a: "Sim! Eu crio categorias bem definidas no menu principal do site, separando 'Feito para Você' e 'Projeto Educar', mantendo tudo organizado em um único endereço web."
   },
   {
     q: "É muito difícil gerenciar o site?",
@@ -59,7 +59,7 @@ const FAQSection = () => {
               key={idx}
               style={{
                 backgroundColor: colors.bg,
-                border: '2px solid #9B89B3',
+                border: '2px solid #2E9B96',
                 borderRadius: '24px',
                 overflow: 'hidden',
                 boxShadow: pTheme.shadows.card

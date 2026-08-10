@@ -17,15 +17,15 @@ const StatsCard = ({ label, value, grow, icon }) => {
   return (
     <Card className="border-0 p-4 h-100 hover-lift transition-all" style={{ 
       borderRadius: '32px',
-      border: '1px solid #9B89B366',
-      boxShadow: '0 15px 35px rgba(155,137,179,0.12)'
+      border: '1px solid #2E9B9666',
+      boxShadow: '0 15px 35px rgba(46,155,150,0.12)'
     }}>
       <div className="d-flex justify-content-between mb-4">
         <div className="bg-light p-3 rounded-4">{icon}</div>
         <Badge 
           bg={getBadgeVariant(grow)} 
           className={`text-${getTextColor(grow)} fw-bold px-3 py-2 rounded-pill d-flex align-items-center`}
-          style={{ color: grow.includes('vs') ? '#9B89B3' : '' }}
+          style={{ color: grow.includes('vs') ? '#2E9B96' : '' }}
         >
           {grow}
         </Badge>

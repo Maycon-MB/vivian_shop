@@ -79,7 +79,7 @@ const PricingSection = () => {
                     backgroundColor: colors.white,
                     borderRadius: '32px',
                     boxShadow: pTheme.shadows.card,
-                    border: '2px solid #9B89B3',
+                    border: '2px solid #2E9B96',
                     transform: 'translateY(0)',
                     cursor: 'default'
                   }}
