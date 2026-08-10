@@ -36,17 +36,20 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* Tema escuro: a mesma tinta azul, agora como fundo. Derivar o escuro da
+   cor da marca mantém a página reconhecível; um verde-ardósia genérico
+   trazia uma cor que não existe em nenhuma das duas logos. */
 @media (prefers-color-scheme: dark) {
   .identity {
-    --paper:      #1B2723;
-    --surface:    #223029;
-    --ink:        #F2EFE4;
-    --ink-soft:   #AEBCB2;
-    --rule:       #4E6A60;
-    --rule-faint: #33453D;
-    --chalk:      #74D6C9;
-    --heart:      #F294A8;
-    --shadow:     0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    --paper:      #121A26;
+    --surface:    #1B2533;
+    --ink:        #EDF1F6;
+    --ink-soft:   #9FADC0;
+    --rule:       #38465C;
+    --rule-faint: #26303F;
+    --chalk:      #5FD0C4;
+    --heart:      #F2A0B2;
+    --shadow:     0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .3);
   }
 }
 
