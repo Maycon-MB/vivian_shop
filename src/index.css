@@ -39,6 +39,95 @@
   }
 }
 
+/* ── Ponte Bootstrap → identidade ─────────────────────────────────────────
+   O Bootstrap traz a própria paleta: bg-primary é #0d6efd, text-muted é um
+   cinza neutro, e os raios de canto vêm de outra escala. Como as classes
+   dele estão espalhadas pelos componentes, sai mais barato e mais seguro
+   redefinir os tokens dele do que caçar classe por classe.
+
+   Paleta em docs/superpowers/specs/2026-08-10-identidade-visual-design.md
+   -------------------------------------------------------------------- */
+:root {
+  --bs-primary: #2E9B96;
+  --bs-primary-rgb: 46, 155, 150;
+  --bs-dark: #12305B;
+  --bs-dark-rgb: 18, 48, 91;
+  --bs-success: #1F7A4D;
+  --bs-success-rgb: 31, 122, 77;
+  --bs-warning: #FFD400;
+  --bs-warning-rgb: 255, 212, 0;
+  --bs-danger: #C4436B;
+  --bs-danger-rgb: 196, 67, 107;
+
+  --bs-body-color: #12305B;
+  --bs-body-bg: #FBFAF7;
+  --bs-secondary-color: #6B7C8F;   /* text-muted */
+  --bs-emphasis-color: #12305B;
+  --bs-border-color: #A8C6E8;
+
+  --bs-link-color: #2E9B96;
+  --bs-link-hover-color: #12305B;
+
+  --bs-body-font-family: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+
+  /* Escala única de canto, no lugar de rounded-3/4/5 sem critério. */
+  --bs-border-radius-sm: 8px;
+  --bs-border-radius: 10px;
+  --bs-border-radius-lg: 12px;
+  --bs-border-radius-xl: 16px;
+  --bs-border-radius-xxl: 24px;
+}
+
+/* Os botões do Bootstrap não leem --bs-primary: cada variante tem tokens
+   próprios, que precisam ser redefinidos um a um. */
+.btn-primary {
+  --bs-btn-bg: #2E9B96;
+  --bs-btn-border-color: #2E9B96;
+  --bs-btn-hover-bg: #257F7B;
+  --bs-btn-hover-border-color: #257F7B;
+  --bs-btn-active-bg: #1E6B67;
+  --bs-btn-active-border-color: #1E6B67;
+  --bs-btn-disabled-bg: #2E9B96;
+  --bs-btn-disabled-border-color: #2E9B96;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #2E9B96;
+  --bs-btn-border-color: #2E9B96;
+  --bs-btn-hover-bg: #2E9B96;
+  --bs-btn-hover-border-color: #2E9B96;
+  --bs-btn-active-bg: #257F7B;
+  --bs-btn-active-border-color: #257F7B;
+}
+
+.btn-dark {
+  --bs-btn-bg: #12305B;
+  --bs-btn-border-color: #12305B;
+  --bs-btn-hover-bg: #0D2445;
+  --bs-btn-hover-border-color: #0D2445;
+  --bs-btn-active-bg: #0A1C36;
+  --bs-btn-active-border-color: #0A1C36;
+}
+
+.btn-outline-dark {
+  --bs-btn-color: #12305B;
+  --bs-btn-border-color: #12305B;
+  --bs-btn-hover-bg: #12305B;
+  --bs-btn-hover-border-color: #12305B;
+}
+
+.btn-success {
+  --bs-btn-bg: #1F7A4D;
+  --bs-btn-border-color: #1F7A4D;
+  --bs-btn-hover-bg: #19653F;
+  --bs-btn-hover-border-color: #19653F;
+}
+
+/* bg-warning é amarelo puro: o texto por cima tem que ser tinta, nunca
+   branco. Regra do sistema, não preferência. */
+.bg-warning,
+.bg-warning * { color: #12305B; }
+
 * {
   margin: 0;
   padding: 0;
