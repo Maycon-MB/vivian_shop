@@ -220,6 +220,15 @@
   padding: 8px;
 }
 
+.identity button.go {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding-inline: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .identity .go {
   margin-top: auto;
   padding-top: 20px;

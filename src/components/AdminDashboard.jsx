@@ -134,7 +134,9 @@ const AdminDashboard = () => {
                 <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 px-md-4 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#2E9B96', borderColor: '#2E9B96' }}>
                     <CheckCircle size={18}/> <span className="d-none d-sm-inline">Lançar Venda</span>
                 </Button>
-                <Button onClick={() => window.open('/', '_blank')} variant="primary" className="px-3 px-md-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
+                {/* BASE_URL, não '/': em produção o site vive em
+                    /vivian_shop/ e a barra sozinha cai fora do projeto. */}
+                <Button onClick={() => window.open(import.meta.env.BASE_URL, '_blank', 'noopener')} variant="primary" className="px-3 px-md-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
                     <Eye size={18}/> <span className="d-none d-sm-inline">Ver Lojas</span>
                 </Button>
               </div>

@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import LandingPage from './components/LandingPage'
 import AdminDashboard from './components/AdminDashboard'
 import HowItWorksPage from './components/HowItWorksPage'
 import IdentityPage from './components/IdentityPage'
-
-/**
- * Views do protótipo.
- *
- * A proposta comercial saiu: o contrato já está fechado, e uma página de
- * venda no meio do projeto só confunde quem já comprou. O componente
- * continua no repositório (components/PresentationPage.jsx), fora do
- * roteamento.
- */
-const VIEWS = [
-  { id: 'landing', label: 'Loja', hash: '', className: 'landing' },
-  { id: 'admin', label: 'Painel', hash: '#painel', className: 'admin' },
-  { id: 'how', label: 'Como funciona', hash: '#como-funciona', className: 'how' },
-  { id: 'identity', label: 'Identidade', hash: '#identidade', className: 'ident' },
-]
-
-const resolveInitialView = () => {
-  const match = VIEWS.find((view) => view.hash && view.hash === window.location.hash)
-  return match ? match.id : 'landing'
-}
+import { VIEWS, viewForHash, hashForView } from './routing'
 
 function App() {
-  const [view, setView] = useState(resolveInitialView)
+  const [view, setView] = useState(() => viewForHash(window.location.hash))
 
+  /**
+   * Mantém a barra de endereço em sincronia com a view, sem empilhar
+   * entrada nova no histórico a cada troca — quem clica em "voltar" espera
+   * sair do site, não percorrer as quatro abas de trás para frente.
+   */
   useEffect(() => {
-    const hash = VIEWS.find((item) => item.id === view)?.hash
+    const hash = hashForView(view)
+    const target = window.location.pathname + window.location.search + hash
 
-    if (hash) {
-      window.location.hash = hash
-    } else {
-      window.history.replaceState('', document.title, window.location.pathname + window.location.search)
+    if (window.location.hash !== hash) {
+      window.history.replaceState('', document.title, target)
     }
   }, [view])
+
+  /**
+   * Endereço digitado, link colado ou botão de voltar do navegador trocam a
+   * view. Sem isto, colar /#painel na barra não mudava nada até recarregar.
+   */
+  const syncFromHash = useCallback(() => {
+    setView(viewForHash(window.location.hash))
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('hashchange', syncFromHash)
+    window.addEventListener('popstate', syncFromHash)
+    return () => {
+      window.removeEventListener('hashchange', syncFromHash)
+      window.removeEventListener('popstate', syncFromHash)
+    }
+  }, [syncFromHash])
 
   return (
     <div className="app-container">
