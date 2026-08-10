@@ -52,7 +52,9 @@ Preto puro e branco puro não entram. `ink` faz o trabalho do preto e mantém a 
 
 ### Tema escuro
 
-Claro = caderno. Escuro = lousa. Fundo vira verde-ardósia `#1B2723`, texto vira giz `#F2EFE4`, e `chalk` e `heart` clareiam para manter contraste sobre o novo fundo. O amarelo não muda; o texto sobre ele vira `ink`.
+O fundo escuro é a própria tinta da marca, escurecida: `#121A26`. `ink` e `paper` trocam de papel, e `chalk` e `heart` clareiam para manter contraste sobre o novo fundo. O amarelo não muda; o texto sobre ele vira `ink`.
+
+Uma primeira versão usava verde-ardósia `#1B2723`, na ideia de "claro = caderno, escuro = lousa". Foi descartada: em tela cheia o verde lia como fundo esverdeado sujo, e trazia uma cor que não existe em nenhuma das duas logos. Derivar o escuro da cor de marca mantém a página reconhecível nos dois temas.
 
 ### Tipografia
 

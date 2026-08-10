@@ -345,9 +345,9 @@ const IdentityPage = () => {
       <footer>
         <div className="wrap">
           <p>
-            Direção visual da loja · documento de trabalho, aberto a ajuste. A página muda de
-            aparência conforme o tema do seu celular ou computador — no modo escuro, o caderno
-            vira lousa.
+            Direção visual da loja · documento de trabalho, aberto a ajuste. A página acompanha
+            o tema do seu celular ou computador: no modo escuro, o papel escurece e a tinta
+            clareia, mantendo as mesmas cores de marca.
           </p>
         </div>
       </footer>
