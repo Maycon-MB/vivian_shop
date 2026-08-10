@@ -91,7 +91,7 @@ const InstagramStrategy = () => {
             borderRadius: '32px',
             padding: 'clamp(24px, 5vw, 60px) clamp(20px, 4vw, 40px)',
             minHeight: '400px',
-            border: '2px solid #9B89B3',
+            border: '2px solid #2E9B96',
             boxShadow: pTheme.shadows.card,
             display: 'flex',
             alignItems: 'center'

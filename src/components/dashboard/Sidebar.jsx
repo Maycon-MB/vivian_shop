@@ -34,14 +34,14 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
       <div className={`p-4 d-flex flex-column gap-4 shadow-sm sidebar-nav ${isOpen ? 'open' : ''}`} style={{ 
         width: '280px', 
         backgroundColor: '#FFFFFF', 
-        borderRight: '1px solid #9B89B333',
+        borderRight: '1px solid #2E9B9633',
         zIndex: 1050,
         transition: 'all 0.3s ease-in-out'
       }}>
         <div className="px-3 py-2 d-flex justify-content-between align-items-center">
           <div>
-            <h2 className="fw-black mb-0" style={{ fontFamily: 'Playfair Display', fontSize: '22px', color: '#2D2438' }}>
-              Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
+            <h2 className="fw-black mb-0" style={{ fontFamily: 'Fraunces', fontSize: '22px', color: '#12305B' }}>
+              Vivian<span style={{ color: '#2E9B96' }}> Quintella</span>
             </h2>
             <small className="text-muted text-uppercase ls-wide fw-bold" style={{ fontSize: '9px', letterSpacing: '1.5px' }}>
               Gestão Multi-Marca
@@ -61,10 +61,10 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
               style={{ 
                 cursor: 'pointer', 
                 fontWeight: activeTab === item.id ? '700' : '500',
-                backgroundColor: activeTab === item.id ? 'rgba(155, 137, 179, 0.08)' : 'transparent'
+                backgroundColor: activeTab === item.id ? 'rgba(46, 155, 150, 0.08)' : 'transparent'
               }}
             >
-              <span style={{ color: activeTab === item.id ? '#9B89B3' : '#A0AEC0' }}>
+              <span style={{ color: activeTab === item.id ? '#2E9B96' : '#A0AEC0' }}>
                 {item.icon}
               </span>
               <span className="small">{item.label}</span>

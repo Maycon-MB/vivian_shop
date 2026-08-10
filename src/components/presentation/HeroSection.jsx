@@ -61,7 +61,7 @@ const HeroSection = () => {
             margin: '0 auto 50px',
             fontWeight: '300'
           }}>
-            Vou unificar suas lojas de Papelaria e Atividades em um site exclusivo, livre das taxas do Elo7. Eu cuido da tecnologia para você vender com autonomia e aparência profissional.
+            Vou unificar suas lojas Feito para Você e Projeto Educar em um site exclusivo, livre das taxas do Elo7. Eu cuido da tecnologia para você vender com autonomia e aparência profissional.
           </p>
 
 

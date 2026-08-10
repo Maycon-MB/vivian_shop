@@ -25,7 +25,7 @@ const OrderTable = ({ orders, onSelectOrder }) => {
                 <div className="text-muted" style={{ fontSize: '11px' }}>{order.date}</div>
               </td>
               <td className="border-0 py-3">
-                <Badge bg={order.niche === 'Papelaria' ? 'primary-subtle' : 'success-subtle'} className={`text-${order.niche === 'Papelaria' ? 'primary' : 'success'} rounded-pill`}>
+                <Badge bg={order.niche === 'Feito para Você' ? 'primary-subtle' : 'success-subtle'} className={`text-${order.niche === 'Feito para Você' ? 'primary' : 'success'} rounded-pill`}>
                   {order.niche}
                 </Badge>
               </td>

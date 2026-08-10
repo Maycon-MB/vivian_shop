@@ -15,10 +15,13 @@ const ProductCard = ({ product, addToCart }) => {
       <Card className="premium-card bg-white border-0 h-100 rounded-5 overflow-hidden">
         <div className="product-image-container mb-0">
           <div className="position-absolute top-0 start-0 m-3 z-10">
-            <span className="glass-pill" style={{ 
-              backgroundColor: product.category === 'Papelaria' 
-                ? 'rgba(155, 137, 179, 0.6)' 
-                : 'rgba(184, 226, 212, 0.6)' 
+            {/* Verde-água identifica a linha de papelaria; amarelo, a
+                pedagógica. Ver spec de identidade visual. */}
+            <span className="glass-pill" style={{
+              backgroundColor: product.category === 'Feito para Você'
+                ? 'rgba(46, 155, 150, 0.85)'
+                : 'rgba(255, 212, 0, 0.9)',
+              color: product.category === 'Feito para Você' ? '#FFFFFF' : '#12305B'
             }}>
               {product.category}
             </span>

@@ -4,10 +4,10 @@ import { Plus, Edit, Trash2, ExternalLink } from 'lucide-react';
 
 const CatalogSection = ({ onNewProduct }) => {
   const products = [
-    { id: 1, name: "Planner Luxury 2026", category: "Papelaria", price: 189.90, stock: 45, sales: 128 },
-    { id: 2, name: "Kit Stickers Minimalistas", category: "Papelaria", price: 45.00, stock: 150, sales: 84 },
-    { id: 3, name: "Apostila Alfabetização Autista", category: "Ativ. Adaptadas", price: 97.00, stock: 'Digital', sales: 256 },
-    { id: 4, name: "Jogo das Emoções", category: "Ativ. Adaptadas", price: 58.00, stock: 20, sales: 92 },
+    { id: 1, name: "Planner Luxury 2026", category: "Feito para Você", price: 189.90, stock: 45, sales: 128 },
+    { id: 2, name: "Kit Stickers Minimalistas", category: "Feito para Você", price: 45.00, stock: 150, sales: 84 },
+    { id: 3, name: "Apostila Alfabetização Autista", category: "Projeto Educar", price: 97.00, stock: 'Digital', sales: 256 },
+    { id: 4, name: "Jogo das Emoções", category: "Projeto Educar", price: 58.00, stock: 20, sales: 92 },
   ];
 
   return (
@@ -50,13 +50,13 @@ const CatalogSection = ({ onNewProduct }) => {
               <td className="border-0 fw-bold">R$ {product.price.toFixed(2)}</td>
               <td className="border-0 text-muted">{product.stock}</td>
               <td className="border-0">
-                <span className="fw-bold text-primary" style={{ color: '#9B89B3' }}>{product.sales}</span> un.
+                <span className="fw-bold text-primary" style={{ color: '#2E9B96' }}>{product.sales}</span> un.
               </td>
               <td className="border-0 text-end">
                 <div className="d-flex justify-content-end gap-2">
                   <Button variant="link" className="p-0 text-muted hover:text-dark"><Edit size={18} /></Button>
                   <Button variant="link" className="p-0 text-muted hover:text-danger"><Trash2 size={18} /></Button>
-                  <Button variant="link" className="p-0 text-primary" style={{ color: '#9B89B3' }}><ExternalLink size={18} /></Button>
+                  <Button variant="link" className="p-0 text-primary" style={{ color: '#2E9B96' }}><ExternalLink size={18} /></Button>
                 </div>
               </td>
             </tr>

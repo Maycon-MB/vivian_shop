@@ -34,7 +34,7 @@ const CartModal = ({ show, onHide, cart, removeFromCart, cartTotal, onCheckout }
                       <Button 
                           onClick={onCheckout}
                           className="w-100 py-3 rounded-pill fw-bold" 
-                          style={{ backgroundColor: '#2D2438' }}
+                          style={{ backgroundColor: '#12305B' }}
                       >
                           Finalizar Compra
                       </Button>

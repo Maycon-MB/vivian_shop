@@ -15,25 +15,24 @@ const PRESENTATION_SECTIONS = [
 ]
 
 /**
- * A identidade é o que a cliente vê ao abrir o endereço. Os protótipos
- * anteriores (loja demo, painel e proposta comercial) continuam acessíveis
- * pelo endereço, mas não são oferecidos na entrada: ainda usam a paleta
- * antiga e mostrá-los junto da identidade nova passaria incoerência.
+ * A loja é o que abre no endereço raiz — é o que a cliente quer ver.
+ * A página de identidade visual fica disponível em #identidade, como
+ * referência de projeto.
  */
 const resolveInitialView = () => {
   const hash = window.location.hash
 
   if (PRESENTATION_SECTIONS.includes(hash)) return 'presentation'
   if (hash === '#admin') return 'admin'
-  if (hash === '#demo') return 'landing'
-  return 'identity'
+  if (hash === '#identidade') return 'identity'
+  return 'landing'
 }
 
 const VIEW_HASH = {
-  identity: '',
-  landing: '#demo',
+  landing: '',
   admin: '#admin',
   presentation: '#proposta',
+  identity: '#identidade',
 }
 
 function App() {
@@ -51,36 +50,33 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Navegação entre protótipos. Escondida na identidade, que é a página
-          que vai para a cliente. */}
-      {view !== 'identity' && (
-        <div className="view-switcher">
-          <button
-            onClick={() => setView('identity')}
-            className="switcher-btn ident"
-          >
-            Identidade
-          </button>
-          <button
-            onClick={() => setView('landing')}
-            className={`switcher-btn landing ${view === 'landing' ? 'active' : ''}`}
-          >
-            Loja Demo
-          </button>
-          <button
-            onClick={() => setView('admin')}
-            className={`switcher-btn admin ${view === 'admin' ? 'active' : ''}`}
-          >
-            Painel ADM
-          </button>
-          <button
-            onClick={() => setView('presentation')}
-            className={`switcher-btn presentation ${view === 'presentation' ? 'active' : ''}`}
-          >
-            Proposta
-          </button>
-        </div>
-      )}
+      {/* Navegação entre as views do protótipo. */}
+      <div className="view-switcher">
+        <button
+          onClick={() => setView('landing')}
+          className={`switcher-btn landing ${view === 'landing' ? 'active' : ''}`}
+        >
+          Loja Demo
+        </button>
+        <button
+          onClick={() => setView('admin')}
+          className={`switcher-btn admin ${view === 'admin' ? 'active' : ''}`}
+        >
+          Painel ADM
+        </button>
+        <button
+          onClick={() => setView('presentation')}
+          className={`switcher-btn presentation ${view === 'presentation' ? 'active' : ''}`}
+        >
+          Proposta
+        </button>
+        <button
+          onClick={() => setView('identity')}
+          className={`switcher-btn ident ${view === 'identity' ? 'active' : ''}`}
+        >
+          Identidade
+        </button>
+      </div>
 
       <main>
         {view === 'identity' && <IdentityPage />}

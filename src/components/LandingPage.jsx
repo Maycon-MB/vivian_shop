@@ -28,7 +28,7 @@ const products = [
   {
     id: 1,
     name: "Planner Luxury 2026",
-    category: "Papelaria",
+    category: "Feito para Você",
     price: 189.90,
     image: "https://images.unsplash.com/photo-1583521214690-73421a1829a9?q=80&w=800&auto=format&fit=crop",
     tag: "Best Seller",
@@ -37,7 +37,7 @@ const products = [
   {
     id: 2,
     name: "Kit Stickers Minimalistas",
-    category: "Papelaria",
+    category: "Feito para Você",
     price: 45.00,
     image: "https://images.unsplash.com/photo-1591522810850-58128c5fb089?q=80&w=800&auto=format&fit=crop",
     tag: "Novo",
@@ -46,7 +46,7 @@ const products = [
   {
     id: 3,
     name: "Bloco de Notas Floral",
-    category: "Papelaria",
+    category: "Feito para Você",
     price: 32.50,
     image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?q=80&w=800&auto=format&fit=crop",
     tag: "Artesanal",
@@ -55,7 +55,7 @@ const products = [
   {
     id: 4,
     name: "Apostila Alfabetização Autista",
-    category: "Atividades Adaptadas",
+    category: "Projeto Educar",
     price: 97.00,
     image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
     tag: "Educação",
@@ -64,7 +64,7 @@ const products = [
   {
     id: 5,
     name: "Kit Rotina Visual Imantada",
-    category: "Atividades Adaptadas",
+    category: "Projeto Educar",
     price: 125.00,
     image: `${import.meta.env.BASE_URL}rotina_visual_premium_1778703012017.png`,
     tag: "Inclusão",
@@ -73,7 +73,7 @@ const products = [
   {
     id: 6,
     name: "Jogo das Emoções",
-    category: "Atividades Adaptadas",
+    category: "Projeto Educar",
     price: 58.00,
     image: `${import.meta.env.BASE_URL}jogo_emocoes_premium_1778702950986.png`,
     tag: "Social",
@@ -104,22 +104,22 @@ const LandingPage = () => {
     : products.filter(p => p.category === activeCategory);
 
   return (
-    <div className="landing-page" style={{ backgroundColor: '#FAF9FB', minHeight: '100vh' }}>
+    <div className="landing-page" style={{ backgroundColor: '#FBFAF7', minHeight: '100vh' }}>
       {/* Navbar Premium */}
       <Navbar expand="lg" fixed="top" className="bg-white bg-opacity-90 backdrop-blur border-bottom py-3 shadow-sm" style={{ zIndex: 1050 }}>
         <Container>
-          <Navbar.Brand href="#" style={{ fontFamily: 'Playfair Display', fontSize: '24px', fontWeight: 900 }}>
-            Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
+          <Navbar.Brand href="#" style={{ fontFamily: 'Fraunces', fontSize: '24px', fontWeight: 900 }}>
+            Vivian<span style={{ color: "#2E9B96" }}> Quintella</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold py-4 py-lg-0" style={{ fontSize: '11px', letterSpacing: '2px' }}>
-              {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
+              {['Todas', 'Feito para Você', 'Projeto Educar'].map(cat => (
                 <button 
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-2 mb-2 mb-lg-0 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
-                    style={activeCategory === cat ? { backgroundColor: '#9B89B3' } : {}}
+                    style={activeCategory === cat ? { backgroundColor: '#2E9B96' } : {}}
                 >
                     {cat}
                 </button>
@@ -137,7 +137,7 @@ const LandingPage = () => {
                         exit={{ scale: 0 }}
                         className="position-absolute top-0 start-100 translate-middle"
                     >
-                        <Badge pill bg="primary" style={{ backgroundColor: '#9B89B3', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Badge pill bg="primary" style={{ backgroundColor: '#2E9B96', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {cart.length}
                         </Badge>
                     </motion.div>
@@ -150,7 +150,7 @@ const LandingPage = () => {
       </Navbar>
 
       {/* Hero Section */}
-      <section className="section-padding" style={{ paddingTop: '140px', background: 'radial-gradient(circle at top right, #F0EDF5, #FAF9FB)' }}>
+      <section className="section-padding" style={{ paddingTop: '140px', background: 'radial-gradient(circle at top right, #F0EDF5, #FBFAF7)' }}>
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="mb-5 mb-lg-0 text-center text-lg-start">
@@ -159,18 +159,18 @@ const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(155, 137, 179, 0.1)', color: '#9B89B3', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
-                    BOUTIQUE VIVIAN: PAPELARIA & INCLUSÃO
+                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#2E9B96', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
+                    PAPELARIA PERSONALIZADA & MATERIAL PEDAGÓGICO
                 </div>
-                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Playfair Display', color: '#2D2438', lineHeight: 1.1 }}>
+                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Fraunces', color: '#12305B', lineHeight: 1.1 }}>
                   Design que acolhe e <br/>
-                  <span style={{ color: '#9B89B3' }}>organiza</span> vidas.
+                  <span style={{ color: '#2E9B96' }}>organiza</span> vidas.
                 </h1>
                 <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: 'clamp(16px, 4vw, 20px)' }}>
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
                 </p>
                 <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
-                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#2D2438' }} onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}>
+                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#12305B' }} onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}>
                     Ver Coleções
                   </Button>
                   <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
@@ -220,14 +220,14 @@ const LandingPage = () => {
         <Container>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
             <div className="mb-4 mb-md-0">
-              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#9B89B3' }}>
-                <div style={{ width: '40px', height: '1px', backgroundColor: '#9B89B3' }}></div>
+              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#2E9B96' }}>
+                <div style={{ width: '40px', height: '1px', backgroundColor: '#2E9B96' }}></div>
                 <span className="small fw-black text-uppercase ls-widest">Coleções 2026</span>
               </div>
-              <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Playfair Display' }}>Nosso Catálogo</h2>
+              <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
             </div>
             <div className="d-flex flex-wrap justify-content-center gap-2">
-              {['Todas', 'Papelaria', 'Atividades Adaptadas'].map(cat => (
+              {['Todas', 'Feito para Você', 'Projeto Educar'].map(cat => (
                 <Button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
@@ -253,13 +253,13 @@ const LandingPage = () => {
       </section>
 
       {/* Trust & Authority Section */}
-      <section className="section-padding" style={{ backgroundColor: '#FAF9FB' }}>
+      <section className="section-padding" style={{ backgroundColor: '#FBFAF7' }}>
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Playfair Display' }}>Sua Compra é <span style={{ color: '#9B89B3' }}>Segura</span></h2>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Sua Compra é <span style={{ color: '#2E9B96' }}>Segura</span></h2>
               <p className="text-muted fs-5">
-                Sabemos que confiança se conquista. Por isso, a Boutique Vivian utiliza as tecnologias de pagamento mais seguras do Brasil, garantindo a proteção total dos seus dados.
+                Sabemos que confiança se conquista. Por isso, a loja utiliza as tecnologias de pagamento mais seguras do Brasil, garantindo a proteção total dos seus dados.
               </p>
             </Col>
           </Row>
@@ -273,14 +273,14 @@ const LandingPage = () => {
             </Col>
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#9B89B3" /></div>
+                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#2E9B96" /></div>
                 <h4 className="fw-black fs-5 mb-3">Suporte Real</h4>
                 <p className="small text-muted mb-0">Dúvidas sobre o material ou personalização? Vivian atende pessoalmente cada cliente no WhatsApp.</p>
               </div>
             </Col>
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#D4880A" /></div>
+                <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#C4436B" /></div>
                 <h4 className="fw-black fs-5 mb-3">Qualidade Artesanal</h4>
                 <p className="small text-muted mb-0">Cada peça é produzida com o carinho e o rigor técnico que sua família merece. Satisfação 100% garantida.</p>
               </div>
@@ -327,8 +327,8 @@ const LandingPage = () => {
       {/* Footer Boutique */}
       <footer className="py-5 bg-dark text-white">
         <Container className="py-5 text-center">
-          <div className="mb-4" style={{ fontFamily: 'Playfair Display', fontSize: '32px', fontWeight: 900 }}>
-            Projeto<span style={{ color: '#9B89B3' }}> Autônomo</span>
+          <div className="mb-4" style={{ fontFamily: 'Fraunces', fontSize: '32px', fontWeight: 900 }}>
+            Vivian<span style={{ color: "#2E9B96" }}> Quintella</span>
           </div>
           <p className="text-white-50 mb-5 mx-auto" style={{ maxWidth: '500px' }}>Transformando a rotina através do design inclusivo e da organização artesanal.</p>
           <div className="d-flex justify-content-center gap-4 mb-5">
@@ -337,7 +337,7 @@ const LandingPage = () => {
             <MessageCircle size={24} className="cursor-pointer text-white-50 hover:text-white" />
           </div>
           <div className="pt-5 border-top border-secondary text-white-50 small">
-            &copy; 2026 Vivian Boutique Store. Uma experiência Projeto Autônomo.
+            &copy; 2026 Feito para Você &middot; Projeto Educar
           </div>
         </Container>
       </footer>

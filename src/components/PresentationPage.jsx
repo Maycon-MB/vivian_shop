@@ -53,8 +53,8 @@ const PresentationPage = () => {
       fontFamily: fonts.body,
       overflowX: 'hidden',
       backgroundImage: `
-        radial-gradient(circle at 20% 0%,  rgba(155,137,179,0.12), transparent 50%),
-        radial-gradient(circle at 80% 60%, rgba(184,226,212,0.06), transparent 40%)
+        radial-gradient(circle at 20% 0%,  rgba(46,155,150,0.12), transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(255,212,0,0.06), transparent 40%)
       `,
       backgroundAttachment: 'fixed',
     }}>
@@ -89,7 +89,7 @@ const PresentationPage = () => {
         <AuthorityBridge />
       </div>
 
-      <div id="instagram" style={{ backgroundColor: '#FAF9F6', padding: '40px 0' }}>
+      <div id="instagram" style={{ backgroundColor: '#FBFAF7', padding: '40px 0' }}>
         <InstagramStrategy />
       </div>
 
@@ -97,7 +97,7 @@ const PresentationPage = () => {
         <ComparisonSection />
       </div>
 
-      <div id="logistica" style={{ backgroundColor: '#FAF9F6', padding: '40px 0' }}>
+      <div id="logistica" style={{ backgroundColor: '#FBFAF7', padding: '40px 0' }}>
         <LogisticsAutomation />
       </div>
 
@@ -105,7 +105,7 @@ const PresentationPage = () => {
         <PricingSection />
       </div>
 
-      <div id="faq" style={{ backgroundColor: '#FAF9F6', padding: '40px 0' }}>
+      <div id="faq" style={{ backgroundColor: '#FBFAF7', padding: '40px 0' }}>
         <FAQSection />
       </div>
 
