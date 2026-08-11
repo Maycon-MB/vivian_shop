@@ -629,6 +629,151 @@
   background: var(--rule);
 }
 
+/* ── Placar de acompanhamento ───────────────────────────────────────────── */
+.identity .placar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.identity .placar-item {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: grid;
+  gap: 4px;
+  background: var(--surface);
+  border-left-width: 4px;
+}
+
+.identity .placar-item.is-aguardando { border-left-color: var(--marker); }
+.identity .placar-item.is-aprovado { border-left-color: var(--chalk); }
+.identity .placar-item.is-pronto { border-left-color: var(--ink); }
+
+.identity .placar-n {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.identity .placar-rotulo {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-weight: 700;
+}
+
+/* ── Fases da construção ────────────────────────────────────────────────── */
+.identity .fase { margin-bottom: 34px; }
+.identity .fase:last-child { margin-bottom: 0; }
+
+.identity .fase-titulo {
+  font-family: var(--body);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .11em;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.identity .fase-titulo.is-pronto { background: var(--chalk); color: #FFFFFF; }
+.identity .fase-titulo.is-fazendo { background: var(--marker); color: var(--marker-ink); }
+.identity .fase-titulo.is-proximo { background: var(--surface); color: var(--ink); border: 1px solid var(--rule); }
+.identity .fase-titulo.is-depois { background: transparent; color: var(--ink-soft); border: 1px dashed var(--rule); }
+
+.identity .etapas { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+
+.identity .etapa {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule-faint);
+  align-items: start;
+}
+
+.identity .etapa:last-child { border-bottom: 0; }
+.identity .etapa > div { display: grid; gap: 3px; }
+.identity .etapa strong { font-size: 15.5px; }
+.identity .etapa span { font-size: 14px; color: var(--ink-soft); }
+
+.identity .etapa-nota {
+  font-size: 12px !important;
+  font-style: italic;
+}
+
+.identity .etapa-marca {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  margin-top: 5px;
+  border: 2px solid var(--rule);
+  background: var(--surface);
+}
+
+.identity .etapa.is-pronto .etapa-marca { background: var(--chalk); border-color: var(--chalk); }
+.identity .etapa.is-fazendo .etapa-marca { background: var(--marker); border-color: var(--marker); }
+.identity .etapa.is-depois .etapa-marca { border-style: dashed; }
+
+/* ── Decisões ───────────────────────────────────────────────────────────── */
+.identity .decisoes { display: grid; gap: 14px; }
+
+.identity .decisao {
+  border: 1px solid var(--rule);
+  border-left-width: 4px;
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 20px 22px;
+  display: grid;
+  gap: 9px;
+}
+
+.identity .decisao.is-aguardando { border-left-color: var(--marker); }
+.identity .decisao.is-proposto { border-left-color: var(--rule); }
+.identity .decisao.is-aprovado { border-left-color: var(--chalk); }
+.identity .decisao.is-revisto { border-left-color: var(--heart); }
+
+.identity .decisao-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.identity .decisao-topo h3 { font-size: 18px; }
+
+.identity .decisao-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.identity .decisao-texto { font-size: 15px; }
+
+.identity .decisao-porque,
+.identity .decisao-pergunta {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.identity .decisao-pergunta {
+  border-top: 1px solid var(--rule-faint);
+  padding-top: 11px;
+  margin-top: 2px;
+  color: var(--ink);
+}
+
 /* ── Rodapé ─────────────────────────────────────────────────────────────── */
 .identity footer { padding-block: 40px 96px; }
 .identity footer p { font-size: 13.5px; color: var(--ink-soft); }
