@@ -24,8 +24,19 @@ export const MINIMO_PERSONALIZADO = 10
 /** Dias úteis de produção, contados da confirmação do pagamento. */
 export const PRAZO_PRODUCAO = 5
 
-/** De onde saem os envios. O endereço completo mora no painel, não aqui. */
-export const CEP_ORIGEM = '[dado pessoal removido]'
+/**
+ * CEP de origem dos envios, usado para cotar frete.
+ *
+ * Fica em variável de ambiente e não no código: este repositório é
+ * público, e o endereço de origem é a casa da cliente. O endereço
+ * completo nunca entra aqui — mora no banco de dados do painel.
+ *
+ * Definir em `.env.local` (ver .env.example). O guard existe porque
+ * `import.meta.env` não existe quando os testes rodam no Node.
+ */
+const env = (typeof import.meta !== 'undefined' && import.meta.env) || {}
+
+export const CEP_ORIGEM = env.VITE_CEP_ORIGEM || ''
 
 /** Transportadoras que a cliente já usava no Elo7. */
 export const TRANSPORTADORAS = ['Correios', 'Jadlog']

@@ -83,7 +83,7 @@ export const DECISOES = [
   {
     id: 14,
     assunto: 'Seu endereço na etiqueta',
-    decisao: 'Os envios saem do seu endereço em Vila Valqueire, e ele aparece como remetente em toda etiqueta.',
+    decisao: 'Os envios saem do seu endereço, e ele aparece como remetente em toda etiqueta.',
     porque: 'Os Correios exigem remetente real em toda encomenda.',
     quem: 'maycon',
     data: '11/08/2026',

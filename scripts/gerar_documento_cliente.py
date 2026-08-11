@@ -146,7 +146,7 @@ PERGUNTAS = [
      "Serve para eu deixar a loja do tamanho certo e o custo mensal baixo."),
 
     ("Tudo bem o seu endereço aparecer na etiqueta?",
-     "Os Correios exigem remetente real, então o seu endereço em Vila Valqueire vai impresso em toda etiqueta que sair. Quem compra consegue ver.",
+     "Os Correios exigem remetente real, então o seu endereço vai impresso em toda etiqueta que sair. Quem compra consegue ver.",
      "Era assim no Elo7 também, mas prefiro que você saiba. Se quiser usar outro endereço, dá para trocar."),
 
     ("Falta alguma coisa no painel desde o primeiro dia?",
