@@ -1,64 +1,96 @@
 import React, { useEffect, useRef } from 'react';
 import '../styles/identity.css';
+import {
+  PERSONALIZADA,
+  PEDAGOGICA,
+  MINIMO_PERSONALIZADO,
+  PRAZO_PRODUCAO,
+  TRANSPORTADORAS,
+} from '../catalogo';
 
 /**
  * Como funciona a loja, explicado para a cliente.
  *
  * A dúvida real de quem sai do Elo7 não é "o site é bonito?" — é "quanto
- * trabalho sobra para mim?". Por isso cada passo do fluxo diz quem executa:
- * ela ou o sistema.
+ * trabalho sobra para mim?". Por isso cada passo diz quem executa: ela, o
+ * sistema, ou quem compra.
  *
- * Usa o mesmo sistema visual da identidade (identity.css).
+ * As duas linhas têm caminhos diferentes e precisam ser explicadas
+ * separadamente: a personalizada passa por produção e frete, a pedagógica
+ * é digital e não tem nenhum dos dois.
  */
 
-/** Quem executa cada passo. Define a cor e o rótulo do marcador. */
 const ACTOR = {
   system: { label: 'Automático', className: 'by-system' },
   vivian: { label: 'Você faz', className: 'by-vivian' },
   buyer: { label: 'Quem compra', className: 'by-buyer' },
 };
 
-const FLOW = [
+const FLOW_FISICO = [
   {
     actor: ACTOR.buyer,
-    title: 'A pessoa encontra a loja',
-    detail: 'Pelo link na bio do Instagram, por um post, ou pesquisando no Google. O endereço é seu — não divide espaço com concorrente, como acontece na vitrine do Elo7.',
+    title: 'A pessoa escolhe e vê as regras antes de pagar',
+    detail: `O mínimo de ${MINIMO_PERSONALIZADO} unidades e o prazo de ${PRAZO_PRODUCAO} dias úteis aparecem no próprio produto, antes do carrinho. Ninguém descobre isso depois de pagar.`,
   },
   {
     actor: ACTOR.buyer,
-    title: 'Escolhe o produto e paga',
-    detail: 'Pix ou cartão em até 12x, direto na página. O frete é calculado na hora pelo CEP dela, com o prazo real dos Correios.',
+    title: 'Coloca o CEP e escolhe a entrega',
+    detail: `${TRANSPORTADORAS.join(' e ')} aparecem lado a lado, com preço e prazo de cada um. Ela escolhe. O cálculo sai do seu CEP no Rio.`,
+  },
+  {
+    actor: ACTOR.buyer,
+    title: 'Paga por Pix ou cartão',
+    detail: 'Cartão pode ser parcelado. O Pix aprova na hora.',
   },
   {
     actor: ACTOR.system,
-    title: 'O pedido aparece no seu painel',
-    detail: 'No mesmo instante em que o pagamento é aprovado. Você recebe um aviso no WhatsApp. Não precisa ficar conferindo nada.',
-  },
-  {
-    actor: ACTOR.system,
-    title: 'O estoque baixa sozinho',
-    detail: 'Vendeu, o número cai. Quando chega ao fim, o produto sai do ar automaticamente — ninguém compra o que você não tem.',
+    title: 'O pedido cai no seu painel',
+    detail: 'No instante em que o pagamento aprova, com aviso no seu WhatsApp. O prazo de produção começa a contar sozinho.',
   },
   {
     actor: ACTOR.vivian,
-    title: 'Você embala e clica em "Gerar etiqueta"',
-    detail: 'A etiqueta sai pronta, com o endereço já preenchido e o código de rastreio. Só imprimir e colar. É o único passo que exige você.',
+    title: 'Você produz',
+    detail: `Os ${PRAZO_PRODUCAO} dias úteis combinados. O painel mostra a fila do que está em produção e para quando cada pedido está prometido.`,
+  },
+  {
+    actor: ACTOR.vivian,
+    title: 'Clica em "Gerar etiqueta"',
+    detail: 'Saem a etiqueta e a declaração de conteúdo juntas, já preenchidas com os itens, a quantidade e o valor. Você imprime, assina a declaração e leva. É o único passo que exige você.',
   },
   {
     actor: ACTOR.system,
     title: 'Quem comprou recebe o rastreio',
     detail: 'O código vai por e-mail e WhatsApp assim que a etiqueta é gerada. Acaba o "chegou meu pedido?" na sua caixa de mensagens.',
   },
+];
+
+const FLOW_DIGITAL = [
+  {
+    actor: ACTOR.buyer,
+    title: 'A pessoa compra o material',
+    detail: 'Sem mínimo de unidades, sem frete, sem escolher transportadora. É bem mais rápido que o pedido físico.',
+  },
   {
     actor: ACTOR.system,
-    title: 'O dinheiro cai na sua conta',
-    detail: 'Direto no seu Mercado Pago, sem passar por mim nem por ninguém. Pix cai na hora; cartão segue o prazo do Mercado Pago.',
+    title: 'O arquivo chega na hora',
+    detail: 'Assim que o pagamento aprova, o material vai para o e-mail e o WhatsApp cadastrados. Não passa por você.',
+  },
+  {
+    actor: ACTOR.system,
+    title: 'O nome de quem comprou vai no arquivo',
+    detail: 'Escrito pequeno em cada página. Não atrapalha quem pagou e desanima quem pensaria em repassar no grupo. Se você preferir sem, é só me dizer.',
+  },
+  {
+    actor: ACTOR.system,
+    title: 'Você só vê a venda no painel',
+    detail: 'Não tem o que fazer. Esse é o produto que vende enquanto você dorme.',
   },
 ];
 
 const ROUTINE = [
-  { label: 'Cadastrar um produto novo', time: 'uns 3 minutos', note: 'Foto, nome, preço, quantidade.' },
-  { label: 'Despachar um pedido', time: 'uns 2 minutos', note: 'Embalar, gerar etiqueta, imprimir.' },
+  { label: 'Cadastrar um produto novo', time: 'uns 3 minutos', note: 'Foto, nome, preço, medidas do pacote.' },
+  { label: 'Despachar um pedido', time: 'uns 2 minutos', note: 'Etiqueta e declaração saem juntas.' },
+  { label: 'Vender material pedagógico', time: 'nenhum', note: 'É tudo automático.' },
   { label: 'Responder uma dúvida', time: 'quando quiser', note: 'As mensagens ficam no painel, junto do pedido.' },
   { label: 'Conferir quanto vendeu', time: 'nenhum', note: 'O painel já mostra ao abrir.' },
 ];
@@ -67,12 +99,12 @@ const COSTS = [
   {
     name: 'Mercado Pago',
     value: 'por venda',
-    detail: 'Taxa cobrada só quando você vende. Cartão e Pix têm taxas diferentes, e o Mercado Pago publica os valores atualizados na conta dele.',
+    detail: 'Cobrado só quando você vende. Cartão e Pix têm taxas diferentes, publicadas na sua conta.',
   },
   {
-    name: 'Correios',
+    name: 'Correios e Jadlog',
     value: 'por envio',
-    detail: 'O frete é cobrado de quem compra no momento do pagamento. Não sai do seu bolso.',
+    detail: 'Cobrado de quem compra, no momento do pagamento. Não sai do seu bolso. Material pedagógico não tem frete nenhum.',
   },
   {
     name: 'Endereço do site',
@@ -82,15 +114,15 @@ const COSTS = [
   {
     name: 'Hospedagem',
     value: 'incluída',
-    detail: 'Está dentro da manutenção mensal enquanto o volume de vendas couber no plano atual. Se crescer muito, eu aviso antes de qualquer mudança.',
+    detail: 'Dentro da manutenção mensal enquanto o volume couber no plano atual. Se crescer muito, eu aviso antes de mudar qualquer coisa.',
   },
 ];
 
 const NOT_YET = [
-  'Emissão de nota fiscal — precisa ser configurada com seu contador.',
-  'Retirada em mãos e frete próprio para a sua cidade.',
+  'Nota fiscal automática — precisa ser configurada junto com seu contador.',
+  'Retirada em mãos e entrega própria no Rio.',
   'Cupom de desconto e programa de indicação.',
-  'Assinatura mensal de kits pedagógicos.',
+  'Área de cliente para rebaixar o material comprado.',
 ];
 
 const useHighlightOnScroll = () => {
@@ -127,10 +159,28 @@ const useHighlightOnScroll = () => {
   return rootRef;
 };
 
+const Flow = ({ steps }) => (
+  <ol className="flow">
+    {steps.map((step, i) => (
+      <li className="flow-step" key={step.title}>
+        <div className="flow-marker">
+          <span className="flow-n">{i + 1}</span>
+        </div>
+        <div className="flow-body">
+          <span className={`actor ${step.actor.className}`}>{step.actor.label}</span>
+          <h3>{step.title}</h3>
+          <p>{step.detail}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+);
+
 const HowItWorksPage = () => {
   const rootRef = useHighlightOnScroll();
 
-  const bySystem = FLOW.filter((step) => step.actor === ACTOR.system).length;
+  const manual = [...FLOW_FISICO, ...FLOW_DIGITAL].filter((step) => step.actor === ACTOR.vivian).length;
+  const total = FLOW_FISICO.length + FLOW_DIGITAL.length;
 
   return (
     <div className="identity" ref={rootRef}>
@@ -146,13 +196,30 @@ const HowItWorksPage = () => {
           <div className="sec-head">
             <p className="eyebrow">Resumo</p>
             <h2>
-              Dos {FLOW.length} passos de uma venda, {bySystem} acontecem{' '}
-              <span className="mark" data-mark>sem você</span>.
+              De {total} passos, só {manual} precisam de <span className="mark" data-mark>você</span>.
             </h2>
             <p>
-              Você embala e clica em um botão. O resto — cobrar, avisar, baixar estoque,
-              mandar o rastreio, depositar — é o sistema que faz.
+              Produzir a encomenda e clicar em um botão para imprimir a etiqueta. Cobrar, avisar,
+              entregar o material digital, mandar o rastreio e depositar o dinheiro é o sistema
+              que faz.
             </p>
+          </div>
+
+          <div className="grid-2">
+            <div className="card">
+              <h3>{PERSONALIZADA}</h3>
+              <p>
+                Feita sob encomenda. Mínimo de {MINIMO_PERSONALIZADO} unidades, {PRAZO_PRODUCAO} dias
+                úteis de produção depois do pagamento, e envio por {TRANSPORTADORAS.join(' ou ')}.
+              </p>
+            </div>
+            <div className="card">
+              <h3>{PEDAGOGICA}</h3>
+              <p>
+                Digital. Vai para o e-mail e o WhatsApp na hora em que o pagamento aprova. Sem
+                mínimo, sem frete, sem produção — e sem trabalho seu.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -160,24 +227,35 @@ const HowItWorksPage = () => {
       <section>
         <div className="wrap">
           <div className="sec-head">
-            <p className="eyebrow">O caminho de um pedido</p>
-            <h2>O que acontece quando alguém compra.</h2>
+            <p className="eyebrow">Caminho 1</p>
+            <h2>Quando alguém compra um personalizado.</h2>
           </div>
+          <Flow steps={FLOW_FISICO} />
+        </div>
+      </section>
 
-          <ol className="flow">
-            {FLOW.map((step, i) => (
-              <li className="flow-step" key={step.title}>
-                <div className="flow-marker">
-                  <span className="flow-n">{i + 1}</span>
-                </div>
-                <div className="flow-body">
-                  <span className={`actor ${step.actor.className}`}>{step.actor.label}</span>
-                  <h3>{step.title}</h3>
-                  <p>{step.detail}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+      <section>
+        <div className="wrap">
+          <div className="sec-head">
+            <p className="eyebrow">Caminho 2</p>
+            <h2>Quando alguém compra material pedagógico.</h2>
+          </div>
+          <Flow steps={FLOW_DIGITAL} />
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="sec-head">
+            <p className="eyebrow">Quando vêm juntos</p>
+            <h2>E se a pessoa comprar os <span className="mark" data-mark>dois</span>?</h2>
+            <p>
+              Acontece bastante, porque é o mesmo público. Nesse caso o pedido tem dois tempos: o
+              material pedagógico chega na hora, e a parte personalizada segue o prazo normal de
+              produção. O frete é cobrado só sobre o que vai pelos Correios ou Jadlog — o arquivo
+              digital não entra na conta do peso.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -187,8 +265,8 @@ const HowItWorksPage = () => {
             <p className="eyebrow">Seu dia a dia</p>
             <h2>Quanto tempo cada coisa <span className="mark" data-mark>toma</span>.</h2>
             <p>
-              O painel foi desenhado para você usar do celular, entre uma encomenda e outra.
-              Nada aqui precisa de computador.
+              O painel foi feito para você usar do celular, entre uma encomenda e outra. Nada aqui
+              precisa de computador.
             </p>
           </div>
 
@@ -219,8 +297,8 @@ const HowItWorksPage = () => {
             <p className="eyebrow">Custos</p>
             <h2>O que continua saindo do seu bolso.</h2>
             <p>
-              Sair do Elo7 acaba com a comissão sobre cada venda. Não acaba com taxa de
-              pagamento nem com frete — isso existe em qualquer loja.
+              Sair do Elo7 acaba com a comissão sobre cada venda. Não acaba com taxa de pagamento
+              nem com frete — isso existe em qualquer loja.
             </p>
           </div>
 
@@ -237,9 +315,9 @@ const HowItWorksPage = () => {
           </div>
 
           <div className="note">
-            <strong>Não coloco valores exatos aqui de propósito.</strong> Taxa de cartão e
-            preço de frete mudam, e número desatualizado numa página vira promessa quebrada.
-            Os valores do momento eu te passo por escrito antes de a loja entrar no ar.
+            <strong>Não coloco valores exatos aqui de propósito.</strong> Taxa de cartão e preço de
+            frete mudam, e número desatualizado numa página vira promessa quebrada. Os valores do
+            momento eu te passo por escrito antes de a loja entrar no ar.
           </div>
         </div>
       </section>
@@ -264,9 +342,9 @@ const HowItWorksPage = () => {
       <footer>
         <div className="wrap">
           <p>
-            Dúvida sobre qualquer passo aqui, me chama. Se alguma parte parecer complicada
-            demais para o seu dia a dia, é sinal de que eu preciso simplificar — não de que
-            você precisa aprender.
+            Dúvida sobre qualquer passo aqui, me chama. Se alguma parte parecer complicada demais
+            para o seu dia a dia, é sinal de que eu preciso simplificar — não de que você precisa
+            aprender.
           </p>
         </div>
       </footer>

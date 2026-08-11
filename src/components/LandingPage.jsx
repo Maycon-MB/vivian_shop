@@ -23,61 +23,67 @@ import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer 
 import ProductCard from './landing/ProductCard';
 import CartModal from './landing/CartModal';
 import CheckoutModal from './landing/CheckoutModal';
+import { PERSONALIZADA, PEDAGOGICA } from '../catalogo';
 
+/**
+ * Catálogo de exemplo, só para mostrar o formato das telas.
+ * Nada aqui é produto real: os itens, preços e fotos entram quando a
+ * cliente enviar o catálogo dela.
+ */
 const products = [
   {
     id: 1,
-    name: "Planner Luxury 2026",
-    category: "Feito para Você",
-    price: 189.90,
-    image: "https://images.unsplash.com/photo-1583521214690-73421a1829a9?q=80&w=800&auto=format&fit=crop",
-    tag: "Best Seller",
-    description: "Capa dura com toque soft, papel 120g que não vaza tinta."
+    name: "Caderno personalizado",
+    category: PERSONALIZADA,
+    price: 32.00,
+    image: "",
+    tag: "Sob encomenda",
+    description: "Capa com o nome de quem vai usar. Vendido em pacotes de 10."
   },
   {
     id: 2,
-    name: "Kit Stickers Minimalistas",
-    category: "Feito para Você",
-    price: 45.00,
-    image: "https://images.unsplash.com/photo-1591522810850-58128c5fb089?q=80&w=800&auto=format&fit=crop",
-    tag: "Novo",
-    description: "Vinil fosco de alta qualidade para seu bullet journal."
+    name: "Cartela de adesivos escolares",
+    category: PERSONALIZADA,
+    price: 18.00,
+    image: "",
+    tag: "Sob encomenda",
+    description: "Etiquetas para material escolar, com nome e turma."
   },
   {
     id: 3,
-    name: "Bloco de Notas Floral",
-    category: "Feito para Você",
-    price: 32.50,
-    image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?q=80&w=800&auto=format&fit=crop",
-    tag: "Artesanal",
-    description: "Papel pólen amarelado, ideal para desenhos e escrita fluida."
+    name: "Bloco de anotações",
+    category: PERSONALIZADA,
+    price: 24.00,
+    image: "",
+    tag: "Sob encomenda",
+    description: "Bloco personalizado, ideal para lembrancinha."
   },
   {
     id: 4,
-    name: "Apostila Alfabetização Autista",
-    category: "Projeto Educar",
-    price: 97.00,
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
-    tag: "Educação",
-    description: "Material estruturado com suporte visual para crianças neurodivergentes."
+    name: "Apostila de alfabetização adaptada",
+    category: PEDAGOGICA,
+    price: 47.00,
+    image: "",
+    tag: "Digital",
+    description: "Material estruturado com apoio visual, para imprimir em casa."
   },
   {
     id: 5,
-    name: "Kit Rotina Visual Imantada",
-    category: "Projeto Educar",
-    price: 125.00,
+    name: "Kit rotina visual",
+    category: PEDAGOGICA,
+    price: 39.00,
     image: `${import.meta.env.BASE_URL}rotina_visual_premium_1778703012017.png`,
-    tag: "Inclusão",
-    description: "Quadro de rotina magnético para previsibilidade diária."
+    tag: "Digital",
+    description: "Quadro de rotina para montar e usar no dia a dia."
   },
   {
     id: 6,
-    name: "Jogo das Emoções",
-    category: "Projeto Educar",
-    price: 58.00,
+    name: "Jogo das emoções",
+    category: PEDAGOGICA,
+    price: 29.00,
     image: `${import.meta.env.BASE_URL}jogo_emocoes_premium_1778702950986.png`,
-    tag: "Social",
-    description: "Atividade lúdica para identificação de sentimentos."
+    tag: "Digital",
+    description: "Atividade lúdica para identificar sentimentos."
   }
 ];
 
@@ -116,12 +122,12 @@ const LandingPage = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             style={{ fontFamily: 'Fraunces', fontSize: '24px', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
           >
-            Vivian<span style={{ color: "#2E9B96" }}> Quintella</span>
+            Feito para você!<span style={{ color: "#2E9B96" }}> Personalizados</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold py-4 py-lg-0" style={{ fontSize: '11px', letterSpacing: '2px' }}>
-              {['Todas', 'Feito para Você', 'Projeto Educar'].map(cat => (
+              {['Todas', PERSONALIZADA, PEDAGOGICA].map(cat => (
                 <button 
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
@@ -167,7 +173,7 @@ const LandingPage = () => {
                 transition={{ duration: 0.8 }}
               >
                 <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#2E9B96', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
-                    PAPELARIA PERSONALIZADA & MATERIAL PEDAGÓGICO
+                    PERSONALIZADOS SOB ENCOMENDA & MATERIAL PEDAGÓGICO DIGITAL
                 </div>
                 <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Fraunces', color: '#12305B', lineHeight: 1.1 }}>
                   Design que acolhe e <br/>
@@ -185,16 +191,17 @@ const LandingPage = () => {
                   </Button>
                 </div>
                 
-                <div className="mt-5 pt-4 border-top border-light d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-lg-start gap-4">
-                    <div className="d-flex -space-x-2">
-                        {[1,2,3].map(i => (
-                            <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} className="rounded-circle border border-2 border-white shadow-sm" style={{ width: '40px', height: '40px', marginLeft: i > 1 ? '-12px' : '0' }} alt="Avatar" />
-                        ))}
-                    </div>
-                    <div className="small text-center text-sm-start">
-                        <div className="fw-black text-dark">+2.400 Pedidos Entregues</div>
-                        <div className="text-muted">Avaliação 4.9/5 nas redes sociais</div>
-                    </div>
+                {/* Prova social entra quando a cliente passar os números
+                    reais dela do Elo7. Nada inventado aqui: número de
+                    pedido falso numa loja de material inclusivo custa caro
+                    se alguém confere. */}
+                <div className="mt-5 pt-4 border-top border-light d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-lg-start gap-3 small">
+                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
+                        <Truck size={18} /> Envio para todo o Brasil
+                    </span>
+                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
+                        <MessageCircle size={18} /> Atendimento direto com a Vivian
+                    </span>
                 </div>
               </motion.div>
             </Col>
@@ -208,12 +215,16 @@ const LandingPage = () => {
                 <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
                   <img src={`${import.meta.env.BASE_URL}hero_boutique_vivian_1778705287616.png`} alt="Hero" className="w-100" />
                 </div>
+                {/* Espaço reservado para um depoimento real. Inventar a fala
+                    de uma mãe atípica para vender material de inclusão é o
+                    tipo de coisa que destrói a confiança que a loja depende
+                    de construir. */}
                 <div className="position-absolute bottom-0 start-0 m-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '280px' }}>
-                  <div className="d-flex gap-1 mb-2 text-warning">
-                    {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                  <div className="d-flex gap-1 mb-2" style={{ color: '#A8C6E8' }}>
+                    {[1,2,3,4,5].map(s => <Star key={s} size={12} />)}
                   </div>
-                  <p className="small fw-bold mb-1">"O material adaptado mudou a forma como meu filho estuda. Gratidão pelo trabalho!"</p>
-                  <span className="small text-muted">- Marina, Mãe Atípica</span>
+                  <p className="small fw-bold mb-1" style={{ color: '#12305B' }}>Aqui entra um depoimento de verdade de uma cliente sua.</p>
+                  <span className="small text-muted">Me manda um print e eu coloco</span>
                 </div>
               </motion.div>
             </Col>
@@ -234,7 +245,7 @@ const LandingPage = () => {
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
             </div>
             <div className="d-flex flex-wrap justify-content-center gap-2">
-              {['Todas', 'Feito para Você', 'Projeto Educar'].map(cat => (
+              {['Todas', PERSONALIZADA, PEDAGOGICA].map(cat => (
                 <Button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
@@ -335,7 +346,7 @@ const LandingPage = () => {
       <footer className="py-5 bg-dark text-white">
         <Container className="py-5 text-center">
           <div className="mb-4" style={{ fontFamily: 'Fraunces', fontSize: '32px', fontWeight: 900 }}>
-            Vivian<span style={{ color: "#2E9B96" }}> Quintella</span>
+            Feito para você!<span style={{ color: "#2E9B96" }}> Personalizados</span>
           </div>
           <p className="text-white-50 mb-5 mx-auto" style={{ maxWidth: '500px' }}>Transformando a rotina através do design inclusivo e da organização artesanal.</p>
           <div className="d-flex justify-content-center gap-4 mb-5">
@@ -344,7 +355,7 @@ const LandingPage = () => {
             <MessageCircle size={24} className="cursor-pointer text-white-50 hover:text-white" />
           </div>
           <div className="pt-5 border-top border-secondary text-white-50 small">
-            &copy; 2026 Feito para Você &middot; Projeto Educar
+            &copy; 2026 Feito para você! Personalizados &middot; Rio de Janeiro, RJ
           </div>
         </Container>
       </footer>
