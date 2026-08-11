@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Row, Col, Form, Button } from 'react-bootstrap';
 import { ShieldCheck } from 'lucide-react';
+import { subtotalItem } from '../../catalogo';
 
 const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
   const [step, setStep] = React.useState('checkout'); // 'checkout', 'processing', 'success'
@@ -116,12 +117,14 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
                       <h5 className="fw-bold mb-4">Resumo do Pedido</h5>
                       <div className="d-flex flex-column gap-3 mb-4">
                           {cart.map(item => (
-                              <div key={item.cartId} className="d-flex justify-content-between align-items-center small">
-                                  <div className="d-flex align-items-center gap-2">
-                                      <img src={item.image} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '8px' }} />
-                                      <span className="text-muted">{item.name}</span>
-                                  </div>
-                                  <span className="fw-bold text-dark">R$ {item.price.toFixed(2)}</span>
+                              <div key={item.id} className="d-flex justify-content-between align-items-center gap-2 small">
+                                  <span className="text-muted">
+                                      {item.quantidade > 1 && <strong>{item.quantidade}x </strong>}
+                                      {item.name}
+                                  </span>
+                                  <span className="fw-bold text-nowrap" style={{ color: '#12305B', fontVariantNumeric: 'tabular-nums' }}>
+                                      R$ {subtotalItem(item).toFixed(2).replace('.', ',')}
+                                  </span>
                               </div>
                           ))}
                       </div>

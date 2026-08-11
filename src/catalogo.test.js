@@ -6,7 +6,17 @@
 
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { PERSONALIZADA, PEDAGOGICA, isDigital, podeAdicionarAoCarrinho } from './catalogo.js'
+import {
+  PERSONALIZADA,
+  PEDAGOGICA,
+  MINIMO_PERSONALIZADO,
+  isDigital,
+  podeAdicionarAoCarrinho,
+  quantidadeMinima,
+  permiteVariasUnidades,
+  subtotalItem,
+  totalCarrinho,
+} from './catalogo.js'
 
 const fisico = { id: 1, name: 'Caderno personalizado', category: PERSONALIZADA }
 const outroFisico = { id: 2, name: 'Cartela de adesivos', category: PERSONALIZADA }
@@ -59,4 +69,43 @@ test('bloqueio sempre vem com motivo legível', () => {
   const resultado = podeAdicionarAoCarrinho([digital], fisico)
   assert.equal(typeof resultado.motivo, 'string')
   assert.ok(resultado.motivo.length > 20, 'motivo curto demais para explicar')
+})
+
+test('personalizado começa no mínimo de 10; digital, em 1', () => {
+  assert.equal(quantidadeMinima(PERSONALIZADA), MINIMO_PERSONALIZADO)
+  assert.equal(quantidadeMinima(PERSONALIZADA), 10)
+  assert.equal(quantidadeMinima(PEDAGOGICA), 1)
+})
+
+test('não dá para comprar 1 caneca — o mínimo é 10', () => {
+  const caneca = { ...fisico, name: 'Caneca personalizada' }
+  assert.ok(quantidadeMinima(caneca.category) > 1, 'produto físico não pode ter mínimo 1')
+  assert.equal(quantidadeMinima(caneca.category), 10)
+})
+
+test('só o produto físico aceita várias unidades', () => {
+  assert.equal(permiteVariasUnidades(PERSONALIZADA), true)
+  assert.equal(permiteVariasUnidades(PEDAGOGICA), false)
+})
+
+test('subtotal multiplica preço pela quantidade', () => {
+  assert.equal(subtotalItem({ price: 32, quantidade: 10 }), 320)
+  assert.equal(subtotalItem({ price: 47, quantidade: 1 }), 47)
+})
+
+test('o total soma os subtotais, não os preços unitários', () => {
+  const carrinho = [
+    { price: 32, quantidade: 10 },
+    { price: 18, quantidade: 10 },
+  ]
+  assert.equal(totalCarrinho(carrinho), 500)
+})
+
+test('carrinho vazio soma zero', () => {
+  assert.equal(totalCarrinho([]), 0)
+})
+
+test('centavos não acumulam erro de ponto flutuante visível', () => {
+  const total = totalCarrinho([{ price: 18.90, quantidade: 10 }])
+  assert.equal(total.toFixed(2), '189.00')
 })

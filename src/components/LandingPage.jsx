@@ -24,7 +24,14 @@ import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer 
 import ProductCard from './landing/ProductCard';
 import CartModal from './landing/CartModal';
 import CheckoutModal from './landing/CheckoutModal';
-import { PERSONALIZADA, PEDAGOGICA, podeAdicionarAoCarrinho } from '../catalogo';
+import {
+  PERSONALIZADA,
+  PEDAGOGICA,
+  podeAdicionarAoCarrinho,
+  quantidadeMinima,
+  permiteVariasUnidades,
+  totalCarrinho,
+} from '../catalogo';
 
 /**
  * Catálogo de exemplo, só para mostrar o formato das telas.
@@ -97,6 +104,11 @@ const LandingPage = () => {
   /** null quando não há aviso; { tipo, texto } quando há. */
   const [aviso, setAviso] = useState(null);
 
+  /**
+   * O carrinho guarda uma linha por produto, com quantidade — e não um
+   * item repetido por clique. Com mínimo de 10 unidades, repetir linha
+   * deixaria o carrinho ilegível e a conta errada.
+   */
   const addToCart = (product) => {
     const permissao = podeAdicionarAoCarrinho(cart, product);
 
@@ -105,15 +117,43 @@ const LandingPage = () => {
       return;
     }
 
-    setCart([...cart, { ...product, cartId: `${product.id}-${cart.length}-${Date.now()}` }]);
-    setAviso({ tipo: 'ok', texto: 'Produto adicionado ao carrinho' });
+    const existente = cart.find((item) => item.id === product.id);
+
+    if (existente) {
+      if (!permiteVariasUnidades(product.category)) {
+        setAviso({ tipo: 'bloqueio', texto: 'Este material já está no carrinho. É um arquivo digital, uma unidade basta.' });
+        return;
+      }
+
+      alterarQuantidade(product.id, existente.quantidade + 1);
+      return;
+    }
+
+    const minimo = quantidadeMinima(product.category);
+    setCart([...cart, { ...product, quantidade: minimo }]);
+    setAviso({
+      tipo: 'ok',
+      texto: minimo > 1
+        ? `${minimo} unidades adicionadas — é o mínimo deste produto`
+        : 'Material adicionado ao carrinho',
+    });
   };
 
-  const removeFromCart = (cartId) => {
-    setCart(cart.filter(item => item.cartId !== cartId));
+  /** Respeita o mínimo do produto: abaixo dele, a linha sai do carrinho. */
+  const alterarQuantidade = (productId, novaQuantidade) => {
+    setCart((atual) => atual.flatMap((item) => {
+      if (item.id !== productId) return [item];
+      if (novaQuantidade < quantidadeMinima(item.category)) return [];
+      return [{ ...item, quantidade: novaQuantidade }];
+    }));
   };
 
-  const cartTotal = cart.reduce((acc, curr) => acc + curr.price, 0);
+  const removeFromCart = (productId) => {
+    setCart(cart.filter((item) => item.id !== productId));
+  };
+
+  const cartTotal = totalCarrinho(cart);
+  const cartCount = cart.reduce((soma, item) => soma + item.quantidade, 0);
 
   const filteredProducts = activeCategory === 'Todas' 
     ? products 
@@ -161,7 +201,7 @@ const LandingPage = () => {
                         className="position-absolute top-0 start-100 translate-middle"
                     >
                         <Badge pill bg="primary" style={{ backgroundColor: '#2E9B96', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {cart.length}
+                            {cartCount}
                         </Badge>
                     </motion.div>
                   )}
@@ -326,9 +366,11 @@ const LandingPage = () => {
       <CartModal 
         show={showCart} 
         onHide={() => setShowCart(false)} 
-        cart={cart} 
-        removeFromCart={removeFromCart} 
-        cartTotal={cartTotal} 
+        cart={cart}
+        removeFromCart={removeFromCart}
+        onChangeQuantity={alterarQuantidade}
+        cartTotal={cartTotal}
+        cartCount={cartCount}
         onCheckout={() => { setShowCart(false); setShowCheckout(true); }}
       />
 
