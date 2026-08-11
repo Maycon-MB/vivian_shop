@@ -22,7 +22,7 @@ O orçamento é pequeno para um e-commerce do zero com pagamento, frete, produto
 | Linha digital | Papelaria pedagógica — arquivo, entrega imediata |
 | Mistura | **Proibida.** Uma compra é de uma linha só |
 | Transportadoras | Correios e Jadlog |
-| Origem | CEP [dado pessoal removido], Rio de Janeiro/RJ |
+| Origem | Rio de Janeiro/RJ. O CEP fica em variável de ambiente, não no código — o repositório é público e o endereço de origem é a casa da cliente |
 
 A proibição de misturar veio da cliente por um motivo correto: a declaração de conteúdo precisa bater com o que está dentro da caixa, e um arquivo digital declarado é um item que não está na embalagem.
 
@@ -135,7 +135,7 @@ O carimbo é gerado no download, não no upload: um arquivo por produto no Stora
 
 ### Frete e postagem
 
-Cotação em tempo real do Melhor Envio, do CEP [dado pessoal removido] para o CEP do comprador, com Correios e Jadlog lado a lado.
+Cotação em tempo real do Melhor Envio, do CEP de origem para o CEP do comprador, com Correios e Jadlog lado a lado.
 
 As medidas são cadastradas **por pacote fechado de 10**, não por peça — como o mínimo é 10, é o que a cliente realmente despacha. Ela pesa uma vez e não mexe mais.
 
