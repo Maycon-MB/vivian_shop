@@ -1,9 +1,19 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { Plus, ShoppingCart, Star } from 'lucide-react';
+import { Plus, ShoppingCart, Download, Package } from 'lucide-react';
+import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../../catalogo';
 
+/**
+ * Card de produto.
+ *
+ * As duas linhas se comportam de formas diferentes e o card precisa dizer
+ * isso antes da compra: a personalizada é feita sob encomenda, com mínimo
+ * de peças e prazo de produção; a pedagógica é digital e chega na hora.
+ */
 const ProductCard = ({ product, addToCart }) => {
+  const isPersonalizada = product.category === PERSONALIZADA;
+
   return (
     <motion.div
       layout
@@ -12,53 +22,81 @@ const ProductCard = ({ product, addToCart }) => {
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="premium-card bg-white border-0 h-100 rounded-5 overflow-hidden">
+      <Card className="premium-card bg-white border-0 h-100 rounded-4 overflow-hidden">
         <div className="product-image-container mb-0">
           <div className="position-absolute top-0 start-0 m-3 z-10">
-            {/* Verde-água identifica a linha de papelaria; amarelo, a
+            {/* Verde-água identifica a linha personalizada; amarelo, a
                 pedagógica. Ver spec de identidade visual. */}
             <span className="glass-pill" style={{
-              backgroundColor: product.category === 'Feito para Você'
+              backgroundColor: isPersonalizada
                 ? 'rgba(46, 155, 150, 0.85)'
                 : 'rgba(255, 212, 0, 0.9)',
-              color: product.category === 'Feito para Você' ? '#FFFFFF' : '#12305B'
+              color: isPersonalizada ? '#FFFFFF' : '#12305B'
             }}>
               {product.category}
             </span>
           </div>
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="w-100" 
-            style={{ height: '300px', objectFit: 'cover' }} 
-          />
-          <div className="hover-overlay position-absolute inset-0 bg-dark bg-opacity-20 d-flex align-items-center justify-content-center opacity-0 hover:opacity-100 transition-opacity">
-            <Button 
-              variant="light" 
-              className="rounded-circle p-3 shadow-lg"
-              onClick={() => addToCart(product)}
+
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-100"
+              style={{ height: '300px', objectFit: 'cover' }}
+            />
+          ) : (
+            /* Sem foto de banco de imagem: produto que a cliente ainda não
+               fotografou fica marcado como espaço reservado, não disfarçado
+               com a foto de outra pessoa. */
+            <div
+              className="w-100 d-flex flex-column align-items-center justify-content-center gap-2"
+              style={{
+                height: '300px',
+                backgroundColor: isPersonalizada ? 'rgba(46, 155, 150, 0.08)' : 'rgba(255, 212, 0, 0.12)',
+                color: '#6B7C8F',
+              }}
             >
-              <Plus size={24} />
-            </Button>
-          </div>
+              <Package size={28} />
+              <span className="small fw-bold text-uppercase" style={{ fontSize: '10px', letterSpacing: '1px' }}>
+                Aqui entra sua foto
+              </span>
+            </div>
+          )}
         </div>
-        <Card.Body className="p-4">
-          <div className="d-flex justify-content-between align-items-start mb-2">
+
+        <Card.Body className="p-4 d-flex flex-column">
+          <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
             <h3 className="fs-5 fw-black mb-0">{product.name}</h3>
-            <span className="fw-black text-dark fs-5">R$ {product.price.toFixed(2)}</span>
+            <span className="fw-black fs-5 text-nowrap" style={{ color: '#12305B' }}>
+              R$ {product.price.toFixed(2)}
+            </span>
           </div>
-          <p className="text-muted small mb-4">{product.description}</p>
-          <div className="d-flex gap-1 text-warning mb-4">
-            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
-            <span className="text-muted small ms-2">(Avaliações)</span>
+
+          <p className="text-muted small mb-3">{product.description}</p>
+
+          {/* A regra de venda vem antes do botão: ninguém deve descobrir o
+              mínimo de 10 peças só no carrinho. */}
+          <div className="d-flex align-items-center gap-2 small fw-bold mb-4" style={{ color: '#12305B' }}>
+            {isPersonalizada ? (
+              <>
+                <Package size={15} />
+                <span>Mínimo {MINIMO_PERSONALIZADO} unidades · pronto em {PRAZO_PRODUCAO} dias úteis</span>
+              </>
+            ) : (
+              <>
+                <Download size={15} />
+                <span>Arquivo digital · chega na hora do pagamento</span>
+              </>
+            )}
           </div>
-          <Button 
+
+          <Button
             onClick={() => addToCart(product)}
-            variant="outline-dark" 
-            className="w-100 py-3 rounded-pill fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2" 
+            variant="outline-dark"
+            className="w-100 py-3 rounded-pill fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2 mt-auto"
             style={{ fontSize: '11px', letterSpacing: '1px' }}
           >
-            <ShoppingCart size={16}/> Comprar
+            <ShoppingCart size={16} /> Comprar
           </Button>
         </Card.Body>
       </Card>

@@ -33,10 +33,15 @@ const AdminDashboard = () => {
   const [approving, setApproving] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  /**
+   * Pedidos de exemplo, para mostrar como a tela se comporta. Os status
+   * são os reais das duas linhas: a personalizada passa por produção, a
+   * pedagógica é entregue na hora do pagamento.
+   */
   const [orders, setOrders] = useState([
-    { id: '#4829', customer: 'Mariana Silva', items: 'Apostila Alfabetização + 2 Stickers', total: 187.00, status: 'Pronto p/ Envio', date: 'Hoje, 14:20', niche: 'Projeto Educar' },
-    { id: '#4828', customer: 'João Pedro', items: 'Planner Luxury 2026', total: 189.90, status: 'Em Produção', date: 'Hoje, 11:05', niche: 'Feito para Você' },
-    { id: '#4827', customer: 'Clínica Crescer', items: '10x Jogo das Emoções', total: 580.00, status: 'Pagamento Confirmado', date: 'Ontem, 19:30', niche: 'Projeto Educar' },
+    { id: '#0003', customer: 'Exemplo — pedido digital', items: 'Apostila de alfabetização adaptada', total: 47.00, status: 'Entregue por e-mail', date: 'Hoje, 14:20', niche: 'Papelaria pedagógica' },
+    { id: '#0002', customer: 'Exemplo — pedido personalizado', items: '10x Caderno personalizado', total: 320.00, status: 'Em produção', date: 'Hoje, 11:05', niche: 'Papelaria personalizada' },
+    { id: '#0001', customer: 'Exemplo — pronto para envio', items: '10x Cartela de adesivos', total: 180.00, status: 'Pronto para envio', date: 'Ontem, 19:30', niche: 'Papelaria personalizada' },
   ]);
 
   const triggerToast = (msg) => {
@@ -61,7 +66,7 @@ const AdminDashboard = () => {
         total: 150.00,
         status: 'Pago',
         date: 'Agora',
-        niche: 'Feito para Você'
+        niche: 'Papelaria personalizada'
     };
     setOrders([newOrder, ...orders]);
     setShowManualSale(false);
@@ -79,7 +84,7 @@ const AdminDashboard = () => {
     yAxis: { type: 'value', splitLine: { lineStyle: { color: '#f5f5f5' } } },
     series: [
       {
-        name: 'Feito para Você (R$)',
+        name: 'Personalizada (R$)',
         data: [5200, 6320, 5010, 7340, 8900, 9300],
         type: 'line',
         smooth: true,
@@ -88,7 +93,7 @@ const AdminDashboard = () => {
         areaStyle: { color: 'rgba(46, 155, 150, 0.1)' }
       },
       {
-        name: 'Projeto Educar (R$)',
+        name: 'Pedagógica (R$)',
         data: [3000, 3000, 4000, 4000, 4000, 4000],
         type: 'line',
         smooth: true,
@@ -99,11 +104,16 @@ const AdminDashboard = () => {
     ]
   };
 
+  /**
+   * Zerado de propósito. Loja nova começa em zero, e número inventado no
+   * painel da própria dona não ajuda ninguém a decidir nada — só cria
+   * expectativa que a primeira semana real desmente.
+   */
   const stats = [
-    { label: 'Faturamento Total', value: 'R$ 13.300', grow: '+15%', icon: <ShoppingBag color="#2E9B96"/> },
-    { label: 'Novos Clientes', value: '184', grow: '+8%', icon: <Users color="#FFD400"/> },
-    { label: 'Pedidos a Enviar', value: '12', grow: 'Imprimir Etiquetas', icon: <Package color="#FFD166"/> },
-    { label: 'Economia em Taxas', value: 'R$ 2.394', grow: 'vs Elo7', icon: <TrendingUp color="#2E9B96"/> },
+    { label: 'Vendas do mês', value: 'R$ 0,00', grow: 'primeiro mês', icon: <ShoppingBag color="#2E9B96"/> },
+    { label: 'Clientes', value: '0', grow: 'começa agora', icon: <Users color="#FFD400"/> },
+    { label: 'Pedidos a enviar', value: '0', grow: 'nada na fila', icon: <Package color="#C4436B"/> },
+    { label: 'Economia em taxas', value: 'R$ 0,00', grow: 'contra o Elo7', icon: <TrendingUp color="#2E9B96"/> },
   ];
 
   return (
@@ -124,7 +134,7 @@ const AdminDashboard = () => {
                 </Button>
                 <div>
                   <h1 className="fw-black fs-2 mb-1" style={{ fontFamily: 'Fraunces' }}>Bem-vinda, Vivian</h1>
-                  <p className="text-muted mb-0 small">Gestão integrada: Feito para Você + Projeto Educar.</p>
+                  <p className="text-muted mb-0 small">Papelaria personalizada e material pedagógico, no mesmo lugar.</p>
                 </div>
               </div>
               <div className="d-flex flex-wrap gap-2">
@@ -156,8 +166,8 @@ const AdminDashboard = () => {
                   <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
                     <h3 className="fw-black fs-4 mb-0">Receita por linha</h3>
                     <div className="d-flex gap-2 text-muted small fw-bold">
-                        <span className="d-flex align-items-center gap-1"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#2E9B96' }}></div> Feito para Você</span>
-                        <span className="d-flex align-items-center gap-1 ms-3"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#FFD400' }}></div> Projeto Educar</span>
+                        <span className="d-flex align-items-center gap-1"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#2E9B96' }}></div> Personalizada</span>
+                        <span className="d-flex align-items-center gap-1 ms-3"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#FFD400' }}></div> Pedagógica</span>
                     </div>
                   </div>
                   <div style={{ width: '100%', overflowX: 'auto' }}>
