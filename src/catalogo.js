@@ -33,6 +33,28 @@ export const TRANSPORTADORAS = ['Correios', 'Jadlog']
 export const isDigital = (categoria) => categoria === PEDAGOGICA
 
 /**
+ * Quantidade mínima de um produto no carrinho.
+ *
+ * Confirmado pela cliente: o mínimo vale por produto, não por pedido —
+ * não dá para comprar 1 caneca, o mínimo são 10 canecas. Quem quiser dois
+ * modelos leva 10 de cada.
+ *
+ * Material digital é um arquivo: a quantidade é sempre 1.
+ */
+export const quantidadeMinima = (categoria) =>
+  isDigital(categoria) ? 1 : MINIMO_PERSONALIZADO
+
+/** Arquivo digital não se compra em dobro. */
+export const permiteVariasUnidades = (categoria) => !isDigital(categoria)
+
+/** Subtotal de uma linha do carrinho. */
+export const subtotalItem = (item) => item.price * item.quantidade
+
+/** Total do carrinho, já com as quantidades. */
+export const totalCarrinho = (carrinho) =>
+  carrinho.reduce((soma, item) => soma + subtotalItem(item), 0)
+
+/**
  * Uma compra é só de uma linha: ou digital, ou personalizada.
  *
  * Decisão da cliente, por um motivo correto: a declaração de conteúdo

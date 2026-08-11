@@ -67,9 +67,14 @@ const ProductCard = ({ product, addToCart }) => {
         <Card.Body className="p-4 d-flex flex-column">
           <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
             <h3 className="fs-5 fw-black mb-0">{product.name}</h3>
-            <span className="fw-black fs-5 text-nowrap" style={{ color: '#12305B' }}>
-              R$ {product.price.toFixed(2)}
-            </span>
+            <div className="text-end">
+              <span className="fw-black fs-5 text-nowrap d-block" style={{ color: '#12305B' }}>
+                R$ {product.price.toFixed(2).replace('.', ',')}
+              </span>
+              {isPersonalizada && (
+                <span className="small text-muted text-nowrap">cada</span>
+              )}
+            </div>
           </div>
 
           <p className="text-muted small mb-3">{product.description}</p>
@@ -79,8 +84,11 @@ const ProductCard = ({ product, addToCart }) => {
           <div className="d-flex align-items-center gap-2 small fw-bold mb-4" style={{ color: '#12305B' }}>
             {isPersonalizada ? (
               <>
-                <Package size={15} />
-                <span>Mínimo {MINIMO_PERSONALIZADO} unidades · pronto em {PRAZO_PRODUCAO} dias úteis</span>
+                <Package size={15} style={{ flexShrink: 0 }} />
+                <span>
+                  Mínimo {MINIMO_PERSONALIZADO} un. — R$ {(product.price * MINIMO_PERSONALIZADO).toFixed(2).replace('.', ',')} ·
+                  pronto em {PRAZO_PRODUCAO} dias úteis
+                </span>
               </>
             ) : (
               <>
