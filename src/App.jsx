@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage'
 import AdminDashboard from './components/AdminDashboard'
 import HowItWorksPage from './components/HowItWorksPage'
 import IdentityPage from './components/IdentityPage'
+import StatusPage from './components/StatusPage'
 import { VIEWS, viewForHash, hashForView } from './routing'
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         {view === 'landing' && <LandingPage />}
         {view === 'admin' && <AdminDashboard />}
         {view === 'how' && <HowItWorksPage />}
+        {view === 'status' && <StatusPage />}
         {view === 'identity' && <IdentityPage />}
       </main>
     </div>

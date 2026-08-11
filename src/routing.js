@@ -9,6 +9,7 @@ export const VIEWS = [
   { id: 'landing', label: 'Loja', hash: '', className: 'landing' },
   { id: 'admin', label: 'Painel', hash: '#painel', className: 'admin' },
   { id: 'how', label: 'Como funciona', hash: '#como-funciona', className: 'how' },
+  { id: 'status', label: 'Andamento', hash: '#andamento', className: 'status' },
   { id: 'identity', label: 'Identidade', hash: '#identidade', className: 'ident' },
 ]
 
