@@ -31,3 +31,31 @@ export const CEP_ORIGEM = '[dado pessoal removido]'
 export const TRANSPORTADORAS = ['Correios', 'Jadlog']
 
 export const isDigital = (categoria) => categoria === PEDAGOGICA
+
+/**
+ * Uma compra é só de uma linha: ou digital, ou personalizada.
+ *
+ * Decisão da cliente, por um motivo correto: a declaração de conteúdo
+ * precisa bater com o que está dentro da caixa. Um arquivo digital listado
+ * numa declaração de encomenda física é inconsistência com os Correios,
+ * porque o item declarado não está na embalagem.
+ *
+ * Como efeito colateral, o checkout fica bem mais simples: frete é
+ * tudo-ou-nada, o pedido tem um prazo só, e não existe pedido meio
+ * entregue.
+ */
+export const podeAdicionarAoCarrinho = (carrinho, produto) => {
+  if (carrinho.length === 0) return { ok: true }
+
+  const carrinhoDigital = isDigital(carrinho[0].category)
+  const produtoDigital = isDigital(produto.category)
+
+  if (carrinhoDigital === produtoDigital) return { ok: true }
+
+  return {
+    ok: false,
+    motivo: carrinhoDigital
+      ? 'Materiais digitais e produtos personalizados vão em compras separadas. Finalize esta compra e faça outra para os personalizados.'
+      : 'Materiais digitais e produtos personalizados vão em compras separadas. Finalize esta compra e faça outra para o material digital.',
+  }
+}

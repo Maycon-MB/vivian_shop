@@ -16,14 +16,15 @@ import {
   Plus,
   Minus,
   Check,
-  CheckCircle
+  CheckCircle,
+  Package
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
 import CartModal from './landing/CartModal';
 import CheckoutModal from './landing/CheckoutModal';
-import { PERSONALIZADA, PEDAGOGICA } from '../catalogo';
+import { PERSONALIZADA, PEDAGOGICA, podeAdicionarAoCarrinho } from '../catalogo';
 
 /**
  * Catálogo de exemplo, só para mostrar o formato das telas.
@@ -91,12 +92,21 @@ const LandingPage = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Todas');
 
+  /** null quando não há aviso; { tipo, texto } quando há. */
+  const [aviso, setAviso] = useState(null);
+
   const addToCart = (product) => {
-    setCart([...cart, { ...product, cartId: Date.now() }]);
-    setShowToast(true);
+    const permissao = podeAdicionarAoCarrinho(cart, product);
+
+    if (!permissao.ok) {
+      setAviso({ tipo: 'bloqueio', texto: permissao.motivo });
+      return;
+    }
+
+    setCart([...cart, { ...product, cartId: `${product.id}-${cart.length}-${Date.now()}` }]);
+    setAviso({ tipo: 'ok', texto: 'Produto adicionado ao carrinho' });
   };
 
   const removeFromCart = (cartId) => {
@@ -334,10 +344,29 @@ const LandingPage = () => {
         }}
       />
 
-      <ToastContainer position="bottom-center" className="p-5" style={{ zIndex: 2000 }}>
-        <Toast show={showToast} onClose={() => setShowToast(false)} delay={3000} autohide className="border-0 shadow-lg rounded-pill bg-dark text-white">
-          <Toast.Body className="py-3 px-4 d-flex align-items-center justify-content-center gap-2 fw-bold">
-            <Check size={18} className="text-success" /> Produto adicionado ao carrinho!
+      {/* Um aviso só, com duas caras: confirmação some rápido, bloqueio
+          fica mais tempo e explica o que fazer em seguida. */}
+      <ToastContainer position="bottom-center" className="p-4 p-md-5" style={{ zIndex: 2000 }}>
+        <Toast
+          show={!!aviso}
+          onClose={() => setAviso(null)}
+          delay={aviso?.tipo === 'bloqueio' ? 7000 : 2500}
+          autohide
+          className="border-0 shadow-lg"
+          style={{
+            borderRadius: aviso?.tipo === 'bloqueio' ? '12px' : '999px',
+            backgroundColor: aviso?.tipo === 'bloqueio' ? '#FFD400' : '#12305B',
+            maxWidth: '460px',
+          }}
+        >
+          <Toast.Body
+            className="py-3 px-4 d-flex align-items-center gap-3 fw-bold"
+            style={{ color: aviso?.tipo === 'bloqueio' ? '#12305B' : '#FFFFFF' }}
+          >
+            {aviso?.tipo === 'bloqueio'
+              ? <Package size={20} style={{ flexShrink: 0 }} />
+              : <Check size={18} style={{ flexShrink: 0 }} />}
+            <span>{aviso?.texto}</span>
           </Toast.Body>
         </Toast>
       </ToastContainer>
