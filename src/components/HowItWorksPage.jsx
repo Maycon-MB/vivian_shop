@@ -247,13 +247,21 @@ const HowItWorksPage = () => {
       <section>
         <div className="wrap">
           <div className="sec-head">
-            <p className="eyebrow">Quando vêm juntos</p>
-            <h2>E se a pessoa comprar os <span className="mark" data-mark>dois</span>?</h2>
+            <p className="eyebrow">Uma regra importante</p>
+            <h2>Cada compra é de uma linha <span className="mark" data-mark>só</span>.</h2>
             <p>
-              Acontece bastante, porque é o mesmo público. Nesse caso o pedido tem dois tempos: o
-              material pedagógico chega na hora, e a parte personalizada segue o prazo normal de
-              produção. O frete é cobrado só sobre o que vai pelos Correios ou Jadlog — o arquivo
-              digital não entra na conta do peso.
+              Material digital e personalizado não vão na mesma compra. Se a pessoa quiser os
+              dois, faz dois pedidos.
+            </p>
+            <p>
+              O motivo é a declaração de conteúdo: ela precisa bater com o que está dentro da
+              caixa. Um arquivo digital listado numa declaração de encomenda física é um item
+              declarado que não está na embalagem.
+            </p>
+            <p>
+              Na loja isso é automático. Se já tem personalizado no carrinho e a pessoa tenta
+              somar um material digital, aparece um aviso explicando que são compras separadas —
+              ela não descobre isso só no fim.
             </p>
           </div>
         </div>
