@@ -32,7 +32,7 @@ const ProductCard = ({ product, addToCart }) => {
                 pedagógica. Ver spec de identidade visual. */}
             <span className="glass-pill" style={{
               backgroundColor: isPersonalizada
-                ? 'rgba(46, 155, 150, 0.85)'
+                ? '#1F736F'
                 : 'rgba(255, 212, 0, 0.9)',
               color: isPersonalizada ? '#FFFFFF' : '#12305B'
             }}>

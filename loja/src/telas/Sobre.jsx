@@ -26,6 +26,7 @@ const Sobre = () => (
             Cada peça sai da minha mesa, uma a uma.
           </h1>
 
+          {/* PENDENTE-LANCAMENTO: este aviso e o texto abaixo saem quando a Vivian mandar a história dela. */}
           <div className="sobre-rascunho">
             <strong>Vivian, este texto é um esboço.</strong> Escrevi para a página não ficar
             vazia, mas quem tem que contar essa história é você. Me manda do seu jeito, mesmo

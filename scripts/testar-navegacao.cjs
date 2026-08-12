@@ -180,8 +180,11 @@ const conferir = async (nome, fn) => {
     await pagina.waitForTimeout(500)
     const corpo = await pagina.locator('body').textContent()
     if (corpo.includes('NaN')) throw new Error('o total apareceu como NaN')
-    // 320 + 46,50 = 366,50, menos 5% do Pix = 348,18
-    if (!corpo.includes('348,18')) throw new Error('a conta do total está errada')
+    // O desconto do Pix incide só sobre os produtos, nunca sobre o frete:
+    // 320 - 5% = 304, mais 46,50 de frete = 350,50. Dar desconto sobre o
+    // frete faria a Vivian pagar a diferença do próprio bolso.
+    if (!corpo.includes('350,50')) throw new Error('a conta do total está errada')
+    if (!corpo.includes('16,00')) throw new Error('o desconto deveria ser 5% de 320, ou seja 16,00')
   })
 
   await conferir('a confirmação explica o que acontece depois', async () => {

@@ -48,8 +48,13 @@ const Checkout = () => {
 
   const precisaEndereco = !ehDigital;
   const valorFrete = precisaEndereco ? (frete?.valor ?? 0) : 0;
-  const totalGeral = total + valorFrete;
-  const desconto = pagamento === 'pix' ? totalGeral * 0.05 : 0;
+
+  /* O desconto do Pix incide só sobre os produtos, nunca sobre o frete.
+     O frete é repassado inteiro aos Correios ou à Jadlog: dar desconto
+     sobre ele significa a Vivian pagar do próprio bolso a diferença de
+     cada pedido. */
+  const desconto = pagamento === 'pix' ? total * 0.05 : 0;
+  const totalGeral = total + valorFrete - desconto;
 
   if (!pronto) return null;
 
@@ -264,13 +269,13 @@ const Checkout = () => {
                 </div>
                 {desconto > 0 && (
                   <div className="desconto">
-                    <dt>Desconto do Pix</dt>
+                    <dt>Desconto do Pix (5% nos produtos)</dt>
                     <dd>− {moeda(desconto)}</dd>
                   </div>
                 )}
                 <div className="total">
                   <dt>Total</dt>
-                  <dd>{moeda(totalGeral - desconto)}</dd>
+                  <dd>{moeda(totalGeral)}</dd>
                 </div>
               </dl>
 
