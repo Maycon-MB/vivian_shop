@@ -268,14 +268,13 @@ export const ETAPAS = [
     fase: 'pronto',
   },
   {
-    nome: 'Loja de verdade, começando a ficar de pé',
-    detalhe: 'Já dá para ver e navegar, ainda com produtos de exemplo. O link está logo acima desta lista.',
+    nome: 'Desenhar todas as telas do sistema',
+    detalhe: 'Ver e aprovar cada tela antes de construir de verdade — inclusive as suas, de cadastrar produto e despachar pedido.',
     fase: 'fazendo',
-    link: 'loja/',
   },
   {
-    nome: 'Catálogo com os seus produtos',
-    detalhe: 'Sair do exemplo e montar o catálogo real, com as suas fotos e os seus preços.',
+    nome: 'Loja de verdade, com os seus produtos',
+    detalhe: 'Depois que as telas estiverem aprovadas, construir o site que vende, com as suas fotos e preços.',
     fase: 'proximo',
   },
   {

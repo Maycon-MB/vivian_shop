@@ -16,6 +16,8 @@ export interface Produto {
   linha: Linha
   minimo: number
   prazoProducao: number
+  /** Caminho da foto dentro de /public. Vazio enquanto a cliente não manda. */
+  imagem?: string
   pesoG?: number
   altCm?: number
   largCm?: number
