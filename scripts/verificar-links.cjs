@@ -11,7 +11,7 @@
  * publicação custa segundos.
  */
 const BASE = 'https://maycon-mb.github.io'
-const INICIOS = ['/vivian_shop/', '/vivian_shop/loja/']
+const INICIOS = ['/vivian_shop/']
 
 const visitadas = new Set()
 const problemas = []
