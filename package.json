@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "deploy": "node scripts/publicar.mjs && gh-pages -d dist --dotfiles",
     "build:tudo": "node scripts/publicar.mjs",
-    "verificar:links": "node scripts/verificar-links.cjs"
+    "verificar:links": "node scripts/verificar-links.cjs",
+    "testar:navegacao": "node scripts/testar-navegacao.cjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
