@@ -16,6 +16,7 @@ import {
   totalCarrinho,
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
+import { PRODUTOS } from './catalogo';
 import { BASE } from '../base'
 
 /**
@@ -23,62 +24,7 @@ import { BASE } from '../base'
  * Nada aqui é produto real: os itens, preços e fotos entram quando a
  * cliente enviar o catálogo dela.
  */
-const products = [
-  {
-    id: 1,
-    name: "Caderno personalizado",
-    category: PERSONALIZADA,
-    price: 32.00,
-    image: "",
-    tag: "Sob encomenda",
-    description: "Capa com o nome de quem vai usar. Vendido em pacotes de 10."
-  },
-  {
-    id: 2,
-    name: "Cartela de adesivos escolares",
-    category: PERSONALIZADA,
-    price: 18.00,
-    image: "",
-    tag: "Sob encomenda",
-    description: "Etiquetas para material escolar, com nome e turma."
-  },
-  {
-    id: 3,
-    name: "Bloco de anotações",
-    category: PERSONALIZADA,
-    price: 24.00,
-    image: "",
-    tag: "Sob encomenda",
-    description: "Bloco personalizado, ideal para lembrancinha."
-  },
-  {
-    id: 4,
-    name: "Apostila de alfabetização adaptada",
-    category: PEDAGOGICA,
-    price: 47.00,
-    image: "",
-    tag: "Digital",
-    description: "Material estruturado com apoio visual, para imprimir em casa."
-  },
-  {
-    id: 5,
-    name: "Kit rotina visual",
-    category: PEDAGOGICA,
-    price: 39.00,
-    image: `${BASE}rotina_visual_premium_1778703012017.png`,
-    tag: "Digital",
-    description: "Quadro de rotina para montar e usar no dia a dia."
-  },
-  {
-    id: 6,
-    name: "Jogo das emoções",
-    category: PEDAGOGICA,
-    price: 29.00,
-    image: `${BASE}jogo_emocoes_premium_1778702950986.png`,
-    tag: "Digital",
-    description: "Atividade lúdica para identificar sentimentos."
-  }
-];
+const products = PRODUTOS;
 
 const LandingPage = () => {
   const [cart, setCart] = useState([]);
