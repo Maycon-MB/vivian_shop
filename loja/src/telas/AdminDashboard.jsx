@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { 
   Users, 
@@ -25,10 +25,28 @@ import LogisticsCard from './dashboard/LogisticsCard';
 import CatalogSection from './dashboard/sections/CatalogSection';
 import CartaoKpi from './painel/CartaoKpi';
 import CartaoPainel from './painel/CartaoPainel';
+import AbaPedidos from './painel/AbaPedidos';
 import { VendasPorDia, ProporcaoLinhas, MaisVendidos } from './painel/GraficosVisaoGeral';
 import FilaProducao from './painel/FilaProducao';
 import './painel.css';
 import { BASE } from '../base'
+
+const ABAS = ['dashboard', 'pedidos', 'catalogo', 'mensagens', 'marketing', 'config'];
+
+/**
+ * A aba aberta vem do endereço (?aba=pedidos) e volta para ele a cada
+ * troca. Assim a cliente pode salvar o link da tela que mais usa, e um
+ * link mandado no WhatsApp abre onde deveria.
+ *
+ * A leitura acontece depois de montar, e não no estado inicial: a página
+ * é gerada como arquivo estático, então o HTML entregue não conhece a
+ * consulta do endereço. Decidir a aba antes da hidratação faria a primeira
+ * renderização do navegador divergir do HTML e o React reclamar.
+ */
+const abaDoEndereco = () => {
+  const aba = new URLSearchParams(window.location.search).get('aba');
+  return ABAS.includes(aba) ? aba : 'dashboard';
+};
 
 const AdminDashboard = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -41,6 +59,31 @@ const AdminDashboard = () => {
   const [approving, setApproving] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarRecolhida, setSidebarRecolhida] = useState(false);
+
+  /**
+   * Abre na aba pedida pelo endereço, uma vez, depois de montar.
+   *
+   * A trava com ref existe porque em desenvolvimento o React roda os
+   * efeitos duas vezes de propósito. Sem ela, a segunda execução leria um
+   * endereço que o efeito de sincronia já tinha limpado, e a tela voltava
+   * para a visão geral sozinha.
+   */
+  const enderecoLido = useRef(false);
+
+  useEffect(() => {
+    if (enderecoLido.current) return;
+    enderecoLido.current = true;
+    setActiveTab(abaDoEndereco());
+  }, []);
+
+  // Só escreve no endereço depois de ter lido dele.
+  useEffect(() => {
+    if (!enderecoLido.current) return;
+    const url = new URL(window.location.href);
+    if (activeTab === 'dashboard') url.searchParams.delete('aba');
+    else url.searchParams.set('aba', activeTab);
+    window.history.replaceState(null, '', url);
+  }, [activeTab]);
 
   /**
    * Pedidos de exemplo, para mostrar como a tela se comporta. Os status
@@ -334,10 +377,7 @@ const AdminDashboard = () => {
         )}
 
         {activeTab === 'pedidos' && (
-           <Card className="border-0 rounded-5 shadow-sm p-5 bg-white">
-                <h3 className="fw-black fs-4 mb-4">Gerenciamento de Pedidos</h3>
-                <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
-           </Card>
+          <AbaPedidos onAbrirEtiqueta={() => setShowLabelPreview(true)} />
         )}
 
         {activeTab === 'mensagens' && (
