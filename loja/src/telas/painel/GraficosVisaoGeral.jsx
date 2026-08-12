@@ -1,12 +1,13 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import {
   base,
   eixoCategoria,
   eixoValor,
   degradeBarra,
+  degradeColuna,
   CORES,
   emReais,
   compacto,
@@ -53,11 +54,152 @@ const MAIS_VENDIDOS = [
   { nome: 'Apostila de alfabetização', unidades: 96, cor: CORES.pedagogica },
   { nome: 'Bloco de anotações', unidades: 80, cor: CORES.personalizada },
   { nome: 'Jogo das emoções', unidades: 62, cor: CORES.pedagogica },
+  { nome: 'Kit rotina visual', unidades: 54, cor: CORES.pedagogica },
+  { nome: 'Marcador de página', unidades: 40, cor: CORES.personalizada },
 ];
 
 const somar = (lista) => lista.reduce((a, b) => a + b, 0);
 
+/**
+ * Períodos que ela pode olhar.
+ *
+ * A granularidade muda junto: trinta barras de dia cabem na tela, trezentas
+ * e sessenta não. Em três meses agrupa por semana; no ano, por mês. Barra
+ * por dia num período longo vira serrilhado ilegível.
+ */
+const PERIODOS = [
+  { id: '7d', rotulo: '7 dias', dias: 7, agrupar: 'dia' },
+  { id: '30d', rotulo: '30 dias', dias: 30, agrupar: 'dia' },
+  { id: '90d', rotulo: '3 meses', dias: 90, agrupar: 'semana' },
+  { id: '12m', rotulo: '12 meses', dias: 360, agrupar: 'mes' },
+];
+
+const MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+/** Repete a base de exemplo até cobrir o período pedido. */
+const esticar = (base, tamanho) =>
+  Array.from({ length: tamanho }, (_, i) => base[i % base.length]);
+
+const agrupar = (valores, tamanhoGrupo) => {
+  const grupos = [];
+  for (let i = 0; i < valores.length; i += tamanhoGrupo) {
+    grupos.push(somar(valores.slice(i, i + tamanhoGrupo)));
+  }
+  return grupos;
+};
+
+const montarPeriodo = (periodo) => {
+  const p = esticar(VENDAS_PERSONALIZADA, periodo.dias);
+  const e = esticar(VENDAS_PEDAGOGICA, periodo.dias);
+
+  if (periodo.agrupar === 'dia') {
+    return {
+      rotulos: Array.from({ length: periodo.dias }, (_, i) => `${String((i % 30) + 1).padStart(2, '0')}/07`),
+      personalizada: p,
+      pedagogica: e,
+      intervalo: periodo.dias > 14 ? 2 : 0,
+    };
+  }
+
+  if (periodo.agrupar === 'semana') {
+    return {
+      rotulos: Array.from({ length: Math.ceil(periodo.dias / 7) }, (_, i) => `sem ${i + 1}`),
+      personalizada: agrupar(p, 7),
+      pedagogica: agrupar(e, 7),
+      intervalo: 1,
+    };
+  }
+
+  return {
+    rotulos: MESES,
+    personalizada: agrupar(p, 30),
+    pedagogica: agrupar(e, 30),
+    intervalo: 0,
+  };
+};
+
+/**
+ * Mapa de calendário.
+ *
+ * Responde uma pergunta que a barra não responde: em que dia da semana ela
+ * vende mais. Quem descobre que vende às segundas passa a postar no
+ * domingo — é a informação que vira decisão de marketing.
+ *
+ * A barra continua servindo para "quanto entrou e de que linha". São
+ * perguntas diferentes, por isso as duas convivem no mesmo bloco.
+ */
+const Calendario = ({ dias }) => {
+  const inicio = new Date(2026, 6, 1);
+
+  const dados = dias.map((valor, i) => {
+    const data = new Date(inicio);
+    data.setDate(inicio.getDate() + i);
+    const iso = data.toISOString().slice(0, 10);
+    return [iso, valor];
+  });
+
+  const maximo = Math.max(...dias, 1);
+
+  const opcao = {
+    tooltip: {
+      backgroundColor: CORES.superficie,
+      borderColor: CORES.linha,
+      borderWidth: 1,
+      padding: [10, 14],
+      textStyle: { color: CORES.tinta, fontSize: 12.5 },
+      extraCssText: 'box-shadow: 0 14px 34px -20px rgba(18,48,91,0.45); border-radius: 12px;',
+      formatter: (p) => {
+        const [iso, valor] = p.value;
+        const [, mes, dia] = iso.split('-');
+        return valor ? `${dia}/${mes}<br/><strong>${emReais(valor)}</strong>` : `${dia}/${mes}<br/>sem venda`;
+      },
+    },
+    visualMap: {
+      min: 0,
+      max: maximo,
+      show: false,
+      inRange: { color: ['#EDF3F9', '#9AD5D1', '#2E9B96', '#1B6B67'] },
+    },
+    calendar: {
+      top: 30,
+      left: 40,
+      right: 12,
+      cellSize: ['auto', 34],
+      range: '2026-07',
+      splitLine: { show: false },
+      itemStyle: { borderWidth: 3, borderColor: CORES.superficie, color: '#F4F7FB' },
+      yearLabel: { show: false },
+      monthLabel: { show: false },
+      dayLabel: {
+        firstDay: 1,
+        nameMap: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'],
+        color: CORES.tintaSuave,
+        fontSize: 11,
+      },
+    },
+    series: [
+      {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: dados,
+        itemStyle: { borderRadius: 6 },
+      },
+    ],
+  };
+
+  return <ReactECharts option={opcao} style={{ height: 288, width: '100%' }} notMerge />;
+};
+
+const MODOS = [
+  { id: 'barras', rotulo: 'Por dia' },
+  { id: 'calendario', rotulo: 'Calendário' },
+];
+
 export const VendasPorDia = () => {
+  const [periodo, setPeriodo] = useState(PERIODOS[1]);
+  const [modo, setModo] = useState('barras');
+  const dados = montarPeriodo(periodo);
+
   const opcao = base({
     grid: { left: 8, right: 12, top: 16, bottom: 20, containLabel: true },
     tooltip: {
@@ -72,14 +214,9 @@ export const VendasPorDia = () => {
       valueFormatter: (v) => (v ? emReais(v) : 'sem venda'),
     },
     xAxis: {
-      ...eixoCategoria(DIAS),
+      ...eixoCategoria(dados.rotulos),
       boundaryGap: true,
-      axisLabel: {
-        color: CORES.tintaSuave,
-        fontSize: 10.5,
-        // Trinta rótulos não cabem: um a cada três basta para situar a data.
-        interval: 2,
-      },
+      axisLabel: { color: CORES.tintaSuave, fontSize: 10.5, interval: dados.intervalo },
     },
     yAxis: eixoValor({
       axisLabel: { color: CORES.tintaSuave, fontSize: 11, formatter: (v) => `R$ ${compacto(v)}` },
@@ -88,27 +225,71 @@ export const VendasPorDia = () => {
       {
         name: 'Personalizada',
         type: 'bar',
-        stack: 'dia',
-        data: VENDAS_PERSONALIZADA,
-        itemStyle: { color: CORES.personalizada },
-        barMaxWidth: 18,
+        stack: 'periodo',
+        data: dados.personalizada,
+        itemStyle: { color: degradeColuna(CORES.personalizada) },
+        barMaxWidth: 26,
         emphasis: { focus: 'series' },
       },
       {
         name: 'Pedagógica',
         type: 'bar',
-        stack: 'dia',
-        data: VENDAS_PEDAGOGICA,
-        // O arredondamento vai só na última série da pilha, senão cada
+        stack: 'periodo',
+        data: dados.pedagogica,
+        // O arredondamento vai só na série de cima da pilha, senão cada
         // pedaço vira uma cápsula solta.
-        itemStyle: { color: CORES.pedagogica, borderRadius: [4, 4, 0, 0] },
-        barMaxWidth: 18,
+        itemStyle: { color: degradeColuna(CORES.pedagogica), borderRadius: [4, 4, 0, 0] },
+        barMaxWidth: 26,
         emphasis: { focus: 'series' },
       },
     ],
   });
 
-  return <ReactECharts option={opcao} style={{ height: 300, width: '100%' }} notMerge />;
+  const somaDias = esticar(VENDAS_PERSONALIZADA, 31).map(
+    (v, i) => v + esticar(VENDAS_PEDAGOGICA, 31)[i]
+  );
+
+  return (
+    <div>
+      <div className="grafico-controles">
+        <div className="periodo-seletor" role="group" aria-label="Modo de visualização">
+          {MODOS.map((opcaoModo) => (
+            <button
+              key={opcaoModo.id}
+              type="button"
+              onClick={() => setModo(opcaoModo.id)}
+              aria-pressed={modo === opcaoModo.id}
+              className={modo === opcaoModo.id ? 'ativo' : ''}
+            >
+              {opcaoModo.rotulo}
+            </button>
+          ))}
+        </div>
+
+        {modo === 'barras' && (
+          <div className="periodo-seletor" role="group" aria-label="Período">
+            {PERIODOS.map((opcaoPeriodo) => (
+              <button
+                key={opcaoPeriodo.id}
+                type="button"
+                onClick={() => setPeriodo(opcaoPeriodo)}
+                aria-pressed={periodo.id === opcaoPeriodo.id}
+                className={periodo.id === opcaoPeriodo.id ? 'ativo' : ''}
+              >
+                {opcaoPeriodo.rotulo}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {modo === 'barras' ? (
+        <ReactECharts option={opcao} style={{ height: 288, width: '100%' }} notMerge />
+      ) : (
+        <Calendario dias={somaDias} />
+      )}
+    </div>
+  );
 };
 
 export const ProporcaoLinhas = () => {
@@ -233,5 +414,5 @@ export const MaisVendidos = () => {
     ],
   };
 
-  return <ReactECharts option={opcao} style={{ height: 240, width: '100%' }} notMerge />;
+  return <ReactECharts option={opcao} style={{ height: 300, width: '100%' }} notMerge />;
 };

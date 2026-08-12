@@ -222,7 +222,7 @@ const AdminDashboard = () => {
               <Col xxl={8}>
                 <CartaoPainel
                   titulo="Quanto entrou por dia"
-                  subtitulo="Últimos 30 dias, separado pelas duas linhas."
+                  subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
                   cor="#2E9B96"
                   info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais — dá para postar no Instagram justamente nesse dia."
                   acao={
@@ -258,7 +258,7 @@ const AdminDashboard = () => {
               </Col>
             </Row>
 
-            <Row className="g-3 mb-3 align-items-start">
+            <Row className="g-3 mb-3">
               <Col xxl={4} lg={6}>
                 <CartaoPainel
                   titulo="Na sua bancada"
