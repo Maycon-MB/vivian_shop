@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { Plus, ShoppingCart, Download, Package } from 'lucide-react';
@@ -68,7 +69,7 @@ const ProductCard = ({ product, addToCart }) => {
 
         <Card.Body className="p-4 d-flex flex-column">
           <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
-            <h3 className="fs-5 fw-black mb-0">{product.name}</h3>
+            <h3 className="fs-5 fw-black mb-0"><Link href={`/produto/${product.slug}`} className="text-reset text-decoration-none stretched-link">{product.name}</Link></h3>
             <div className="text-end">
               <span className="fw-black fs-5 text-nowrap d-block" style={{ color: '#12305B' }}>
                 R$ {product.price.toFixed(2).replace('.', ',')}
