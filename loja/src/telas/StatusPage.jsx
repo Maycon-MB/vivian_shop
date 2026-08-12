@@ -127,9 +127,10 @@ const StatusPage = () => {
           </div>
 
           <div className="note">
-            <strong>Importante:</strong> o que você vê nas outras telas ainda é uma amostra, com
-            produtos e valores de exemplo. A loja que vende de verdade está sendo construída — o
-            que está pronto e o que falta você acompanha logo abaixo.
+            <strong>Onde estamos:</strong> as telas da loja e do seu painel já estão de pé — não
+            são mais desenho, é o site de verdade. O que ainda é de mentira são os produtos, os
+            preços e os pedidos que aparecem neles: entram os seus quando você mandar. Falta
+            ligar o pagamento e o cálculo de frete.
           </div>
 
         </div>

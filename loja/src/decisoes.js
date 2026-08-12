@@ -49,7 +49,7 @@ export const QUEM = {
   maycon: 'Eu decidi',
 }
 
-export const ATUALIZADO_EM = '11 de agosto de 2026'
+export const ATUALIZADO_EM = '12 de agosto de 2026'
 
 export const DECISOES = [
   {
@@ -248,11 +248,16 @@ export const ETAPAS = [
     nome: 'Identidade visual',
     detalhe: 'Cores, letras e o jeito da loja, tirados das suas duas logos.',
     fase: 'pronto',
+  },
+  {
+    nome: 'A loja para quem compra',
+    detalhe: 'Vitrine, filtro por linha, página de cada produto e carrinho com as suas regras de venda.',
+    fase: 'pronto',
     prototipo: true,
   },
   {
-    nome: 'Telas da loja para você ver',
-    detalhe: 'Catálogo, carrinho e as regras de venda funcionando, com produtos de exemplo.',
+    nome: 'Seu painel completo',
+    detalhe: 'Visão geral com gráficos, pedidos, seus produtos, mensagens, marketing e configurações.',
     fase: 'pronto',
     prototipo: true,
   },
@@ -260,7 +265,6 @@ export const ETAPAS = [
     nome: 'Explicação de como tudo funciona',
     detalhe: 'O passo a passo de uma venda, do pagamento até o envio.',
     fase: 'pronto',
-    prototipo: true,
   },
   {
     nome: 'Esta página de acompanhamento',
@@ -268,23 +272,18 @@ export const ETAPAS = [
     fase: 'pronto',
   },
   {
-    nome: 'Desenhar todas as telas do sistema',
-    detalhe: 'Ver e aprovar cada tela antes de construir de verdade — inclusive as suas, de cadastrar produto e despachar pedido.',
+    nome: 'Tela de fechar a compra',
+    detalhe: 'Onde a pessoa põe o endereço, escolhe o frete entre Correios e Jadlog, e paga.',
     fase: 'fazendo',
   },
   {
-    nome: 'Loja de verdade, com os seus produtos',
-    detalhe: 'Depois que as telas estiverem aprovadas, construir o site que vende, com as suas fotos e preços.',
+    nome: 'Pagamento de verdade',
+    detalhe: 'Ligar a loja à sua conta do Mercado Pago, para o dinheiro cair direto para você.',
     fase: 'proximo',
   },
   {
-    nome: 'Pagamento por Pix e cartão',
-    detalhe: 'Ligar a loja à sua conta do Mercado Pago para o dinheiro cair direto para você.',
-    fase: 'proximo',
-  },
-  {
-    nome: 'Cálculo de frete e etiqueta',
-    detalhe: 'Correios e Jadlog calculando na hora, e a etiqueta com a declaração saindo prontas.',
+    nome: 'Etiqueta e declaração saindo prontas',
+    detalhe: 'Frete calculado de verdade e os dois documentos prontos para imprimir.',
     fase: 'proximo',
   },
   {
@@ -293,8 +292,8 @@ export const ETAPAS = [
     fase: 'proximo',
   },
   {
-    nome: 'Seu painel de verdade',
-    detalhe: 'Cadastrar produto, ver pedidos e gerar etiqueta, tudo pelo celular.',
+    nome: 'Seu catálogo de verdade',
+    detalhe: 'Trocar os produtos de exemplo pelos seus, com as suas fotos e preços.',
     fase: 'proximo',
   },
   {
