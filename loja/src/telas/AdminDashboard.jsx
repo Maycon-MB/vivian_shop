@@ -25,6 +25,8 @@ import LogisticsCard from './dashboard/LogisticsCard';
 import CatalogSection from './dashboard/sections/CatalogSection';
 import CartaoKpi from './painel/CartaoKpi';
 import CartaoPainel from './painel/CartaoPainel';
+import { VendasPorDia, ProporcaoLinhas, MaisVendidos } from './painel/GraficosVisaoGeral';
+import FilaProducao from './painel/FilaProducao';
 import './painel.css';
 import { BASE } from '../base'
 
@@ -125,38 +127,38 @@ const AdminDashboard = () => {
   const indicadores = [
     {
       rotulo: 'Esperando você',
-      valor: 0,
+      valor: 3,
       icone: <Package size={20} />,
       cor: '#FFD400',
-      nota: 'nada na fila agora',
+      nota: '2 em produção, 1 pronto para postar',
       info: 'Pedidos já pagos que dependem de você produzir ou postar. É por onde começar o dia.',
     },
     {
       rotulo: 'Vendas do mês',
-      valor: 0,
+      valor: 16240,
       prefixo: 'R$ ',
       casas: 2,
       icone: <ShoppingBag size={20} />,
       cor: '#2E9B96',
-      nota: 'primeiro mês da loja',
+      nota: 'sem contar o frete',
       info: 'Soma dos pedidos pagos neste mês, sem contar o frete — o frete é dos Correios, não seu.',
     },
     {
       rotulo: 'Clientes',
-      valor: 0,
+      valor: 47,
       icone: <Users size={20} />,
       cor: '#12305B',
-      nota: 'começa agora',
+      nota: '12 compraram mais de uma vez',
       info: 'Quantas pessoas diferentes já compraram. Cliente que volta conta uma vez só.',
     },
     {
       rotulo: 'Economizado em taxas',
-      valor: 0,
+      valor: 3086,
       prefixo: 'R$ ',
       casas: 2,
       icone: <TrendingUp size={20} />,
       cor: '#C4436B',
-      nota: 'em comparação ao Elo7',
+      nota: 'comissão que você não pagou',
       info: 'Quanto você teria pago de comissão se estas vendas tivessem passado pelo Elo7. É o que a loja própria te devolve.',
     },
   ];
@@ -217,32 +219,71 @@ const AdminDashboard = () => {
             </Row>
 
             <Row className="g-3 mb-3">
-              <Col xl={8}>
+              <Col xxl={8}>
                 <CartaoPainel
-                  titulo="Quanto cada linha vendeu"
-                  subtitulo="Comparação mês a mês entre as duas linhas da loja."
+                  titulo="Quanto entrou por dia"
+                  subtitulo="Últimos 30 dias, separado pelas duas linhas."
                   cor="#2E9B96"
-                  info="Cada linha do gráfico é uma parte do seu negócio. Serve para ver qual das duas está crescendo e onde vale investir tempo."
+                  info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais — dá para postar no Instagram justamente nesse dia."
                   acao={
-                    <span className="d-flex gap-3 small fw-bold" style={{ color: '#6B7C8F' }}>
-                      <span className="d-flex align-items-center gap-1">
-                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#2E9B96' }} />
-                        Personalizada
+                    <span className="d-flex align-items-center gap-3">
+                      <span className="d-flex gap-3 small fw-bold" style={{ color: '#6B7C8F' }}>
+                        <span className="d-flex align-items-center gap-1">
+                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#2E9B96' }} />
+                          Personalizada
+                        </span>
+                        <span className="d-flex align-items-center gap-1">
+                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFD400' }} />
+                          Pedagógica
+                        </span>
                       </span>
-                      <span className="d-flex align-items-center gap-1">
-                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFD400' }} />
-                        Pedagógica
-                      </span>
+                      <span className="selo-exemplo">exemplo</span>
                     </span>
                   }
                 >
-                  <div style={{ width: '100%', overflowX: 'auto' }}>
-                    <ReactECharts option={salesChartOption} style={{ height: '320px', minWidth: '480px' }} />
-                  </div>
+                  <VendasPorDia />
                 </CartaoPainel>
               </Col>
 
-              <Col xl={4}>
+              <Col xxl={4}>
+                <CartaoPainel
+                  titulo="De onde vem o dinheiro"
+                  subtitulo="Peso de cada linha no mês."
+                  cor="#FFD400"
+                  info="A linha pedagógica é digital: não tem frete nem produção, então quase tudo que entra ali é lucro. Se ela crescer, você trabalha menos para ganhar o mesmo."
+                  acao={<span className="selo-exemplo">exemplo</span>}
+                >
+                  <ProporcaoLinhas />
+                </CartaoPainel>
+              </Col>
+            </Row>
+
+            <Row className="g-3 mb-3">
+              <Col xxl={4}>
+                <CartaoPainel
+                  titulo="Na sua bancada"
+                  subtitulo="O que produzir primeiro."
+                  cor="#C4436B"
+                  info="A barra mostra quanto do prazo combinado já passou — não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
+                  acao={<span className="selo-exemplo">exemplo</span>}
+                >
+                  <FilaProducao />
+                </CartaoPainel>
+              </Col>
+
+              <Col xxl={4}>
+                <CartaoPainel
+                  titulo="O que mais sai"
+                  subtitulo="Unidades vendidas no mês."
+                  cor="#12305B"
+                  info="Use para decidir o que vale ter pronto e o que fotografar melhor. Produto que quase não aparece aqui talvez precise de foto nova, não de desconto."
+                  acao={<span className="selo-exemplo">exemplo</span>}
+                >
+                  <MaisVendidos />
+                </CartaoPainel>
+              </Col>
+
+              <Col xxl={4}>
                 <div className="d-flex flex-column gap-3 h-100">
                   <MarketingIA approving={approving} onApprove={handleApprovePost} />
                   <LogisticsCard onShowLabel={() => setShowLabelPreview(true)} />
@@ -255,8 +296,8 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Últimos pedidos"
                   subtitulo="O que precisa de você aparece primeiro."
-                  cor="#FFD400"
-                  info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho."
+                  cor="#2E9B96"
+                  info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho, sem você fazer nada."
                   acao={
                     <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
                       Ver todos os pedidos
