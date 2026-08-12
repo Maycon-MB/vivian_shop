@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Fraunces, Atkinson_Hyperlegible } from 'next/font/google'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../telas/prototipo.css'
 import './globals.css'
+import { Navegacao } from '@/componentes/Navegacao'
 
 /* A Atkinson Hyperlegible é escolha funcional, não estética: foi desenhada
    pelo Braille Institute para diferenciar caracteres que se confundem —
@@ -10,7 +13,7 @@ import './globals.css'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
-  weight: ['500', '600'],
+  weight: ['500', '600', '700'],
   variable: '--font-fraunces',
   display: 'swap',
 })
@@ -32,7 +35,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${atkinson.variable}`}>
-      <body>{children}</body>
+      <body>
+        <div className="app-container">
+          <Navegacao />
+          <main>{children}</main>
+        </div>
+      </body>
     </html>
   )
 }
