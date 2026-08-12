@@ -1,18 +1,19 @@
 import type { NextConfig } from 'next'
 
 /**
- * Exportação estática, para publicar no GitHub Pages junto do protótipo.
+ * Exportação estática para o GitHub Pages.
  *
- * O protótipo em Vite continua servido na raiz de /vivian_shop/, e esta
- * loja fica em /vivian_shop/loja/ — as duas coisas convivem enquanto a
- * cliente acompanha uma e a outra é construída.
+ * A loja é servida na raiz de /vivian_shop/. Foi para lá quando passou a
+ * ter tudo que o protótipo em Vite tinha — e mais: o protótipo entregava
+ * HTML vazio, com o conteúdo aparecendo só depois do JavaScript, o que
+ * deixava o Google vendo uma página em branco.
  *
  * `basePath` só é aplicado na publicação: em `npm run dev` a loja roda na
  * raiz, sem prefixo, para não atrapalhar o desenvolvimento.
  */
 const publicando = process.env.PUBLICAR_GITHUB_PAGES === 'true'
 
-const base = publicando ? '/vivian_shop/loja' : ''
+const base = publicando ? '/vivian_shop' : ''
 
 const nextConfig: NextConfig = {
   output: 'export',

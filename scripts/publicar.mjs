@@ -3,71 +3,86 @@
  *
  *     node scripts/publicar.mjs
  *
- * Junta duas coisas que precisam conviver enquanto o projeto está no meio:
+ * Publica a loja em Next na raiz de /vivian_shop/.
  *
- *   /vivian_shop/        protótipo em Vite — é o que a cliente acompanha
- *   /vivian_shop/loja/   loja real em Next, ainda com produtos de exemplo
- *
- * Roda os dois builds e copia o resultado do Next para dentro do resultado
- * do Vite, que é o que o `gh-pages` publica.
- *
- * O protótipo sai do ar quando a loja real tiver catálogo, carrinho e
- * checkout — até lá, apagar seria tirar da cliente a única coisa que ela
- * consegue abrir e opinar.
+ * O protótipo em Vite saiu do ar quando a loja passou a ter tudo que ele
+ * tinha. Ele continua no repositório, em src/, como referência do que foi
+ * validado com a cliente — mas não é mais servido: duas versões no ar
+ * divergem, e a cliente acabaria opinando sobre a errada.
  */
 
 import { execSync } from 'node:child_process'
-import { cpSync, existsSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
 const raiz = path.dirname(fileURLToPath(new URL('.', import.meta.url)))
 const dist = path.join(raiz, 'dist')
 const loja = path.join(raiz, 'loja')
-const saidaLoja = path.join(loja, 'out')
-const destinoLoja = path.join(dist, 'loja')
+const saida = path.join(loja, 'out')
 
 const rodar = (comando, cwd, env = {}) => {
   console.log(`\n> ${comando}`)
   // A variável vai pelo ambiente, e não como prefixo do comando: prefixo
   // `VAR=x comando` não funciona no cmd do Windows.
-  execSync(comando, {
-    cwd,
-    stdio: 'inherit',
-    shell: true,
-    env: { ...process.env, ...env },
-  })
+  execSync(comando, { cwd, stdio: 'inherit', shell: true, env: { ...process.env, ...env } })
 }
 
-console.log('1/3 · protótipo (Vite)')
-rodar('npm run build', raiz)
-
-console.log('\n2/3 · loja real (Next, exportação estática)')
+console.log('1/2 · construindo a loja')
 rodar('npm run build', loja, { PUBLICAR_GITHUB_PAGES: 'true' })
 
-if (!existsSync(saidaLoja)) {
-  console.error(
-    `\nA exportação do Next não gerou ${saidaLoja}.\n` +
-      'Confira se next.config.ts está com output: "export".'
-  )
+if (!existsSync(saida)) {
+  console.error(`\nA exportação não gerou ${saida}. Confira output: "export" em next.config.ts.`)
   process.exit(1)
 }
 
-console.log('\n3/3 · juntando os dois')
-rmSync(destinoLoja, { recursive: true, force: true })
-cpSync(saidaLoja, destinoLoja, { recursive: true })
+console.log('\n2/2 · preparando a publicação')
+rmSync(dist, { recursive: true, force: true })
+cpSync(saida, dist, { recursive: true })
 
 /**
  * Sem este arquivo o GitHub Pages processa o site com Jekyll, que descarta
  * tudo começando com underscore — e o Next põe os scripts, o CSS e as
- * fontes em `_next/`. O resultado é um 404 silencioso: o HTML carrega, mas
- * a página fica em branco ou nem abre.
+ * fontes em `_next/`. O resultado é um 404 silencioso.
  *
  * Precisa vir junto de `gh-pages --dotfiles`, senão o publicador ignora
  * arquivos que começam com ponto e este some no caminho.
  */
 writeFileSync(path.join(dist, '.nojekyll'), '')
 
-console.log(`\nPronto. Publicar com:\n  npx gh-pages -d dist --dotfiles\n`)
-console.log('  /            protótipo')
-console.log('  /loja/       loja real\n')
+/**
+ * Endereços antigos continuam funcionando.
+ *
+ * Enquanto a loja morava em /vivian_shop/loja/, esses links foram mandados
+ * por WhatsApp. Link que um dia funcionou e depois responde 404 é pior que
+ * link que nunca existiu: quem recebeu acha que o site saiu do ar.
+ */
+const REDIRECIONAR = ['', 'painel', 'como-funciona', 'andamento', 'identidade']
+
+for (const rota of REDIRECIONAR) {
+  const pasta = path.join(dist, 'loja', rota)
+  const destino = `/vivian_shop/${rota ? `${rota}/` : ''}`
+
+  mkdirSync(pasta, { recursive: true })
+  writeFileSync(
+    path.join(pasta, 'index.html'),
+    `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecionando…</title>
+    <link rel="canonical" href="${destino}" />
+    <meta http-equiv="refresh" content="0; url=${destino}" />
+    <script>window.location.replace('${destino}')</script>
+  </head>
+  <body>
+    <p>Esta página mudou de endereço. <a href="${destino}">Continuar</a>.</p>
+  </body>
+</html>
+`
+  )
+}
+
+console.log(`  ${REDIRECIONAR.length} endereços antigos redirecionados`)
+
+console.log('\nPronto. Publicar com:\n  npx gh-pages -d dist --dotfiles\n')
