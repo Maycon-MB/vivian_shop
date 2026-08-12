@@ -12,9 +12,13 @@ import type { NextConfig } from 'next'
  */
 const publicando = process.env.PUBLICAR_GITHUB_PAGES === 'true'
 
+const base = publicando ? '/vivian_shop/loja' : ''
+
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: publicando ? '/vivian_shop/loja' : undefined,
+  basePath: base || undefined,
+  // Chega ao navegador para montar caminhos de imagem escritos como texto.
+  env: { NEXT_PUBLIC_BASE_PATH: base },
   // GitHub Pages não tem o otimizador de imagem do Next.
   images: { unoptimized: true },
   // Sem isso, /produto/x devolve 404 no Pages: ele espera /produto/x/index.html

@@ -26,16 +26,5 @@
   --font-corpo: var(--font-atkinson), "Segoe UI", system-ui, sans-serif;
 }
 
-body {
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-corpo);
-  -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
-  text-wrap: balance;
-}
+/* O visual das telas vem de telas/prototipo.css e do Bootstrap.
+   Aqui ficam só os tokens, para o que for construído daqui em diante. */
