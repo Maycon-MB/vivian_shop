@@ -90,6 +90,8 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlterna
             const link = (
               <Nav.Link
                 key={item.id}
+                as="button"
+                type="button"
                 onClick={() => selecionar(item.id)}
                 className={`sidebar-item ${ativo ? 'ativo' : ''}`}
                 aria-current={ativo ? 'page' : undefined}
