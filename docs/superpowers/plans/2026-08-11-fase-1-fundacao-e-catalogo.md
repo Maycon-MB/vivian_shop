@@ -4,9 +4,17 @@
 
 **Objetivo:** ter a loja real rodando com o catálogo vindo do banco, filtro por linha e página de produto, sobre uma base testada onde as regras de venda são código verificado e não texto solto.
 
-**Arquitetura:** Next.js 15 com App Router, TypeScript e Tailwind, servindo páginas estáticas com revalidação. Supabase Postgres guarda o catálogo; as regras de venda ficam num módulo puro (`src/dominio/`) sem dependência de React ou banco, para poderem ser testadas em milissegundos e reaproveitadas no painel. Os componentes leem esse módulo — nunca reimplementam regra.
+**Arquitetura:** Next.js 16 com App Router, TypeScript e Tailwind, servindo páginas estáticas com revalidação. Supabase Postgres guarda o catálogo; as regras de venda ficam num módulo puro (`src/dominio/`) sem dependência de React ou banco, para poderem ser testadas em milissegundos e reaproveitadas no painel. Os componentes leem esse módulo — nunca reimplementam regra.
 
-**Stack:** Next.js 15, React 19, TypeScript, Tailwind CSS 4, Supabase (Postgres + CLI), Vitest.
+**Stack:** Next.js 16.3, React 19.2, TypeScript, Tailwind CSS 4, Supabase (Postgres + CLI), Vitest 4.
+
+## Situação
+
+Tarefas 1, 3 e 5 executadas em 11/08/2026, junto com o `moeda` e o `CardProduto` da tarefa 6 — nenhuma delas depende de credencial.
+
+Falta o que precisa do Supabase: tarefa 2 (schema), tarefa 4 (leitura) e o restante da tarefa 6 (páginas). O primeiro passo para retomar é criar o projeto no Supabase e preencher `loja/.env.local`.
+
+Estado: 33 testes passando, lint limpo, build gerando páginas estáticas.
 
 ## Restrições globais
 
@@ -39,7 +47,7 @@ O protótipo atual em `src/` fica onde está durante toda a fase 1. Ele é o que
 
 ---
 
-## Tarefa 1: Projeto Next com testes rodando
+## Tarefa 1: Projeto Next com testes rodando — FEITA em 11/08/2026
 
 **Arquivos:**
 - Criar: `loja/` (projeto Next completo)
@@ -57,10 +65,10 @@ O protótipo atual em `src/` fica onde está durante toda a fase 1. Ele é o que
 Na raiz do repositório:
 
 ```bash
-npx create-next-app@latest loja --typescript --tailwind --eslint --app --src-dir --use-npm --no-turbopack --import-alias "@/*"
+npx --yes create-next-app@latest loja --ts --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --yes
 ```
 
-Responder **No** para "Would you like to customize the import alias?" se perguntar de novo.
+O `--yes` evita as perguntas interativas.
 
 - [ ] **Passo 2: Instalar o Vitest**
 
@@ -71,12 +79,12 @@ npm install -D vitest @vitejs/plugin-react
 
 - [ ] **Passo 3: Configurar o Vitest**
 
-Criar `loja/vitest.config.ts`:
+Criar `loja/vitest.config.mts` — extensão `.mts`, não `.ts`: o `package.json` do Next não declara `type: module`, e o Vite avisa ao carregar sintaxe ESM como CommonJS.
 
 ```typescript
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export default defineConfig({
   plugins: [react()],
@@ -85,7 +93,8 @@ export default defineConfig({
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
   resolve: {
-    alias: { '@': path.resolve(__dirname, './src') },
+    // __dirname não existe em módulo ESM.
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
 })
 ```
@@ -310,7 +319,7 @@ git commit -m "feat: schema do catálogo, com regra que recusa produto invendáv
 
 ---
 
-## Tarefa 3: Regras do carrinho como código testado
+## Tarefa 3: Regras do carrinho como código testado — FEITA em 11/08/2026
 
 **Arquivos:**
 - Criar: `loja/src/dominio/produto.ts`
@@ -840,7 +849,7 @@ git commit -m "feat: leitura do catálogo no Supabase, com conversão testada"
 
 ---
 
-## Tarefa 5: Identidade visual em tokens do Tailwind
+## Tarefa 5: Identidade visual em tokens do Tailwind — FEITA em 11/08/2026
 
 **Arquivos:**
 - Modificar: `loja/src/app/globals.css`
