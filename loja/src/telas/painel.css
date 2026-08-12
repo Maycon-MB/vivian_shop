@@ -559,3 +559,54 @@
 .painel .kpi-valor,
 .painel .rosca-valor,
 .painel .fila-prazo { font-variant-numeric: tabular-nums; }
+
+/* ── Seletor de período ─────────────────────────────────────────────────── */
+.periodo-seletor {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: var(--painel-fundo);
+  border: 1px solid var(--painel-linha);
+}
+
+.periodo-seletor button {
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--painel-tinta-suave);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+  white-space: nowrap;
+}
+
+.periodo-seletor button:hover { color: var(--painel-tinta); }
+
+.periodo-seletor button.ativo {
+  background: var(--painel-superficie);
+  color: var(--painel-tinta);
+  box-shadow: 0 2px 8px -4px rgba(18, 48, 91, .5);
+}
+
+/* A fila cresce para acompanhar os blocos vizinhos, em vez de deixar o
+   card com metade vazia. */
+.painel-card-corpo > div:has(.fila-item) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.painel-card-corpo:has(.fila-item) { display: flex; flex-direction: column; }
+
+.grafico-controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}

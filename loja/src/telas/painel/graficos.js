@@ -55,6 +55,19 @@ export const degrade = (hex, de = 0.28, ate = 0.02) => ({
   ],
 })
 
+/** Degradê na vertical, para barra em pé. */
+export const degradeColuna = (hex) => ({
+  type: 'linear',
+  x: 0,
+  y: 0,
+  x2: 0,
+  y2: 1,
+  colorStops: [
+    { offset: 0, color: hex },
+    { offset: 1, color: rgba(hex, 0.55) },
+  ],
+})
+
 /** Degradê na horizontal, para barra deitada. */
 export const degradeBarra = (hex) => ({
   type: 'linear',
