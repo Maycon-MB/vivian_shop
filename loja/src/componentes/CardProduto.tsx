@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Produto } from '@/dominio/produto'
 import { quantidadeMinima } from '@/dominio/carrinho'
 import { ehDigital } from '@/dominio/linhas'
@@ -23,11 +24,23 @@ export function CardProduto({ produto }: { produto: Produto }) {
       className="flex flex-col overflow-hidden rounded-xl border border-rule bg-surface transition hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-chalk"
     >
       <div
-        className={`flex aspect-[5/4] items-center justify-center text-[10px] uppercase tracking-wider text-ink-soft ${
+        className={`relative aspect-[5/4] overflow-hidden ${
           digital ? 'bg-marker/15' : 'bg-chalk/10'
         }`}
       >
-        Aqui entra sua foto
+        {produto.imagem ? (
+          <Image
+            src={produto.imagem}
+            alt={produto.nome}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+          />
+        ) : (
+          <span className="flex h-full items-center justify-center text-[10px] uppercase tracking-wider text-ink-soft">
+            Aqui entra sua foto
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-2 border-t border-rule p-4">
