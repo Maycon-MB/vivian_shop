@@ -8,7 +8,13 @@
   --pl-dark: #12305B;      /* tinta: texto e marca */
   --pl-light: #FBFAF7;     /* papel: fundo */
   --pl-white: #ffffff;
-  --pl-gray: #6B7C8F;
+  --pl-gray: #5F6F80;      /* escurecido: o anterior dava 4.10:1 no papel, abaixo do mínimo */
+
+  /* O verde-água é bonito como superfície, mas com texto branco por cima
+     dá 3.36:1 — reprova o mínimo de 4.5:1 para texto normal. Onde houver
+     branco escrito em cima, usa-se esta versão escura, que dá 5.61:1.
+     Parte do público desta loja tem visão reduzida; isso não é detalhe. */
+  --pl-verde-texto: #1F736F;
   --pl-gold: #C4436B;      /* rosa: promoções e avisos */
   --pl-rule: #A8C6E8;      /* pauta: bordas e divisórias */
 
@@ -487,4 +493,42 @@ body {
   .navbar .btn,
   .landing-page .btn,
   .view-switcher .switcher-btn { min-height: 40px; }
+}
+
+
+/* ── Contraste ──────────────────────────────────────────────────────────────
+   Medido com a fórmula da WCAG, não no olho.
+   -------------------------------------------------------------------------- */
+
+/* Fundo verde com texto branco pequeno: usa a versão escura. */
+.btn-primary,
+.glass-pill,
+.switcher-btn.active {
+  --bs-btn-bg: var(--pl-verde-texto);
+  --bs-btn-border-color: var(--pl-verde-texto);
+}
+
+/* O botão de comprar é a ação principal da loja: sólido, não vazado.
+   Contorno fino num cartão claro não convida ao clique, e no celular
+   some. */
+.premium-card .btn-outline-dark {
+  --bs-btn-color: #FFFFFF;
+  --bs-btn-bg: var(--pl-dark);
+  --bs-btn-border-color: var(--pl-dark);
+  --bs-btn-hover-bg: #0D2445;
+  --bs-btn-hover-border-color: #0D2445;
+  --bs-btn-hover-color: #FFFFFF;
+}
+
+/* O preço precisa pesar mais que o nome do produto: é o que decide a
+   compra, e antes tinha o mesmo tamanho da descrição. */
+.premium-card .fs-5.fw-black {
+  font-size: 1.35rem !important;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 767px) {
+  /* A marca colava no botão de menu. */
+  .navbar .container { gap: 12px; }
+  .marca-loja { max-width: 66vw; }
 }

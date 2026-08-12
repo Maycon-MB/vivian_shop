@@ -16,6 +16,8 @@ import {
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
 import { PRODUTOS } from './catalogo';
+import RodapeConfianca from './RodapeConfianca';
+import BotaoWhatsApp from './BotaoWhatsApp';
 import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
 
@@ -73,7 +75,7 @@ const LandingPage = () => {
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-2 mb-2 mb-lg-0 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
-                    style={activeCategory === cat ? { backgroundColor: '#2E9B96' } : {}}
+                    style={activeCategory === cat ? { backgroundColor: '#1F736F' } : {}}
                 >
                     {cat}
                 </button>
@@ -171,6 +173,7 @@ const LandingPage = () => {
                   <div className="d-flex gap-1 mb-2" style={{ color: '#A8C6E8' }}>
                     {[1,2,3,4,5].map(s => <Star key={s} size={12} />)}
                   </div>
+                  {/* PENDENTE-LANCAMENTO: trocar por depoimento real, com autorização. Ver docs/antes-de-abrir-a-loja.md */}
                   <p className="small fw-bold mb-1" style={{ color: '#12305B' }}>Aqui entra um depoimento de verdade de uma cliente sua.</p>
                   <span className="small text-muted">Me manda um print e eu coloco</span>
                 </div>
@@ -301,25 +304,9 @@ const LandingPage = () => {
         </Toast>
       </ToastContainer>
 
-      {/* Footer Boutique */}
-      <footer className="py-5 bg-dark text-white">
-        <Container className="py-5 text-center">
-          <div className="mb-4" style={{ fontFamily: 'Fraunces', fontSize: '32px', fontWeight: 900 }}>
-            Feito para você!<span style={{ color: "#2E9B96" }}> Personalizados</span>
-          </div>
-          <p className="text-white-50 mb-5 mx-auto" style={{ maxWidth: '500px' }}>Transformando a rotina através do design inclusivo e da organização artesanal.</p>
-          <div className="d-flex justify-content-center gap-4 mb-5">
-            <Instagram size={24} className="cursor-pointer text-white-50 hover:text-white" />
-            <Facebook size={24} className="cursor-pointer text-white-50 hover:text-white" />
-            <MessageCircle size={24} className="cursor-pointer text-white-50 hover:text-white" />
-          </div>
-          <div className="pt-5 border-top border-secondary text-white-50 small">
-            <a href="/sobre/" className="text-white-50 text-decoration-none">Quem faz</a>
-            <span className="mx-2 text-white-50">·</span>
-            &copy; 2026 Feito para você! Personalizados
-          </div>
-        </Container>
-      </footer>
+      <RodapeConfianca />
+
+      <BotaoWhatsApp />
     </div>
   );
 };
