@@ -23,6 +23,9 @@ import OrderTable from './dashboard/OrderTable';
 import MarketingIA from './dashboard/MarketingIA';
 import LogisticsCard from './dashboard/LogisticsCard';
 import CatalogSection from './dashboard/sections/CatalogSection';
+import CartaoKpi from './painel/CartaoKpi';
+import CartaoPainel from './painel/CartaoPainel';
+import './painel.css';
 import { BASE } from '../base'
 
 const AdminDashboard = () => {
@@ -35,6 +38,7 @@ const AdminDashboard = () => {
   const [toastMsg, setToastMsg] = useState('');
   const [approving, setApproving] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarRecolhida, setSidebarRecolhida] = useState(false);
 
   /**
    * Pedidos de exemplo, para mostrar como a tela se comporta. Os status
@@ -108,93 +112,164 @@ const AdminDashboard = () => {
   };
 
   /**
-   * Zerado de propósito. Loja nova começa em zero, e número inventado no
-   * painel da própria dona não ajuda ninguém a decidir nada — só cria
-   * expectativa que a primeira semana real desmente.
+   * Números da visão geral.
+   *
+   * Zerados de propósito: loja nova começa em zero, e número inventado no
+   * painel da própria dona não ajuda a decidir nada — só cria expectativa
+   * que a primeira semana real desmente.
+   *
+   * Cada um carrega a própria explicação, porque a cliente não é técnica e
+   * painel sem explicação vira enfeite: ela olha, não entende, e volta a
+   * controlar tudo no caderno.
    */
-  const stats = [
-    { label: 'Vendas do mês', value: 'R$ 0,00', grow: 'primeiro mês', icon: <ShoppingBag color="#2E9B96"/> },
-    { label: 'Clientes', value: '0', grow: 'começa agora', icon: <Users color="#FFD400"/> },
-    { label: 'Pedidos a enviar', value: '0', grow: 'nada na fila', icon: <Package color="#C4436B"/> },
-    { label: 'Economia em taxas', value: 'R$ 0,00', grow: 'contra o Elo7', icon: <TrendingUp color="#2E9B96"/> },
+  const indicadores = [
+    {
+      rotulo: 'Esperando você',
+      valor: 0,
+      icone: <Package size={20} />,
+      cor: '#FFD400',
+      nota: 'nada na fila agora',
+      info: 'Pedidos já pagos que dependem de você produzir ou postar. É por onde começar o dia.',
+    },
+    {
+      rotulo: 'Vendas do mês',
+      valor: 0,
+      prefixo: 'R$ ',
+      casas: 2,
+      icone: <ShoppingBag size={20} />,
+      cor: '#2E9B96',
+      nota: 'primeiro mês da loja',
+      info: 'Soma dos pedidos pagos neste mês, sem contar o frete — o frete é dos Correios, não seu.',
+    },
+    {
+      rotulo: 'Clientes',
+      valor: 0,
+      icone: <Users size={20} />,
+      cor: '#12305B',
+      nota: 'começa agora',
+      info: 'Quantas pessoas diferentes já compraram. Cliente que volta conta uma vez só.',
+    },
+    {
+      rotulo: 'Economizado em taxas',
+      valor: 0,
+      prefixo: 'R$ ',
+      casas: 2,
+      icone: <TrendingUp size={20} />,
+      cor: '#C4436B',
+      nota: 'em comparação ao Elo7',
+      info: 'Quanto você teria pago de comissão se estas vendas tivessem passado pelo Elo7. É o que a loja própria te devolve.',
+    },
   ];
 
   return (
-    <div className="d-flex" style={{ minHeight: '100vh', backgroundColor: '#F0F2F5', color: '#12305B' }}>
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="painel d-flex">
+      <Sidebar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        recolhida={sidebarRecolhida}
+        onAlternarRecolhida={() => setSidebarRecolhida((v) => !v)}
+      />
 
       <div className="flex-grow-1 p-3 p-md-5 overflow-auto w-100">
         {activeTab === 'dashboard' && (
           <>
-            <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-5">
+            <header className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
               <div className="d-flex align-items-center gap-3">
-                <Button 
-                  variant="link" 
-                  className="p-0 text-dark mobile-only" 
+                <Button
+                  variant="link"
+                  className="p-0 text-dark mobile-only"
                   onClick={() => setSidebarOpen(true)}
+                  aria-label="Abrir menu"
                 >
                   <Menu size={24} />
                 </Button>
                 <div>
-                  <h1 className="fw-black fs-2 mb-1" style={{ fontFamily: 'Fraunces' }}>Bem-vinda, Vivian</h1>
-                  <p className="text-muted mb-0 small">Papelaria personalizada e material pedagógico, no mesmo lugar.</p>
+                  <h1 className="painel-titulo">Bem-vinda, Vivian</h1>
+                  <p className="painel-subtitulo">
+                    Papelaria personalizada e material pedagógico, no mesmo lugar.
+                  </p>
                 </div>
               </div>
+
               <div className="d-flex flex-wrap gap-2">
-                <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-3 px-md-4 rounded-pill fw-bold d-flex align-items-center gap-2 small">
-                    <Plus size={18}/> <span className="d-none d-sm-inline">Novo Produto</span>
+                <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
+                  <Plus size={16} /> <span className="d-none d-sm-inline">Novo produto</span>
                 </Button>
-                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 px-md-4 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#2E9B96', borderColor: '#2E9B96' }}>
-                    <CheckCircle size={18}/> <span className="d-none d-sm-inline">Lançar Venda</span>
+                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#2E9B96', borderColor: '#2E9B96' }}>
+                  <CheckCircle size={16} /> <span className="d-none d-sm-inline">Lançar venda</span>
                 </Button>
-                {/* BASE_URL, não '/': em produção o site vive em
-                    /vivian_shop/ e a barra sozinha cai fora do projeto. */}
-                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 px-md-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
-                    <Eye size={18}/> <span className="d-none d-sm-inline">Ver Lojas</span>
+                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
+                  <Eye size={16} /> <span className="d-none d-sm-inline">Ver a loja</span>
                 </Button>
               </div>
             </header>
 
-            <Row className="g-3 g-md-4 mb-5">
-              {stats.map((stat, i) => (
-                <Col xl={3} md={6} key={i}>
-                  <StatsCard {...stat} />
+            {/* Grid de 12 colunas: 4 números lado a lado no computador,
+                2 no tablet, 1 no celular. */}
+            <Row className="g-3 mb-4">
+              {indicadores.map((indicador, i) => (
+                <Col xxl={3} lg={6} key={indicador.rotulo}>
+                  <CartaoKpi {...indicador} atraso={i * 90} />
                 </Col>
               ))}
             </Row>
 
-            <Row className="g-4">
-              <Col lg={8}>
-                <Card className="border-0 rounded-5 shadow-sm p-4 p-md-5 bg-white mb-4">
-                  <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
-                    <h3 className="fw-black fs-4 mb-0">Receita por linha</h3>
-                    <div className="d-flex gap-2 text-muted small fw-bold">
-                        <span className="d-flex align-items-center gap-1"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#2E9B96' }}></div> Personalizada</span>
-                        <span className="d-flex align-items-center gap-1 ms-3"><div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#FFD400' }}></div> Pedagógica</span>
-                    </div>
-                  </div>
+            <Row className="g-3 mb-3">
+              <Col xl={8}>
+                <CartaoPainel
+                  titulo="Quanto cada linha vendeu"
+                  subtitulo="Comparação mês a mês entre as duas linhas da loja."
+                  cor="#2E9B96"
+                  info="Cada linha do gráfico é uma parte do seu negócio. Serve para ver qual das duas está crescendo e onde vale investir tempo."
+                  acao={
+                    <span className="d-flex gap-3 small fw-bold" style={{ color: '#6B7C8F' }}>
+                      <span className="d-flex align-items-center gap-1">
+                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#2E9B96' }} />
+                        Personalizada
+                      </span>
+                      <span className="d-flex align-items-center gap-1">
+                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFD400' }} />
+                        Pedagógica
+                      </span>
+                    </span>
+                  }
+                >
                   <div style={{ width: '100%', overflowX: 'auto' }}>
-                    <ReactECharts option={salesChartOption} style={{ height: '380px', minWidth: '500px' }} />
+                    <ReactECharts option={salesChartOption} style={{ height: '320px', minWidth: '480px' }} />
                   </div>
-                </Card>
-
-                <Card className="border-0 rounded-5 shadow-sm p-4 p-md-5 bg-white mb-4 mb-lg-0 overflow-hidden">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h3 className="fw-black fs-4 mb-0">Pedidos Recentes</h3>
-                        <Button variant="link" className="text-primary fw-bold text-decoration-none p-0">Ver todos</Button>
-                    </div>
-                    <div className="table-responsive">
-                      <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
-                    </div>
-                </Card>
+                </CartaoPainel>
               </Col>
-              <Col lg={4}>
-                <div className="d-flex flex-column gap-4 h-100">
+
+              <Col xl={4}>
+                <div className="d-flex flex-column gap-3 h-100">
                   <MarketingIA approving={approving} onApprove={handleApprovePost} />
                   <LogisticsCard onShowLabel={() => setShowLabelPreview(true)} />
                 </div>
               </Col>
             </Row>
+
+            <Row className="g-3">
+              <Col xs={12}>
+                <CartaoPainel
+                  titulo="Últimos pedidos"
+                  subtitulo="O que precisa de você aparece primeiro."
+                  cor="#FFD400"
+                  info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho."
+                  acao={
+                    <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
+                      Ver todos os pedidos
+                    </button>
+                  }
+                >
+                  <div className="table-responsive">
+                    <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
+                  </div>
+                </CartaoPainel>
+              </Col>
+            </Row>
+
           </>
         )}
 

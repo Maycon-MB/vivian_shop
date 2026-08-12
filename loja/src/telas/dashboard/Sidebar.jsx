@@ -1,83 +1,125 @@
 'use client'
 
 import React from 'react';
-import { Nav, Button } from 'react-bootstrap';
-import { 
-  TrendingUp, 
-  ShoppingBag, 
-  Mail, 
-  Settings, 
+import { Nav, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+  TrendingUp,
+  ShoppingBag,
+  Mail,
+  Settings,
   LogOut,
   Package,
-  MessageSquare
+  MessageSquare,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 
-const Sidebar = ({ activeTab, onTabChange, isOpen, onClose }) => {
-  const menuItems = [
-    { id: 'dashboard', icon: <TrendingUp size={18}/>, label: 'Visão Geral' },
-    { id: 'pedidos', icon: <ShoppingBag size={18}/>, label: 'Vendas & Pedidos' },
-    { id: 'mensagens', icon: <MessageSquare size={18}/>, label: 'Mensagens' },
-    { id: 'marketing', icon: <Mail size={18}/>, label: 'Marketing IA' },
-    { id: 'catalogo', icon: <Package size={18}/>, label: 'Meus Produtos' },
-    { id: 'config', icon: <Settings size={18}/>, label: 'Configurações' },
-  ];
+/**
+ * Menu lateral do painel.
+ *
+ * Recolhe para faixa de ícones no computador, liberando largura para as
+ * tabelas e gráficos — que é onde a cliente realmente olha. Recolhido, o
+ * nome de cada área aparece ao passar o mouse, para ninguém precisar
+ * decorar ícone.
+ *
+ * No celular vira gaveta sobre o conteúdo, porque faixa de ícone numa tela
+ * estreita rouba espaço sem entregar navegação.
+ *
+ * Os rótulos são as tarefas dela, não nomes de módulo.
+ */
+const ITENS = [
+  { id: 'dashboard', icone: <TrendingUp size={18} />, rotulo: 'Visão geral' },
+  { id: 'pedidos', icone: <ShoppingBag size={18} />, rotulo: 'Pedidos' },
+  { id: 'catalogo', icone: <Package size={18} />, rotulo: 'Meus produtos' },
+  { id: 'mensagens', icone: <MessageSquare size={18} />, rotulo: 'Mensagens' },
+  { id: 'marketing', icone: <Mail size={18} />, rotulo: 'Marketing' },
+  { id: 'config', icone: <Settings size={18} />, rotulo: 'Configurações' },
+];
+
+const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlternarRecolhida }) => {
+  const selecionar = (id) => {
+    onTabChange(id);
+    if (typeof window !== 'undefined' && window.innerWidth < 992) onClose();
+  };
 
   return (
     <>
-      {/* Overlay para mobile */}
       {isOpen && (
-        <div 
-          className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 mobile-only" 
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 mobile-only"
           style={{ zIndex: 1040 }}
           onClick={onClose}
         />
       )}
 
-      <div className={`p-4 d-flex flex-column gap-4 shadow-sm sidebar-nav ${isOpen ? 'open' : ''}`} style={{ 
-        width: '280px', 
-        backgroundColor: '#FFFFFF', 
-        borderRight: '1px solid #2E9B9633',
-        zIndex: 1050,
-        transition: 'all 0.3s ease-in-out'
-      }}>
-        <div className="px-3 py-2 d-flex justify-content-between align-items-center">
-          <div>
-            <h2 className="fw-black mb-0" style={{ fontFamily: 'Fraunces', fontSize: '22px', color: '#12305B' }}>
-              Vivian<span style={{ color: '#2E9B96' }}> Quintella</span>
-            </h2>
-            <small className="text-muted text-uppercase ls-wide fw-bold" style={{ fontSize: '9px', letterSpacing: '1.5px' }}>
-              Gestão Multi-Marca
-            </small>
-          </div>
-          <Button variant="link" className="mobile-only p-0 text-muted" onClick={onClose}>
-            <LogOut size={20} />
+      <div className={`sidebar-nav ${isOpen ? 'open' : ''} ${recolhida ? 'recolhida' : ''}`}>
+        <div className="sidebar-topo">
+          {!recolhida && (
+            <div className="sidebar-marca">
+              <h2>
+                Feito para você!<span> Personalizados</span>
+              </h2>
+              <small>Painel da loja</small>
+            </div>
+          )}
+
+          <Button
+            variant="link"
+            className="sidebar-alternar desktop-only"
+            onClick={onAlternarRecolhida}
+            aria-label={recolhida ? 'Expandir menu' : 'Recolher menu'}
+            aria-expanded={!recolhida}
+          >
+            {recolhida ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+          </Button>
+
+          <Button
+            variant="link"
+            className="mobile-only p-0 text-muted"
+            onClick={onClose}
+            aria-label="Fechar menu"
+          >
+            <PanelLeftClose size={20} />
           </Button>
         </div>
 
-        <Nav className="flex-column gap-2 px-2 mt-4">
-          {menuItems.map((item, i) => (
-            <Nav.Link 
-              key={i} 
-              onClick={() => { onTabChange(item.id); if(window.innerWidth < 992) onClose(); }}
-              className={`d-flex align-items-center gap-3 px-4 py-3 rounded-4 text-decoration-none transition-all ${activeTab === item.id ? 'bg-primary bg-opacity-10 text-primary shadow-sm' : 'text-muted'}`}
-              style={{ 
-                cursor: 'pointer', 
-                fontWeight: activeTab === item.id ? '700' : '500',
-                backgroundColor: activeTab === item.id ? 'rgba(46, 155, 150, 0.08)' : 'transparent'
-              }}
-            >
-              <span style={{ color: activeTab === item.id ? '#2E9B96' : '#A0AEC0' }}>
-                {item.icon}
-              </span>
-              <span className="small">{item.label}</span>
-            </Nav.Link>
-          ))}
+        <Nav className="sidebar-itens">
+          {ITENS.map((item) => {
+            const ativo = activeTab === item.id;
+
+            const link = (
+              <Nav.Link
+                key={item.id}
+                onClick={() => selecionar(item.id)}
+                className={`sidebar-item ${ativo ? 'ativo' : ''}`}
+                aria-current={ativo ? 'page' : undefined}
+              >
+                <span className="sidebar-item-icone">{item.icone}</span>
+                {!recolhida && <span className="sidebar-item-rotulo">{item.rotulo}</span>}
+              </Nav.Link>
+            );
+
+            if (!recolhida) return link;
+
+            return (
+              <OverlayTrigger
+                key={item.id}
+                placement="right"
+                overlay={<Tooltip id={`dica-${item.id}`}>{item.rotulo}</Tooltip>}
+              >
+                {link}
+              </OverlayTrigger>
+            );
+          })}
         </Nav>
 
-        <div className="mt-auto px-2 border-top pt-4">
-            <Button variant="link" className="w-100 text-muted text-decoration-none text-start d-flex align-items-center gap-2 small fw-bold opacity-75 hover-opacity-100">
-                <LogOut size={16} /> Sair do Painel
-            </Button>
+        <div className="sidebar-rodape">
+          <Button variant="link" className="sidebar-item sair">
+            <span className="sidebar-item-icone">
+              <LogOut size={16} />
+            </span>
+            {!recolhida && <span className="sidebar-item-rotulo">Sair</span>}
+          </Button>
         </div>
       </div>
     </>
