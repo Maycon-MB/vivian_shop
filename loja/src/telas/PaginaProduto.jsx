@@ -50,7 +50,7 @@ const PaginaProduto = ({ produto, aoAdicionar = null }) => {
   return (
     <div className="produto-pagina">
       <Container className="py-4 py-md-5">
-        <Link href="/" className="voltar">
+        <Link href="/" className="voltar" prefetch={false}>
           <ArrowLeft size={16} /> Voltar para a loja
         </Link>
 

@@ -196,3 +196,8 @@
 }
 
 .produto-garantias svg { color: #2E9B96; flex-shrink: 0; }
+
+/* O nome do produto leva à página dele. Sem `stretched-link`: aquele
+   utilitário faz o link cobrir o cartão inteiro e engolir o botão de
+   comprar — o botão continua na tela, mas nunca é alcançado. */
+.link-produto:hover { color: #2E9B96 !important; }

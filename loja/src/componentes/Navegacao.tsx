@@ -31,6 +31,7 @@ export function Navegacao() {
           <Link
             key={area.href}
             href={area.href}
+            prefetch={false}
             aria-current={ativo ? 'page' : undefined}
             className={`switcher-btn ${area.classe} ${ativo ? 'active' : ''}`}
           >

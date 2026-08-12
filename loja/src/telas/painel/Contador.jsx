@@ -8,25 +8,20 @@ import React, { useEffect, useState } from 'react';
  * O movimento diz onde olhar sem precisar de seta nem cor, num painel que
  * abre várias vezes por dia.
  *
- * Começa no valor final e anima a partir dele quando dá — e não o
- * contrário. Se a animação não rodar (aba em segundo plano, captura de
- * tela, navegador que congela o relógio, quem pediu menos animação), o
- * número correto já está na tela. Começar em zero e depender da animação
- * para chegar ao valor é como um painel mostra R$ 0,00 quando vendeu
- * dezesseis mil.
+ * O estado começa no valor final, e a animação só desce e sobe a partir
+ * dele. Se ela não rodar — aba em segundo plano, captura de tela, quem
+ * pediu menos animação — o número certo já está na tela. Começar em zero e
+ * depender da animação para chegar ao valor é como um painel mostra
+ * R$ 0,00 tendo vendido dezesseis mil.
  */
 const Contador = ({ valor, prefixo = '', sufixo = '', casas = 0, atraso = 0 }) => {
   const [atual, setAtual] = useState(valor);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return undefined;
-
     const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reduzido || valor === 0) {
-      setAtual(valor);
-      return undefined;
-    }
+    // Sem animação, o estado inicial já é o valor: nada a fazer.
+    if (reduzido || valor === 0) return undefined;
 
     let inicio;
     let quadro;
@@ -38,14 +33,15 @@ const Contador = ({ valor, prefixo = '', sufixo = '', casas = 0, atraso = 0 }) =
     }, atraso + 1100);
 
     const tempo = setTimeout(() => {
-      setAtual(0);
-
       const passo = (agora) => {
         if (cancelado) return;
         if (!inicio) inicio = agora;
+
         const progresso = Math.min((agora - inicio) / 750, 1);
         const suave = 1 - (1 - progresso) ** 3;
+
         setAtual(parseFloat((suave * valor).toFixed(casas)));
+
         if (progresso < 1) quadro = requestAnimationFrame(passo);
         else setAtual(valor);
       };
