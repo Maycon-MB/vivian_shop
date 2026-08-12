@@ -17,13 +17,22 @@ export {
   ehDigital as isDigital,
 } from './dominio/linhas'
 
-export {
-  quantidadeMinima as quantidadeMinimaDe,
-  permiteVariasUnidades as permiteVariasUnidadesDe,
-  subtotalItem,
-  totalCarrinho,
-  podeAdicionar,
-} from './dominio/carrinho'
+export { podeAdicionar } from './dominio/carrinho'
+
+/**
+ * Dívida conhecida: o domínio chama o campo de `preco` e as telas vindas do
+ * protótipo chamam de `price`. Enquanto os dois nomes convivem, as contas
+ * aceitam qualquer um dos dois — foi essa diferença que fez o total do
+ * checkout aparecer como "R$ NaN" para quem ia pagar.
+ *
+ * Some quando as telas passarem a usar o tipo `Produto` do domínio.
+ */
+const precoDe = (item) => Number(item.preco ?? item.price) || 0
+
+export const subtotalItem = (item) => precoDe(item) * (item.quantidade || 0)
+
+export const totalCarrinho = (carrinho) =>
+  carrinho.reduce((soma, item) => soma + subtotalItem(item), 0)
 
 import { MINIMO_PERSONALIZADO as MINIMO, PRAZO_PRODUCAO as PRAZO } from './dominio/regras'
 
