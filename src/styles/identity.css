@@ -667,6 +667,55 @@
   font-weight: 700;
 }
 
+/* ── Chamada para a loja real ───────────────────────────────────────────── */
+.identity .chamada-loja {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 20px 22px;
+  border: 2px solid var(--chalk);
+  border-radius: 12px;
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.identity .chamada-loja:hover,
+.identity .chamada-loja:focus-visible {
+  box-shadow: 0 8px 24px rgba(46, 155, 150, .18);
+  transform: translateY(-1px);
+}
+
+.identity .chamada-rotulo {
+  flex-shrink: 0;
+  background: var(--chalk);
+  color: #FFFFFF;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.identity .chamada-texto { display: grid; gap: 3px; }
+.identity .chamada-texto strong { font-size: 15.5px; }
+.identity .chamada-texto span { font-size: 14px; color: var(--ink-soft); }
+
+.identity .chamada-seta {
+  margin-left: auto;
+  font-size: 22px;
+  color: var(--chalk);
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .identity .chamada-loja { flex-wrap: wrap; gap: 10px; }
+  .identity .chamada-seta { display: none; }
+}
+
 /* ── Fases da construção ────────────────────────────────────────────────── */
 .identity .fase { margin-bottom: 34px; }
 .identity .fase:last-child { margin-bottom: 0; }

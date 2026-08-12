@@ -129,6 +129,20 @@ const StatusPage = () => {
             produtos e valores de exemplo. A loja que vende de verdade está sendo construída — o
             que está pronto e o que falta você acompanha logo abaixo.
           </div>
+
+          {/* A loja real vive num endereço próprio, fora do protótipo. Enquanto
+              as duas coexistem, a cliente precisa de um caminho para chegar lá. */}
+          <a className="chamada-loja" href={`${import.meta.env.BASE_URL}loja/`}>
+            <span className="chamada-rotulo">Novo</span>
+            <span className="chamada-texto">
+              <strong>Espiar a loja de verdade sendo construída</strong>
+              <span>
+                Ainda com produtos de exemplo, mas já é o site que vai ao ar — não mais um
+                desenho.
+              </span>
+            </span>
+            <span className="chamada-seta" aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
 

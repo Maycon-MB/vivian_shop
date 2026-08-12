@@ -9,8 +9,8 @@
     "test": "node --test src/**/*.test.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "node scripts/publicar.mjs && gh-pages -d dist",
+    "build:tudo": "node scripts/publicar.mjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

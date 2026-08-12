@@ -268,9 +268,15 @@ export const ETAPAS = [
     fase: 'pronto',
   },
   {
-    nome: 'Loja de verdade, com seus produtos',
-    detalhe: 'Sair do exemplo e montar o catálogo real, com as suas fotos e os seus preços.',
+    nome: 'Loja de verdade, começando a ficar de pé',
+    detalhe: 'Já dá para ver e navegar, ainda com produtos de exemplo. O link está logo acima desta lista.',
     fase: 'fazendo',
+    link: 'loja/',
+  },
+  {
+    nome: 'Catálogo com os seus produtos',
+    detalhe: 'Sair do exemplo e montar o catálogo real, com as suas fotos e os seus preços.',
+    fase: 'proximo',
   },
   {
     nome: 'Pagamento por Pix e cartão',
