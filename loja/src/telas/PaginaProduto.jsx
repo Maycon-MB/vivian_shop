@@ -15,6 +15,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo';
+import { useCarrinho } from './CarrinhoContexto';
 
 /**
  * Página de um produto.
@@ -28,7 +29,8 @@ import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo
  * descobre isso só no carrinho desiste ali, e a loja perde a venda sem
  * saber por quê.
  */
-const PaginaProduto = ({ produto, aoAdicionar = null }) => {
+const PaginaProduto = ({ produto }) => {
+  const { adicionar } = useCarrinho();
   const personalizado = produto.category === PERSONALIZADA;
   const minimo = personalizado ? MINIMO_PERSONALIZADO : 1;
 
@@ -41,8 +43,20 @@ const PaginaProduto = ({ produto, aoAdicionar = null }) => {
     setQuantidade((atual) => Math.max(minimo, atual + delta));
   };
 
-  const adicionar = () => {
-    aoAdicionar?.(produto, quantidade);
+  const [barrado, setBarrado] = useState(null);
+
+  const aoComprar = () => {
+    const entrou = adicionar(produto, quantidade);
+
+    if (!entrou) {
+      // Carrinho com a outra linha: explicar em vez de apenas não fazer nada.
+      setBarrado(
+        'Material digital e produtos personalizados vão em compras separadas. Finalize a compra que já está no carrinho e faça outra para este.'
+      );
+      return;
+    }
+
+    setBarrado(null);
     setAdicionado(true);
     setTimeout(() => setAdicionado(false), 2600);
   };
@@ -133,7 +147,7 @@ const PaginaProduto = ({ produto, aoAdicionar = null }) => {
                 </div>
               )}
 
-              <Button className="comprar" onClick={adicionar}>
+              <Button className="comprar" onClick={aoComprar}>
                 {adicionado ? (
                   <>
                     <Check size={18} /> Adicionado
@@ -144,7 +158,15 @@ const PaginaProduto = ({ produto, aoAdicionar = null }) => {
               </Button>
             </div>
 
-            {personalizado && quantidade === minimo && (
+            {barrado && <p className="produto-barrado">{barrado}</p>}
+
+            {!barrado && adicionado && (
+              <p className="produto-no-carrinho">
+                No carrinho. <Link href="/checkout/" prefetch={false}>Fechar a compra →</Link>
+              </p>
+            )}
+
+            {personalizado && quantidade === minimo && !adicionado && (
               <p className="produto-aviso-minimo">
                 {minimo} unidades é o pedido mínimo deste produto.
               </p>

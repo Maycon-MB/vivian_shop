@@ -1,0 +1,379 @@
+/* ==========================================================================
+   Fechar a compra e pedido confirmado
+   ========================================================================== */
+
+.checkout,
+.confirmado {
+  background: var(--pl-light);
+  color: var(--pl-dark);
+  min-height: 100vh;
+  padding-bottom: 110px;
+}
+
+.checkout-titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  margin: 14px 0 26px;
+}
+
+/* ── Blocos do formulário ───────────────────────────────────────────────── */
+.bloco {
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 0 #DCE9F6, 0 16px 36px -30px rgba(18, 48, 91, .6);
+}
+
+.bloco h2 {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+
+.bloco .numero {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #12305B;
+  color: #FFFFFF;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.campos { display: grid; gap: 14px; grid-template-columns: 1fr; }
+
+@media (min-width: 576px) {
+  .campos { grid-template-columns: 1fr 1fr; }
+  .campos .largo { grid-column: 1 / -1; }
+}
+
+.campos .form-label { font-size: 12.5px; font-weight: 700; margin-bottom: 5px; }
+
+.campos .form-control {
+  border: 1px solid #DCE9F6;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+.campos .form-control:focus {
+  border-color: #2E9B96;
+  box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
+}
+
+.dica {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: #6B7C8F;
+}
+
+.dica svg { color: #2E9B96; flex-shrink: 0; }
+
+/* ── Frete ──────────────────────────────────────────────────────────────── */
+.fretes { margin-top: 20px; display: grid; gap: 10px; }
+
+.fretes-titulo { font-size: 12.5px; font-weight: 700; margin: 0 0 4px; }
+
+.frete {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid #DCE9F6;
+  border-radius: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.frete:hover { border-color: #A8C6E8; }
+
+.frete.escolhido {
+  border-color: #2E9B96;
+  background: rgba(46, 155, 150, .06);
+  box-shadow: 0 0 0 1px #2E9B96;
+}
+
+.frete input { accent-color: #2E9B96; width: 17px; height: 17px; flex-shrink: 0; }
+
+.frete-nome { display: grid; flex: 1; min-width: 0; }
+.frete-nome strong { font-size: 14px; }
+.frete-nome span { font-size: 12px; color: #6B7C8F; }
+
+.frete-valor { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ── Pagamento ──────────────────────────────────────────────────────────── */
+.pagamentos { display: grid; gap: 10px; }
+
+@media (min-width: 576px) { .pagamentos { grid-template-columns: 1fr 1fr; } }
+
+.pagamento {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #DCE9F6;
+  border-radius: 12px;
+  padding: 15px 16px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.pagamento.escolhido {
+  border-color: #2E9B96;
+  background: rgba(46, 155, 150, .06);
+  box-shadow: 0 0 0 1px #2E9B96;
+}
+
+.pagamento input { accent-color: #2E9B96; width: 17px; height: 17px; flex-shrink: 0; }
+.pagamento svg { color: #2E9B96; flex-shrink: 0; }
+.pagamento > span { display: grid; }
+.pagamento strong { font-size: 14px; }
+.pagamento > span > span { font-size: 12px; color: #6B7C8F; }
+
+/* ── Resumo ─────────────────────────────────────────────────────────────── */
+.resumo {
+  position: sticky;
+  top: 20px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 1px 0 #DCE9F6, 0 22px 46px -32px rgba(18, 48, 91, .7);
+}
+
+.resumo h2 { font-size: 17px; font-weight: 700; margin: 0 0 16px; }
+
+.resumo-itens { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; }
+
+.resumo-itens li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+  color: #6B7C8F;
+}
+
+.resumo-itens strong { color: #12305B; }
+.resumo-itens .valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: #12305B; }
+
+.resumo-contas {
+  margin: 0 0 18px;
+  padding: 16px 0 0;
+  border-top: 1px solid #DCE9F6;
+  display: grid;
+  gap: 9px;
+}
+
+.resumo-contas > div { display: flex; justify-content: space-between; gap: 12px; }
+.resumo-contas dt { font-size: 13.5px; color: #6B7C8F; font-weight: 400; }
+.resumo-contas dd { margin: 0; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+
+.resumo-contas .desconto dt,
+.resumo-contas .desconto dd { color: #2E9B96; font-weight: 700; }
+
+.resumo-contas .total {
+  border-top: 1px solid #DCE9F6;
+  padding-top: 12px;
+  margin-top: 3px;
+}
+
+.resumo-contas .total dt { font-size: 15px; font-weight: 700; color: #12305B; }
+.resumo-contas .total dd { font-size: 24px; font-weight: 700; }
+
+.finalizar {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #12305B;
+  color: #FFFFFF;
+  border-radius: 999px;
+  padding: 15px 22px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: 0 16px 32px -18px rgba(18, 48, 91, .9);
+  transition: transform .15s ease;
+}
+
+.finalizar:hover { color: #FFFFFF; transform: translateY(-1px); }
+
+/* Botão travado precisa dizer o que falta, não só ficar apagado. */
+.finalizar.travado {
+  background: #DCE9F6;
+  color: #6B7C8F;
+  box-shadow: none;
+  cursor: not-allowed;
+  font-size: 13.5px;
+}
+
+.finalizar.travado:hover { transform: none; color: #6B7C8F; }
+
+.prazo-aviso {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: #6B7C8F;
+}
+
+.prazo-aviso svg { color: #2E9B96; flex-shrink: 0; }
+
+.resumo-garantias {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 15px 0 0;
+  border-top: 1px solid #DCE9F6;
+  display: grid;
+  gap: 9px;
+}
+
+.resumo-garantias li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  color: #6B7C8F;
+}
+
+.resumo-garantias svg { color: #2E9B96; flex-shrink: 0; }
+
+/* ── Pedido confirmado ──────────────────────────────────────────────────── */
+.confirmado-topo { text-align: center; max-width: 44ch; margin: 0 auto 40px; }
+
+.confirmado-selo {
+  display: inline-grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #2E9B96, #1F736F);
+  color: #FFFFFF;
+  margin-bottom: 18px;
+  box-shadow: 0 18px 34px -18px rgba(46, 155, 150, 1);
+}
+
+.confirmado-topo h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.confirmado-topo p { color: #6B7C8F; margin: 0; }
+
+.passos-pedido,
+.confirmado-ajuda {
+  max-width: 620px;
+  margin: 0 auto 20px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 1px 0 #DCE9F6, 0 16px 36px -30px rgba(18, 48, 91, .6);
+}
+
+.passos-pedido h2,
+.confirmado-ajuda h2 { font-size: 16px; font-weight: 700; margin: 0 0 18px; }
+
+.passos-pedido ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+
+.passos-pedido li { display: flex; gap: 14px; align-items: flex-start; }
+
+.passos-pedido .marca {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid #DCE9F6;
+  color: #6B7C8F;
+  background: #FFFFFF;
+}
+
+.passos-pedido .feito .marca { background: #2E9B96; border-color: #2E9B96; color: #FFFFFF; }
+.passos-pedido .agora .marca { background: #FFD400; border-color: #FFD400; color: #12305B; }
+
+.passos-pedido strong { font-size: 14.5px; display: block; }
+.passos-pedido p { margin: 3px 0 0; font-size: 13.5px; color: #6B7C8F; }
+
+.baixar {
+  max-width: 620px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(140deg, rgba(255, 212, 0, .18), rgba(255, 212, 0, .06));
+  border: 1px solid #FFD400;
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+
+.baixar strong { display: block; font-size: 15px; }
+.baixar span { font-size: 12.5px; color: #6B7C8F; }
+
+.baixar-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #12305B;
+  color: #FFFFFF;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.confirmado-ajuda p { font-size: 14px; color: #6B7C8F; margin: 0 0 18px; }
+
+.confirmado-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.acao-whats-grande {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #2E9B96;
+  color: #FFFFFF;
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
+
+.acao-voltar {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #A8C6E8;
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #12305B;
+  text-decoration: none;
+}
+
+.confirmado-email {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 0 !important;
+  font-size: 12.5px !important;
+}

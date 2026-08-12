@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
 import CartModal from './landing/CartModal';
-import CheckoutModal from './landing/CheckoutModal';
 import {
   PERSONALIZADA,
   PEDAGOGICA,
@@ -17,6 +16,7 @@ import {
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
 import { PRODUTOS } from './catalogo';
+import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
 
 /**
@@ -27,64 +27,23 @@ import { BASE } from '../base'
 const products = PRODUTOS;
 
 const LandingPage = () => {
-  const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
-  const [showCheckout, setShowCheckout] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Todas');
 
-  /** null quando não há aviso; { tipo, texto } quando há. */
-  const [aviso, setAviso] = useState(null);
+  /* O carrinho vem do contexto: precisa sobreviver à ida e volta da página
+     de cada produto, e some se ficar dentro desta tela. */
+  const {
+    itens: cart,
+    adicionar,
+    alterarQuantidade,
+    remover: removeFromCart,
+    total: cartTotal,
+    unidades: cartCount,
+    aviso,
+    setAviso,
+  } = useCarrinho();
 
-  /**
-   * O carrinho guarda uma linha por produto, com quantidade — e não um
-   * item repetido por clique. Com mínimo de 10 unidades, repetir linha
-   * deixaria o carrinho ilegível e a conta errada.
-   */
-  const addToCart = (product) => {
-    const permissao = podeAdicionarAoCarrinho(cart, product);
-
-    if (!permissao.ok) {
-      setAviso({ tipo: 'bloqueio', texto: permissao.motivo });
-      return;
-    }
-
-    const existente = cart.find((item) => item.id === product.id);
-
-    if (existente) {
-      if (!permiteVariasUnidades(product.category)) {
-        setAviso({ tipo: 'bloqueio', texto: 'Este material já está no carrinho. É um arquivo digital, uma unidade basta.' });
-        return;
-      }
-
-      alterarQuantidade(product.id, existente.quantidade + 1);
-      return;
-    }
-
-    const minimo = quantidadeMinima(product.category);
-    setCart([...cart, { ...product, quantidade: minimo }]);
-    setAviso({
-      tipo: 'ok',
-      texto: minimo > 1
-        ? `${minimo} unidades adicionadas — é o mínimo deste produto`
-        : 'Material adicionado ao carrinho',
-    });
-  };
-
-  /** Respeita o mínimo do produto: abaixo dele, a linha sai do carrinho. */
-  const alterarQuantidade = (productId, novaQuantidade) => {
-    setCart((atual) => atual.flatMap((item) => {
-      if (item.id !== productId) return [item];
-      if (novaQuantidade < quantidadeMinima(item.category)) return [];
-      return [{ ...item, quantidade: novaQuantidade }];
-    }));
-  };
-
-  const removeFromCart = (productId) => {
-    setCart(cart.filter((item) => item.id !== productId));
-  };
-
-  const cartTotal = totalCarrinho(cart);
-  const cartCount = cart.reduce((soma, item) => soma + item.quantidade, 0);
+  const addToCart = (product) => adicionar(product);
 
   const filteredProducts = activeCategory === 'Todas' 
     ? products 
@@ -309,23 +268,10 @@ const LandingPage = () => {
         onChangeQuantity={alterarQuantidade}
         cartTotal={cartTotal}
         cartCount={cartCount}
-        onCheckout={() => { setShowCart(false); setShowCheckout(true); }}
+        onCheckout={() => { setShowCart(false); window.location.assign(`${BASE}checkout/`); }}
       />
 
-      <CheckoutModal 
-        show={showCheckout} 
-        onHide={() => setShowCheckout(false)} 
-        cart={cart} 
-        cartTotal={cartTotal} 
-        onComplete={() => {
-            setShowCheckout(false);
-            setCart([]);
-            setAviso({
-              tipo: 'ok',
-              texto: 'Compra simulada. Numa loja no ar, este pedido já apareceria no painel da Vivian.',
-            });
-        }}
-      />
+
 
       {/* Um aviso só, com duas caras: confirmação some rápido, bloqueio
           fica mais tempo e explica o que fazer em seguida. */}

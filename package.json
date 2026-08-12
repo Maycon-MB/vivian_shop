@@ -12,7 +12,8 @@
     "deploy": "node scripts/publicar.mjs && gh-pages -d dist --dotfiles",
     "build:tudo": "node scripts/publicar.mjs",
     "verificar:links": "node scripts/verificar-links.cjs",
-    "testar:navegacao": "node scripts/testar-navegacao.cjs"
+    "testar:navegacao": "node scripts/testar-navegacao.cjs",
+    "verificar": "npm run verificar:links && npm run testar:navegacao"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

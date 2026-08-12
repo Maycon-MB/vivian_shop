@@ -152,6 +152,46 @@ const conferir = async (nome, fn) => {
     }
   })
 
+  await conferir('o carrinho sobrevive à troca de página', async () => {
+    await pagina.goto(`${BASE}/produto/caderno-personalizado/`, { waitUntil: 'networkidle' })
+    // O carrinho é guardado no navegador e sobrevive entre as verificações:
+    // sem limpar, o total testado aqui carrega o que os testes anteriores
+    // deixaram lá.
+    await pagina.evaluate(() => window.localStorage.clear())
+    await pagina.reload({ waitUntil: 'networkidle' })
+    await pagina.getByRole('button', { name: /Adicionar/ }).click()
+    await pagina.waitForTimeout(700)
+    await pagina.goto(`${BASE}/checkout/`, { waitUntil: 'networkidle' })
+    await pagina.waitForTimeout(900)
+    const corpo = await pagina.locator('body').textContent()
+    if (!corpo.includes('Caderno personalizado')) throw new Error('o carrinho esvaziou ao mudar de página')
+    if (!corpo.includes('320,00')) throw new Error('o valor não chegou ao checkout')
+  })
+
+  await conferir('o checkout não deixa pagar sem escolher o frete', async () => {
+    const corpo = await pagina.locator('body').textContent()
+    if (!corpo.includes('Escolha o frete')) throw new Error('deixaria pagar sem frete')
+  })
+
+  await conferir('o total soma frete e desconto sem dar NaN', async () => {
+    await pagina.locator('input[placeholder="00000-000"]').fill('01310100')
+    await pagina.waitForTimeout(700)
+    await pagina.getByText('Correios SEDEX').click()
+    await pagina.waitForTimeout(500)
+    const corpo = await pagina.locator('body').textContent()
+    if (corpo.includes('NaN')) throw new Error('o total apareceu como NaN')
+    // 320 + 46,50 = 366,50, menos 5% do Pix = 348,18
+    if (!corpo.includes('348,18')) throw new Error('a conta do total está errada')
+  })
+
+  await conferir('a confirmação explica o que acontece depois', async () => {
+    await pagina.goto(`${BASE}/pedido-confirmado/`, { waitUntil: 'networkidle' })
+    await pagina.waitForTimeout(900)
+    const corpo = await pagina.locator('body').textContent()
+    if (!corpo.includes('Pagamento aprovado')) throw new Error('não confirmou')
+    if (!corpo.includes('dias úteis')) throw new Error('não diz o prazo de produção')
+  })
+
   await conferir('endereço antigo redireciona para o novo', async () => {
     await pagina.goto(`${BASE}/loja/painel/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(900)
