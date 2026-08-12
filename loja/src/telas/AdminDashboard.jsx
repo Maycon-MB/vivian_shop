@@ -26,9 +26,14 @@ import CatalogSection from './dashboard/sections/CatalogSection';
 import CartaoKpi from './painel/CartaoKpi';
 import CartaoPainel from './painel/CartaoPainel';
 import AbaPedidos from './painel/AbaPedidos';
+import AbaProdutos from './painel/AbaProdutos';
+import AbaMensagens from './painel/AbaMensagens';
+import AbaMarketing from './painel/AbaMarketing';
+import AbaConfiguracoes from './painel/AbaConfiguracoes';
 import { VendasPorDia, ProporcaoLinhas, MaisVendidos } from './painel/GraficosVisaoGeral';
 import FilaProducao from './painel/FilaProducao';
 import './painel.css';
+import './painel-abas.css';
 import { BASE } from '../base'
 
 const ABAS = ['dashboard', 'pedidos', 'catalogo', 'mensagens', 'marketing', 'config'];
@@ -380,109 +385,15 @@ const AdminDashboard = () => {
           <AbaPedidos onAbrirEtiqueta={() => setShowLabelPreview(true)} />
         )}
 
-        {activeTab === 'mensagens' && (
-           <Row className="g-4">
-             <Col lg={4}>
-               <Card className="border-0 p-4 bg-white h-100" style={{ borderRadius: '32px', border: '1px solid #2E9B9666', boxShadow: '0 15px 35px rgba(46,155,150,0.12)' }}>
-                 <h4 className="fw-black mb-4">Conversas</h4>
-                 <div className="d-flex flex-column gap-2">
-                    {[
-                      { name: 'Ana Silva', msg: 'Qual o prazo do planner?', time: '2m', active: true },
-                      { name: 'Carlos Lima', msg: 'Gostei do kit de atividades', time: '1h' },
-                      { name: 'Mariana P.', msg: 'Faz personalizado?', time: '3h' }
-                    ].map((chat, i) => (
-                      <div key={i} className={`p-3 rounded-4 cursor-pointer transition-all ${chat.active ? 'bg-primary bg-opacity-10 border border-primary border-opacity-20' : 'bg-light hover-bg-light-80'}`} style={{ cursor: 'pointer' }}>
-                        <div className="d-flex justify-content-between align-items-center mb-1">
-                          <span className="fw-bold small">{chat.name}</span>
-                          <span className="text-muted" style={{ fontSize: '10px' }}>{chat.time}</span>
-                        </div>
-                        <p className="text-muted small mb-0 text-truncate">{chat.msg}</p>
-                      </div>
-                    ))}
-                 </div>
-               </Card>
-             </Col>
-             <Col lg={8}>
-               <Card className="border-0 p-4 bg-white h-100 d-flex flex-column" style={{ borderRadius: '32px', border: '1px solid #2E9B9666', boxShadow: '0 15px 35px rgba(46,155,150,0.12)', minHeight: '500px' }}>
-                  <div className="border-bottom pb-3 mb-3 d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', color: '#2E9B96' }}>
-                      <User size={20} />
-                    </div>
-                    <div>
-                      <h5 className="mb-0 fw-bold">Ana Silva</h5>
-                      <span className="text-success small">● Online</span>
-                    </div>
-                  </div>
-                  <div className="flex-grow-1 overflow-auto mb-3 p-3 bg-light rounded-4 d-flex flex-column gap-3">
-                    <div className="bg-white p-3 rounded-4 shadow-sm align-self-start" style={{ maxWidth: '80%' }}>
-                      <p className="small mb-0">Olá Vivian! Vi o seu Kit de Rotina Visual. Qual o prazo de entrega para o CEP 04571-010?</p>
-                    </div>
-                    <div className="bg-primary text-white p-3 rounded-4 shadow-sm align-self-end" style={{ maxWidth: '80%', backgroundColor: '#2E9B96' }}>
-                      <p className="small mb-0">Olá Ana! Para esse CEP o prazo é de 5 dias úteis após a produção.</p>
-                    </div>
-                  </div>
-                  <div className="d-flex gap-2">
-                    <Form.Control placeholder="Escreva sua resposta..." className="rounded-pill py-2" />
-                    <Button variant="dark" className="rounded-circle d-flex align-items-center justify-content-center" style={{ width: '45px', height: '45px' }}>
-                      <Send size={18} />
-                    </Button>
-                  </div>
-               </Card>
-             </Col>
-           </Row>
-        )}
+        {activeTab === 'mensagens' && <AbaMensagens />}
 
-        {activeTab === 'marketing' && (
-           <Row className="g-4">
-               <Col lg={6}><MarketingIA approving={approving} onApprove={handleApprovePost} /></Col>
-               <Col lg={6}>
-                  <Card className="border-0 rounded-5 shadow-sm p-5 bg-white h-100">
-                     <h4 className="fw-black mb-4">Calendário Editorial</h4>
-                     <p className="text-muted">A IA agendou 4 posts para esta semana nos seus dois nichos.</p>
-                  </Card>
-               </Col>
-           </Row>
-        )}
+        {activeTab === 'marketing' && <AbaMarketing />}
 
         {activeTab === 'catalogo' && (
-            <CatalogSection onNewProduct={() => setShowNewProduct(true)} />
+          <AbaProdutos onNovoProduto={() => setShowNewProduct(true)} />
         )}
 
-        {activeTab === 'config' && (
-           <Card className="border-0 rounded-5 shadow-sm p-5 bg-white">
-                <h3 className="fw-black fs-4 mb-4" style={{ fontFamily: 'Fraunces' }}>Configurações da Loja</h3>
-                <Form className="d-flex flex-column gap-4" style={{ maxWidth: '600px' }}>
-                    <div className="p-4 rounded-4 bg-light bg-opacity-50">
-                        <h5 className="fw-bold fs-6 mb-3">Perfil das Lojas</h5>
-                        <Row className="g-3">
-                            <Col md={12}>
-                                <Form.Label className="small fw-bold">Nome de Exibição Principal</Form.Label>
-                                <Form.Control defaultValue="Feito para Você e Projeto Educar" className="py-2" />
-                            </Col>
-                            <Col md={6}>
-                                <Form.Label className="small fw-bold">E-mail de Contato</Form.Label>
-                                <Form.Control defaultValue="contato@feitoparavoce.com.br" />
-                            </Col>
-                            <Col md={6}>
-                                <Form.Label className="small fw-bold">WhatsApp Comercial</Form.Label>
-                                <Form.Control defaultValue="(11) 98765-4321" />
-                            </Col>
-                        </Row>
-                    </div>
-                    
-                    <div className="p-4 rounded-4 bg-light bg-opacity-50">
-                        <h5 className="fw-bold fs-6 mb-3">Notificações Inteligentes</h5>
-                        <Form.Check type="switch" id="notif-1" label="Avisar no WhatsApp sobre novos pedidos" defaultChecked className="mb-2" />
-                        <Form.Check type="switch" id="notif-2" label="Relatório semanal de desempenho por nicho" defaultChecked className="mb-2" />
-                        <Form.Check type="switch" id="notif-3" label="Sugerir posts no Instagram quando o estoque baixar" defaultChecked />
-                    </div>
-
-                    <Button variant="dark" className="rounded-pill py-3 fw-bold" onClick={() => triggerToast('Configurações salvas com sucesso!')}>
-                        Salvar Alterações
-                    </Button>
-                </Form>
-           </Card>
-        )}
+        {activeTab === 'config' && <AbaConfiguracoes />}
 
       </div>
 
