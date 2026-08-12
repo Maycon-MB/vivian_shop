@@ -4,7 +4,6 @@ import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import {
   base,
-  serieArea,
   eixoCategoria,
   eixoValor,
   degradeBarra,
@@ -19,12 +18,18 @@ import {
  * Cada um responde uma pergunta que a cliente realmente faz. Gráfico que
  * não responde pergunta é enfeite que atrasa o carregamento.
  *
- *   área    → "está vendendo mais ou menos que semana passada?"
- *   rosca   → "qual das minhas duas linhas puxa o faturamento?"
- *   barra   → "o que mais sai, e o que devo produzir primeiro?"
+ *   barra empilhada → "em que dias eu vendo, e quanto de cada linha?"
+ *   rosca           → "qual das duas linhas puxa o faturamento?"
+ *   barra deitada   → "o que mais sai, e o que produzir primeiro?"
  *
- * Descartei gráfico de dispersão, radar e mapa de calor: bonitos, mas
- * nenhum responde pergunta que ela tenha às sete da manhã.
+ * A primeira era um gráfico de linha e estava errada. Linha sugere
+ * variável contínua, e venda de loja pequena é evento solto: tem dia com
+ * pedido e dia sem. O resultado era um dente de serra que não dizia nada.
+ * Barra mostra o dia que vendeu, o dia que não vendeu, e a composição
+ * entre as duas linhas de uma vez.
+ *
+ * Descartei dispersão, radar e mapa de calor: bonitos, mas nenhum responde
+ * pergunta que ela tenha às sete da manhã.
  *
  * Os dados são de exemplo enquanto a loja não vende — e estão marcados
  * como tal na tela, para ela não confundir com venda real.
@@ -54,22 +59,52 @@ const somar = (lista) => lista.reduce((a, b) => a + b, 0);
 
 export const VendasPorDia = () => {
   const opcao = base({
-    legend: { show: false },
+    grid: { left: 8, right: 12, top: 16, bottom: 20, containLabel: true },
     tooltip: {
       trigger: 'axis',
+      axisPointer: { type: 'shadow' },
       backgroundColor: CORES.superficie,
       borderColor: CORES.linha,
       borderWidth: 1,
       padding: [10, 14],
       textStyle: { color: CORES.tinta, fontSize: 12.5 },
       extraCssText: 'box-shadow: 0 14px 34px -20px rgba(18,48,91,0.45); border-radius: 12px;',
-      valueFormatter: (v) => emReais(v),
+      valueFormatter: (v) => (v ? emReais(v) : 'sem venda'),
     },
-    xAxis: eixoCategoria(DIAS),
-    yAxis: eixoValor({ axisLabel: { color: CORES.tintaSuave, fontSize: 11, formatter: (v) => `R$ ${compacto(v)}` } }),
+    xAxis: {
+      ...eixoCategoria(DIAS),
+      boundaryGap: true,
+      axisLabel: {
+        color: CORES.tintaSuave,
+        fontSize: 10.5,
+        // Trinta rótulos não cabem: um a cada três basta para situar a data.
+        interval: 2,
+      },
+    },
+    yAxis: eixoValor({
+      axisLabel: { color: CORES.tintaSuave, fontSize: 11, formatter: (v) => `R$ ${compacto(v)}` },
+    }),
     series: [
-      serieArea('Personalizada', VENDAS_PERSONALIZADA, CORES.personalizada),
-      serieArea('Pedagógica', VENDAS_PEDAGOGICA, CORES.pedagogica),
+      {
+        name: 'Personalizada',
+        type: 'bar',
+        stack: 'dia',
+        data: VENDAS_PERSONALIZADA,
+        itemStyle: { color: CORES.personalizada },
+        barMaxWidth: 18,
+        emphasis: { focus: 'series' },
+      },
+      {
+        name: 'Pedagógica',
+        type: 'bar',
+        stack: 'dia',
+        data: VENDAS_PEDAGOGICA,
+        // O arredondamento vai só na última série da pilha, senão cada
+        // pedaço vira uma cápsula solta.
+        itemStyle: { color: CORES.pedagogica, borderRadius: [4, 4, 0, 0] },
+        barMaxWidth: 18,
+        emphasis: { focus: 'series' },
+      },
     ],
   });
 
@@ -80,6 +115,11 @@ export const ProporcaoLinhas = () => {
   const totalP = somar(VENDAS_PERSONALIZADA);
   const totalE = somar(VENDAS_PEDAGOGICA);
   const total = totalP + totalE;
+
+  const fatias = [
+    { nome: 'Personalizada', valor: totalP, cor: CORES.personalizada, obs: 'com frete e produção' },
+    { nome: 'Pedagógica', valor: totalE, cor: CORES.pedagogica, obs: 'sem custo de envio' },
+  ];
 
   const opcao = {
     ...base({ grid: undefined }),
@@ -125,7 +165,29 @@ export const ProporcaoLinhas = () => {
     ],
   };
 
-  return <ReactECharts option={opcao} style={{ height: 240, width: '100%' }} notMerge />;
+  /* A legenda embaixo carrega o valor e a proporção de cada linha: quem
+     olha a rosca quer saber quanto, não só qual pedaço é maior. */
+  return (
+    <div>
+      <ReactECharts option={opcao} style={{ height: 210, width: '100%' }} notMerge />
+
+      <ul className="rosca-legenda">
+        {fatias.map((fatia) => (
+          <li key={fatia.nome}>
+            <span className="rosca-bolinha" style={{ background: fatia.cor }} />
+            <span className="rosca-nome">
+              <strong>{fatia.nome}</strong>
+              <span>{fatia.obs}</span>
+            </span>
+            <span className="rosca-valor">
+              <strong>{emReais(fatia.valor)}</strong>
+              <span>{Math.round((fatia.valor / total) * 100)}%</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export const MaisVendidos = () => {

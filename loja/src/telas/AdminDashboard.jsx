@@ -135,7 +135,7 @@ const AdminDashboard = () => {
     },
     {
       rotulo: 'Vendas do mês',
-      valor: 16240,
+      valor: 16768,
       prefixo: 'R$ ',
       casas: 2,
       icone: <ShoppingBag size={20} />,
@@ -153,7 +153,7 @@ const AdminDashboard = () => {
     },
     {
       rotulo: 'Economizado em taxas',
-      valor: 3086,
+      valor: 3186,
       prefixo: 'R$ ',
       casas: 2,
       icone: <TrendingUp size={20} />,
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
             <Row className="g-3 mb-4">
               {indicadores.map((indicador, i) => (
                 <Col xxl={3} lg={6} key={indicador.rotulo}>
-                  <CartaoKpi {...indicador} atraso={i * 90} />
+                  <CartaoKpi {...indicador} atraso={i * 60} />
                 </Col>
               ))}
             </Row>
@@ -258,8 +258,8 @@ const AdminDashboard = () => {
               </Col>
             </Row>
 
-            <Row className="g-3 mb-3">
-              <Col xxl={4}>
+            <Row className="g-3 mb-3 align-items-start">
+              <Col xxl={4} lg={6}>
                 <CartaoPainel
                   titulo="Na sua bancada"
                   subtitulo="O que produzir primeiro."
@@ -271,7 +271,7 @@ const AdminDashboard = () => {
                 </CartaoPainel>
               </Col>
 
-              <Col xxl={4}>
+              <Col xxl={4} lg={6}>
                 <CartaoPainel
                   titulo="O que mais sai"
                   subtitulo="Unidades vendidas no mês."
@@ -284,10 +284,29 @@ const AdminDashboard = () => {
               </Col>
 
               <Col xxl={4}>
-                <div className="d-flex flex-column gap-3 h-100">
+                <CartaoPainel
+                  titulo="Marketing"
+                  subtitulo="Post sugerido para esta semana."
+                  cor="#2E9B96"
+                  info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda — nada vai para o seu Instagram sem você aprovar."
+                  semPadding
+                >
                   <MarketingIA approving={approving} onApprove={handleApprovePost} />
+                </CartaoPainel>
+              </Col>
+            </Row>
+
+            <Row className="g-3 mb-3">
+              <Col xs={12}>
+                <CartaoPainel
+                  titulo="Para despachar"
+                  subtitulo="Etiqueta e declaração de conteúdo saem juntas, prontas para imprimir."
+                  cor="#FFD400"
+                  info="A declaração vale para Correios e Jadlog: como você é MEI, ela substitui a nota fiscal no transporte."
+                  semPadding
+                >
                   <LogisticsCard onShowLabel={() => setShowLabelPreview(true)} />
-                </div>
+                </CartaoPainel>
               </Col>
             </Row>
 
