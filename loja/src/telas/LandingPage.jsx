@@ -167,7 +167,14 @@ const LandingPage = () => {
                   <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#12305B' }} onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}>
                     Ver Coleções
                   </Button>
-                  <Button variant="outline-dark" className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2" onClick={() => alert('Abrindo chat com a Vivian...')}>
+                  <Button
+                    as="a"
+                    href="https://wa.me/5521900000000?text=Oi%20Vivian!%20Vi%20sua%20loja%20e%20queria%20tirar%20uma%20d%C3%BAvida."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="outline-dark"
+                    className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2"
+                  >
                     <MessageSquare size={18}/> Mensagem
                   </Button>
                 </div>
@@ -313,7 +320,10 @@ const LandingPage = () => {
         onComplete={() => {
             setShowCheckout(false);
             setCart([]);
-            alert('Simulação de Pagamento Concluída! O pedido apareceria instantaneamente no seu Painel ADM.');
+            setAviso({
+              tipo: 'ok',
+              texto: 'Compra simulada. Numa loja no ar, este pedido já apareceria no painel da Vivian.',
+            });
         }}
       />
 
