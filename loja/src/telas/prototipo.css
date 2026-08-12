@@ -444,3 +444,47 @@ body {
 .app-container {
   min-height: 100vh;
 }
+
+/* ── Ajustes de celular ─────────────────────────────────────────────────────
+   Feitos depois de medir a tela em 375px, que é onde a maior parte das
+   clientes dela compra.
+   -------------------------------------------------------------------------- */
+
+/* A marca tinha tamanho fixo e era cortada pela borda da tela. */
+.marca-loja {
+  font-size: clamp(15px, 4.4vw, 24px);
+  line-height: 1.15;
+  max-width: 72vw;
+  white-space: normal;
+}
+
+@media (min-width: 992px) {
+  .marca-loja { max-width: none; white-space: nowrap; }
+}
+
+@media (max-width: 767px) {
+  /* A barra de navegação espremia cinco rótulos em 375px e quebrava
+     "Como funciona" em duas linhas. Passa a rolar na horizontal. */
+  .view-switcher {
+    width: calc(100% - 24px);
+    max-width: none;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .view-switcher::-webkit-scrollbar { display: none; }
+
+  .switcher-btn {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  /* Alvo de toque menor que 40px é difícil de acertar com o dedo. */
+  .navbar .btn,
+  .landing-page .btn,
+  .view-switcher .switcher-btn { min-height: 40px; }
+}

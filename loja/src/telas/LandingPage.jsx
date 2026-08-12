@@ -60,7 +60,8 @@ const LandingPage = () => {
             as="button"
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            style={{ fontFamily: 'Fraunces', fontSize: '24px', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
+            className="marca-loja"
+            style={{ fontFamily: 'Fraunces', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer', textAlign: 'left' }}
           >
             Feito para você!<span style={{ color: "#2E9B96" }}> Personalizados</span>
           </Navbar.Brand>
