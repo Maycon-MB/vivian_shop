@@ -110,13 +110,14 @@ export const DECISOES = [
     pergunta: 'Mais ou menos quantas vendas por mês você fazia no Elo7? Pode ser um chute. Serve para eu deixar a loja do tamanho certo e o custo mensal baixo.',
   },
   {
-    id: 7,
-    assunto: 'Declaração de conteúdo',
-    decisao: 'Continua existindo. Sai junto com a etiqueta, já preenchida com os itens, a quantidade e o valor. Você imprime, assina e leva.',
+    id: 19,
+    assunto: 'Seguro do frete',
+    decisao: 'Com declaração de conteúdo, o seguro cobre extravio mas não cobre avaria, e o teto é R$ 1.500. Com nota fiscal cobre os dois, com teto de R$ 30 mil.',
+    porque: 'Como você é MEI, pode escolher. Isso importa porque produto personalizado que chega quebrado não dá para revender: cada peça tem o nome de alguém.',
     quem: 'maycon',
     data: '11/08/2026',
     estado: 'aguardando',
-    pergunta: 'Pelos Correios está certo. Pela Jadlog eu ainda estou confirmando se aceitam a declaração ou se pedem nota fiscal — te falo assim que souber.',
+    pergunta: 'Não precisa decidir agora. Mas se você vender coisa que quebra fácil, vale a gente pensar nisso antes de a loja abrir.',
   },
 
   {
@@ -212,6 +213,15 @@ export const DECISOES = [
     decisao: 'Correios e Jadlog, as mesmas que você já usava. Aparecem lado a lado com preço e prazo, e quem compra escolhe.',
     quem: 'vivian',
     data: '10/08/2026',
+    estado: 'aprovado',
+  },
+  {
+    id: 7,
+    assunto: 'Declaração de conteúdo',
+    decisao: 'Continua existindo, e vale para as duas transportadoras. Sai junto com a etiqueta, já preenchida com os itens, a quantidade e o valor.',
+    porque: 'Confirmado: a Jadlog aceita declaração de conteúdo de MEI, sem precisar de nota fiscal. Desde abril de 2026 ela é eletrônica, então nem precisa mais preencher no papel.',
+    quem: 'maycon',
+    data: '11/08/2026',
     estado: 'aprovado',
   },
 ]

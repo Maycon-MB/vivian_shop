@@ -141,7 +141,19 @@ As medidas são cadastradas **por pacote fechado de 10**, não por peça — com
 
 Na postagem, o Melhor Envio devolve etiqueta e declaração de conteúdo juntas.
 
-**Ponto a confirmar antes de prometer:** a Jadlog, como transportadora privada, normalmente exige nota fiscal em vez de declaração de conteúdo. A cliente é MEI e pode emitir. Confirmar com o Melhor Envio antes de anunciar a Jadlog como opção.
+**Confirmado em 11/08/2026:** a Jadlog aceita declaração de conteúdo de MEI e pessoa física, sem exigir nota fiscal. Desde abril de 2026 o padrão é a DC-e, declaração eletrônica, no lugar do formulário em papel. A restrição de origem que existe — envios saindo do Paraná não podem usar declaração — não afeta a cliente, que despacha do Rio.
+
+**O que isso custa, e precisa aparecer no painel:** o documento escolhido define a cobertura do seguro.
+
+| | Declaração de conteúdo | Nota fiscal |
+|---|---|---|
+| Teto | R$ 1.500 | R$ 30.000 |
+| Extravio | coberto | coberto |
+| Avaria | **não coberto** | coberto |
+
+Avaria não coberta é um risco concreto para esta cliente: produto personalizado que chega quebrado não pode ser revendido, porque cada peça tem o nome de alguém — ela perde a produção inteira dos 5 dias.
+
+Como ela é MEI, pode emitir nota e ter a cobertura maior. Fica como decisão dela, a ser tomada antes do lançamento. O sistema deve suportar os dois documentos desde o começo, e não assumir declaração como única saída.
 
 ## Escopo da primeira versão
 
