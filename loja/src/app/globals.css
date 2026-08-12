@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Paleta e tipografia da loja.
+   Ver docs/superpowers/specs/2026-08-10-identidade-visual-design.md
+
+   Cada cor saiu de uma das duas logos que a cliente já usava no Elo7: o
+   verde-água e o rosa do "Feito para você", o amarelo do "Projeto Educar",
+   e o azul que as duas tinham virou a cor do texto.
+
+   Regra dura: o amarelo nunca é cor de texto. Sobre branco tem contraste
+   de 1.3:1, que é ilegível. Ele só entra como preenchimento, com a tinta
+   escrita por cima. */
+
+@theme {
+  --color-paper: #FBFAF7;
+  --color-surface: #FFFFFF;
+  --color-ink: #12305B;
+  --color-ink-soft: #6B7C8F;
+  --color-rule: #A8C6E8;
+  --color-rule-faint: #DCE9F6;
+  --color-chalk: #2E9B96;
+  --color-marker: #FFD400;
+  --color-heart: #C4436B;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-corpo: var(--font-atkinson), "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-corpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
