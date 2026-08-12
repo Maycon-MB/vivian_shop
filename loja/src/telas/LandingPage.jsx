@@ -313,7 +313,9 @@ const LandingPage = () => {
             <MessageCircle size={24} className="cursor-pointer text-white-50 hover:text-white" />
           </div>
           <div className="pt-5 border-top border-secondary text-white-50 small">
-            &copy; 2026 Feito para você! Personalizados &middot; Rio de Janeiro, RJ
+            <a href="/sobre/" className="text-white-50 text-decoration-none">Quem faz</a>
+            <span className="mx-2 text-white-50">·</span>
+            &copy; 2026 Feito para você! Personalizados
           </div>
         </Container>
       </footer>

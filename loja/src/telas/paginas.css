@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Entrar, Sobre e Baixar
+   ========================================================================== */
+
+.entrar,
+.sobre,
+.baixar-pagina {
+  background: var(--pl-light);
+  color: var(--pl-dark);
+  min-height: 100vh;
+  padding-bottom: 110px;
+}
+
+/* ── Entrar ─────────────────────────────────────────────────────────────── */
+.entrar-caixa {
+  max-width: 420px;
+  margin: 40px auto 0;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 20px;
+  padding: 34px 30px;
+  box-shadow: 0 1px 0 #DCE9F6, 0 26px 54px -34px rgba(18, 48, 91, .7);
+}
+
+.entrar-marca { text-align: center; margin-bottom: 26px; line-height: 1.2; }
+.entrar-marca span { display: block; font-family: var(--font-serif); font-size: 18px; font-weight: 700; }
+.entrar-marca strong { font-family: var(--font-serif); font-size: 18px; color: #2E9B96; }
+
+.entrar-caixa h1 { font-size: 21px; font-weight: 700; margin: 0 0 5px; text-align: center; }
+.entrar-sub { font-size: 13.5px; color: #6B7C8F; text-align: center; margin: 0 0 26px; }
+
+.entrar-form { display: grid; gap: 16px; }
+.entrar-form .form-label { font-size: 12.5px; font-weight: 700; margin-bottom: 5px; }
+
+.entrar-form .form-control {
+  border: 1px solid #DCE9F6;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+.entrar-form .form-control:focus {
+  border-color: #2E9B96;
+  box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
+}
+
+.entrar-erro {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: rgba(196, 67, 107, .1);
+  border: 1px solid rgba(196, 67, 107, .35);
+  color: #C4436B;
+  font-size: 13px;
+}
+
+.entrar-botao {
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 13px !important;
+  font-weight: 700 !important;
+  background: #12305B !important;
+  box-shadow: 0 14px 28px -16px rgba(18, 48, 91, .9);
+}
+
+.entrar-esqueci {
+  border: 0;
+  background: none;
+  color: #2E9B96;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.entrar-seguranca {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid #DCE9F6;
+  font-size: 12px;
+  color: #6B7C8F;
+  line-height: 1.5;
+}
+
+.entrar-seguranca svg { color: #2E9B96; flex-shrink: 0; margin-top: 1px; }
+
+.entrar-voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6B7C8F;
+  text-decoration: none;
+}
+
+/* ── Sobre ──────────────────────────────────────────────────────────────── */
+.sobre-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #2E9B96;
+  margin: 0 0 10px;
+}
+
+.sobre-titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 26px;
+  text-wrap: balance;
+}
+
+/* O aviso de rascunho fica visível de propósito: a história é dela, e
+   inventar passado de alguém para vender seria o pior que esta página
+   poderia fazer. */
+.sobre-rascunho {
+  border-left: 3px solid #FFD400;
+  background: rgba(255, 212, 0, .14);
+  border-radius: 0 12px 12px 0;
+  padding: 15px 18px;
+  font-size: 13.5px;
+  color: #6B7C8F;
+  margin-bottom: 28px;
+}
+
+.sobre-rascunho strong { color: #12305B; }
+
+.sobre-texto p {
+  font-size: 16.5px;
+  line-height: 1.7;
+  margin: 0 0 18px;
+  max-width: 62ch;
+}
+
+.sobre-linhas { display: grid; gap: 16px; margin: 34px 0; }
+
+@media (min-width: 768px) { .sobre-linhas { grid-template-columns: 1fr 1fr; } }
+
+.sobre-linha {
+  display: flex;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sobre-icone {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.sobre-icone.fisico { background: rgba(46, 155, 150, .14); color: #2E9B96; }
+.sobre-icone.digital { background: rgba(255, 212, 0, .22); color: #12305B; }
+
+.sobre-linha strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.sobre-linha p { margin: 0; font-size: 13.5px; color: #6B7C8F; line-height: 1.55; }
+
+.sobre-fechamento {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: linear-gradient(140deg, rgba(46, 155, 150, .1), rgba(255, 212, 0, .07));
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 30px;
+}
+
+.sobre-fechamento svg { color: #C4436B; flex-shrink: 0; margin-top: 2px; }
+.sobre-fechamento p { margin: 0; font-size: 15.5px; line-height: 1.6; }
+
+.sobre-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.sobre-botao {
+  background: #12305B;
+  color: #FFFFFF;
+  border-radius: 999px;
+  padding: 13px 26px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.sobre-botao:hover { color: #FFFFFF; }
+
+.sobre-whats {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #A8C6E8;
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #12305B;
+  text-decoration: none;
+}
+
+/* ── Baixar ─────────────────────────────────────────────────────────────── */
+.baixar-topo { text-align: center; max-width: 44ch; margin: 20px auto 36px; }
+
+.baixar-selo {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #FFD400, #E0BB00);
+  color: #12305B;
+  margin-bottom: 18px;
+  box-shadow: 0 18px 34px -18px rgba(255, 212, 0, 1);
+}
+
+.baixar-topo h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(25px, 4vw, 32px);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.baixar-topo p { color: #6B7C8F; margin: 0; }
+
+.baixar-lista { max-width: 620px; margin: 0 auto 22px; display: grid; gap: 12px; }
+
+.baixar-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 0 #DCE9F6, 0 16px 36px -30px rgba(18, 48, 91, .6);
+}
+
+.baixar-icone {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: rgba(255, 212, 0, .2);
+  color: #12305B;
+}
+
+.baixar-info { flex: 1; min-width: 160px; display: grid; }
+.baixar-info strong { font-size: 14.5px; }
+.baixar-info span { font-size: 12.5px; color: #6B7C8F; }
+
+.baixar-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 700;
+  font-size: 13.5px;
+  background: #12305B;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+
+.baixar-acao:hover { transform: translateY(-1px); }
+
+.baixar-acao.feito {
+  background: #FFFFFF;
+  color: #2E9B96;
+  border: 1px solid #2E9B96;
+}
+
+.baixar-avisos { max-width: 620px; margin: 0 auto 22px; display: grid; gap: 12px; }
+
+.baixar-aviso {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  background: #FFFFFF;
+  border: 1px solid #DCE9F6;
+  border-radius: 14px;
+  padding: 17px 19px;
+}
+
+.baixar-aviso svg { color: #2E9B96; flex-shrink: 0; margin-top: 2px; }
+.baixar-aviso strong { display: block; font-size: 14px; margin-bottom: 3px; }
+.baixar-aviso p { margin: 0; font-size: 13px; color: #6B7C8F; line-height: 1.55; }
+
+.baixar-ajuda { max-width: 620px; margin: 0 auto; text-align: center; }
+.baixar-ajuda p { font-size: 14px; color: #6B7C8F; margin: 0 0 16px; }
+
+.baixar-acoes-rodape { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* Estes dois botões nasceram no checkout e são usados aqui também. Ficam
+   repetidos de propósito: cada página carrega só o seu CSS, e importar a
+   folha inteira do checkout traria junto tudo que não é usado. */
+.baixar-pagina .acao-whats-grande,
+.baixar-pagina .acao-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 999px;
+  padding: 13px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.baixar-pagina .acao-whats-grande { background: #2E9B96; color: #FFFFFF; border: 0; }
+.baixar-pagina .acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
+.baixar-pagina .acao-voltar { border: 1px solid #A8C6E8; color: #12305B; }
