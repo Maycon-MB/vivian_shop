@@ -17,7 +17,7 @@
  */
 
 import { execSync } from 'node:child_process'
-import { cpSync, existsSync, rmSync } from 'node:fs'
+import { cpSync, existsSync, rmSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
@@ -57,6 +57,17 @@ console.log('\n3/3 · juntando os dois')
 rmSync(destinoLoja, { recursive: true, force: true })
 cpSync(saidaLoja, destinoLoja, { recursive: true })
 
-console.log(`\nPronto. Publicar com:\n  npx gh-pages -d dist\n`)
+/**
+ * Sem este arquivo o GitHub Pages processa o site com Jekyll, que descarta
+ * tudo começando com underscore — e o Next põe os scripts, o CSS e as
+ * fontes em `_next/`. O resultado é um 404 silencioso: o HTML carrega, mas
+ * a página fica em branco ou nem abre.
+ *
+ * Precisa vir junto de `gh-pages --dotfiles`, senão o publicador ignora
+ * arquivos que começam com ponto e este some no caminho.
+ */
+writeFileSync(path.join(dist, '.nojekyll'), '')
+
+console.log(`\nPronto. Publicar com:\n  npx gh-pages -d dist --dotfiles\n`)
 console.log('  /            protótipo')
 console.log('  /loja/       loja real\n')
