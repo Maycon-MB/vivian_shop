@@ -115,6 +115,14 @@ const BLOCOS = [
         linhas: 2,
       },
       {
+        id: 'taxaelo7',
+        pergunta: 'Quanto o Elo7 ficava de cada venda sua?',
+        porque:
+          'O painel tem uma tela que mostra quanto você economiza saindo de lá. Hoje ela usa um chute meu de 12%, e chute não serve para você tomar decisão. Se lembrar mais ou menos, já vale.',
+        dica: 'ex: uns 12% / não lembro, mas era bem alto',
+        linhas: 2,
+      },
+      {
         id: 'volume',
         pergunta: 'Mais ou menos quantos pedidos por mês você fazia no Elo7?',
         porque:
