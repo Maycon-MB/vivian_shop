@@ -210,6 +210,45 @@ const BLOCOS = [
     ],
   },
   {
+    id: 'voce',
+    titulo: 'Você na loja',
+    resumo: 'A parte que faz alguém comprar de você e não de uma loja qualquer.',
+    perguntas: [
+      {
+        id: 'historia',
+        pergunta: 'Como você começou a fazer isso?',
+        porque:
+          'A página "Quem faz" está com um texto meu, provisório, e quem tem que contar essa história é você. Pode escrever do seu jeito, ou mandar um áudio no WhatsApp que eu transformo em texto — sem inventar nada.',
+        dica: 'quando começou, por que, para quem você faz',
+        linhas: 5,
+      },
+      {
+        id: 'depoimentos',
+        pergunta: 'Você tem print de elogio de alguma cliente do Elo7?',
+        porque:
+          'A loja tem um espaço reservado para um depoimento de verdade, e ele está vazio de propósito: inventar a fala de uma mãe para vender material de inclusão destrói exatamente a confiança que a loja precisa construir. Só peça autorização antes de eu publicar.',
+        dica: 'pode mandar os prints no WhatsApp',
+        linhas: 3,
+      },
+      {
+        id: 'marca',
+        pergunta: 'Você tem os arquivos das suas logos e alguma foto sua trabalhando?',
+        porque:
+          'Montei as cores a partir dos prints que você mandou, mas print perde qualidade quando aumenta. O arquivo original deixa a logo nítida em qualquer tamanho. A foto é para a página "Quem faz" — não precisa ser profissional, uma da bancada já vale.',
+        dica: 'tenho / não acho mais / posso tirar uma foto',
+        linhas: 2,
+      },
+      {
+        id: 'instagram',
+        pergunta: 'Qual é o seu Instagram?',
+        porque:
+          'Para a loja linkar, e para eu começar os posts que a gente combinou. Se você preferir abrir um novo só da loja, também dá — me diga qual dos dois.',
+        dica: '@seuperfil',
+        linhas: 2,
+      },
+    ],
+  },
+  {
     id: 'endereco',
     titulo: 'O endereço da loja na internet',
     resumo: 'O nome que a pessoa digita no navegador.',
