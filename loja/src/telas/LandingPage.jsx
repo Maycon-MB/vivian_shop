@@ -17,7 +17,6 @@ import {
 import { Instagram, Facebook } from './icones-marca';
 import { PRODUTOS } from './catalogo';
 import RodapeConfianca from './RodapeConfianca';
-import BotaoWhatsApp from './BotaoWhatsApp';
 import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
 
@@ -305,8 +304,6 @@ const LandingPage = () => {
       </ToastContainer>
 
       <RodapeConfianca />
-
-      <BotaoWhatsApp />
     </div>
   );
 };

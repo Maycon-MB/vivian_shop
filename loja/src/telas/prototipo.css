@@ -469,11 +469,24 @@ body {
 }
 
 @media (max-width: 767px) {
-  /* A barra de navegação espremia cinco rótulos em 375px e quebrava
-     "Como funciona" em duas linhas. Passa a rolar na horizontal. */
+  /* A barra que troca entre as áreas do projeto sai do rodapé no celular.
+     Fixa embaixo, ela cobria o fim de cada página durante a rolagem,
+     vazava 110px pela direita e cortava rótulo no meio da palavra. Vira
+     uma faixa no topo, que rola junto com a página e não esconde nada.
+
+     Ela é do protótipo e some quando a loja abrir de verdade — mas
+     enquanto existe, não pode atrapalhar quem está avaliando as telas. */
   .view-switcher {
-    width: calc(100% - 24px);
+    position: static;
+    transform: none;
+    width: 100%;
     max-width: none;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(18, 48, 91, .12);
+    box-shadow: none;
+    background: rgba(255, 255, 255, .96);
+    padding: 8px 12px;
     overflow-x: auto;
     justify-content: flex-start;
     scrollbar-width: none;
@@ -484,51 +497,26 @@ body {
 
   .switcher-btn {
     flex-shrink: 0;
-    padding: 10px 14px;
+    padding: 9px 13px;
     font-size: 10px;
     white-space: nowrap;
+    min-height: 40px;
   }
 
-  /* Alvo de toque menor que 40px é difícil de acertar com o dedo. */
-  .navbar .btn,
-  .landing-page .btn,
-  .view-switcher .switcher-btn { min-height: 40px; }
-}
+  /* Sem barra fixa embaixo, as páginas não precisam mais reservar o
+     espaço que ela ocupava. */
+  .produto-pagina,
+  .checkout,
+  .confirmado,
+  .entrar,
+  .sobre,
+  .baixar-pagina { padding-bottom: 32px; }
 
-
-/* ── Contraste ──────────────────────────────────────────────────────────────
-   Medido com a fórmula da WCAG, não no olho.
-   -------------------------------------------------------------------------- */
-
-/* Fundo verde com texto branco pequeno: usa a versão escura. */
-.btn-primary,
-.glass-pill,
-.switcher-btn.active {
-  --bs-btn-bg: var(--pl-verde-texto);
-  --bs-btn-border-color: var(--pl-verde-texto);
-}
-
-/* O botão de comprar é a ação principal da loja: sólido, não vazado.
-   Contorno fino num cartão claro não convida ao clique, e no celular
-   some. */
-.premium-card .btn-outline-dark {
-  --bs-btn-color: #FFFFFF;
-  --bs-btn-bg: var(--pl-dark);
-  --bs-btn-border-color: var(--pl-dark);
-  --bs-btn-hover-bg: #0D2445;
-  --bs-btn-hover-border-color: #0D2445;
-  --bs-btn-hover-color: #FFFFFF;
-}
-
-/* O preço precisa pesar mais que o nome do produto: é o que decide a
-   compra, e antes tinha o mesmo tamanho da descrição. */
-.premium-card .fs-5.fw-black {
-  font-size: 1.35rem !important;
-  letter-spacing: -0.01em;
-}
-
-@media (max-width: 767px) {
-  /* A marca colava no botão de menu. */
   .navbar .container { gap: 12px; }
   .marca-loja { max-width: 66vw; }
 }
+
+/* Tabela larga rola dentro do próprio bloco, e não empurra a página
+   inteira para o lado. */
+.table-responsive { overflow-x: auto; max-width: 100%; }
+.painel table { min-width: 560px; }
