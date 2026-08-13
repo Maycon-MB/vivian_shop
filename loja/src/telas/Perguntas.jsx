@@ -22,10 +22,10 @@ import { MessageCircle, Check, Copy, Save } from 'lucide-react';
  * responde uma coisa melhor do que a que foi perguntada.
  */
 
-/* PENDENTE-LANCAMENTO: número de exemplo. Este é o meu WhatsApp, não o da
-   Vivian — as respostas vêm para mim, não para a loja. Trocar antes de
-   mandar o link para ela, senão o botão abre uma conversa com ninguém. */
-const WHATSAPP_DO_MAYCON = '5521999999999';
+/* O WhatsApp do Maycon, e não o da loja: quem recebe estas respostas é
+   quem está construindo, não quem vende. O 55 na frente é o país — sem
+   ele o link não abre para quem estiver fora do Brasil. */
+const WHATSAPP_DO_MAYCON = '5521974587181';
 
 const CHAVE = 'feito-para-voce:respostas-vivian';
 
