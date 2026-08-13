@@ -162,7 +162,7 @@ const LandingPage = () => {
                 className="position-relative"
               >
                 <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
-                  <img src={`${BASE}hero_boutique_vivian_1778705287616.png`} alt="Hero" className="w-100" />
+                  <img src={`${BASE}hero_boutique_vivian_1778705287616.png`} alt="Mesa de trabalho com cadernos, adesivos e material pedagógico adaptado" className="w-100" />
                 </div>
                 {/* Espaço reservado para um depoimento real. Inventar a fala
                     de uma mãe atípica para vender material de inclusão é o
@@ -225,9 +225,9 @@ const LandingPage = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Sua Compra é <span style={{ color: '#2E9B96' }}>Segura</span></h2>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Dá para <span style={{ color: '#2E9B96' }}>confiar</span></h2>
               <p className="text-muted fs-5">
-                Sabemos que confiança se conquista. Por isso, a loja utiliza as tecnologias de pagamento mais seguras do Brasil, garantindo a proteção total dos seus dados.
+                Comprar de quem você não conhece dá receio, e eu entendo. Por isso o pagamento passa pelo Mercado Pago: eu não vejo nem guardo nenhum dado do seu cartão.
               </p>
             </Col>
           </Row>
@@ -235,22 +235,22 @@ const LandingPage = () => {
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-success bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><ShieldCheck size={32} color="#198754" /></div>
-                <h4 className="fw-black fs-5 mb-3">Segurança Bancária</h4>
-                <p className="small text-muted mb-0">Pagamentos processados via Mercado Pago. Seus dados de cartão nunca são salvos em nosso sistema.</p>
+                <h4 className="fw-black fs-5 mb-3">Pagamento seguro</h4>
+                <p className="small text-muted mb-0">O Mercado Pago cuida do pagamento. Os dados do seu cartão não passam por mim em momento nenhum.</p>
               </div>
             </Col>
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#2E9B96" /></div>
-                <h4 className="fw-black fs-5 mb-3">Suporte Real</h4>
-                <p className="small text-muted mb-0">Dúvidas sobre o material ou personalização? Vivian atende pessoalmente cada cliente no WhatsApp.</p>
+                <h4 className="fw-black fs-5 mb-3">Falo com você</h4>
+                <p className="small text-muted mb-0">Quem responde no WhatsApp sou eu mesma, a mesma pessoa que faz as peças. Pode perguntar qualquer coisa antes de comprar.</p>
               </div>
             </Col>
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#C4436B" /></div>
-                <h4 className="fw-black fs-5 mb-3">Qualidade Artesanal</h4>
-                <p className="small text-muted mb-0">Cada peça é produzida com o carinho e o rigor técnico que sua família merece. Satisfação 100% garantida.</p>
+                <h4 className="fw-black fs-5 mb-3">Se vier errado, eu refaço</h4>
+                <p className="small text-muted mb-0">Faço cada peça uma a uma. Se chegar com defeito ou diferente do que combinamos, eu refaço — sem discussão e sem custo para você.</p>
               </div>
             </Col>
           </Row>

@@ -330,18 +330,28 @@
 }
 
 @media (max-width: 991px) {
+  /* A gaveta fechada sai da tela, mas sair da tela não basta: os botões
+     dela continuavam recebendo foco pelo Tab, e quem navega por teclado
+     via o foco desaparecer no nada por oito paradas seguidas.
+     `visibility: hidden` tira do fluxo de foco; o `transition` atrasa a
+     volta dela para a animação de abrir não ser cortada. */
   .sidebar-nav {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(-100%);
-    transition: transform .25s ease;
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
     z-index: 1050;
     width: 268px;
   }
 
-  .sidebar-nav.open { transform: translateX(0); }
+  .sidebar-nav.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform .25s ease, visibility 0s;
+  }
   .sidebar-nav.recolhida { width: 268px; padding-inline: 14px; }
   .sidebar-nav.recolhida .sidebar-item { justify-content: flex-start; padding-inline: 14px !important; }
 }

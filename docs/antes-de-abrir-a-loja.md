@@ -35,6 +35,21 @@ que precisa de ação está marcado assim.
 - [ ] **Depoimentos reais**, com autorização de quem escreveu
 - [ ] **Número de WhatsApp verdadeiro** — hoje está `5521900000000` em toda a loja
 
+## Precisa de validação profissional
+
+- [ ] **Política de devolução.** O art. 49 do Código de Defesa do Consumidor
+      dá 7 dias de arrependimento em compra pela internet e não abre exceção
+      escrita para produto personalizado. Só que uma peça feita com o nome de
+      outra criança não pode ser revendida: se a devolução acontecer, o
+      prejuízo é inteiro da Vivian.
+
+      O texto no rodapé hoje informa o direito sem prometer nada além dele e
+      pede contato antes, mas **isso precisa passar por um contador ou
+      advogado antes de a loja abrir**. Prometer menos que a lei pode ser
+      cláusula abusiva; prometer mais custa dinheiro dela em cada devolução.
+
+      Eu não sou advogado e não tenho como decidir isso.
+
 ## Decisões dela que ainda faltam
 
 - [ ] Formato do material pedagógico: um arquivo por compra ou pacote com vários?

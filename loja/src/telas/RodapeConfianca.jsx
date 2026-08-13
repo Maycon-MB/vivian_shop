@@ -151,11 +151,22 @@ const RodapeConfianca = () => (
 
           <div style={estiloItem}>
             <RotateCcw size={18} color={cores.aguaLinhaPersonalizada} style={{ flexShrink: 0, marginTop: 2 }} />
+            {/* PENDENTE-LANCAMENTO: este texto precisa de validação de um
+                contador ou advogado antes de a loja abrir.
+                O art. 49 do Código de Defesa do Consumidor dá 7 dias de
+                arrependimento em compra pela internet e não abre exceção
+                escrita para produto personalizado. Só que uma peça feita
+                com o nome de outra criança não pode ser revendida: se a
+                devolução acontecer, o prejuízo é inteiro da Vivian.
+                Por isso o texto informa o direito sem prometer nada além
+                dele, e pede contato antes — o acerto caso a caso protege
+                os dois lados melhor que uma promessa larga demais. */}
             <span>
-              Comprou pela internet e se arrependeu? Você tem{' '}
+              Comprou pela internet e se arrependeu? O Código de Defesa do Consumidor te dá{' '}
               <strong style={{ color: cores.azulTinta }}>7 dias</strong> a partir do recebimento
-              para desistir e receber o dinheiro de volta. É o direito de arrependimento do
-              Código de Defesa do Consumidor (art. 49).
+              (art. 49). Nos materiais digitais é só avisar. Nos produtos personalizados, que
+              são feitos com o nome de alguém, me chame antes: a gente resolve conversando, do
+              jeito que for melhor para você.
             </span>
           </div>
         </Col>
