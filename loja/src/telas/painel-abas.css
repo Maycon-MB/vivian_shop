@@ -393,7 +393,7 @@
 .opcoes { display: grid; gap: 12px; }
 
 .opcao { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
-.opcao input { margin-top: 3px; width: 17px; height: 17px; accent-color: #2E9B96; flex-shrink: 0; }
+.opcao input { margin-top: 3px; width: 17px; height: 17px; accent-color: #1F736F; flex-shrink: 0; }
 .opcao strong { display: block; font-size: 14px; }
 .opcao small { font-size: 12.5px; color: var(--painel-tinta-suave); }
 

@@ -28,7 +28,7 @@ const AbaConfiguracoes = () => (
     <CartaoPainel
       titulo="Sua loja"
       subtitulo="Como sua loja aparece para quem chega."
-      cor="#2E9B96"
+      cor="#1F736F"
     >
       <div className="form-grade">
         <label className="campo campo-largo">

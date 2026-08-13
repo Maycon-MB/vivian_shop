@@ -64,7 +64,7 @@ const LandingPage = () => {
             className="marca-loja"
             style={{ fontFamily: 'Fraunces', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer', textAlign: 'left' }}
           >
-            Feito para você!<span style={{ color: "#2E9B96" }}> Personalizados</span>
+            Feito para você!<span style={{ color: "#1F736F" }}> Personalizados</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -92,7 +92,7 @@ const LandingPage = () => {
                         exit={{ scale: 0 }}
                         className="position-absolute top-0 start-100 translate-middle"
                     >
-                        <Badge pill bg="primary" style={{ backgroundColor: '#2E9B96', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Badge pill bg="primary" style={{ backgroundColor: '#1F736F', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {cartCount}
                         </Badge>
                     </motion.div>
@@ -114,12 +114,12 @@ const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#2E9B96', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
+                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#1F736F', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
                     PERSONALIZADOS SOB ENCOMENDA & MATERIAL PEDAGÓGICO DIGITAL
                 </div>
                 <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Fraunces', color: '#12305B', lineHeight: 1.1 }}>
                   Design que acolhe e <br/>
-                  <span style={{ color: '#2E9B96' }}>organiza</span> vidas.
+                  <span style={{ color: '#1F736F' }}>organiza</span> vidas.
                 </h1>
                 <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: 'clamp(16px, 4vw, 20px)' }}>
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
@@ -188,8 +188,8 @@ const LandingPage = () => {
         <Container>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
             <div className="mb-4 mb-md-0">
-              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#2E9B96' }}>
-                <div style={{ width: '40px', height: '1px', backgroundColor: '#2E9B96' }}></div>
+              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#1F736F' }}>
+                <div style={{ width: '40px', height: '1px', backgroundColor: '#1F736F' }}></div>
                 <span className="small fw-black text-uppercase ls-widest">Coleções 2026</span>
               </div>
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
@@ -225,7 +225,7 @@ const LandingPage = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Dá para <span style={{ color: '#2E9B96' }}>confiar</span></h2>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Dá para <span style={{ color: '#1F736F' }}>confiar</span></h2>
               <p className="text-muted fs-5">
                 Comprar de quem você não conhece dá receio, e eu entendo. Por isso o pagamento passa pelo Mercado Pago: eu não vejo nem guardo nenhum dado do seu cartão.
               </p>
@@ -241,7 +241,7 @@ const LandingPage = () => {
             </Col>
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#2E9B96" /></div>
+                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#1F736F" /></div>
                 <h4 className="fw-black fs-5 mb-3">Falo com você</h4>
                 <p className="small text-muted mb-0">Quem responde no WhatsApp sou eu mesma, a mesma pessoa que faz as peças. Pode perguntar qualquer coisa antes de comprar.</p>
               </div>

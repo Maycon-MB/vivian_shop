@@ -245,6 +245,11 @@ const conferir = async (nome, fn) => {
     await pagina.getByRole('button', { name: /^Pagar$/ }).click()
 
     await pagina.waitForURL(/pedido-confirmado/, { timeout: 20000 })
+    /* `waitForURL` volta assim que o endereço muda, e nesse instante a
+       tela ainda não desenhou. Ler o texto agora pega a página em branco
+       e acusa uma falha que não existe. Esperar o número do pedido é o
+       sinal de que o React já montou com o pedido em mãos. */
+    await pagina.locator('.confirmado-topo p').first().waitFor({ timeout: 15000 })
     const confirmacao = await pagina.locator('body').textContent()
     // O número não é fixo: cada compra feita nesta mesma sessão avança o
     // contador. O que importa é ele existir e ter os quatro dígitos.

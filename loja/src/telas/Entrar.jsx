@@ -43,13 +43,28 @@ const Entrar = () => {
 
           <Form onSubmit={entrar} className="entrar-form">
             <Form.Group>
-              <Form.Label>E-mail</Form.Label>
-              <Form.Control type="email" required placeholder="seu@email.com" autoComplete="username" />
+              <Form.Label htmlFor="entrar-email">E-mail</Form.Label>
+              <Form.Control
+                id="entrar-email"
+                type="email"
+                required
+                placeholder="seu@email.com"
+                autoComplete="username"
+              />
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Senha</Form.Label>
-              <Form.Control type="password" required autoComplete="current-password" />
+              {/* O rótulo precisa apontar para o campo. Sem o par
+                  htmlFor/id, quem usa leitor de tela ouve "campo de senha"
+                  sem saber de qual formulário — e clicar no texto "Senha"
+                  não põe o cursor no campo. */}
+              <Form.Label htmlFor="entrar-senha">Senha</Form.Label>
+              <Form.Control
+                id="entrar-senha"
+                type="password"
+                required
+                autoComplete="current-password"
+              />
             </Form.Group>
 
             {erro && (

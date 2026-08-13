@@ -16,6 +16,10 @@
   --rule:       #A8C6E8;
   --rule-faint: #DCE9F6;
   --chalk:      #2E9B96;
+  /* O mesmo verde, escurecido até passar em contraste. O de cima continua
+     sendo a cor da marca e é o que a paleta mostra; este é o que pode
+     encostar em texto. Branco sobre #2E9B96 dá 3,36:1 e reprova. */
+  --chalk-texto: #1F736F;
   --heart:      #C4436B;
   --marker:     #FFD400;
   --marker-ink: #12305B;
@@ -176,7 +180,7 @@
 .identity .page--education .line { background: var(--marker); }
 
 .identity .page h2 { font-size: clamp(30px, 4.2vw, 46px); }
-.identity .page--stationery h2 { color: var(--chalk); }
+.identity .page--stationery h2 { color: var(--chalk-texto); }
 
 .identity .page .tagline { color: var(--ink-soft); font-size: 15px; }
 
@@ -245,7 +249,7 @@
   border-bottom: 2px solid transparent;
 }
 
-.identity .page--stationery .go { color: var(--chalk); }
+.identity .page--stationery .go { color: var(--chalk-texto); }
 .identity .page--education .go { color: var(--ink); }
 .identity .go:hover,
 .identity .go:focus-visible { border-bottom-color: currentColor; }
@@ -409,7 +413,7 @@
   border-radius: 4px;
 }
 
-.identity .product--st .badge { background: var(--chalk); color: #FFFFFF; }
+.identity .product--st .badge { background: var(--chalk-texto); color: #FFFFFF; }
 .identity .product--ed .badge { background: var(--marker); color: var(--marker-ink); }
 
 .identity .product h4 {
@@ -530,7 +534,7 @@
   border-radius: 4px;
 }
 
-.identity .actor.by-system { background: var(--chalk); color: #FFFFFF; }
+.identity .actor.by-system { background: var(--chalk-texto); color: #FFFFFF; }
 .identity .actor.by-vivian { background: var(--marker); color: var(--marker-ink); }
 .identity .actor.by-buyer {
   background: transparent;
@@ -571,7 +575,7 @@
 
 .identity .routine .time {
   font-variant-numeric: tabular-nums;
-  color: var(--chalk);
+  color: var(--chalk-texto);
   font-weight: 700;
   white-space: nowrap;
 }

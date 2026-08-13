@@ -42,7 +42,17 @@ const OrderTable = ({ orders, onSelectOrder }) => {
                 </span>
               </td>
               <td className="border-0 py-3 text-end">
-                <Button variant="light" size="sm" className="rounded-circle p-2"><Eye size={14}/></Button>
+                <Button
+                  variant="light"
+                  size="sm"
+                  className="rounded-circle p-2"
+                  /* Botão só de ícone precisa dizer o que faz: sem isto o
+                     leitor de tela anuncia apenas "botão", três vezes
+                     seguidas, e quem ouve não sabe qual pedido é qual. */
+                  aria-label={`Ver o pedido ${order.id}`}
+                >
+                  <Eye size={14} aria-hidden="true" />
+                </Button>
               </td>
             </tr>
           ))}

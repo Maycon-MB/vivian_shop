@@ -23,7 +23,7 @@ const FILA = [
 const cor = (restantes) => {
   if (restantes <= 0) return '#C4436B';
   if (restantes <= 1) return '#FFD400';
-  return '#2E9B96';
+  return '#1F736F';
 };
 
 const legenda = (restantes) => {

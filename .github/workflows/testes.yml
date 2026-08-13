@@ -1,13 +1,18 @@
-# Roda a conferência inteira a cada envio.
+# Confere tudo a cada envio e, se passar, publica.
 #
-# Existe porque até agora os testes só rodavam se eu lembrasse de rodar. Os
-# dois erros mais caros deste projeto — o botão de comprar que virou link
-# morto e o total que apareceu como "R$ NaN" — passaram por build, lint e
-# testes de unidade. O que pegou os dois foi olhar a tela.
+# Existe porque até pouco tempo os testes só rodavam se eu lembrasse, e a
+# publicação era um comando na minha mão. Os dois erros mais caros deste
+# projeto — o botão de comprar que virou link morto e o total que apareceu
+# como "R$ NaN" — passaram por build, lint e testes de unidade. O que pegou
+# os dois foi olhar a tela.
 #
-# Por isso aqui não para no `npm test`: sobe o site montado e compra de
-# verdade, do carrinho até o pedido aparecer no painel. Se essa compra
-# quebrar, o envio fica marcado como quebrado antes de chegar na Vivian.
+# Por isso a conferência aqui não para no `npm test`. Ela sobe o site
+# montado e, contra ele: compra de ponta a ponta, passa o pente fino de
+# acessibilidade e mede peso e tempo de cada tela.
+#
+# A publicação só acontece depois que tudo isso passa, e só na branch
+# principal. É a ordem que importa: automatizar a publicação antes de a
+# rede de segurança existir seria só publicar o erro mais rápido.
 
 name: testes
 
@@ -16,17 +21,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # Permite rodar pelo botão, quando eu quiser conferir sem enviar nada.
   workflow_dispatch:
 
 jobs:
   conferir:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    defaults:
-      run:
-        working-directory: loja
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -38,41 +38,55 @@ jobs:
           cache-dependency-path: loja/package-lock.json
 
       # `npm ci` e não `npm install`: instala exatamente o que está no
-      # package-lock. Uma versão diferente aqui do que roda na minha máquina
-      # transformaria este teste numa loteria.
+      # package-lock. Uma versão diferente aqui do que roda na minha
+      # máquina transformaria esta conferência numa loteria.
       - name: instalar
         run: npm ci
+        working-directory: loja
 
       - name: tipos
         run: npx tsc --noEmit
+        working-directory: loja
 
       - name: lint
         run: npx eslint src --ext .ts,.tsx,.js,.jsx --max-warnings 40
+        working-directory: loja
 
-      - name: testes de domínio e serviços
+      - name: regras de negócio e telas
         run: npm test
+        working-directory: loja
 
       # Monta pelo mesmo script que publica, e não por `next build` direto:
       # o que vai ao ar tem caminho /vivian_shop e redirecionamentos dos
-      # endereços antigos. Testar um artefato diferente do que é publicado
-      # é testar outra coisa.
+      # endereços antigos. Testar artefato diferente do publicado é testar
+      # outra coisa.
       - name: montar o site como vai ao ar
         run: node scripts/publicar.mjs
-        working-directory: .
 
-      - name: servir o site montado
+      # O servidor próprio comprime, como o GitHub Pages comprime. Sem
+      # isso, a medição de peso mede o texto cru e acusa três vezes o que
+      # realmente trafega.
+      - name: subir o site
         run: |
-          mkdir -p publicado
-          cp -r dist publicado/vivian_shop
-          npx --yes http-server publicado -p 4173 --silent &
+          node scripts/servir.cjs 4173 &
           npx --yes wait-on http://127.0.0.1:4173/vivian_shop/ --timeout 60000
-        working-directory: .
 
       - name: instalar o navegador
         run: npx playwright install --with-deps chromium
+        working-directory: loja
 
       - name: comprar de ponta a ponta
-        run: node ../scripts/testar-navegacao.cjs
+        run: node scripts/testar-navegacao.cjs
+        env:
+          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+
+      - name: acessibilidade
+        run: node scripts/testar-acessibilidade.cjs
+        env:
+          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+
+      - name: peso e tempo das telas
+        run: node scripts/medir-desempenho.cjs
         env:
           BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
 
@@ -86,3 +100,49 @@ jobs:
           path: loja/telas-da-falha/
           if-no-files-found: ignore
           retention-days: 7
+
+      # O site já montado segue para a publicação sem ser montado de novo:
+      # publicar um artefato diferente do que foi testado anularia o teste.
+      - name: guardar o site montado
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          include-hidden-files: true
+          retention-days: 1
+
+  publicar:
+    needs: conferir
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: pegar o site que passou nos testes
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+
+      # O `.nojekyll` é o que impede o GitHub de ignorar a pasta `_next`,
+      # cujo nome começa com underscore. Sem ele, o site publica e abre
+      # sem nenhum estilo nem JavaScript.
+      - name: conferir o .nojekyll antes de publicar
+        run: |
+          test -f dist/.nojekyll || { echo "faltou o .nojekyll — o site publicaria quebrado"; exit 1; }
+          test -f dist/index.html || { echo "faltou o index.html"; exit 1; }
+
+      - name: publicar
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          enable_jekyll: false
+          commit_message: 'publica ${{ github.sha }}'

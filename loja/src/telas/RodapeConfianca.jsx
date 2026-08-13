@@ -26,11 +26,11 @@ import { ShieldCheck, Truck, RotateCcw, MessageCircle, MapPin } from 'lucide-rea
  */
 
 const cores = {
-  aguaLinhaPersonalizada: '#2E9B96',
+  aguaLinhaPersonalizada: '#1F736F',
   amareloLinhaPedagogica: '#FFD400',
   azulTinta: '#12305B',
   papel: '#FBFAF7',
-  cinzaApoio: '#6B7C8F',
+  cinzaApoio: '#5F6F80',
   borda: '#DCE9F6',
 };
 
