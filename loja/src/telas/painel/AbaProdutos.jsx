@@ -78,7 +78,7 @@ const PRODUTOS = [
     preco: 39,
     vendidos: 54,
     ativo: true,
-    imagem: '/rotina_visual_premium_1778703012017.png',
+    imagem: '/rotina_visual_premium_1778703012017.webp',
   },
   {
     id: 7,
@@ -87,7 +87,7 @@ const PRODUTOS = [
     preco: 29,
     vendidos: 62,
     ativo: true,
-    imagem: '/jogo_emocoes_premium_1778702950986.png',
+    imagem: '/jogo_emocoes_premium_1778702950986.webp',
   },
 ];
 
