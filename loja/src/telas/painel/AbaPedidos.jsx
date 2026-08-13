@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Search, Printer, MessageCircle, Package, Download, Eye } from 'lucide-react';
 import CartaoPainel from './CartaoPainel';
 import InfoBotao from './InfoBotao';
-import { PEDIDOS, ESTADOS, PRECISA_DE_ACAO, totalDe, contarPor } from './dadosPedidos';
+import { PEDIDOS, ESTADOS, PRECISA_DE_ACAO, totalDe } from './dadosPedidos';
 import { emReais } from './graficos';
+import { carregarPedidosDaLoja } from './pedidosDaLoja';
 
 /**
  * Pedidos.
@@ -40,9 +41,36 @@ const prazoTexto = (dias) => {
 const AbaPedidos = ({ onAbrirEtiqueta }) => {
   const [filtro, setFiltro] = useState('acao');
   const [busca, setBusca] = useState('');
+  const [daLoja, setDaLoja] = useState([]);
+
+  /* Compras feitas na loja aparecem aqui junto com os exemplos. A leitura
+     acontece depois da primeira renderização de propósito: o site é
+     estático, e ler o navegador durante a montagem faria o HTML entregue
+     divergir do que a tela desenha. */
+  useEffect(() => {
+    let vivo = true;
+    carregarPedidosDaLoja().then((lista) => {
+      if (vivo) setDaLoja(lista);
+    });
+    return () => {
+      vivo = false;
+    };
+  }, []);
+
+  const todos = useMemo(() => [...daLoja, ...PEDIDOS], [daLoja]);
+
+  /* A conta de cada filtro sai da mesma lista que a tela mostra. Contar só
+     os exemplos faria o número no filtro discordar do que aparece embaixo
+     dele assim que a primeira compra entrasse. */
+  const contar = (id) =>
+    todos.filter((pedido) => {
+      if (id === 'todos') return true;
+      if (id === 'acao') return PRECISA_DE_ACAO.includes(pedido.estado);
+      return pedido.estado === id;
+    }).length;
 
   const visiveis = useMemo(() => {
-    const porFiltro = PEDIDOS.filter((pedido) => {
+    const porFiltro = todos.filter((pedido) => {
       if (filtro === 'todos') return true;
       if (filtro === 'acao') return PRECISA_DE_ACAO.includes(pedido.estado);
       return pedido.estado === filtro;
@@ -60,7 +88,7 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
 
     // Atrasado primeiro: é o que custa caro deixar passar.
     return [...porBusca].sort((a, b) => (a.prazoDias ?? 99) - (b.prazoDias ?? 99));
-  }, [filtro, busca]);
+  }, [filtro, busca, todos]);
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -84,7 +112,7 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
 
       <nav className="filtros" aria-label="Filtrar pedidos">
         {FILTROS.map((opcao) => {
-          const quantos = contarPor(opcao.id);
+          const quantos = contar(opcao.id);
 
           return (
             <button
@@ -116,12 +144,13 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
 
             return (
               <li
-                key={pedido.id}
+                key={`${pedido.daLoja ? 'loja' : 'exemplo'}-${pedido.id}`}
                 className={`pedido ${prazo?.urgente ? 'urgente' : ''} cor-${estado.cor}`}
               >
                 <div className="pedido-principal">
                   <div className="pedido-cabeca">
                     <span className="pedido-numero">#{pedido.id}</span>
+                    {pedido.daLoja && <span className="pedido-daloja">feito agora na loja</span>}
                     <span className={`pedido-selo cor-${estado.cor}`}>{estado.rotulo}</span>
                     <InfoBotao texto={estado.explicacao} />
                     {prazo && (
@@ -198,9 +227,26 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
         </ul>
       )}
 
+      {/* O texto muda quando entra pedido de verdade: dizer que está tudo
+          errado — "são todos exemplo" — com uma venda real na lista faria a
+          Vivian desconfiar da própria tela. */}
       <p className="aviso-exemplo">
-        <strong>Estes pedidos são de exemplo</strong>, para mostrar como a tela se comporta em
-        cada situação. Os nomes não são de pessoas reais.
+        {daLoja.length > 0 ? (
+          <>
+            <strong>
+              {daLoja.length === 1
+                ? 'O pedido marcado como “feito agora na loja” veio de uma compra sua'
+                : `Os ${daLoja.length} pedidos marcados como “feito agora na loja” vieram de compras suas`}
+            </strong>{' '}
+            nesta demonstração — nada foi cobrado, e eles ficam guardados só neste navegador. Os
+            outros são exemplos, com nomes que não são de pessoas reais.
+          </>
+        ) : (
+          <>
+            <strong>Estes pedidos são de exemplo</strong>, para mostrar como a tela se comporta em
+            cada situação. Os nomes não são de pessoas reais.
+          </>
+        )}
       </p>
     </div>
   );

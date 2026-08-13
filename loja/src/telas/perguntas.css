@@ -1,0 +1,233 @@
+/**
+ * O formulário de perguntas para a Vivian.
+ *
+ * Desenhado para celular em pé, porque é onde ela vai responder — no
+ * intervalo de alguma coisa, com uma mão só. Coluna única, campo grande,
+ * nada de duas colunas espremidas.
+ */
+
+.perguntas {
+  background: #FBF8F3;
+  min-height: 100vh;
+}
+
+.perguntas .container { max-width: 720px; }
+
+.perguntas-topo { margin-bottom: 34px; }
+
+.perguntas-etiqueta {
+  margin: 0 0 6px;
+  color: #1F736F;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.perguntas-topo h1 {
+  margin: 0 0 12px;
+  color: #12305B;
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.perguntas-intro {
+  margin: 0 0 20px;
+  color: #4A5A6B;
+  font-size: 15.5px;
+  line-height: 1.62;
+}
+
+.perguntas-progresso {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.perguntas-barra {
+  flex: 1;
+  height: 7px;
+  background: #E4EDF6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.perguntas-barra span {
+  display: block;
+  height: 100%;
+  background: #1F736F;
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+
+.perguntas-progresso > span {
+  color: #5F6F80;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.perguntas-guardado {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #5F6F80;
+  font-size: 13px;
+}
+
+.perguntas-bloco {
+  background: #FFFFFF;
+  border: 1px solid #E9EFF6;
+  border-radius: 20px;
+  padding: 24px 22px;
+  margin-bottom: 18px;
+}
+
+.perguntas-bloco h2 {
+  margin: 0 0 4px;
+  color: #12305B;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.perguntas-bloco-resumo {
+  margin: 0 0 20px;
+  color: #5F6F80;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pergunta + .pergunta {
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1px solid #F0F4F9;
+}
+
+.pergunta label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #12305B;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Marca a pergunta já respondida sem apagá-la: ela ainda precisa poder
+   reler e mudar de ideia. */
+.pergunta.respondida label { color: #1F736F; }
+.pergunta label svg { flex: 0 0 auto; margin-top: 3px; }
+
+.pergunta-porque {
+  margin: 7px 0 12px;
+  color: #5F6F80;
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.pergunta textarea {
+  width: 100%;
+  border: 1.5px solid #DCE6F1;
+  border-radius: 14px;
+  background: #FDFDFB;
+  padding: 13px 15px;
+  color: #12305B;
+  font-family: inherit;
+  /* 16px impede o iPhone de dar zoom sozinho ao focar o campo. */
+  font-size: 16px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.pergunta textarea::placeholder { color: #93A3B4; }
+
+.pergunta textarea:focus {
+  outline: none;
+  border-color: #1F736F;
+  box-shadow: 0 0 0 3px rgba(31, 115, 111, .14);
+}
+
+.perguntas-fim {
+  background: #12305B;
+  border-radius: 22px;
+  padding: 28px 24px;
+  margin-top: 26px;
+  color: #FFFFFF;
+}
+
+.perguntas-fim h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.perguntas-fim > p {
+  margin: 0 0 20px;
+  color: #C9DAEC;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.perguntas-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+}
+
+.perguntas-enviar,
+.perguntas-copiar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.perguntas-enviar {
+  background: #25D366;
+  color: #08331B;
+}
+
+.perguntas-enviar:hover { color: #08331B; }
+
+.perguntas-enviar.travado {
+  background: #33507B;
+  color: #A7BDD8;
+  cursor: not-allowed;
+}
+
+.perguntas-copiar {
+  background: transparent;
+  color: #FFFFFF;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .35);
+}
+
+.perguntas-copiar:disabled {
+  color: #7B95B8;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .16);
+  cursor: not-allowed;
+}
+
+.perguntas-voltar {
+  display: inline-block;
+  margin-top: 20px;
+  color: #C9DAEC;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.perguntas-voltar:hover { color: #FFFFFF; }
+
+@media (max-width: 575.98px) {
+  .perguntas-bloco { padding: 20px 17px; }
+  .perguntas-acoes > * { flex: 1 1 100%; justify-content: center; }
+}

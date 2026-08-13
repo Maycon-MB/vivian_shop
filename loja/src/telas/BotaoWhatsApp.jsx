@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';
 
 /**
@@ -98,7 +99,17 @@ const cssDoBotao = `
 }
 `;
 
-const BotaoWhatsApp = () => (
+/* Telas onde falar com a Vivian não é a saída. Na de perguntas, quem lê é
+   a própria Vivian: um botão convidando ela a se chamar no WhatsApp é
+   confuso, e ainda cobre o campo de resposta no celular. */
+const SEM_BOTAO = ['/perguntas', '/painel'];
+
+const BotaoWhatsApp = () => {
+  const caminho = usePathname();
+
+  if (SEM_BOTAO.some((tela) => caminho?.startsWith(tela))) return null;
+
+  return (
   <>
     <style>{cssDoBotao}</style>
 
@@ -129,6 +140,7 @@ const BotaoWhatsApp = () => (
       <span className="bt-whats-rotulo">Falar com a Vivian</span>
     </a>
   </>
-);
+  );
+};
 
 export default BotaoWhatsApp;

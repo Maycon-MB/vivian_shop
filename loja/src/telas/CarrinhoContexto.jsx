@@ -46,7 +46,13 @@ export const ProvedorCarrinho = ({ children }) => {
      conhece o navegador de quem abre. Ler no estado inicial faria a
      primeira renderização divergir do HTML entregue. */
   useEffect(() => {
+    // O lint desaconselha mudar estado ao montar, e com razão na maioria
+    // dos casos. Aqui é a exceção que ele não consegue ver: o carrinho
+    // guardado só existe no navegador, e é este o primeiro instante em que
+    // dá para lê-lo. As duas mudanças acontecem juntas, num render só.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItens(ler());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPronto(true);
   }, []);
 
