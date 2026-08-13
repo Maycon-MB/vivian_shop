@@ -335,15 +335,19 @@
      via o foco desaparecer no nada por oito paradas seguidas.
      `visibility: hidden` tira do fluxo de foco; o `transition` atrasa a
      volta dela para a animação de abrir não ser cortada. */
+  /* A gaveta começa abaixo das faixas do topo e sobe acima delas na
+     ordem de empilhamento. Enquanto ficava embaixo, a faixa cobria o
+     primeiro item do menu — que é "Visão geral", justamente para onde ela
+     mais volta. */
   .sidebar-nav {
     position: fixed;
-    top: 0;
+    top: var(--faixas, 0);
     left: 0;
-    height: 100vh;
+    height: calc(100vh - var(--faixas, 0px));
     transform: translateX(-100%);
     visibility: hidden;
     transition: transform .25s ease, visibility 0s linear .25s;
-    z-index: 1050;
+    z-index: 1150;
     width: 268px;
   }
 

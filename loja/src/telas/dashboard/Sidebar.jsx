@@ -61,7 +61,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlterna
               <h2>
                 Feito para você!<span> Personalizados</span>
               </h2>
-              <small>Painel da loja</small>
+              <small>Minhas vendas</small>
             </div>
           )}
 

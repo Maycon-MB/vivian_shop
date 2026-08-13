@@ -37,7 +37,7 @@ export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout
     <div
       role="status"
       style={{
-        background: forte ? '#FFD400' : 'rgba(255, 212, 0, .22)',
+        background: forte ? '#FFD400' : '#FDF3C7',
         color: '#12305B',
         borderBottom: '1px solid rgba(18, 48, 91, .12)',
         padding: forte ? '12px 16px' : '9px 16px',
