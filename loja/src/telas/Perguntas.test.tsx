@@ -162,9 +162,20 @@ describe('formulário de perguntas', () => {
     )
 
     // Contá-la faria a barra dizer "16 de 15" e parecer defeito.
-    expect(await screen.findByText(/0 de 15 respondidas/)).toBeInTheDocument()
+    expect(await screen.findByText(/0 de 19 respondidas/)).toBeInTheDocument()
     // Mas ela ainda precisa chegar até mim.
     expect(screen.getByText(/ainda não me chegou/)).toBeInTheDocument()
+  })
+
+  it('pergunta o que a loja ainda mostra como espaço reservado', async () => {
+    render(<Perguntas />)
+
+    // Cada uma destas corresponde a um lugar da loja que hoje exibe texto
+    // provisório. Sem a resposta, o espaço reservado vai ao ar.
+    expect(await screen.findByLabelText(/Como você começou a fazer isso/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/print de elogio de alguma cliente/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/arquivos das suas logos/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/Qual é o seu Instagram/)).toBeInTheDocument()
   })
 
   it('pergunta o peso e as medidas, que o frete precisa', async () => {

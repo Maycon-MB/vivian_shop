@@ -47,16 +47,18 @@ export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout
         fontWeight: forte ? 700 : 400,
       }}
     >
-      {forte ? (
-        <>
-          Esta loja ainda está em construção: <strong>nenhuma cobrança é feita</strong> e nenhum
-          pedido chega de verdade. Dá para percorrer a compra inteira à vontade.
-        </>
-      ) : (
-        <>
-          Loja em construção — os produtos e preços são exemplos, e nada é cobrado de verdade.
-        </>
-      )}
+      <div className="container">
+        {forte ? (
+          <>
+            Esta loja ainda está em construção: <strong>nenhuma cobrança é feita</strong> e
+            nenhum pedido chega de verdade. Dá para percorrer a compra inteira à vontade.
+          </>
+        ) : (
+          <>
+            Loja em construção — os produtos e preços são exemplos, e nada é cobrado de verdade.
+          </>
+        )}
+      </div>
     </div>
   )
 }
