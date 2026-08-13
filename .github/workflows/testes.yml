@@ -66,6 +66,20 @@ jobs:
       # qualquer forma. Guardá-lo como segredo daria uma falsa sensação
       # de proteção. O que o protege é ser um endereço longo e aleatório
       # que só escreve, nunca lê.
+      # Diz em voz alta se o endereço de recebimento chegou até aqui. Sem
+      # isto, uma variável criada na aba errada (Secrets em vez de
+      # Variables) some sem avisar: o site publica normalmente, só sem o
+      # botão de enviar, e a descoberta acontece dias depois.
+      - name: conferir o endereço de recebimento
+        run: |
+          if [ -z "${{ vars.NEXT_PUBLIC_FORMULARIO_URL }}" ]; then
+            echo "::warning::A variável NEXT_PUBLIC_FORMULARIO_URL está vazia. O formulário vai publicar sem o botão de enviar. Confira em Settings > Secrets and variables > Actions, aba Variables (não Secrets)."
+          else
+            echo "endereço de recebimento presente, ${#URL} caracteres, começa com: $(echo "$URL" | cut -c1-45)"
+          fi
+        env:
+          URL: ${{ vars.NEXT_PUBLIC_FORMULARIO_URL }}
+
       - name: montar o site como vai ao ar
         run: node scripts/publicar.mjs
         env:
