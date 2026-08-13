@@ -168,31 +168,73 @@ const conferir = async (nome, fn) => {
     if (!corpo.includes('320,00')) throw new Error('o valor não chegou ao checkout')
   })
 
-  await conferir('o checkout não deixa pagar sem escolher o frete', async () => {
+  await conferir('a loja avisa que ainda é demonstração', async () => {
+    // Enquanto o pagamento não é real, este aviso é o que impede alguém de
+    // completar uma compra e ficar esperando um pacote que ninguém postou.
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('Escolha o frete')) throw new Error('deixaria pagar sem frete')
+    if (!corpo.includes('nenhuma cobrança é feita')) {
+      throw new Error('o checkout não avisa que nada é cobrado')
+    }
+  })
+
+  await conferir('o checkout cobra os dados antes de deixar pagar', async () => {
+    await pagina.getByRole('button', { name: /^Pagar$/ }).click()
+    await pagina.waitForTimeout(600)
+    const corpo = await pagina.locator('body').textContent()
+    if (!corpo.includes('nome e sobrenome')) throw new Error('deixaria pagar sem nome')
+    if (!corpo.includes('8 números')) throw new Error('deixaria pagar sem CEP')
   })
 
   await conferir('o total soma frete e desconto sem dar NaN', async () => {
-    await pagina.locator('input[placeholder="00000-000"]').fill('01310100')
-    await pagina.waitForTimeout(700)
+    await pagina.fill('#campo-nome', 'Ana Paula Souza')
+    await pagina.fill('#campo-email', 'ana@exemplo.com.br')
+    await pagina.fill('#campo-whatsapp', '(21) 98888-7777')
+    await pagina.fill('#campo-cep', '01310100')
+    // A cotação é assíncrona: espera as opções aparecerem, não um tempo fixo.
+    await pagina.locator('.frete').first().waitFor({ timeout: 15000 })
     await pagina.getByText('Correios SEDEX').click()
-    await pagina.waitForTimeout(500)
+    await pagina.waitForTimeout(400)
+
     const corpo = await pagina.locator('body').textContent()
     if (corpo.includes('NaN')) throw new Error('o total apareceu como NaN')
-    // O desconto do Pix incide só sobre os produtos, nunca sobre o frete:
-    // 320 - 5% = 304, mais 46,50 de frete = 350,50. Dar desconto sobre o
-    // frete faria a Vivian pagar a diferença do próprio bolso.
-    if (!corpo.includes('350,50')) throw new Error('a conta do total está errada')
+    // O desconto do Pix incide só sobre os produtos, nunca sobre o frete.
+    // 5% de 320 são 16,00 — dar desconto sobre o frete faria a Vivian pagar
+    // a diferença do próprio bolso em cada pedido.
     if (!corpo.includes('16,00')) throw new Error('o desconto deveria ser 5% de 320, ou seja 16,00')
+
+    const totalNaTela = (corpo.match(/Total\s*R\$ ([\d.,]+)/) || [])[1]
+    if (!totalNaTela) throw new Error('não achei o total na tela')
+
+    const freteNaTela = (corpo.match(/Frete\s*R\$ ([\d.,]+)/) || [])[1]
+    if (!freteNaTela) throw new Error('não achei o frete na tela')
+
+    const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
+    const esperado = 320 - 16 + emNumero(freteNaTela)
+    if (Math.abs(emNumero(totalNaTela) - esperado) > 0.01) {
+      throw new Error(`total ${totalNaTela} não bate com ${esperado.toFixed(2)}`)
+    }
   })
 
-  await conferir('a confirmação explica o que acontece depois', async () => {
-    await pagina.goto(`${BASE}/pedido-confirmado/`, { waitUntil: 'networkidle' })
-    await pagina.waitForTimeout(900)
-    const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('Pagamento aprovado')) throw new Error('não confirmou')
-    if (!corpo.includes('dias úteis')) throw new Error('não diz o prazo de produção')
+  await conferir('a compra cria um pedido e ele aparece no painel', async () => {
+    await pagina.fill('#campo-rua', 'Avenida Paulista')
+    await pagina.fill('#campo-numero', '1000')
+    await pagina.getByRole('button', { name: /^Pagar$/ }).click()
+
+    await pagina.waitForURL(/pedido-confirmado/, { timeout: 20000 })
+    const confirmacao = await pagina.locator('body').textContent()
+    // O número não é fixo: cada compra feita nesta mesma sessão avança o
+    // contador. O que importa é ele existir e ter os quatro dígitos.
+    if (!/#\d{4}/.test(confirmacao)) throw new Error('o pedido não ganhou número')
+    if (!confirmacao.includes('nada foi cobrado')) {
+      throw new Error('a confirmação não avisa que é simulação')
+    }
+    if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
+
+    await pagina.goto(`${BASE}/painel/?aba=pedidos`, { waitUntil: 'networkidle' })
+    await pagina.waitForTimeout(1200)
+    if ((await pagina.locator('.pedido-daloja').count()) === 0) {
+      throw new Error('o pedido comprado não chegou ao painel da Vivian')
+    }
   })
 
   await conferir('endereço antigo redireciona para o novo', async () => {
