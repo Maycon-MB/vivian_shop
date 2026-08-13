@@ -75,7 +75,7 @@ export const PRODUTOS = [
     name: 'Kit rotina visual',
     category: PEDAGOGICA,
     price: 39.0,
-    image: `${BASE}rotina_visual_premium_1778703012017.png`,
+    image: `${BASE}rotina_visual_premium_1778703012017.webp`,
     tag: 'Digital',
     description: 'Quadro de rotina para montar e usar no dia a dia.',
     detalhes: [
@@ -90,7 +90,7 @@ export const PRODUTOS = [
     name: 'Jogo das emoções',
     category: PEDAGOGICA,
     price: 29.0,
-    image: `${BASE}jogo_emocoes_premium_1778702950986.png`,
+    image: `${BASE}jogo_emocoes_premium_1778702950986.webp`,
     tag: 'Digital',
     description: 'Atividade lúdica para identificar sentimentos.',
     detalhes: [

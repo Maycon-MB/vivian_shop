@@ -162,7 +162,7 @@ const LandingPage = () => {
                 className="position-relative"
               >
                 <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
-                  <img src={`${BASE}hero_boutique_vivian_1778705287616.png`} alt="Mesa de trabalho com cadernos, adesivos e material pedagógico adaptado" className="w-100" />
+                  <img src={`${BASE}hero_boutique_vivian_1778705287616.webp`} alt="Mesa de trabalho com cadernos, adesivos e material pedagógico adaptado" className="w-100" />
                 </div>
                 {/* Espaço reservado para um depoimento real. Inventar a fala
                     de uma mãe atípica para vender material de inclusão é o
