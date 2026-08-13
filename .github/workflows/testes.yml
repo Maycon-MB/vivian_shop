@@ -1,0 +1,88 @@
+# Roda a conferência inteira a cada envio.
+#
+# Existe porque até agora os testes só rodavam se eu lembrasse de rodar. Os
+# dois erros mais caros deste projeto — o botão de comprar que virou link
+# morto e o total que apareceu como "R$ NaN" — passaram por build, lint e
+# testes de unidade. O que pegou os dois foi olhar a tela.
+#
+# Por isso aqui não para no `npm test`: sobe o site montado e compra de
+# verdade, do carrinho até o pedido aparecer no painel. Se essa compra
+# quebrar, o envio fica marcado como quebrado antes de chegar na Vivian.
+
+name: testes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Permite rodar pelo botão, quando eu quiser conferir sem enviar nada.
+  workflow_dispatch:
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: loja
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: loja/package-lock.json
+
+      # `npm ci` e não `npm install`: instala exatamente o que está no
+      # package-lock. Uma versão diferente aqui do que roda na minha máquina
+      # transformaria este teste numa loteria.
+      - name: instalar
+        run: npm ci
+
+      - name: tipos
+        run: npx tsc --noEmit
+
+      - name: lint
+        run: npx eslint src --ext .ts,.tsx,.js,.jsx --max-warnings 40
+
+      - name: testes de domínio e serviços
+        run: npm test
+
+      # Monta pelo mesmo script que publica, e não por `next build` direto:
+      # o que vai ao ar tem caminho /vivian_shop e redirecionamentos dos
+      # endereços antigos. Testar um artefato diferente do que é publicado
+      # é testar outra coisa.
+      - name: montar o site como vai ao ar
+        run: node scripts/publicar.mjs
+        working-directory: .
+
+      - name: servir o site montado
+        run: |
+          mkdir -p publicado
+          cp -r dist publicado/vivian_shop
+          npx --yes http-server publicado -p 4173 --silent &
+          npx --yes wait-on http://127.0.0.1:4173/vivian_shop/ --timeout 60000
+        working-directory: .
+
+      - name: instalar o navegador
+        run: npx playwright install --with-deps chromium
+
+      - name: comprar de ponta a ponta
+        run: node ../scripts/testar-navegacao.cjs
+        env:
+          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+
+      # Quando a compra falha, a mensagem de erro raramente basta: o que
+      # resolve é ver a tela no instante em que quebrou.
+      - name: guardar as telas quando falhar
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: telas-da-falha
+          path: loja/telas-da-falha/
+          if-no-files-found: ignore
+          retention-days: 7

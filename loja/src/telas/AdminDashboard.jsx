@@ -30,13 +30,14 @@ import AbaProdutos from './painel/AbaProdutos';
 import AbaMensagens from './painel/AbaMensagens';
 import AbaMarketing from './painel/AbaMarketing';
 import AbaConfiguracoes from './painel/AbaConfiguracoes';
+import AbaRelatorios from './painel/AbaRelatorios';
 import { VendasPorDia, ProporcaoLinhas, MaisVendidos } from './painel/GraficosVisaoGeral';
 import FilaProducao from './painel/FilaProducao';
 import './painel.css';
 import './painel-abas.css';
 import { BASE } from '../base'
 
-const ABAS = ['dashboard', 'pedidos', 'catalogo', 'mensagens', 'marketing', 'config'];
+const ABAS = ['dashboard', 'pedidos', 'catalogo', 'relatorios', 'mensagens', 'marketing', 'config'];
 
 /**
  * A aba aberta vem do endereço (?aba=pedidos) e volta para ele a cada
@@ -392,6 +393,8 @@ const AdminDashboard = () => {
         {activeTab === 'catalogo' && (
           <AbaProdutos onNovoProduto={() => setShowNewProduct(true)} />
         )}
+
+        {activeTab === 'relatorios' && <AbaRelatorios />}
 
         {activeTab === 'config' && <AbaConfiguracoes />}
 

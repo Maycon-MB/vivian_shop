@@ -11,10 +11,20 @@
  * console do navegador. Tudo isso publica sem reclamar.
  */
 
+const fs = require('fs')
 const path = require('path')
 const { chromium } = require(path.join(__dirname, '..', 'loja', 'node_modules', 'playwright'))
 
-const BASE = process.argv[2] || 'https://maycon-mb.github.io/vivian_shop'
+/* Sem endereço informado, testa o site publicado. Na automação do GitHub
+   não há site publicado ainda — o que se testa lá é o site recém-montado,
+   servido na própria máquina, e o endereço chega por BASE_DA_LOJA. */
+const BASE = process.argv[2] || process.env.BASE_DA_LOJA || 'https://maycon-mb.github.io/vivian_shop'
+
+/* Onde a tela do momento da falha é guardada. Mensagem de erro raramente
+   basta para entender o que quebrou; a imagem quase sempre basta. */
+const PASTA_DAS_FALHAS = path.join(__dirname, '..', 'loja', 'telas-da-falha')
+
+let paginaAtual = null
 
 const resultados = []
 const ok = (nome) => resultados.push({ nome, passou: true })
@@ -26,12 +36,26 @@ const conferir = async (nome, fn) => {
     ok(nome)
   } catch (erro) {
     falha(nome, erro.message)
+
+    try {
+      if (paginaAtual) {
+        fs.mkdirSync(PASTA_DAS_FALHAS, { recursive: true })
+        const arquivo = nome.replace(/[^a-z0-9]+/gi, '-').toLowerCase()
+        await paginaAtual.screenshot({
+          path: path.join(PASTA_DAS_FALHAS, `${arquivo}.png`),
+          fullPage: true,
+        })
+      }
+    } catch {
+      // Não conseguir fotografar a falha não pode virar uma segunda falha.
+    }
   }
 }
 
 ;(async () => {
   const navegador = await chromium.launch()
   const pagina = await navegador.newPage({ viewport: { width: 1440, height: 900 } })
+  paginaAtual = pagina
 
   // Erro no console é defeito, mesmo que a tela pareça certa.
   const errosConsole = []
@@ -235,6 +259,31 @@ const conferir = async (nome, fn) => {
     if ((await pagina.locator('.pedido-daloja').count()) === 0) {
       throw new Error('o pedido comprado não chegou ao painel da Vivian')
     }
+  })
+
+  await conferir('os relatórios separam o que é dela do frete', async () => {
+    await pagina.goto(`${BASE}/painel/?aba=relatorios`, { waitUntil: 'networkidle' })
+    // Espera o bloco existir em vez de esperar um tempo fixo: a tela só
+    // desenha depois de ler os pedidos guardados, e um segundo cravado
+    // passa na minha máquina e falha na máquina lenta da automação.
+    await pagina.locator('.relatorio-bloco').first().waitFor({ timeout: 15000 })
+
+    const corpo = await pagina.locator('body').textContent()
+
+    // O ponto inteiro desta tela: frete não pode aparecer como ganho dela.
+    if (!corpo.includes('O que é seu')) throw new Error('não mostra a receita dela')
+    if (!corpo.includes('Frete (não é seu)')) {
+      throw new Error('o frete não está marcado como repasse')
+    }
+    if (!corpo.includes('O que produzir agora')) throw new Error('não mostra a fila de produção')
+    if (!corpo.includes('Comparando com o Elo7')) throw new Error('não compara com o Elo7')
+
+    // A taxa do Elo7 ainda é estimativa minha, e a tela precisa admitir isso
+    // enquanto a Vivian não responder.
+    if (!corpo.includes('chute meu')) throw new Error('apresenta a estimativa como fato')
+
+    const baixar = pagina.getByRole('button', { name: /Baixar para o contador/ })
+    if (!(await baixar.isEnabled())) throw new Error('não dá para exportar para o contador')
   })
 
   await conferir('endereço antigo redireciona para o novo', async () => {

@@ -90,6 +90,10 @@ export const paraOPainel = (pedido) => ({
   subtotal: pedido.subtotal,
   frete: pedido.frete,
   quando: quandoFoi(pedido.criadoEm),
+  /* A data crua vai junto com o texto: a tela mostra "há 3 dias", mas o
+     relatório precisa saber em que mês a venda caiu. */
+  criadoEmISO: pedido.criadoEm,
+  desconto: pedido.desconto,
   prazoDias: diasUteisAte(pedido.prometidoPara),
   cidade: cidadeDe(pedido),
   transportadora: pedido.transportadora,

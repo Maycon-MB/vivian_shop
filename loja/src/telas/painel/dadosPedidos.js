@@ -54,6 +54,7 @@ export const PRECISA_DE_ACAO = ['producao', 'pronto']
 export const PEDIDOS = [
   {
     id: '0007',
+    diasAtras: 6,
     estado: 'pronto',
     linha: 'personalizada',
     cliente: 'Exemplo — Ana Souza',
@@ -68,6 +69,7 @@ export const PEDIDOS = [
   },
   {
     id: '0006',
+    diasAtras: 5,
     estado: 'producao',
     linha: 'personalizada',
     cliente: 'Exemplo — Beatriz Lima',
@@ -85,6 +87,7 @@ export const PEDIDOS = [
   },
   {
     id: '0005',
+    diasAtras: 2,
     estado: 'producao',
     linha: 'personalizada',
     cliente: 'Exemplo — Carla Menezes',
@@ -99,6 +102,7 @@ export const PEDIDOS = [
   },
   {
     id: '0004',
+    diasAtras: 0,
     estado: 'digital',
     linha: 'pedagogica',
     cliente: 'Exemplo — Daniela Rocha',
@@ -111,6 +115,7 @@ export const PEDIDOS = [
   },
   {
     id: '0003',
+    diasAtras: 0,
     estado: 'aguardando',
     linha: 'pedagogica',
     cliente: 'Exemplo — Elaine Prado',
@@ -123,6 +128,7 @@ export const PEDIDOS = [
   },
   {
     id: '0002',
+    diasAtras: 8,
     estado: 'enviado',
     linha: 'personalizada',
     cliente: 'Exemplo — Fernanda Dias',
@@ -137,6 +143,7 @@ export const PEDIDOS = [
   },
   {
     id: '0001',
+    diasAtras: 14,
     estado: 'entregue',
     linha: 'personalizada',
     cliente: 'Exemplo — Gabriela Nunes',
@@ -152,6 +159,19 @@ export const PEDIDOS = [
 ]
 
 export const totalDe = (pedido) => pedido.subtotal + pedido.frete
+
+/**
+ * A data de cada exemplo, contada a partir de hoje.
+ *
+ * Os exemplos guardam "há quantos dias", e não uma data fixa, porque data
+ * fixa envelhece: em seis meses o painel de demonstração mostraria pedidos
+ * de meio ano atrás e o fechamento do mês viria vazio.
+ */
+export const criadoEmDe = (pedido) => {
+  const data = new Date()
+  data.setDate(data.getDate() - (pedido.diasAtras ?? 0))
+  return data.toISOString()
+}
 
 export const contarPor = (filtro) =>
   filtro === 'todos'

@@ -10,6 +10,7 @@ import {
   LogOut,
   Package,
   MessageSquare,
+  FileBarChart,
   PanelLeftClose,
   PanelLeftOpen,
 } from 'lucide-react';
@@ -31,6 +32,7 @@ const ITENS = [
   { id: 'dashboard', icone: <TrendingUp size={18} />, rotulo: 'Visão geral' },
   { id: 'pedidos', icone: <ShoppingBag size={18} />, rotulo: 'Pedidos' },
   { id: 'catalogo', icone: <Package size={18} />, rotulo: 'Meus produtos' },
+  { id: 'relatorios', icone: <FileBarChart size={18} />, rotulo: 'Relatórios' },
   { id: 'mensagens', icone: <MessageSquare size={18} />, rotulo: 'Mensagens' },
   { id: 'marketing', icone: <Mail size={18} />, rotulo: 'Marketing' },
   { id: 'config', icone: <Settings size={18} />, rotulo: 'Configurações' },
