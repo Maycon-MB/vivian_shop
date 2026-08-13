@@ -234,6 +234,7 @@ const Perguntas = () => {
   const [carregado, setCarregado] = useState(false);
   const [jaEnviadas, setJaEnviadas] = useState(0);
   const [enviando, setEnviando] = useState(false);
+  const [demorando, setDemorando] = useState(false);
   const [envio, setEnvio] = useState(null);
   const primeiraGravacao = useRef(true);
 
@@ -319,12 +320,22 @@ const Perguntas = () => {
 
   const enviar = async () => {
     setEnviando(true);
+    setDemorando(false);
     setEnvio(null);
+
+    /* O primeiro envio do dia costuma passar de 20 segundos: o serviço que
+       recebe fica adormecido e precisa acordar. Sem dizer nada, a Vivian
+       vê "Enviando…" parado e conclui que travou — e aí aperta de novo, ou
+       fecha a página achando que não foi. */
+    const avisarDemora = setTimeout(() => setDemorando(true), 6000);
 
     const resultado = await enviarRespostas(respostas);
 
+    clearTimeout(avisarDemora);
+
     if (resultado.ok) marcarComoEnviadas();
     setEnvio(resultado);
+    setDemorando(false);
     setEnviando(false);
   };
 
@@ -438,6 +449,13 @@ const Perguntas = () => {
             </p>
           )}
 
+          {demorando && (
+            <p className="perguntas-demora" role="status">
+              Está demorando mais que o normal, mas não fechei nada — pode esperar mais um
+              pouquinho. Suas respostas continuam guardadas aqui de qualquer jeito.
+            </p>
+          )}
+
           <div className="perguntas-acoes">
             {/* O envio direto é a ação principal porque funciona igual no
                 computador e no celular. O WhatsApp fica ao lado, para quem
@@ -451,7 +469,8 @@ const Perguntas = () => {
               >
                 {enviando ? (
                   <>
-                    <Loader2 size={17} className="girando" /> Enviando…
+                    <Loader2 size={17} className="girando" />
+                    {demorando ? 'Ainda enviando, aguenta aí…' : 'Enviando…'}
                   </>
                 ) : (
                   <>
