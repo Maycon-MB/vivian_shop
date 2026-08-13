@@ -12,12 +12,15 @@ import { usePathname } from 'next/navigation'
  */
 
 const AREAS = [
-  { href: '/', rotulo: 'Loja', classe: 'landing' },
-  { href: '/painel', rotulo: 'Painel', classe: 'admin' },
-  { href: '/como-funciona', rotulo: 'Como funciona', classe: 'how' },
-  { href: '/andamento', rotulo: 'Andamento', classe: 'status' },
+  /* Os nomes são os que a Vivian usaria, não os que eu usaria.
+     "Painel" é palavra de quem programa; ela não vai ao painel, vai ver
+     as vendas. "Andamento" e "Identidade" não dizem nada sozinhos. */
+  { href: '/', rotulo: 'A loja', classe: 'landing' },
+  { href: '/painel', rotulo: 'Minhas vendas', classe: 'admin' },
   { href: '/perguntas', rotulo: 'Perguntas', classe: 'ask' },
-  { href: '/identidade', rotulo: 'Identidade', classe: 'ident' },
+  { href: '/como-funciona', rotulo: 'Como funciona', classe: 'how' },
+  { href: '/identidade', rotulo: 'Minha marca', classe: 'ident' },
+  { href: '/andamento', rotulo: 'O que já fiz', classe: 'status' },
 ]
 
 export function Navegacao() {
