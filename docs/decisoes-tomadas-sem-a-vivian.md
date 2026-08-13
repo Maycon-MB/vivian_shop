@@ -55,6 +55,31 @@ clientes dela.
 | Botão "i" ao lado de cada termo do sistema | Ela não é de tecnologia. Explicação escondida atrás de um toque não atrapalha quem já sabe. | — |
 | Produtos em grade com foto, não em tabela | Ela pensa nos produtos como coisas que faz, e reconhece pela foto antes do nome. | — |
 
+## A loja não vende até o Mercado Pago entrar
+
+Esta é a única decisão do documento que **não** foi minha, e por isso ela
+vem antes das outras: foi o Maycon quem decidiu, em 13/08/2026.
+
+Existia um caminho para a loja vender de verdade hoje, sem contratar nada
+e sem pagar taxa: fechar o pedido, mostrar o QR Code e a chave Pix da
+Vivian, e ela conferir o comprovante pelo WhatsApp. É como a maior parte
+das artesãs vende no Instagram, e sai mais barato que o Elo7, que cobrava
+comissão sobre cada venda.
+
+A decisão foi não fazer isso, e esperar o Mercado Pago.
+
+**O que isso custa, para ficar registrado:** enquanto durar, a loja está
+pronta e parada. Ela não substitui o Elo7 — substitui a *aparência* dele.
+A primeira venda depende de uma conta que ainda não foi aberta.
+
+**O que isso protege:** ninguém precisa expor chave Pix numa página
+pública, ninguém confere comprovante na mão, e a loja abre inteira de uma
+vez em vez de abrir pela metade e mudar de regra no meio.
+
+**Como reverter:** o trabalho é de um dia. A tela de pagamento já é a
+única que precisaria mudar, porque o pagamento já está atrás de um
+contrato próprio.
+
 ## Relatórios
 
 | Decisão | Por quê | Custo de mudar |
