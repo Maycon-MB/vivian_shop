@@ -377,3 +377,83 @@
   margin: 18px 0 0 !important;
   font-size: 12.5px !important;
 }
+
+/* ── Erros e espera ───────────────────────────────────────────────────────
+   Quem está comprando precisa de duas informações quando algo dá errado:
+   o que houve e o que fazer agora. Vermelho sozinho não diz nenhuma das
+   duas — por isso todo erro aqui vem com texto ao lado do campo. */
+
+.finalizar {
+  border: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.finalizar:disabled { cursor: wait; }
+
+.campo-erro {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 6px;
+  /* #B42318 sobre branco dá 6.4:1 — passa no mínimo de 4.5:1 com folga. */
+  color: #B42318;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.campo-erro svg { flex: 0 0 auto; margin-top: 2px; }
+
+/* A recusa aparece junto do botão de pagar, que é para onde a pessoa está
+   olhando quando a compra não passa. */
+.pagamento-recusado {
+  background: #FEF3F2;
+  border: 1px solid #FDA29B;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.pagamento-recusado strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #B42318;
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.pagamento-recusado p {
+  margin: 7px 0 0;
+  color: #5F3F3B;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.girando { animation: girar 1s linear infinite; }
+
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Quem pediu menos movimento na tela do sistema não deve ganhar um ícone
+   girando sem parar. O estado de espera continua legível pelo texto. */
+@media (prefers-reduced-motion: reduce) {
+  .girando { animation: none; }
+}
+
+.confirmado-topo .confirmado-simulado {
+  /* `width: fit-content` junto com `margin auto` é o que centraliza de fato:
+     só `max-width` deixa a caixa colada à esquerda quando o texto é curto. */
+  width: fit-content;
+  max-width: min(46ch, 100%);
+  margin: 14px auto 0;
+  text-align: center;
+  padding: 11px 15px;
+  background: rgba(255, 212, 0, .22);
+  border-radius: 12px;
+  color: #12305B;
+  font-size: 13.5px;
+  line-height: 1.5;
+}

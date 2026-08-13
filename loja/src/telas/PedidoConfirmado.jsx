@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Container } from 'react-bootstrap';
 import { Check, Download, Package, MessageCircle, Mail, Clock } from 'lucide-react';
 import { useCarrinho } from './CarrinhoContexto';
 import { PRAZO_PRODUCAO } from '../catalogo';
+import { pedidos, estaTudoReal } from '@/servicos';
 
 /**
  * Pedido confirmado.
@@ -22,14 +23,29 @@ import { PRAZO_PRODUCAO } from '../catalogo';
  * O carrinho é esvaziado ao chegar aqui: deixar o pedido lá faria a pessoa
  * comprar de novo sem querer.
  */
+const moeda = (v) => `R$ ${v.toFixed(2).replace('.', ',')}`;
+
 const PedidoConfirmado = () => {
   const { itens, ehDigital, esvaziar } = useCarrinho();
   const [linha, setLinha] = useState(null);
+  const [pedido, setPedido] = useState(null);
+  const jaLeu = useRef(false);
 
   useEffect(() => {
+    // O React roda os efeitos duas vezes em desenvolvimento. Sem esta trava,
+    // a segunda passada leria o carrinho que a primeira acabou de esvaziar.
+    if (jaLeu.current) return;
+    jaLeu.current = true;
+
     // Guarda o tipo antes de esvaziar, senão a tela perde o que dizer.
     setLinha(itens.length > 0 ? (ehDigital ? 'digital' : 'fisica') : 'fisica');
     esvaziar();
+
+    // O número do pedido vem do endereço, e o pedido do repositório. Se a
+    // pessoa chegou aqui sem ter comprado — link antigo, atualizou a página —
+    // a tela ainda funciona: só não mostra número nem valor.
+    const id = new URLSearchParams(window.location.search).get('pedido');
+    if (id) pedidos.buscar(id).then(setPedido).catch(() => setPedido(null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,10 +60,27 @@ const PedidoConfirmado = () => {
           <span className="confirmado-selo">
             <Check size={30} />
           </span>
-          <h1>Pagamento aprovado</h1>
+          <h1>{estaTudoReal ? 'Pagamento aprovado' : 'Compra simulada com sucesso'}</h1>
           <p>
-            Pedido <strong>#0008</strong> · a confirmação foi para o seu e-mail.
+            {pedido ? (
+              <>
+                Pedido <strong>#{pedido.numero}</strong> · {moeda(pedido.total)}
+                {estaTudoReal
+                  ? ' · a confirmação foi para o seu e-mail.'
+                  : ' · guardado só neste navegador.'}
+              </>
+            ) : (
+              'Tudo certo com a sua compra.'
+            )}
           </p>
+
+          {!estaTudoReal && (
+            <p className="confirmado-simulado">
+              Esta loja ainda está em construção: <strong>nada foi cobrado</strong> e nenhum
+              pedido de verdade foi criado. O pedido acima serve para você ver como a loja
+              funciona.
+            </p>
+          )}
         </div>
 
         <section className="passos-pedido">

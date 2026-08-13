@@ -6,6 +6,7 @@ import './globals.css'
 import { Navegacao } from '@/componentes/Navegacao'
 import { ProvedorCarrinho } from '@/telas/CarrinhoContexto'
 import { WhatsAppDaLoja } from '@/componentes/WhatsAppDaLoja'
+import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao'
 
 /* A Atkinson Hyperlegible é escolha funcional, não estética: foi desenhada
    pelo Braille Institute para diferenciar caracteres que se confundem —
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body>
         <ProvedorCarrinho>
           <div className="app-container">
+            <AvisoDemonstracao />
             <Navegacao />
             <main>{children}</main>
             <WhatsAppDaLoja />
