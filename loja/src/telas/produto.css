@@ -40,7 +40,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .08em;
-  color: #6B7C8F;
+  color: #5F6F80;
   box-shadow: 0 24px 60px -34px rgba(18, 48, 91, .55);
 }
 
@@ -69,7 +69,7 @@
   border-radius: 999px;
 }
 
-.produto-etiqueta.fisico { background: #2E9B96; color: #FFFFFF; }
+.produto-etiqueta.fisico { background: #1F736F; color: #FFFFFF; }
 .produto-etiqueta.digital { background: #FFD400; color: #12305B; }
 
 /* ── Texto ──────────────────────────────────────────────────────────────── */
@@ -81,7 +81,7 @@
   margin: 0 0 10px;
 }
 
-.produto-descricao { font-size: 16px; color: #6B7C8F; margin: 0 0 20px; max-width: 52ch; }
+.produto-descricao { font-size: 16px; color: #5F6F80; margin: 0 0 20px; max-width: 52ch; }
 
 .produto-preco-bloco { display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px; }
 
@@ -92,11 +92,11 @@
   color: #12305B;
 }
 
-.produto-unidade { font-size: 14px; color: #6B7C8F; }
+.produto-unidade { font-size: 14px; color: #5F6F80; }
 
 /* ── Regra de venda ─────────────────────────────────────────────────────── */
 .produto-regra-bloco {
-  border-left: 3px solid #2E9B96;
+  border-left: 3px solid #1F736F;
   background: rgba(46, 155, 150, .07);
   border-radius: 0 14px 14px 0;
   padding: 16px 18px;
@@ -109,7 +109,7 @@
 }
 
 .produto-regra-bloco p { margin: 0; font-size: 14.5px; line-height: 1.55; }
-.produto-prazo { margin-top: 8px !important; color: #6B7C8F; font-size: 13.5px !important; }
+.produto-prazo { margin-top: 8px !important; color: #5F6F80; font-size: 13.5px !important; }
 
 /* ── O que vem junto ────────────────────────────────────────────────────── */
 .produto-detalhes { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 9px; }
@@ -122,7 +122,7 @@
   color: #12305B;
 }
 
-.produto-detalhes svg { color: #2E9B96; flex-shrink: 0; margin-top: 2px; }
+.produto-detalhes svg { color: #1F736F; flex-shrink: 0; margin-top: 2px; }
 
 /* ── Compra ─────────────────────────────────────────────────────────────── */
 .produto-compra { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -179,7 +179,7 @@
 
 .comprar:hover { transform: translateY(-1px); }
 
-.produto-aviso-minimo { margin: 10px 0 0; font-size: 12.5px; color: #6B7C8F; }
+.produto-aviso-minimo { margin: 10px 0 0; font-size: 12.5px; color: #5F6F80; }
 
 /* ── Garantias ──────────────────────────────────────────────────────────── */
 .produto-garantias {
@@ -196,15 +196,15 @@
   align-items: center;
   gap: 11px;
   font-size: 13.5px;
-  color: #6B7C8F;
+  color: #5F6F80;
 }
 
-.produto-garantias svg { color: #2E9B96; flex-shrink: 0; }
+.produto-garantias svg { color: #1F736F; flex-shrink: 0; }
 
 /* O nome do produto leva à página dele. Sem `stretched-link`: aquele
    utilitário faz o link cobrir o cartão inteiro e engolir o botão de
    comprar — o botão continua na tela, mas nunca é alcançado. */
-.link-produto:hover { color: #2E9B96 !important; }
+.link-produto:hover { color: #1F736F !important; }
 
 .produto-barrado {
   margin: 12px 0 0;
@@ -216,5 +216,5 @@
   color: #12305B;
 }
 
-.produto-no-carrinho { margin: 12px 0 0; font-size: 13.5px; font-weight: 700; color: #2E9B96; }
+.produto-no-carrinho { margin: 12px 0 0; font-size: 13.5px; font-weight: 700; color: #1F736F; }
 .produto-no-carrinho a { color: #12305B; }

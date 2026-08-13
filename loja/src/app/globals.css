@@ -15,10 +15,10 @@
   --color-paper: #FBFAF7;
   --color-surface: #FFFFFF;
   --color-ink: #12305B;
-  --color-ink-soft: #6B7C8F;
+  --color-ink-soft: #5F6F80;
   --color-rule: #A8C6E8;
   --color-rule-faint: #DCE9F6;
-  --color-chalk: #2E9B96;
+  --color-chalk: #1F736F;
   --color-marker: #FFD400;
   --color-heart: #C4436B;
 
@@ -28,3 +28,33 @@
 
 /* O visual das telas vem de telas/prototipo.css e do Bootstrap.
    Aqui ficam só os tokens, para o que for construído daqui em diante. */
+
+/* ── Cinzas do Bootstrap ──────────────────────────────────────────────────
+   O `text-muted` do Bootstrap é #6c757d. Sobre o nosso papel (#FBFAF7) ele
+   dá 4,49:1 — reprova no mínimo de 4,5:1 por um centésimo, e o mesmo tom
+   sobre fundo claro cai para 4,06:1. É o tipo de erro que ninguém enxerga
+   revisando e que aparece na hora de ler no celular, no sol.
+
+   O nosso #5F6F80 dá no mínimo 4,74:1 em todos os fundos que usamos.
+
+   O `!important` é necessário porque as classes utilitárias do Bootstrap
+   já vêm com ele; sem isso a regra não vale. */
+.text-muted,
+.text-secondary {
+  color: #5F6F80 !important;
+}
+
+/* Mesmo motivo, para o contorno cinza dos botões secundários. */
+.btn-outline-secondary {
+  --bs-btn-color: #5F6F80;
+  --bs-btn-border-color: #5F6F80;
+  --bs-btn-hover-bg: #5F6F80;
+  --bs-btn-hover-border-color: #5F6F80;
+}
+
+/* O verde do selo "sucesso" do Bootstrap dá 4,09:1 sobre o próprio fundo
+   claro dele. Escurecido, passa — e continua sendo verde. */
+.badge.bg-success-subtle,
+.text-success {
+  color: #145C39 !important;
+}

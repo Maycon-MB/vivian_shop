@@ -56,7 +56,7 @@ const ProductCard = ({ product, addToCart }) => {
               style={{
                 height: '300px',
                 backgroundColor: isPersonalizada ? 'rgba(46, 155, 150, 0.08)' : 'rgba(255, 212, 0, 0.12)',
-                color: '#6B7C8F',
+                color: '#5F6F80',
               }}
             >
               <Package size={28} />

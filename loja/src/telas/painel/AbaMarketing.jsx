@@ -60,7 +60,7 @@ const AbaMarketing = () => {
       <CartaoPainel
         titulo="Como isto funciona"
         subtitulo="Em três passos, sem surpresa."
-        cor="#2E9B96"
+        cor="#1F736F"
       >
         <ol className="passos">
           <li>

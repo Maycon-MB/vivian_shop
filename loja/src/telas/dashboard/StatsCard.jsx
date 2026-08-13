@@ -17,7 +17,7 @@ const StatsCard = ({ label, value, grow, icon }) => {
   return (
     <Card className="border-0 p-4 h-100 hover-lift transition-all" style={{ 
       borderRadius: '32px',
-      border: '1px solid #2E9B9666',
+      border: '1px solid #1F736F66',
       boxShadow: '0 15px 35px rgba(46,155,150,0.12)'
     }}>
       <div className="d-flex justify-content-between mb-4">
@@ -25,7 +25,7 @@ const StatsCard = ({ label, value, grow, icon }) => {
         <Badge 
           bg={getBadgeVariant(grow)} 
           className={`text-${getTextColor(grow)} fw-bold px-3 py-2 rounded-pill d-flex align-items-center`}
-          style={{ color: grow.includes('vs') ? '#2E9B96' : '' }}
+          style={{ color: grow.includes('vs') ? '#1F736F' : '' }}
         >
           {grow}
         </Badge>

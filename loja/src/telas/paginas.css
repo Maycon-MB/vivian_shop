@@ -24,10 +24,10 @@
 
 .entrar-marca { text-align: center; margin-bottom: 26px; line-height: 1.2; }
 .entrar-marca span { display: block; font-family: var(--font-serif); font-size: 18px; font-weight: 700; }
-.entrar-marca strong { font-family: var(--font-serif); font-size: 18px; color: #2E9B96; }
+.entrar-marca strong { font-family: var(--font-serif); font-size: 18px; color: #1F736F; }
 
 .entrar-caixa h1 { font-size: 21px; font-weight: 700; margin: 0 0 5px; text-align: center; }
-.entrar-sub { font-size: 13.5px; color: #6B7C8F; text-align: center; margin: 0 0 26px; }
+.entrar-sub { font-size: 13.5px; color: #5F6F80; text-align: center; margin: 0 0 26px; }
 
 .entrar-form { display: grid; gap: 16px; }
 .entrar-form .form-label { font-size: 12.5px; font-weight: 700; margin-bottom: 5px; }
@@ -40,7 +40,7 @@
 }
 
 .entrar-form .form-control:focus {
-  border-color: #2E9B96;
+  border-color: #1F736F;
   box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
 }
 
@@ -66,7 +66,7 @@
 .entrar-esqueci {
   border: 0;
   background: none;
-  color: #2E9B96;
+  color: #1F736F;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
@@ -81,11 +81,11 @@
   padding-top: 20px;
   border-top: 1px solid #DCE9F6;
   font-size: 12px;
-  color: #6B7C8F;
+  color: #5F6F80;
   line-height: 1.5;
 }
 
-.entrar-seguranca svg { color: #2E9B96; flex-shrink: 0; margin-top: 1px; }
+.entrar-seguranca svg { color: #1F736F; flex-shrink: 0; margin-top: 1px; }
 
 .entrar-voltar {
   display: flex;
@@ -95,7 +95,7 @@
   margin-top: 22px;
   font-size: 13px;
   font-weight: 700;
-  color: #6B7C8F;
+  color: #5F6F80;
   text-decoration: none;
 }
 
@@ -105,7 +105,7 @@
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #2E9B96;
+  color: #1F736F;
   margin: 0 0 10px;
 }
 
@@ -127,7 +127,7 @@
   border-radius: 0 12px 12px 0;
   padding: 15px 18px;
   font-size: 13.5px;
-  color: #6B7C8F;
+  color: #5F6F80;
   margin-bottom: 28px;
 }
 
@@ -162,11 +162,11 @@
   flex-shrink: 0;
 }
 
-.sobre-icone.fisico { background: rgba(46, 155, 150, .14); color: #2E9B96; }
+.sobre-icone.fisico { background: rgba(46, 155, 150, .14); color: #1F736F; }
 .sobre-icone.digital { background: rgba(255, 212, 0, .22); color: #12305B; }
 
 .sobre-linha strong { display: block; font-size: 15px; margin-bottom: 4px; }
-.sobre-linha p { margin: 0; font-size: 13.5px; color: #6B7C8F; line-height: 1.55; }
+.sobre-linha p { margin: 0; font-size: 13.5px; color: #5F6F80; line-height: 1.55; }
 
 .sobre-fechamento {
   display: flex;
@@ -230,7 +230,7 @@
   margin: 0 0 8px;
 }
 
-.baixar-topo p { color: #6B7C8F; margin: 0; }
+.baixar-topo p { color: #5F6F80; margin: 0; }
 
 .baixar-lista { max-width: 620px; margin: 0 auto 22px; display: grid; gap: 12px; }
 
@@ -259,7 +259,7 @@
 
 .baixar-info { flex: 1; min-width: 160px; display: grid; }
 .baixar-info strong { font-size: 14.5px; }
-.baixar-info span { font-size: 12.5px; color: #6B7C8F; }
+.baixar-info span { font-size: 12.5px; color: #5F6F80; }
 
 .baixar-acao {
   display: inline-flex;
@@ -280,8 +280,8 @@
 
 .baixar-acao.feito {
   background: #FFFFFF;
-  color: #2E9B96;
-  border: 1px solid #2E9B96;
+  color: #1F736F;
+  border: 1px solid #1F736F;
 }
 
 .baixar-avisos { max-width: 620px; margin: 0 auto 22px; display: grid; gap: 12px; }
@@ -296,12 +296,12 @@
   padding: 17px 19px;
 }
 
-.baixar-aviso svg { color: #2E9B96; flex-shrink: 0; margin-top: 2px; }
+.baixar-aviso svg { color: #1F736F; flex-shrink: 0; margin-top: 2px; }
 .baixar-aviso strong { display: block; font-size: 14px; margin-bottom: 3px; }
-.baixar-aviso p { margin: 0; font-size: 13px; color: #6B7C8F; line-height: 1.55; }
+.baixar-aviso p { margin: 0; font-size: 13px; color: #5F6F80; line-height: 1.55; }
 
 .baixar-ajuda { max-width: 620px; margin: 0 auto; text-align: center; }
-.baixar-ajuda p { font-size: 14px; color: #6B7C8F; margin: 0 0 16px; }
+.baixar-ajuda p { font-size: 14px; color: #5F6F80; margin: 0 0 16px; }
 
 .baixar-acoes-rodape { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 
@@ -321,6 +321,6 @@
   white-space: nowrap;
 }
 
-.baixar-pagina .acao-whats-grande { background: #2E9B96; color: #FFFFFF; border: 0; }
+.baixar-pagina .acao-whats-grande { background: #1F736F; color: #FFFFFF; border: 0; }
 .baixar-pagina .acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
 .baixar-pagina .acao-voltar { border: 1px solid #A8C6E8; color: #12305B; }

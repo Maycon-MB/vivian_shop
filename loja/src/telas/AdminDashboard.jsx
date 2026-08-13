@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import ReactECharts from 'echarts-for-react';
+import Grafico from './painel/Grafico';
 import { 
   Users, 
   ShoppingBag, 
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
         data: [5200, 6320, 5010, 7340, 8900, 9300],
         type: 'line',
         smooth: true,
-        color: '#2E9B96',
+        color: '#1F736F',
         lineStyle: { width: 3 },
         areaStyle: { color: 'rgba(46, 155, 150, 0.1)' }
       },
@@ -188,7 +188,7 @@ const AdminDashboard = () => {
       prefixo: 'R$ ',
       casas: 2,
       icone: <ShoppingBag size={20} />,
-      cor: '#2E9B96',
+      cor: '#1F736F',
       nota: 'sem contar o frete',
       info: 'Soma dos pedidos pagos neste mês, sem contar o frete — o frete é dos Correios, não seu.',
     },
@@ -248,10 +248,10 @@ const AdminDashboard = () => {
                 <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
                   <Plus size={16} /> <span className="d-none d-sm-inline">Novo produto</span>
                 </Button>
-                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#2E9B96', borderColor: '#2E9B96' }}>
+                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#1F736F', borderColor: '#1F736F' }}>
                   <CheckCircle size={16} /> <span className="d-none d-sm-inline">Lançar venda</span>
                 </Button>
-                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
+                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#1F736F', borderColor: '#1F736F' }}>
                   <Eye size={16} /> <span className="d-none d-sm-inline">Ver a loja</span>
                 </Button>
               </div>
@@ -272,13 +272,13 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Quanto entrou por dia"
                   subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
-                  cor="#2E9B96"
+                  cor="#1F736F"
                   info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais — dá para postar no Instagram justamente nesse dia."
                   acao={
                     <span className="d-flex align-items-center gap-3">
-                      <span className="d-flex gap-3 small fw-bold" style={{ color: '#6B7C8F' }}>
+                      <span className="d-flex gap-3 small fw-bold" style={{ color: '#5F6F80' }}>
                         <span className="d-flex align-items-center gap-1">
-                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#2E9B96' }} />
+                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#1F736F' }} />
                           Personalizada
                         </span>
                         <span className="d-flex align-items-center gap-1">
@@ -336,7 +336,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Marketing"
                   subtitulo="Post sugerido para esta semana."
-                  cor="#2E9B96"
+                  cor="#1F736F"
                   info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda — nada vai para o seu Instagram sem você aprovar."
                   semPadding
                 >
@@ -364,7 +364,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Últimos pedidos"
                   subtitulo="O que precisa de você aparece primeiro."
-                  cor="#2E9B96"
+                  cor="#1F736F"
                   info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho, sem você fazer nada."
                   acao={
                     <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
@@ -457,7 +457,7 @@ const AdminDashboard = () => {
                         <option>Indicação</option>
                     </Form.Select>
                 </Form.Group>
-                <Button type="submit" className="w-100 py-3 rounded-pill fw-bold mt-2" variant="primary" style={{ backgroundColor: '#2E9B96', borderColor: '#2E9B96' }}>
+                <Button type="submit" className="w-100 py-3 rounded-pill fw-bold mt-2" variant="primary" style={{ backgroundColor: '#1F736F', borderColor: '#1F736F' }}>
                     Registrar e Atualizar Dashboard
                 </Button>
             </Form>
@@ -516,7 +516,7 @@ const AdminDashboard = () => {
             <div className="d-flex justify-content-between align-items-center border-top pt-3">
                 <div>
                     <p className="text-muted small mb-0">Total:</p>
-                    <p className="fw-black fs-4 mb-0 text-primary" style={{ color: '#2E9B96' }}>R$ {selectedOrder?.total.toFixed(2)}</p>
+                    <p className="fw-black fs-4 mb-0 text-primary" style={{ color: '#1F736F' }}>R$ {selectedOrder?.total.toFixed(2)}</p>
                 </div>
                 <Button variant="success" className="rounded-pill px-4 fw-bold">Enviar WhatsApp</Button>
             </div>

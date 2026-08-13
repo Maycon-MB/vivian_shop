@@ -65,7 +65,7 @@
 }
 
 .campos .form-control:focus {
-  border-color: #2E9B96;
+  border-color: #1F736F;
   box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
 }
 
@@ -75,10 +75,10 @@
   gap: 8px;
   margin: 14px 0 0;
   font-size: 13px;
-  color: #6B7C8F;
+  color: #5F6F80;
 }
 
-.dica svg { color: #2E9B96; flex-shrink: 0; }
+.dica svg { color: #1F736F; flex-shrink: 0; }
 
 /* ── Frete ──────────────────────────────────────────────────────────────── */
 .fretes { margin-top: 20px; display: grid; gap: 10px; }
@@ -99,16 +99,16 @@
 .frete:hover { border-color: #A8C6E8; }
 
 .frete.escolhido {
-  border-color: #2E9B96;
+  border-color: #1F736F;
   background: rgba(46, 155, 150, .06);
-  box-shadow: 0 0 0 1px #2E9B96;
+  box-shadow: 0 0 0 1px #1F736F;
 }
 
-.frete input { accent-color: #2E9B96; width: 17px; height: 17px; flex-shrink: 0; }
+.frete input { accent-color: #1F736F; width: 17px; height: 17px; flex-shrink: 0; }
 
 .frete-nome { display: grid; flex: 1; min-width: 0; }
 .frete-nome strong { font-size: 14px; }
-.frete-nome span { font-size: 12px; color: #6B7C8F; }
+.frete-nome span { font-size: 12px; color: #5F6F80; }
 
 .frete-valor { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
@@ -129,16 +129,16 @@
 }
 
 .pagamento.escolhido {
-  border-color: #2E9B96;
+  border-color: #1F736F;
   background: rgba(46, 155, 150, .06);
-  box-shadow: 0 0 0 1px #2E9B96;
+  box-shadow: 0 0 0 1px #1F736F;
 }
 
-.pagamento input { accent-color: #2E9B96; width: 17px; height: 17px; flex-shrink: 0; }
-.pagamento svg { color: #2E9B96; flex-shrink: 0; }
+.pagamento input { accent-color: #1F736F; width: 17px; height: 17px; flex-shrink: 0; }
+.pagamento svg { color: #1F736F; flex-shrink: 0; }
 .pagamento > span { display: grid; }
 .pagamento strong { font-size: 14px; }
-.pagamento > span > span { font-size: 12px; color: #6B7C8F; }
+.pagamento > span > span { font-size: 12px; color: #5F6F80; }
 
 /* ── Resumo ─────────────────────────────────────────────────────────────── */
 .resumo {
@@ -160,7 +160,7 @@
   justify-content: space-between;
   gap: 12px;
   font-size: 13.5px;
-  color: #6B7C8F;
+  color: #5F6F80;
 }
 
 .resumo-itens strong { color: #12305B; }
@@ -175,11 +175,11 @@
 }
 
 .resumo-contas > div { display: flex; justify-content: space-between; gap: 12px; }
-.resumo-contas dt { font-size: 13.5px; color: #6B7C8F; font-weight: 400; }
+.resumo-contas dt { font-size: 13.5px; color: #5F6F80; font-weight: 400; }
 .resumo-contas dd { margin: 0; font-size: 13.5px; font-variant-numeric: tabular-nums; }
 
 .resumo-contas .desconto dt,
-.resumo-contas .desconto dd { color: #2E9B96; font-weight: 700; }
+.resumo-contas .desconto dd { color: #1F736F; font-weight: 700; }
 
 .resumo-contas .total {
   border-top: 1px solid #DCE9F6;
@@ -210,13 +210,13 @@
 /* Botão travado precisa dizer o que falta, não só ficar apagado. */
 .finalizar.travado {
   background: #DCE9F6;
-  color: #6B7C8F;
+  color: #5F6F80;
   box-shadow: none;
   cursor: not-allowed;
   font-size: 13.5px;
 }
 
-.finalizar.travado:hover { transform: none; color: #6B7C8F; }
+.finalizar.travado:hover { transform: none; color: #5F6F80; }
 
 .prazo-aviso {
   display: flex;
@@ -224,10 +224,10 @@
   gap: 8px;
   margin: 14px 0 0;
   font-size: 12.5px;
-  color: #6B7C8F;
+  color: #5F6F80;
 }
 
-.prazo-aviso svg { color: #2E9B96; flex-shrink: 0; }
+.prazo-aviso svg { color: #1F736F; flex-shrink: 0; }
 
 .resumo-garantias {
   list-style: none;
@@ -243,10 +243,10 @@
   align-items: center;
   gap: 9px;
   font-size: 12px;
-  color: #6B7C8F;
+  color: #5F6F80;
 }
 
-.resumo-garantias svg { color: #2E9B96; flex-shrink: 0; }
+.resumo-garantias svg { color: #1F736F; flex-shrink: 0; }
 
 /* ── Pedido confirmado ──────────────────────────────────────────────────── */
 .confirmado-topo { text-align: center; max-width: 44ch; margin: 0 auto 40px; }
@@ -257,7 +257,7 @@
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: linear-gradient(140deg, #2E9B96, #1F736F);
+  background: linear-gradient(140deg, #1F736F, #1F736F);
   color: #FFFFFF;
   margin-bottom: 18px;
   box-shadow: 0 18px 34px -18px rgba(46, 155, 150, 1);
@@ -270,7 +270,7 @@
   margin: 0 0 8px;
 }
 
-.confirmado-topo p { color: #6B7C8F; margin: 0; }
+.confirmado-topo p { color: #5F6F80; margin: 0; }
 
 .passos-pedido,
 .confirmado-ajuda {
@@ -298,15 +298,15 @@
   place-items: center;
   flex-shrink: 0;
   border: 1px solid #DCE9F6;
-  color: #6B7C8F;
+  color: #5F6F80;
   background: #FFFFFF;
 }
 
-.passos-pedido .feito .marca { background: #2E9B96; border-color: #2E9B96; color: #FFFFFF; }
+.passos-pedido .feito .marca { background: #1F736F; border-color: #1F736F; color: #FFFFFF; }
 .passos-pedido .agora .marca { background: #FFD400; border-color: #FFD400; color: #12305B; }
 
 .passos-pedido strong { font-size: 14.5px; display: block; }
-.passos-pedido p { margin: 3px 0 0; font-size: 13.5px; color: #6B7C8F; }
+.passos-pedido p { margin: 3px 0 0; font-size: 13.5px; color: #5F6F80; }
 
 .baixar {
   max-width: 620px;
@@ -323,7 +323,7 @@
 }
 
 .baixar strong { display: block; font-size: 15px; }
-.baixar span { font-size: 12.5px; color: #6B7C8F; }
+.baixar span { font-size: 12.5px; color: #5F6F80; }
 
 .baixar-botao {
   display: inline-flex;
@@ -339,7 +339,7 @@
   cursor: pointer;
 }
 
-.confirmado-ajuda p { font-size: 14px; color: #6B7C8F; margin: 0 0 18px; }
+.confirmado-ajuda p { font-size: 14px; color: #5F6F80; margin: 0 0 18px; }
 
 .confirmado-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -347,7 +347,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: #2E9B96;
+  background: #1F736F;
   color: #FFFFFF;
   border-radius: 999px;
   padding: 13px 24px;

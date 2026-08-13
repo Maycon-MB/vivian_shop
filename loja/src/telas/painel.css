@@ -17,11 +17,11 @@
   --painel-fundo: #F2F5F9;
   --painel-superficie: #FFFFFF;
   --painel-tinta: #12305B;
-  --painel-tinta-suave: #6B7C8F;
+  --painel-tinta-suave: #5F6F80;
   --painel-linha: #DCE9F6;
   --painel-linha-forte: #A8C6E8;
 
-  --painel-verde: #2E9B96;
+  --painel-verde: #1F736F;
   --painel-amarelo: #FFD400;
   --painel-rosa: #C4436B;
   --painel-azul: #12305B;
@@ -172,7 +172,7 @@
   height: 40px;
   border-radius: 11px;
   color: var(--kpi-cor, var(--painel-verde));
-  background: color-mix(in srgb, var(--kpi-cor, #2E9B96) 12%, #FFFFFF);
+  background: color-mix(in srgb, var(--kpi-cor, #1F736F) 12%, #FFFFFF);
 }
 
 .kpi-rotulo {
@@ -391,7 +391,7 @@
 
 .painel-card {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--card-cor, #2E9B96) 5%, transparent), transparent 120px),
+    linear-gradient(180deg, color-mix(in srgb, var(--card-cor, #1F736F) 5%, transparent), transparent 120px),
     var(--painel-superficie);
 }
 
@@ -399,8 +399,8 @@
 .kpi-faixa,
 .painel-card-faixa {
   background: linear-gradient(90deg,
-    var(--kpi-cor, var(--card-cor, #2E9B96)),
-    color-mix(in srgb, var(--kpi-cor, var(--card-cor, #2E9B96)) 35%, #FFFFFF));
+    var(--kpi-cor, var(--card-cor, #1F736F)),
+    color-mix(in srgb, var(--kpi-cor, var(--card-cor, #1F736F)) 35%, #FFFFFF));
 }
 
 /* ── Selo de conteúdo de exemplo ────────────────────────────────────────── */
@@ -470,7 +470,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: linear-gradient(140deg, #2E9B96, #1F736F);
+  background: linear-gradient(140deg, #1F736F, #1F736F);
   box-shadow: 0 8px 18px -10px rgba(46, 155, 150, .9);
 }
 
@@ -895,7 +895,7 @@
 .relatorio-numero.destaque strong { color: #1F736F; }
 
 .relatorio-numero .detalhe {
-  color: #6B7C8F;
+  color: #5F6F80;
   font-size: 12px;
   line-height: 1.4;
 }
@@ -1026,7 +1026,7 @@
 }
 
 .produzir-lista em {
-  color: #6B7C8F;
+  color: #5F6F80;
   font-size: 12.5px;
   font-style: normal;
   font-weight: 400;
@@ -1034,7 +1034,21 @@
 
 .acao-principal:disabled {
   background: #DCE9F6;
-  color: #6B7C8F;
+  color: #5F6F80;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* O espaço do gráfico enquanto ele carrega. Ter altura desde já evita que
+   o resto da tela pule para baixo quando ele chega — o salto faz a pessoa
+   perder o que estava lendo, e é pior que a espera. */
+.grafico-carregando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 210px;
+  background: #F7FAFD;
+  border-radius: 14px;
+  color: #5F6F80;
+  font-size: 13.5px;
 }

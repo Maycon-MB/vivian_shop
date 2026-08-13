@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import ReactECharts from 'echarts-for-react';
+import Grafico from './Grafico';
 import {
   base,
   eixoCategoria,
@@ -158,7 +158,7 @@ const Calendario = ({ dias }) => {
       min: 0,
       max: maximo,
       show: false,
-      inRange: { color: ['#EDF3F9', '#9AD5D1', '#2E9B96', '#1B6B67'] },
+      inRange: { color: ['#EDF3F9', '#9AD5D1', '#1F736F', '#1B6B67'] },
     },
     calendar: {
       top: 30,
@@ -187,7 +187,7 @@ const Calendario = ({ dias }) => {
     ],
   };
 
-  return <ReactECharts option={opcao} style={{ height: 288, width: '100%' }} notMerge />;
+  return <Grafico option={opcao} />;
 };
 
 const MODOS = [
@@ -284,7 +284,7 @@ export const VendasPorDia = () => {
       </div>
 
       {modo === 'barras' ? (
-        <ReactECharts option={opcao} style={{ height: 288, width: '100%' }} notMerge />
+        <Grafico option={opcao} />
       ) : (
         <Calendario dias={somaDias} />
       )}
@@ -350,7 +350,7 @@ export const ProporcaoLinhas = () => {
      olha a rosca quer saber quanto, não só qual pedaço é maior. */
   return (
     <div>
-      <ReactECharts option={opcao} style={{ height: 210, width: '100%' }} notMerge />
+      <Grafico option={opcao} height={210} />
 
       <ul className="rosca-legenda">
         {fatias.map((fatia) => (
@@ -414,5 +414,5 @@ export const MaisVendidos = () => {
     ],
   };
 
-  return <ReactECharts option={opcao} style={{ height: 300, width: '100%' }} notMerge />;
+  return <Grafico option={opcao} height={300} />;
 };
