@@ -55,6 +55,18 @@ clientes dela.
 | Botão "i" ao lado de cada termo do sistema | Ela não é de tecnologia. Explicação escondida atrás de um toque não atrapalha quem já sabe. | — |
 | Produtos em grade com foto, não em tabela | Ela pensa nos produtos como coisas que faz, e reconhece pela foto antes do nome. | — |
 
+## Relatórios
+
+| Decisão | Por quê | Custo de mudar |
+|---|---|---|
+| Frete nunca entra no faturamento | Ele passa pela conta dela e sai inteiro para a transportadora. Somar os dois é como uma artesã fecha o mês achando que lucrou. Na tela o frete aparece sempre separado e nomeado como repasse. | — |
+| Ticket médio calculado sobre a receita, não sobre o total pago | Senão um pedido para o Acre pareceria uma venda maior do que foi. | 2 minutos |
+| Pedido cancelado e pedido sem pagamento não contam como venda | Contar infla o mês e o buraco aparece no mês seguinte, quando o dinheiro não chega. | — |
+| A fila de produção soma a mesma peça de pedidos diferentes | 30 canecas de uma vez em vez de ligar o forno três vezes para 10. | — |
+| A comparação com o Elo7 assume 12% e **diz que é chute meu** | Eu não sei quanto o Elo7 cobrava dela. Mostrar "você economizou R$ X" com um número inventado seria inventar economia. A pergunta foi para /perguntas. | some quando ela responder |
+| Quando o mês é fraco, a tela diz que o fixo saiu mais caro | Esconder isso faria o relatório servir para me defender, e não para ela decidir. A tela ainda explica a partir de quanto o fixo compensa. | — |
+| CSV com ponto e vírgula e BOM | É o que o Excel em português abre sem quebrar acento e sem jogar tudo numa coluna só. | — |
+
 ## Como está montado por dentro
 
 | Decisão | Por quê | Custo de mudar |
