@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
 import '../identidade.css';
 import {
   DECISOES,
@@ -125,6 +126,17 @@ const StatusPage = () => {
               <span className="placar-rotulo">etapas prontas</span>
             </div>
           </div>
+
+          {/* Esta página mostra o que está esperando resposta, mas o lugar
+              de responder é o formulário. Sem este aviso, ela lê as
+              perguntas aqui, responde na cabeça e segue — e nada chega. */}
+          <Link className="ir-para-perguntas" href="/perguntas/">
+            <strong>Responder o que está esperando</strong>
+            <span>
+              As perguntas ficam todas numa página só, e dá para responder aos poucos: o que
+              você escrever fica salvo e você volta quando der.
+            </span>
+          </Link>
 
           <div className="note">
             <strong>Onde estamos:</strong> as telas da loja e do seu painel já estão de pé — não

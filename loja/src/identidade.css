@@ -830,3 +830,38 @@
 /* ── Rodapé ─────────────────────────────────────────────────────────────── */
 .identity footer { padding-block: 40px 96px; }
 .identity footer p { font-size: 13.5px; color: var(--ink-soft); }
+
+/* Atalho da página de acompanhamento para o formulário de perguntas.
+   As duas páginas falam do mesmo assunto — o que falta decidir — e sem
+   este caminho a Vivian lê as perguntas aqui, responde na cabeça e segue
+   em frente. Nada chega, e eu fico esperando. */
+.identity .ir-para-perguntas {
+  display: block;
+  margin: 22px 0 0;
+  padding: 16px 18px;
+  background: var(--ink, #12305B);
+  border-radius: 14px;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.identity .ir-para-perguntas:hover,
+.identity .ir-para-perguntas:focus-visible {
+  background: #1B4179;
+  color: #FFFFFF;
+}
+
+.identity .ir-para-perguntas strong {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.identity .ir-para-perguntas span {
+  display: block;
+  margin-top: 4px;
+  color: #C9DAEC;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
