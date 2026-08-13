@@ -49,7 +49,7 @@ export const QUEM = {
   maycon: 'Eu decidi',
 }
 
-export const ATUALIZADO_EM = '12 de agosto de 2026'
+export const ATUALIZADO_EM = '13 de agosto de 2026'
 
 export const DECISOES = [
   {
