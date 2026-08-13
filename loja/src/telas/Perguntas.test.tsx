@@ -121,10 +121,58 @@ describe('formulário de perguntas', () => {
     )
     await userEvent.click(await screen.findByRole('link', { name: /Mandar pelo WhatsApp/ }))
 
-    await userEvent.type(await screen.findByLabelText(/PDF, ou tem outro formato/), 'PDF')
+    await userEvent.type(await screen.findByLabelText(/é PDF para imprimir em casa/), 'PDF')
 
     // O que ela escreveu depois do envio também precisa chegar.
     expect(await screen.findByText(/1 resposta que ainda não me chegou/)).toBeInTheDocument()
+  })
+
+  it('mostra o que ela já respondeu, em vez de perguntar de novo', async () => {
+    render(<Perguntas />)
+
+    expect(await screen.findByText('O que você já me contou')).toBeInTheDocument()
+    expect(screen.getByText(/mínimo são 10 canecas/)).toBeInTheDocument()
+    expect(screen.getByText(/CEP [dado pessoal removido]/)).toBeInTheDocument()
+
+    // O que ela já disse não pode voltar como pergunta em branco.
+    expect(screen.queryByLabelText(/prazo de 5 dias úteis vale para tudo/)).toBeNull()
+    expect(screen.queryByLabelText(/declaração de conteúdo saindo junto/)).toBeNull()
+  })
+
+  it('deixa ela corrigir o que eu entendi errado', async () => {
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/Tem alguma coisa errada/),
+      'o prazo da caneca é 7 dias',
+    )
+
+    // A correção é a resposta mais valiosa da página: precisa chegar.
+    const botao = await screen.findByRole('link', { name: /Mandar pelo WhatsApp/ })
+    const link = decodeURIComponent(botao.getAttribute('href') ?? '')
+    expect(link).toContain('o prazo da caneca é 7 dias')
+  })
+
+  it('não conta a correção como uma das perguntas', async () => {
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/Tem alguma coisa errada/),
+      'alguma coisa',
+    )
+
+    // Contá-la faria a barra dizer "16 de 15" e parecer defeito.
+    expect(await screen.findByText(/0 de 15 respondidas/)).toBeInTheDocument()
+    // Mas ela ainda precisa chegar até mim.
+    expect(screen.getByText(/ainda não me chegou/)).toBeInTheDocument()
+  })
+
+  it('pergunta o peso e as medidas, que o frete precisa', async () => {
+    render(<Perguntas />)
+
+    // Nunca foi perguntado, e sem isso o frete sai errado — a diferença
+    // sai do bolso dela em cada pedido.
+    expect(await screen.findByLabelText(/Quanto pesa e qual o tamanho/)).toBeInTheDocument()
   })
 
   it('explica por que cada pergunta está sendo feita', async () => {

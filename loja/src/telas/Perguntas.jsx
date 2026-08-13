@@ -30,6 +30,45 @@ const WHATSAPP_DO_MAYCON = '5521974587181';
 
 const CHAVE = 'feito-para-voce:respostas-vivian';
 
+/**
+ * O que a Vivian já me contou pelo WhatsApp.
+ *
+ * Aparece no topo, para leitura, por dois motivos. O primeiro é não
+ * reperguntar: nada irrita mais do que responder de novo o que já foi
+ * respondido, e ela responderia com menos vontade a partir dali. O
+ * segundo é mais importante — é a chance de ela ver que eu entendi
+ * errado antes de o erro virar código.
+ *
+ * O que está aqui saiu da conversa dos dias 10 e 11 de agosto de 2026.
+ */
+const JA_SEI = [
+  {
+    titulo: 'O nome e as duas linhas',
+    texto:
+      'A loja se chama "Feito para você! Personalizados". Tem duas linhas: papelaria personalizada, que são os produtos feitos à mão, e papelaria pedagógica, que são as atividades adaptadas e jogos, vendidos em arquivo digital.',
+  },
+  {
+    titulo: 'Mínimo de 10 e prazo de 5 dias',
+    texto:
+      'Cada produto personalizado sai de 10 em 10 — não dá para comprar 1 caneca, o mínimo são 10 canecas. Nada é pronta entrega: a produção leva 5 dias úteis depois que o pagamento é confirmado.',
+  },
+  {
+    titulo: 'Digital e personalizado não se misturam',
+    texto:
+      'São duas compras separadas. O digital sai na hora por e-mail e WhatsApp, sem etiqueta e sem declaração de conteúdo; o personalizado entra na produção. Juntar os dois faria o arquivo constar numa embalagem onde ele não está.',
+  },
+  {
+    titulo: 'De onde sai e por onde vai',
+    texto:
+      'Os envios saem do Rio de Janeiro, do CEP [dado pessoal removido], por Correios ou Jadlog — as duas que você já usava. O endereço vai impresso como remetente em toda etiqueta, e quem compra consegue ver.',
+  },
+  {
+    titulo: 'A declaração de conteúdo continua',
+    texto:
+      'Você perguntou se ela ainda existe: existe. O sistema gera junto com a etiqueta, já preenchida, e você só imprime.',
+  },
+]
+
 /* Guarda quantas respostas já saíram daqui. É o que separa "escrevi" de
    "mandei" — e essa diferença é a única falha séria deste formulário:
    sem servidor, uma resposta que ela escreve e não envia é, para quem
@@ -59,12 +98,12 @@ const BLOCOS = [
         linhas: 3,
       },
       {
-        id: 'prazos',
-        pergunta: 'O prazo de 5 dias úteis vale para tudo?',
+        id: 'medidas',
+        pergunta: 'Quanto pesa e qual o tamanho da caixa de cada pacote de 10?',
         porque:
-          'Hoje a loja promete 5 dias para todo produto personalizado. Se a caneca leva mais que o caderno, é melhor a loja já dizer isso — prazo prometido a menos vira cobrança depois.',
-        dica: 'ex: caneca leva 7, o resto 5',
-        linhas: 2,
+          'É o que faz o frete sair certo. Como o mínimo é 10, a gente cadastra o pacote fechado do jeito que você já envia — mede uma vez e nunca mais. Se errar para menos, a diferença sai do seu bolso em cada pedido.',
+        dica: 'ex: 10 cadernos = 1,8 kg, caixa de 30 x 25 x 12 cm. Balança de cozinha e fita métrica resolvem.',
+        linhas: 5,
       },
     ],
   },
@@ -75,10 +114,18 @@ const BLOCOS = [
     perguntas: [
       {
         id: 'formato',
-        pergunta: 'O material digital vai em PDF, ou tem outro formato?',
+        pergunta: 'O material digital é PDF para imprimir em casa?',
         porque:
-          'PDF abre em qualquer celular e não dá para editar. Se for Canva ou arquivo editável, a entrega muda e a proteção também.',
+          'Perguntei isso no WhatsApp e a conversa seguiu para outro assunto. PDF abre em qualquer celular e ninguém edita. Se for Canva ou arquivo editável, muda a entrega e muda a proteção.',
         dica: 'PDF / Canva / outro',
+        linhas: 2,
+      },
+      {
+        id: 'oquevem',
+        pergunta: 'Cada compra digital é um arquivo só, ou um pacote com vários?',
+        porque:
+          'Também perguntei no WhatsApp e ficou para trás. Muda como o preço aparece na loja: "R$ 47 a atividade" é diferente de "R$ 47 o pacote com 12".',
+        dica: 'um arquivo por compra / um pacote / depende do produto',
         linhas: 2,
       },
       {
@@ -145,14 +192,6 @@ const BLOCOS = [
     resumo: 'O que a loja promete aqui, você vai ter que cumprir.',
     perguntas: [
       {
-        id: 'declaracao',
-        pergunta: 'Você quer a declaração de conteúdo saindo junto com a etiqueta?',
-        porque:
-          'É o papel que ia junto no Elo7. Dá para o sistema gerar preenchido, você só imprime e assina. Se preferir continuar preenchendo à mão, também dá.',
-        dica: 'quero que saia pronta / prefiro preencher na mão',
-        linhas: 2,
-      },
-      {
         id: 'troca',
         pergunta: 'O que você faz hoje quando a peça chega com defeito?',
         porque:
@@ -207,6 +246,12 @@ const TOTAL = BLOCOS.reduce((soma, bloco) => soma + bloco.perguntas.length, 0);
 /** Monta o texto que vai para o WhatsApp, só com o que ela respondeu. */
 const montarTexto = (respostas) => {
   const partes = ['Respostas sobre a loja:', ''];
+
+  if (respostas.corrigir?.trim()) {
+    partes.push('*Corrigindo o que você tinha entendido*');
+    partes.push(respostas.corrigir.trim());
+    partes.push('');
+  }
 
   BLOCOS.forEach((bloco) => {
     const respondidas = bloco.perguntas.filter((p) => respostas[p.id]?.trim());
@@ -278,14 +323,27 @@ const Perguntas = () => {
     }
   }, [respostas, carregado]);
 
-  const respondidas = useMemo(
-    () => Object.values(respostas).filter((r) => r?.trim()).length,
-    [respostas],
+  const IDS_DAS_PERGUNTAS = useMemo(
+    () => BLOCOS.flatMap((bloco) => bloco.perguntas.map((p) => p.id)),
+    [],
   );
+
+  const respondidas = useMemo(
+    () => IDS_DAS_PERGUNTAS.filter((id) => respostas[id]?.trim()).length,
+    [respostas, IDS_DAS_PERGUNTAS],
+  );
+
+  /* A correção conta para "tem coisa não enviada", mas não para o "X de
+     15": ela não é uma das perguntas, é um aviso de que eu errei. */
+  const temCorrecao = Boolean(respostas.corrigir?.trim());
+
+  /* Ter o que mandar é diferente de ter pergunta respondida: só a correção
+     já basta, e é justamente a mensagem que eu menos posso perder. */
+  const temOQueMandar = respondidas > 0 || temCorrecao;
 
   const texto = useMemo(() => montarTexto(respostas), [respostas]);
 
-  const pendentes = Math.max(respondidas - jaEnviadas, 0);
+  const pendentes = Math.max(respondidas + (temCorrecao ? 1 : 0) - jaEnviadas, 0);
 
   /* Se ela fechar a aba com resposta escrita e não enviada, o navegador
      pergunta antes. É a última chance de avisar: depois de fechar, o
@@ -309,9 +367,10 @@ const Perguntas = () => {
      WhatsApp, fora daqui — mas é o ponto a partir do qual cobrar de novo
      seria implicância. */
   const marcarComoEnviadas = () => {
-    setJaEnviadas(respondidas);
+    const total = respondidas + (temCorrecao ? 1 : 0);
+    setJaEnviadas(total);
     try {
-      window.localStorage.setItem(CHAVE_ENVIADO, String(respondidas));
+      window.localStorage.setItem(CHAVE_ENVIADO, String(total));
     } catch {
       // Sem armazenamento, o aviso volta na próxima visita. Insistir de
       // novo é melhor do que deixar passar.
@@ -380,6 +439,45 @@ const Perguntas = () => {
             enviado até você apertar o botão lá embaixo.
           </p>
         </header>
+
+        {/* O que ela já respondeu vem antes das perguntas novas, e para
+            conferir, não para responder de novo. É aqui que um mal-entendido
+            meu aparece enquanto ainda é barato de corrigir. */}
+        <section className="perguntas-jasei">
+          <h2>O que você já me contou</h2>
+          <p className="perguntas-jasei-intro">
+            Isto veio das nossas conversas. Dá uma lida rápida: se eu entendi alguma coisa
+            errada, me fala — é melhor descobrir agora do que depois de a loja estar pronta.
+          </p>
+
+          <ul>
+            {JA_SEI.map((item) => (
+              <li key={item.titulo}>
+                <Check size={16} aria-hidden="true" />
+                <div>
+                  <strong>{item.titulo}</strong>
+                  <span>{item.texto}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pergunta">
+            <label htmlFor="p-corrigir">Tem alguma coisa errada aí em cima?</label>
+            <p className="pergunta-porque">
+              Se estiver tudo certo, pula esta e vai para as perguntas de baixo.
+            </p>
+            <textarea
+              id="p-corrigir"
+              rows={3}
+              value={respostas.corrigir ?? ''}
+              placeholder="o que eu entendi errado"
+              onChange={(e) =>
+                setRespostas((atual) => ({ ...atual, corrigir: e.target.value }))
+              }
+            />
+          </div>
+        </section>
 
         {BLOCOS.map((bloco) => (
           <section key={bloco.id} className="perguntas-bloco">
@@ -463,9 +561,9 @@ const Perguntas = () => {
             {podeEnviar && (
               <button
                 type="button"
-                className={`perguntas-enviar ${respondidas === 0 ? 'travado' : ''}`}
+                className={`perguntas-enviar ${temOQueMandar ? '' : 'travado'}`}
                 onClick={enviar}
-                disabled={respondidas === 0 || enviando}
+                disabled={!temOQueMandar || enviando}
               >
                 {enviando ? (
                   <>
@@ -475,20 +573,20 @@ const Perguntas = () => {
                 ) : (
                   <>
                     <Send size={17} />
-                    {respondidas === 0 ? 'Responda alguma coisa primeiro' : 'Enviar minhas respostas'}
+                    {temOQueMandar ? 'Enviar minhas respostas' : 'Responda alguma coisa primeiro'}
                   </>
                 )}
               </button>
             )}
 
             <a
-              className={`${podeEnviar ? 'perguntas-whats' : 'perguntas-enviar'} ${respondidas === 0 ? 'travado' : ''}`}
+              className={`${podeEnviar ? 'perguntas-whats' : 'perguntas-enviar'} ${temOQueMandar ? '' : 'travado'}`}
               href={`https://wa.me/${WHATSAPP_DO_MAYCON}?text=${encodeURIComponent(texto)}`}
               target="_blank"
               rel="noopener noreferrer"
-              aria-disabled={respondidas === 0}
+              aria-disabled={!temOQueMandar}
               onClick={(e) => {
-                if (respondidas === 0) {
+                if (!temOQueMandar) {
                   e.preventDefault();
                   return;
                 }
@@ -496,7 +594,7 @@ const Perguntas = () => {
               }}
             >
               <MessageCircle size={17} />
-              {respondidas === 0 && !podeEnviar
+              {!temOQueMandar && !podeEnviar
                 ? 'Responda alguma coisa primeiro'
                 : 'Mandar pelo WhatsApp'}
             </a>
@@ -505,7 +603,7 @@ const Perguntas = () => {
               type="button"
               className="perguntas-copiar"
               onClick={copiar}
-              disabled={respondidas === 0}
+              disabled={!temOQueMandar}
             >
               {copiado ? <Check size={16} /> : <Copy size={16} />}
               {copiado ? 'Copiado' : 'Copiar o texto'}
