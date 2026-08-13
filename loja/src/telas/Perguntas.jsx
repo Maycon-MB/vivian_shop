@@ -3,7 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Container } from 'react-bootstrap';
-import { MessageCircle, Check, Copy, Save } from 'lucide-react';
+import { MessageCircle, Check, Copy, Save, Send, Loader2, AlertCircle } from 'lucide-react';
+import { enviarRespostas, podeEnviar } from '@/servicos/enviarRespostas';
 
 /**
  * As perguntas que faltam para a loja abrir.
@@ -232,6 +233,8 @@ const Perguntas = () => {
   const [copiado, setCopiado] = useState(false);
   const [carregado, setCarregado] = useState(false);
   const [jaEnviadas, setJaEnviadas] = useState(0);
+  const [enviando, setEnviando] = useState(false);
+  const [envio, setEnvio] = useState(null);
   const primeiraGravacao = useRef(true);
 
   /* Lido depois da montagem porque o site é estático: ler o navegador
@@ -314,6 +317,17 @@ const Perguntas = () => {
     }
   };
 
+  const enviar = async () => {
+    setEnviando(true);
+    setEnvio(null);
+
+    const resultado = await enviarRespostas(respostas);
+
+    if (resultado.ok) marcarComoEnviadas();
+    setEnvio(resultado);
+    setEnviando(false);
+  };
+
   const copiar = async () => {
     try {
       await navigator.clipboard.writeText(texto);
@@ -337,8 +351,8 @@ const Perguntas = () => {
           <h1>O que ainda falta decidir</h1>
           <p className="perguntas-intro">
             São {TOTAL} perguntas. Não precisa responder tudo hoje, nem na ordem: o que você
-            escrever fica guardado aqui neste celular, e você volta quando der. Quando quiser
-            mandar, tem um botão no fim que junta tudo e abre o WhatsApp.
+            escrever fica guardado neste aparelho, e você volta quando der. Quando quiser
+            mandar, tem um botão no fim que me envia o que você já respondeu.
           </p>
 
           <div className="perguntas-progresso" role="status">
@@ -351,7 +365,7 @@ const Perguntas = () => {
           </div>
 
           <p className="perguntas-guardado">
-            <Save size={14} /> Salvo sozinho enquanto você escreve, aqui neste celular. Nada é
+            <Save size={14} /> Salvo sozinho enquanto você escreve, neste aparelho. Nada é
             enviado até você apertar o botão lá embaixo.
           </p>
         </header>
@@ -396,8 +410,8 @@ const Perguntas = () => {
                 : `Você tem ${pendentes} respostas que ainda não me chegaram.`}
             </strong>
             <span>
-              Elas estão guardadas aqui no seu celular, mas eu só recebo quando você apertar o
-              botão verde no fim da página.
+              Elas estão guardadas neste aparelho, mas eu só recebo quando você apertar o botão
+              de enviar, no fim da página.
             </span>
           </div>
         )}
@@ -409,9 +423,47 @@ const Perguntas = () => {
             depois. O texto vai listar só o que você preencheu.
           </p>
 
+          {envio?.ok && (
+            <p className="perguntas-recebido" role="status">
+              <Check size={17} />
+              {envio.semConfirmacao
+                ? 'Enviei! Se eu não confirmar por aqui em algumas horas, me chama no WhatsApp.'
+                : 'Recebi, obrigado! Pode continuar respondendo o resto quando der.'}
+            </p>
+          )}
+
+          {envio && !envio.ok && (
+            <p className="perguntas-falhou" role="alert">
+              <AlertCircle size={17} /> {envio.motivo}
+            </p>
+          )}
+
           <div className="perguntas-acoes">
+            {/* O envio direto é a ação principal porque funciona igual no
+                computador e no celular. O WhatsApp fica ao lado, para quem
+                prefere conversar — e como saída se o envio falhar. */}
+            {podeEnviar && (
+              <button
+                type="button"
+                className={`perguntas-enviar ${respondidas === 0 ? 'travado' : ''}`}
+                onClick={enviar}
+                disabled={respondidas === 0 || enviando}
+              >
+                {enviando ? (
+                  <>
+                    <Loader2 size={17} className="girando" /> Enviando…
+                  </>
+                ) : (
+                  <>
+                    <Send size={17} />
+                    {respondidas === 0 ? 'Responda alguma coisa primeiro' : 'Enviar minhas respostas'}
+                  </>
+                )}
+              </button>
+            )}
+
             <a
-              className={`perguntas-enviar ${respondidas === 0 ? 'travado' : ''}`}
+              className={`${podeEnviar ? 'perguntas-whats' : 'perguntas-enviar'} ${respondidas === 0 ? 'travado' : ''}`}
               href={`https://wa.me/${WHATSAPP_DO_MAYCON}?text=${encodeURIComponent(texto)}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -425,7 +477,9 @@ const Perguntas = () => {
               }}
             >
               <MessageCircle size={17} />
-              {respondidas === 0 ? 'Responda alguma coisa primeiro' : 'Mandar pelo WhatsApp'}
+              {respondidas === 0 && !podeEnviar
+                ? 'Responda alguma coisa primeiro'
+                : 'Mandar pelo WhatsApp'}
             </a>
 
             <button

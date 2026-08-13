@@ -265,3 +265,66 @@
 
 .perguntas-pendente strong { font-size: 14.5px; line-height: 1.35; }
 .perguntas-pendente span { font-size: 13px; line-height: 1.5; }
+
+/* Quando o envio direto existe, ele é a ação principal e o WhatsApp fica
+   ao lado: um funciona igual no computador e no celular, o outro depende
+   do aplicativo estar conectado. A cor segue essa hierarquia. */
+.perguntas-whats {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 22px;
+  background: transparent;
+  color: #FFFFFF;
+  box-shadow: inset 0 0 0 1.5px rgba(37, 211, 102, .8);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.perguntas-whats:hover { color: #FFFFFF; background: rgba(37, 211, 102, .14); }
+
+.perguntas-whats.travado {
+  color: #7B95B8;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .16);
+  cursor: not-allowed;
+}
+
+.perguntas-recebido,
+.perguntas-falhou {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0 0 16px;
+  padding: 13px 16px;
+  border-radius: 13px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.perguntas-recebido {
+  background: rgba(37, 211, 102, .16);
+  color: #C6F6D5;
+}
+
+/* Falha precisa ser legível sobre o azul escuro do bloco, sem virar um
+   vermelho que assusta: ela não perdeu nada, só precisa tentar de novo. */
+.perguntas-falhou {
+  background: rgba(255, 212, 0, .16);
+  color: #FFE9A3;
+}
+
+.perguntas-recebido svg,
+.perguntas-falhou svg { flex: 0 0 auto; margin-top: 2px; }
+
+.perguntas-fim .girando { animation: girar-envio 1s linear infinite; }
+
+@keyframes girar-envio { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .perguntas-fim .girando { animation: none; }
+}
