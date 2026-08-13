@@ -231,3 +231,37 @@
   .perguntas-bloco { padding: 20px 17px; }
   .perguntas-acoes > * { flex: 1 1 100%; justify-content: center; }
 }
+
+/* A tarja de "escrito mas não enviado".
+
+   Sem servidor, resposta guardada e resposta inexistente são a mesma coisa
+   para quem espera do outro lado. Esta é a única defesa da página contra
+   ela preencher tudo e nunca mandar.
+
+   Fica presa ao rodapé da tela, e não ao fim da página, porque o risco
+   existe desde a primeira resposta: um aviso que só aparece rolando até o
+   fim chega tarde para quem fechou a aba no meio. O `padding-bottom` no
+   fim da página devolve o espaço que ela ocupa, senão a tarja cobriria o
+   próprio botão de mandar. */
+.perguntas-pendente {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  width: min(692px, calc(100% - 28px));
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 17px;
+  background: #FFD400;
+  border-radius: 14px;
+  box-shadow: 0 14px 34px -12px rgba(18, 48, 91, .5);
+  color: #12305B;
+}
+
+/* Espaço no fim da página para a tarja não cobrir o botão verde. */
+.perguntas.tem-pendente .perguntas-voltar { margin-bottom: 92px; }
+
+.perguntas-pendente strong { font-size: 14.5px; line-height: 1.35; }
+.perguntas-pendente span { font-size: 13px; line-height: 1.5; }
