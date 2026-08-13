@@ -341,3 +341,76 @@
   font-size: 14px;
   line-height: 1.55;
 }
+
+/* "O que você já me contou" — para conferir, não para responder de novo.
+   Fundo diferente e sem numeração de propósito: precisa ler como resumo,
+   e não como mais um bloco de perguntas a preencher. */
+.perguntas-jasei {
+  background: #F2F7F6;
+  border: 1px solid #D6E7E4;
+  border-radius: 20px;
+  padding: 24px 22px;
+  margin-bottom: 18px;
+}
+
+.perguntas-jasei h2 {
+  margin: 0 0 4px;
+  color: #1F736F;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.perguntas-jasei-intro {
+  margin: 0 0 18px;
+  color: #4A5A6B;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.perguntas-jasei ul {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.perguntas-jasei li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.perguntas-jasei li svg {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: #1F736F;
+}
+
+.perguntas-jasei li strong {
+  display: block;
+  color: #12305B;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.perguntas-jasei li span {
+  display: block;
+  margin-top: 3px;
+  color: #4A5A6B;
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+/* A pergunta de correção fica separada do resumo por uma linha, para não
+   parecer que ela precisa responder cada item acima. */
+.perguntas-jasei .pergunta {
+  padding-top: 20px;
+  border-top: 1px solid #D6E7E4;
+}
+
+@media (max-width: 575.98px) {
+  .perguntas-jasei { padding: 20px 17px; }
+}
