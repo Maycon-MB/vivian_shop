@@ -48,7 +48,7 @@ const cssDoBotao = `
 .bt-whats {
   position: fixed;
   right: 16px;
-  bottom: 96px; /* acima da barra de navegação fixa do rodapé */
+  bottom: 24px; /* a barra de navegação saiu do rodapé no celular */
   z-index: 1040;
   display: inline-flex;
   align-items: center;
@@ -114,7 +114,7 @@ const BotaoWhatsApp = () => (
         // com a cor certa e no tamanho de toque certo.
         position: 'fixed',
         right: 16,
-        bottom: 96,
+        bottom: 24,
         zIndex: 1040,
         minHeight: 48,
         minWidth: 48,
