@@ -60,8 +60,16 @@ jobs:
       # o que vai ao ar tem caminho /vivian_shop e redirecionamentos dos
       # endereços antigos. Testar artefato diferente do publicado é testar
       # outra coisa.
+      # O endereço que recebe as respostas da Vivian é uma variável do
+      # repositório, e não um segredo: ele vai dentro do JavaScript da
+      # página, então qualquer pessoa que abra o site consegue lê-lo de
+      # qualquer forma. Guardá-lo como segredo daria uma falsa sensação
+      # de proteção. O que o protege é ser um endereço longo e aleatório
+      # que só escreve, nunca lê.
       - name: montar o site como vai ao ar
         run: node scripts/publicar.mjs
+        env:
+          NEXT_PUBLIC_FORMULARIO_URL: ${{ vars.NEXT_PUBLIC_FORMULARIO_URL }}
 
       # O servidor próprio comprime, como o GitHub Pages comprime. Sem
       # isso, a medição de peso mede o texto cru e acusa três vezes o que
