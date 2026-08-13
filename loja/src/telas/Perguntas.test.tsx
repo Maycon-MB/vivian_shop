@@ -82,6 +82,51 @@ describe('formulário de perguntas', () => {
     expect(link).toMatch(/faltam \d+/)
   })
 
+  it('avisa que a resposta escrita ainda não chegou em ninguém', async () => {
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/Quais produtos você quer vender/),
+      'caderno e caneca',
+    )
+
+    // Sem servidor, resposta guardada e resposta inexistente são a mesma
+    // coisa para quem espera do outro lado. Este aviso é o que separa as
+    // duas — e a única defesa contra ela preencher tudo e nunca mandar.
+    expect(await screen.findByText(/1 resposta que ainda não me chegou/)).toBeInTheDocument()
+  })
+
+  it('para de cobrar depois que ela usa o botão de mandar', async () => {
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/Quais produtos você quer vender/),
+      'caderno e caneca',
+    )
+    await screen.findByText(/1 resposta que ainda não me chegou/)
+
+    await userEvent.click(screen.getByRole('link', { name: /Mandar pelo WhatsApp/ }))
+
+    await waitFor(() => {
+      expect(screen.queryByText(/ainda não me chegou/)).not.toBeInTheDocument()
+    })
+  })
+
+  it('volta a cobrar quando ela responde mais coisa depois de mandar', async () => {
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/Quais produtos você quer vender/),
+      'caderno e caneca',
+    )
+    await userEvent.click(await screen.findByRole('link', { name: /Mandar pelo WhatsApp/ }))
+
+    await userEvent.type(await screen.findByLabelText(/PDF, ou tem outro formato/), 'PDF')
+
+    // O que ela escreveu depois do envio também precisa chegar.
+    expect(await screen.findByText(/1 resposta que ainda não me chegou/)).toBeInTheDocument()
+  })
+
   it('explica por que cada pergunta está sendo feita', async () => {
     render(<Perguntas />)
 

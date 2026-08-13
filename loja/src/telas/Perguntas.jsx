@@ -29,6 +29,12 @@ const WHATSAPP_DO_MAYCON = '5521974587181';
 
 const CHAVE = 'feito-para-voce:respostas-vivian';
 
+/* Guarda quantas respostas já saíram daqui. É o que separa "escrevi" de
+   "mandei" — e essa diferença é a única falha séria deste formulário:
+   sem servidor, uma resposta que ela escreve e não envia é, para quem
+   está do outro lado, idêntica a uma resposta que nunca existiu. */
+const CHAVE_ENVIADO = 'feito-para-voce:respostas-enviadas';
+
 const BLOCOS = [
   {
     id: 'produtos',
@@ -225,6 +231,7 @@ const Perguntas = () => {
   const [respostas, setRespostas] = useState({});
   const [copiado, setCopiado] = useState(false);
   const [carregado, setCarregado] = useState(false);
+  const [jaEnviadas, setJaEnviadas] = useState(0);
   const primeiraGravacao = useRef(true);
 
   /* Lido depois da montagem porque o site é estático: ler o navegador
@@ -234,6 +241,10 @@ const Perguntas = () => {
       const guardado = window.localStorage.getItem(CHAVE);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       if (guardado) setRespostas(JSON.parse(guardado));
+
+      const enviadas = Number(window.localStorage.getItem(CHAVE_ENVIADO));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (Number.isFinite(enviadas) && enviadas > 0) setJaEnviadas(enviadas);
     } catch {
       // Sem armazenamento, o formulário funciona igual: só não sobrevive
       // a fechar a aba. Não é motivo para não deixar ela responder.
@@ -270,9 +281,43 @@ const Perguntas = () => {
 
   const texto = useMemo(() => montarTexto(respostas), [respostas]);
 
+  const pendentes = Math.max(respondidas - jaEnviadas, 0);
+
+  /* Se ela fechar a aba com resposta escrita e não enviada, o navegador
+     pergunta antes. É a última chance de avisar: depois de fechar, o
+     texto continua guardado, mas ninguém do outro lado sabe que existe. */
+  useEffect(() => {
+    if (pendentes === 0) return;
+
+    const perguntarAntesDeSair = (evento) => {
+      evento.preventDefault();
+      // Os navegadores ignoram a mensagem e mostram a própria, mas exigem
+      // que alguma coisa seja devolvida para a pergunta aparecer.
+      evento.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', perguntarAntesDeSair);
+    return () => window.removeEventListener('beforeunload', perguntarAntesDeSair);
+  }, [pendentes]);
+
+  /* Chamado quando ela usa o botão do WhatsApp ou copia o texto. Não
+     prova que a mensagem foi enviada — o envio acontece dentro do
+     WhatsApp, fora daqui — mas é o ponto a partir do qual cobrar de novo
+     seria implicância. */
+  const marcarComoEnviadas = () => {
+    setJaEnviadas(respondidas);
+    try {
+      window.localStorage.setItem(CHAVE_ENVIADO, String(respondidas));
+    } catch {
+      // Sem armazenamento, o aviso volta na próxima visita. Insistir de
+      // novo é melhor do que deixar passar.
+    }
+  };
+
   const copiar = async () => {
     try {
       await navigator.clipboard.writeText(texto);
+      marcarComoEnviadas();
       setCopiado(true);
       setTimeout(() => setCopiado(false), 2500);
     } catch {
@@ -285,7 +330,7 @@ const Perguntas = () => {
   if (!carregado) return null;
 
   return (
-    <div className="perguntas">
+    <div className={`perguntas ${pendentes > 0 ? "tem-pendente" : ""}`}>
       <Container className="py-4 py-md-5">
         <header className="perguntas-topo">
           <p className="perguntas-etiqueta">Para a Vivian</p>
@@ -306,8 +351,8 @@ const Perguntas = () => {
           </div>
 
           <p className="perguntas-guardado">
-            <Save size={14} /> Salvo sozinho enquanto você escreve. Nada é enviado até você
-            apertar o botão.
+            <Save size={14} /> Salvo sozinho enquanto você escreve, aqui neste celular. Nada é
+            enviado até você apertar o botão lá embaixo.
           </p>
         </header>
 
@@ -343,6 +388,20 @@ const Perguntas = () => {
           </section>
         ))}
 
+        {pendentes > 0 && (
+          <div className="perguntas-pendente" role="status">
+            <strong>
+              {pendentes === 1
+                ? 'Você tem 1 resposta que ainda não me chegou.'
+                : `Você tem ${pendentes} respostas que ainda não me chegaram.`}
+            </strong>
+            <span>
+              Elas estão guardadas aqui no seu celular, mas eu só recebo quando você apertar o
+              botão verde no fim da página.
+            </span>
+          </div>
+        )}
+
         <section className="perguntas-fim">
           <h2>Pronto para mandar?</h2>
           <p>
@@ -358,7 +417,11 @@ const Perguntas = () => {
               rel="noopener noreferrer"
               aria-disabled={respondidas === 0}
               onClick={(e) => {
-                if (respondidas === 0) e.preventDefault();
+                if (respondidas === 0) {
+                  e.preventDefault();
+                  return;
+                }
+                marcarComoEnviadas();
               }}
             >
               <MessageCircle size={17} />
