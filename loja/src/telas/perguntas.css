@@ -328,3 +328,16 @@
 @media (prefers-reduced-motion: reduce) {
   .perguntas-fim .girando { animation: none; }
 }
+
+/* O primeiro envio acorda o serviço que recebe e pode passar de 20
+   segundos. Sem este aviso, "Enviando…" parado parece travamento — e
+   quem acha que travou aperta de novo ou desiste. */
+.perguntas-demora {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 13px;
+  color: #C9DAEC;
+  font-size: 14px;
+  line-height: 1.55;
+}
