@@ -24,8 +24,9 @@ import { estaTudoReal } from '@/servicos'
  * cobrança sem motivo.
  */
 
+import { TOTAL as TOTAL_DE_PERGUNTAS } from '@/telas/Perguntas'
+
 const CHAVE_RESPOSTAS = 'feito-para-voce:respostas-vivian'
-const TOTAL_DE_PERGUNTAS = 19
 
 export function ChamadoDasPerguntas() {
   const caminho = usePathname()

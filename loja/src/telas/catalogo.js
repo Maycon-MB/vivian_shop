@@ -26,6 +26,13 @@ import { BASE } from '../base'
  *
  * O `slug` é o que aparece no endereço: vira link para mandar no WhatsApp
  * e é o que o Google indexa.
+ *
+ * PENDENTE-VIVIAN — os preços dos produtos personalizados são MEUS, não
+ * dela. Ela mandou a lista de preços só do material pedagógico; dos
+ * personalizados vieram as descrições e as medidas, sem valor. Coloquei
+ * números plausíveis para a loja não ficar vazia, e eles saem no lugar dos
+ * verdadeiros assim que o catálogo do Elo7 for lido. Nenhum destes preços
+ * pode ir ao ar cobrando de cliente.
  */
 
 /* Vale para todo produto personalizado, e aparece uma vez na tela em vez
