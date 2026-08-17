@@ -92,6 +92,16 @@ contrato próprio.
 | **Mínimo de 10 por produto, confirmado em 17/08** | Regra nova dela, e não do Elo7 — por isso as descrições de lá não mencionam. A loja mostra o preço da peça e, ao lado, quanto sai o pacote de dez. | 5 minutos |
 | O catálogo entra por extração e planilha, nunca digitado | São 343 produtos que ela já escreveu uma vez. Digitar de novo custaria dias e criaria erro de preço; e ela ficaria dependendo de mim para toda correção. | — |
 
+## Como ela se movimenta pelo site
+
+| Decisão | Por quê | Custo de mudar |
+|---|---|---|
+| A barra de navegação usa os nomes dela | "Painel" é palavra de quem programa; ela vai ver as vendas. Viraram "Minhas vendas", "O que já fiz", "Minha marca". | 2 minutos |
+| No celular a barra quebra em duas linhas, e não rola de lado | Com sete áreas, as três últimas ficavam fora da tela e nada indicava que a barra rolava. Ela simplesmente não saberia que existem. | 2 minutos |
+| A barra é medida junto com as faixas fixas do topo | Sem isso, o cabeçalho da loja passa por cima dela e nenhum item funciona — os sete aparecem na tela e o toque não faz nada. Durou dois dias assim. | — |
+| Existe teste que clica em cada item do menu, no celular | Os 24 testes anteriores navegavam por endereço direto, que é o jeito que ninguém usa. Por isso o defeito acima passou. | — |
+| Uma página só sobre o que a loja custa | A conversa sobre dinheiro precisa existir num lugar que ela consulte sozinha, não numa mensagem que se perde na conversa. | — |
+
 ## Relatórios
 
 | Decisão | Por quê | Custo de mudar |
