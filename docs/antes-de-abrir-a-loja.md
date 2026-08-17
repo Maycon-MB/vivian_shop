@@ -46,6 +46,23 @@ Atualizado em 17/08/2026, depois das 83 mensagens dela de 16/08.
 - [ ] **Autorização dos depoimentos.** Os 15 prints chegaram, e todos trazem o nome de clientes dela. Publicar nome de terceiro sem essa pessoa saber é problema, mesmo sendo elogio.
 - [ ] **Número de WhatsApp verdadeiro** — hoje está `5521900000000` em toda a loja
 
+## O que a conferência automática cobre hoje
+
+Rodam a cada envio, e reprovam a publicação se falharem:
+
+| O quê | Quantos |
+|---|---|
+| Regras de negócio, serviços e telas | 152 testes |
+| Navegação num navegador de verdade | 25 testes |
+| Acessibilidade (WCAG 2.1 AA) | 11 telas |
+| Peso e tempo em 4G | 6 telas |
+
+Entre os de navegação está um que **clica em cada item do menu, no
+celular**. Ele existe porque um defeito passou dois dias no ar: o
+cabeçalho da loja cobria a barra inteira, os sete itens apareciam e
+nenhum funcionava. Nenhum teste pegou porque todos navegavam por endereço
+direto — o jeito que ninguém usa.
+
 ## Precisa de validação profissional
 
 - [ ] **Política de devolução.** O art. 49 do Código de Defesa do Consumidor

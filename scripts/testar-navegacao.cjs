@@ -324,6 +324,58 @@ const conferir = async (nome, fn) => {
     if (!(await baixar.isEnabled())) throw new Error('não dá para exportar para o contador')
   })
 
+  await conferir('dá para clicar em cada item do menu, no celular', async () => {
+    /* Este teste existe por um defeito que durou dois dias: o cabeçalho da
+       loja passava por cima da barra de navegação no celular, e nenhum dos
+       sete itens funcionava. Todos apareciam na tela, o item ativo ficava
+       destacado, e o toque não fazia nada.
+
+       Nenhum teste pegou porque todos navegavam por endereço direto — o
+       jeito que ninguém usa. Este clica, que é o que a Vivian faz. */
+    const celular = await navegador.newContext({ viewport: { width: 375, height: 812 } })
+    const tela = await celular.newPage()
+
+    try {
+      await tela.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+      await tela.locator('.switcher-btn').first().waitFor({ timeout: 15000 })
+
+      const quantos = await tela.locator('.switcher-btn').count()
+      if (quantos === 0) throw new Error('não achei a barra de navegação')
+
+      for (let i = 0; i < quantos; i++) {
+        const item = tela.locator('.switcher-btn').nth(i)
+        const nome = (await item.innerText()).trim()
+        const destino = await item.getAttribute('href')
+
+        // `elementFromPoint` diz quem está por cima naquele ponto. Se não
+        // for o próprio item, alguma coisa o está cobrindo — e o toque da
+        // Vivian vai para essa outra coisa, não para o link.
+        const coberto = await item.evaluate((el) => {
+          const r = el.getBoundingClientRect()
+          const emCima = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+          if (!emCima) return 'fora da tela'
+          return el === emCima || el.contains(emCima) ? null : (emCima.className || emCima.tagName)
+        })
+
+        if (coberto) {
+          throw new Error(`o item "${nome}" está ${coberto === 'fora da tela' ? 'fora da tela' : 'coberto por ' + coberto}`)
+        }
+
+        await item.click()
+        await tela.waitForTimeout(900)
+
+        if (destino && !tela.url().includes(destino.replace(/\/$/, ''))) {
+          throw new Error(`clicar em "${nome}" deveria levar a ${destino}, e foi para ${tela.url()}`)
+        }
+
+        await tela.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+        await tela.locator('.switcher-btn').first().waitFor({ timeout: 15000 })
+      }
+    } finally {
+      await celular.close()
+    }
+  })
+
   await conferir('endereço antigo redireciona para o novo', async () => {
     await pagina.goto(`${BASE}/loja/painel/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(900)
