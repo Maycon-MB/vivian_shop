@@ -74,7 +74,7 @@ export function ChamadoDasPerguntas() {
           </div>
 
           <div className="col-12 col-md-4 col-lg-3 d-flex justify-content-md-end">
-            <Link href="/perguntas/" className="chamado-botao">
+            <Link href="/perguntas/" className="chamado-botao" prefetch={false}>
               {comecou ? 'Continuar' : 'Ver as perguntas'} <ArrowRight size={16} />
             </Link>
           </div>

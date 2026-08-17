@@ -6,6 +6,7 @@ import { Card, Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { Plus, ShoppingCart, Download, Package } from 'lucide-react';
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../../catalogo';
+import { precoAtual, temPromocao } from '../catalogo';
 
 /**
  * Card de produto.
@@ -72,7 +73,14 @@ const ProductCard = ({ product, addToCart }) => {
             <h3 className="fs-5 fw-black mb-0"><Link href={`/produto/${product.slug}`} prefetch={false} className="text-reset text-decoration-none link-produto">{product.name}</Link></h3>
             <div className="text-end">
               <span className="fw-black fs-5 text-nowrap d-block" style={{ color: '#12305B' }}>
-                R$ {product.price.toFixed(2).replace('.', ',')}
+                {/* O valor cheio riscado ao lado do promocional: é como
+                    ela anuncia, e some quando não há desconto. */}
+                {temPromocao(product) && (
+                  <s className="produto-preco-cheio">
+                    R$ {product.price.toFixed(2).replace('.', ',')}
+                  </s>
+                )}
+                R$ {precoAtual(product).toFixed(2).replace('.', ',')}
               </span>
               {isPersonalizada && (
                 <span className="small text-muted text-nowrap">cada</span>
@@ -89,7 +97,7 @@ const ProductCard = ({ product, addToCart }) => {
               <>
                 <Package size={15} style={{ flexShrink: 0 }} />
                 <span>
-                  Mínimo {MINIMO_PERSONALIZADO} un. — R$ {(product.price * MINIMO_PERSONALIZADO).toFixed(2).replace('.', ',')} ·
+                  Mínimo {MINIMO_PERSONALIZADO} un. — R$ {(precoAtual(product) * MINIMO_PERSONALIZADO).toFixed(2).replace('.', ',')} ·
                   pronto em {PRAZO_PRODUCAO} dias úteis
                 </span>
               </>
