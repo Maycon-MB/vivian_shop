@@ -31,15 +31,15 @@ clientes dela.
 
 | Decisão | Por quê | Custo de mudar |
 |---|---|---|
-| Link de download válido por 7 dias | Folgado para baixar, curto para circular. Passando disso, ela reenvia. | 2 minutos |
+| Link de download válido por 7 dias | Era palpite meu, e **ela confirmou em 16/08**: é o que já praticava no Elo7, contado em dias úteis. Passando disso, quem comprou pede de novo. | 2 minutos |
 | Nome de quem comprou impresso no arquivo | É o que segura o repasse, sem atrapalhar o uso. **Ainda não implementado** — precisa da confirmação dela, está em /perguntas. | — |
-| PDF como formato assumido | Abre em qualquer celular e não dá para editar. Se for Canva, muda a entrega. Está em /perguntas. | — |
+| PDF como formato | Era suposição minha, e **ela confirmou em 16/08**: "nossos produtos são digitais, arquivos no formato PDF, ficando sob a responsabilidade do cliente a impressão". | — |
 
 ## Texto e promessas
 
 | Decisão | Por quê | Custo de mudar |
 |---|---|---|
-| Tirei "Satisfação 100% garantida" | Junto com a promessa de devolução em 7 dias, virava obrigação sobre produto personalizado — que por lei não tem direito de arrependimento. Era uma armadilha jurídica. | — |
+| Tirei "Satisfação 100% garantida" | Junto com a promessa de devolução em 7 dias, virava uma obrigação larga demais sobre peça feita com o nome de outra criança, que não pode ser revendida. **Correção de uma versão anterior deste documento:** eu havia escrito que produto personalizado "por lei não tem direito de arrependimento", e isso é impreciso — o art. 49 do CDC não abre exceção escrita para isso. Por isso a loja informa o direito e pede contato antes, em vez de prometer ou negar. | — |
 | A loja fala "eu", como a Vivian | Quem compra de artesã espera falar com gente. "Nossa equipe" seria mentira: a equipe é ela. | — |
 | Toda mensagem de erro diz o que fazer, não só o que houve | "E-mail inválido" não ajuda ninguém. "Confira o e-mail: é para lá que a confirmação vai" ajuda. | — |
 | Nenhum texto legal definitivo foi escrito | Política de troca, devolução e privacidade precisam de advogado. Eu não sou advogado e não vou fingir que sou. Estão marcados no código como `PENDENTE-LANCAMENTO`. | — |
