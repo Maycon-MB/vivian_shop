@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 
 import { AvisoDemonstracao } from './AvisoDemonstracao'
 import { ChamadoDasPerguntas } from './ChamadoDasPerguntas'
+import { Navegacao } from './Navegacao'
 
 /**
  * As duas faixas que ficam acima de tudo: o aviso de que a loja é uma
@@ -20,6 +21,15 @@ import { ChamadoDasPerguntas } from './ChamadoDasPerguntas'
  * verdade e publicada como a variável `--faixas`, que o CSS usa para
  * empurrar o cabeçalho fixo e o conteúdo. Chutar um valor aqui daria certo
  * numa largura de tela e erraria em todas as outras.
+ *
+ * A barra de navegação entrou aqui depois, e por um defeito que só
+ * apareceu clicando: no celular ela fica no topo, logo abaixo das faixas,
+ * e o cabeçalho fixo da loja passava por cima dela. Os sete itens ficavam
+ * visíveis e nenhum funcionava — o pior tipo de defeito, porque a tela
+ * parece certa. Medindo a barra junto, o cabeçalho começa abaixo dela.
+ *
+ * No computador a barra é fixa no rodapé e não ocupa espaço no fluxo, de
+ * modo que a medida não muda.
  */
 export function FaixasDoTopo() {
   const caixa = useRef<HTMLDivElement>(null)
@@ -52,6 +62,7 @@ export function FaixasDoTopo() {
     <div className="faixas-topo" ref={caixa}>
       <AvisoDemonstracao />
       <ChamadoDasPerguntas />
+      <Navegacao />
     </div>
   )
 }

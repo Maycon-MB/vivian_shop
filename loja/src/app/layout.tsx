@@ -3,7 +3,6 @@ import { Fraunces, Atkinson_Hyperlegible } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../telas/prototipo.css'
 import './globals.css'
-import { Navegacao } from '@/componentes/Navegacao'
 import { ProvedorCarrinho } from '@/telas/CarrinhoContexto'
 import { WhatsAppDaLoja } from '@/componentes/WhatsAppDaLoja'
 import { FaixasDoTopo } from '@/componentes/FaixasDoTopo'
@@ -42,7 +41,6 @@ export default function RootLayout({
         <ProvedorCarrinho>
           <div className="app-container">
             <FaixasDoTopo />
-            <Navegacao />
             <main>{children}</main>
             <WhatsAppDaLoja />
           </div>

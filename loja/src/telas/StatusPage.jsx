@@ -138,6 +138,14 @@ const StatusPage = () => {
             </span>
           </Link>
 
+          <Link className="ir-para-custos" href="/custos/" prefetch={false}>
+            <strong>Quanto isso vai te custar por mês</strong>
+            <span>
+              O que você paga para mim, o que paga para terceiros, e a partir de quanta venda
+              cada custo aparece.
+            </span>
+          </Link>
+
           <div className="note">
             <strong>Onde estamos:</strong> as telas da loja e do seu painel já estão de pé — não
             são mais desenho, é o site de verdade. O que ainda é de mentira são os produtos, os
