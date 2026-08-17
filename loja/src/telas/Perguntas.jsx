@@ -67,6 +67,26 @@ const JA_SEI = [
     texto:
       'Você perguntou se ela ainda existe: existe. O sistema gera junto com a etiqueta, já preenchida, e você só imprime.',
   },
+  {
+    titulo: 'As políticas e as descrições que você mandou',
+    texto:
+      'Estão na loja com as suas palavras, sem eu reescrever nada. O atendimento de segunda a sexta das 9h às 17h, o material pedagógico em PDF, o link de download valendo 7 dias e o envio em até 24 horas depois do pagamento.',
+  },
+  {
+    titulo: 'As três regras que se repetiam em todo anúncio',
+    texto:
+      'Vai embalado em saquinho com lapela no tema; a arte é a da foto e muda só o nome, sem prévia para aprovação; e o prazo de produção é em dias úteis, com o frete vindo depois. Agora aparecem uma vez na página do produto, em vez de repetidas em cada descrição.',
+  },
+  {
+    titulo: 'Os temas, do jeito que você pediu',
+    texto:
+      'Quem escolhe o tema vê tudo daquele tema junto — caneca, revista, álbum, lousa — como era no Elo7. Falta só cadastrar os seus, e para isso eu preciso do endereço da sua loja de lá.',
+  },
+  {
+    titulo: 'Seu Instagram e suas logos',
+    texto:
+      'Recebi: @feito.paravocepersonalizados, e os arquivos das duas logos em qualidade boa. As cores da loja saíram delas.',
+  },
 ]
 
 /* Guarda quantas respostas já saíram daqui. É o que separa "escrevi" de
@@ -82,12 +102,12 @@ const BLOCOS = [
     resumo: 'Sem isso a loja continua mostrando produto de exemplo.',
     perguntas: [
       {
-        id: 'catalogo',
-        pergunta: 'Quais produtos você quer vender já na abertura?',
+        id: 'linkelo7',
+        pergunta: 'Qual o endereço da sua loja no Elo7?',
         porque:
-          'Não precisa ser tudo. Cinco ou seis já dão uma loja cheia. Dá para ir somando depois, sem mexer em nada.',
-        dica: 'nome do produto, preço, e quanto tempo você leva para fazer',
-        linhas: 6,
+          'Você já escreveu os 343 produtos uma vez. Com o link eu pego de lá os temas, os nomes, os preços e as descrições — em vez de você digitar tudo de novo. Se no painel tiver um botão de exportar produtos, melhor ainda: me manda o arquivo.',
+        dica: 'o endereço da loja, ou o arquivo exportado',
+        linhas: 2,
       },
       {
         id: 'fotos',
@@ -113,36 +133,12 @@ const BLOCOS = [
     resumo: 'É a parte que entrega sozinha, sem você precisar fazer nada.',
     perguntas: [
       {
-        id: 'formato',
-        pergunta: 'O material digital é PDF para imprimir em casa?',
-        porque:
-          'Perguntei isso no WhatsApp e a conversa seguiu para outro assunto. PDF abre em qualquer celular e ninguém edita. Se for Canva ou arquivo editável, muda a entrega e muda a proteção.',
-        dica: 'PDF / Canva / outro',
-        linhas: 2,
-      },
-      {
-        id: 'oquevem',
-        pergunta: 'Cada compra digital é um arquivo só, ou um pacote com vários?',
-        porque:
-          'Também perguntei no WhatsApp e ficou para trás. Muda como o preço aparece na loja: "R$ 47 a atividade" é diferente de "R$ 47 o pacote com 12".',
-        dica: 'um arquivo por compra / um pacote / depende do produto',
-        linhas: 2,
-      },
-      {
         id: 'marcadagua',
         pergunta:
           'Tudo bem o arquivo sair com o nome de quem comprou impresso nele?',
         porque:
           'É o que segura o repasse: quem compra pensa duas vezes antes de passar adiante um arquivo com o próprio nome. Não atrapalha o uso — dá para imprimir e usar normalmente.',
         dica: 'pode / prefiro que não / quero ver como fica antes',
-        linhas: 2,
-      },
-      {
-        id: 'validade',
-        pergunta: 'O link de download pode valer por 7 dias?',
-        porque:
-          'Sete dias é folgado para baixar e curto para o link circular por aí. Passando disso, quem comprou te chama e você reenvia.',
-        dica: '7 dias está bom / prefiro mais tempo / prefiro sem prazo',
         linhas: 2,
       },
     ],
@@ -192,14 +188,6 @@ const BLOCOS = [
     resumo: 'O que a loja promete aqui, você vai ter que cumprir.',
     perguntas: [
       {
-        id: 'troca',
-        pergunta: 'O que você faz hoje quando a peça chega com defeito?',
-        porque:
-          'Preciso escrever isso na loja com as suas palavras, não com as minhas. Produto personalizado não tem direito de arrependimento de 7 dias — mas defeito tem, e o que você já faz costuma ser melhor do que o mínimo da lei.',
-        dica: 'ex: refaço sem custo e pago o frete de volta',
-        linhas: 3,
-      },
-      {
         id: 'whatsapp',
         pergunta: 'Qual número aparece no botão de WhatsApp da loja?',
         porque:
@@ -223,27 +211,11 @@ const BLOCOS = [
         linhas: 5,
       },
       {
-        id: 'depoimentos',
-        pergunta: 'Você tem print de elogio de alguma cliente do Elo7?',
+        id: 'autorizacao',
+        pergunta: 'Posso publicar os elogios que você me mandou, com o nome de quem escreveu?',
         porque:
-          'A loja tem um espaço reservado para um depoimento de verdade, e ele está vazio de propósito: inventar a fala de uma mãe para vender material de inclusão destrói exatamente a confiança que a loja precisa construir. Só peça autorização antes de eu publicar.',
-        dica: 'pode mandar os prints no WhatsApp',
-        linhas: 3,
-      },
-      {
-        id: 'marca',
-        pergunta: 'Você tem os arquivos das suas logos e alguma foto sua trabalhando?',
-        porque:
-          'Montei as cores a partir dos prints que você mandou, mas print perde qualidade quando aumenta. O arquivo original deixa a logo nítida em qualquer tamanho. A foto é para a página "Quem faz" — não precisa ser profissional, uma da bancada já vale.',
-        dica: 'tenho / não acho mais / posso tirar uma foto',
-        linhas: 2,
-      },
-      {
-        id: 'instagram',
-        pergunta: 'Qual é o seu Instagram?',
-        porque:
-          'Para a loja linkar, e para eu começar os posts que a gente combinou. Se você preferir abrir um novo só da loja, também dá — me diga qual dos dois.',
-        dica: '@seuperfil',
+          'Recebi os 15 prints, obrigado. Só que eles têm o nome das suas clientes, e publicar o nome de alguém sem essa pessoa saber é problema — mesmo sendo elogio. O caminho é você mandar uma mensagem para cada uma perguntando. Se preferir, dá para publicar só o texto, sem nome nenhum.',
+        dica: 'vou pedir autorização / pode publicar sem o nome / prefiro não usar',
         linhas: 2,
       },
     ],
@@ -280,7 +252,10 @@ const BLOCOS = [
   },
 ];
 
-const TOTAL = BLOCOS.reduce((soma, bloco) => soma + bloco.perguntas.length, 0);
+/* Exportado porque a faixa que chama a Vivian na loja mostra quantas
+   faltam. Enquanto o número era digitado nos dois lugares, bastava eu
+   remover uma pergunta respondida para a faixa passar a mentir. */
+export const TOTAL = BLOCOS.reduce((soma, bloco) => soma + bloco.perguntas.length, 0);
 
 /** Monta o texto que vai para o WhatsApp, só com o que ela respondeu. */
 const montarTexto = (respostas) => {

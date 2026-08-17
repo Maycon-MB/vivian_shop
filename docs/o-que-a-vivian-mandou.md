@@ -37,18 +37,16 @@ Quem procura "Mickey" não acha. Com 86 temas, a busca por tema não é
 enfeite: é como a cliente dela compra — ela não quer uma caneca, quer
 alguma coisa do Mickey para a festa do filho.
 
-## A contradição que precisa ser resolvida
+## A contradição, e como ficou
 
 Em 11/08 ela disse: **mínimo de 10 unidades por produto**, "não dá para
-comprar 1 caneca".
+comprar 1 caneca". As descrições que ela mandou depois falam sempre de uma
+peça só, com o preço unitário do Elo7 — as duas coisas não podiam estar
+certas ao mesmo tempo.
 
-As descrições que ela mandou agora falam **sempre de uma peça**: "Caneca
-personalizada 350ml", "Revista de colorir, 12 páginas", "Tubolata 7 × 6
-cm". Nenhuma menciona mínimo de 10, e os preços do Elo7 são unitários.
-
-As duas coisas não podem estar certas ao mesmo tempo. Ou o mínimo de 10 é
-novo (e as descrições precisam mudar), ou o mínimo é do pedido e não do
-item. **Está no formulário como pergunta.**
+**Resolvido em 17/08: o mínimo de 10 vale.** É regra nova, e não do Elo7 —
+por isso as descrições de lá não a mencionam. A loja mostra o preço por
+unidade e, ao lado, quanto sai o pacote fechado de dez.
 
 ---
 
@@ -173,4 +171,57 @@ Da lista que ela mandou, com preço cheio e promocional:
 - Se o nome de quem compra pode sair impresso no material digital
 - Peso e medidas do **pacote fechado**, para o frete (ela mandou o
   tamanho da peça, que é outra coisa)
-- E agora: como ela quer os temas, e o que fazer com o mínimo de 10
+- O endereço da loja dela no Elo7, para o catálogo inteiro entrar
+- Se posso publicar os elogios com o nome de quem escreveu
+
+---
+
+## Como o catálogo completo vai entrar
+
+Pedir os 86 temas e os 343 produtos para ela digitar seria pedir que ela
+refizesse um trabalho que já fez. A informação existe, publicada e
+organizada, na loja dela no Elo7.
+
+A ordem de tentar, da menos trabalhosa para a mais:
+
+1. **Exportação do próprio Elo7.** Se o painel dela tiver algo como
+   "exportar produtos", acabou — é um arquivo e ela não digita nada.
+2. **Ler a loja pública dela.** É o conteúdo dela, num site aberto: dá
+   para pegar os nomes das coleções, os produtos com preço e descrição, e
+   os endereços das fotos.
+3. **Planilha do Google**, que passa a ser onde ela mantém o catálogo.
+
+A planilha não nasce vazia: ela nasce com o que foi extraído, e a Vivian
+revisa em vez de digitar. Daí para frente é lá que ela cadastra produto
+novo, corrige preço e cria tema — sem depender de mim estar disponível.
+
+### Por que planilha, e não uma tela de cadastro
+
+Tela de cadastro precisa de banco, e não há banco até o pagamento entrar.
+A planilha custa R$ 0, ela edita do celular, e o script do Google que já
+recebe as respostas do formulário serve os dados.
+
+Quando o banco existir, a planilha vira uma importação única e o cadastro
+passa para o painel. Nada do que ela escrever se perde.
+
+### O que a planilha não resolve
+
+Foto. Planilha guarda texto. As imagens continuam vindo por WhatsApp ou
+por uma pasta do Drive, e eu converto para WebP antes de publicar.
+
+### Cuidado que o build precisa ter
+
+Se ela escrever "mickey" numa linha e "Mickey" em outra, viram dois temas.
+Isso se resolve com lista suspensa na planilha e com o build reclamando em
+vez de publicar um catálogo torto.
+
+## O que já está na loja, e o que ainda é meu
+
+| | |
+|---|---|
+| Descrições dos produtos | **dela**, sem eu reescrever |
+| Medidas e materiais | **dela** |
+| Preços do material pedagógico | **dela**, com o promocional |
+| Preços dos personalizados | **meus** — ela não mandou. Marcados no código como pendentes |
+| Temas | 3 dos 86 |
+| Fotos | nenhuma: todo produto está com espaço reservado |

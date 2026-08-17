@@ -30,8 +30,8 @@ beforeEach(() => {
 
 const responderUma = async () => {
   await userEvent.type(
-    await screen.findByLabelText(/Quais produtos você quer vender/),
-    'caderno e caneca',
+    await screen.findByLabelText(/endereço da sua loja no Elo7/),
+    'elo7.com.br/loja/feitoparavoce',
   )
 }
 
@@ -46,7 +46,7 @@ describe('envio direto', () => {
 
     expect(await screen.findByText(/Recebi, obrigado/)).toBeInTheDocument()
     expect(enviarRespostas).toHaveBeenCalledWith(
-      expect.objectContaining({ catalogo: 'caderno e caneca' }),
+      expect.objectContaining({ linkelo7: 'elo7.com.br/loja/feitoparavoce' }),
     )
   })
 

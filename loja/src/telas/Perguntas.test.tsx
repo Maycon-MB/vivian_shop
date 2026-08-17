@@ -27,8 +27,8 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
 
     expect(await screen.findByText(/1 de \d+ respondidas/)).toBeInTheDocument()
@@ -38,18 +38,18 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
 
     await waitFor(() => {
       const guardado = JSON.parse(window.localStorage.getItem(CHAVE) ?? '{}')
-      expect(guardado.catalogo).toBe('caderno e caneca')
+      expect(guardado.linkelo7).toBe('elo7.com.br/loja/feitoparavoce')
     })
   })
 
   it('devolve o que ela já tinha escrito quando volta', async () => {
-    window.localStorage.setItem(CHAVE, JSON.stringify({ catalogo: 'resposta de ontem' }))
+    window.localStorage.setItem(CHAVE, JSON.stringify({ linkelo7: 'resposta de ontem' }))
 
     render(<Perguntas />)
 
@@ -68,14 +68,14 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
 
     const botao = await screen.findByRole('link', { name: /Mandar pelo WhatsApp/ })
     const link = decodeURIComponent(botao.getAttribute('href') ?? '')
 
-    expect(link).toContain('caderno e caneca')
+    expect(link).toContain('elo7.com.br/loja/feitoparavoce')
     // O que ela não respondeu não pode entrar como pergunta vazia.
     expect(link).not.toContain('Qual endereço você quer')
     // E o texto avisa quantas ficaram para depois.
@@ -86,8 +86,8 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
 
     // Sem servidor, resposta guardada e resposta inexistente são a mesma
@@ -100,8 +100,8 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
     await screen.findByText(/1 resposta que ainda não me chegou/)
 
@@ -116,12 +116,12 @@ describe('formulário de perguntas', () => {
     render(<Perguntas />)
 
     await userEvent.type(
-      await screen.findByLabelText(/Quais produtos você quer vender/),
-      'caderno e caneca',
+      await screen.findByLabelText(/endereço da sua loja no Elo7/),
+      'elo7.com.br/loja/feitoparavoce',
     )
     await userEvent.click(await screen.findByRole('link', { name: /Mandar pelo WhatsApp/ }))
 
-    await userEvent.type(await screen.findByLabelText(/é PDF para imprimir em casa/), 'PDF')
+    await userEvent.type(await screen.findByLabelText(/De quais produtos você já tem foto/), 'PDF')
 
     // O que ela escreveu depois do envio também precisa chegar.
     expect(await screen.findByText(/1 resposta que ainda não me chegou/)).toBeInTheDocument()
@@ -162,7 +162,7 @@ describe('formulário de perguntas', () => {
     )
 
     // Contá-la faria a barra dizer "16 de 15" e parecer defeito.
-    expect(await screen.findByText(/0 de 19 respondidas/)).toBeInTheDocument()
+    expect(await screen.findByText(/0 de 13 respondidas/)).toBeInTheDocument()
     // Mas ela ainda precisa chegar até mim.
     expect(screen.getByText(/ainda não me chegou/)).toBeInTheDocument()
   })
@@ -173,9 +173,12 @@ describe('formulário de perguntas', () => {
     // Cada uma destas corresponde a um lugar da loja que hoje exibe texto
     // provisório. Sem a resposta, o espaço reservado vai ao ar.
     expect(await screen.findByLabelText(/Como você começou a fazer isso/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/print de elogio de alguma cliente/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/arquivos das suas logos/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Qual é o seu Instagram/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/De quais produtos você já tem foto/)).toBeInTheDocument()
+
+    // O que ela respondeu em 16/08 não pode voltar como pergunta em branco.
+    expect(screen.queryByLabelText(/Qual é o seu Instagram/)).toBeNull()
+    expect(screen.queryByLabelText(/arquivos das suas logos/)).toBeNull()
+    expect(screen.queryByLabelText(/é PDF para imprimir em casa/)).toBeNull()
   })
 
   it('pergunta o peso e as medidas, que o frete precisa', async () => {
@@ -191,7 +194,7 @@ describe('formulário de perguntas', () => {
 
     // Pergunta sem motivo parece burocracia; com motivo, ela responde melhor.
     expect(
-      await screen.findByText(/Não precisa ser tudo. Cinco ou seis já dão uma loja cheia/),
+      await screen.findByText(/Você já escreveu os 343 produtos uma vez/),
     ).toBeInTheDocument()
   })
 
