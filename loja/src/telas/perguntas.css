@@ -414,3 +414,15 @@
 @media (max-width: 575.98px) {
   .perguntas-jasei { padding: 20px 17px; }
 }
+
+/* Caminho para a explicação completa, na pergunta que decide o custo
+   mensal da loja. Ela não precisa entender de nuvem para responder o
+   tamanho de um arquivo — mas tem o direito de entender por que perguntei. */
+.pergunta-leia-mais {
+  display: inline-block;
+  margin: -6px 0 12px;
+  color: #1F736F;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}

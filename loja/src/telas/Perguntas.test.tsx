@@ -162,7 +162,7 @@ describe('formulário de perguntas', () => {
     )
 
     // Contá-la faria a barra dizer "16 de 15" e parecer defeito.
-    expect(await screen.findByText(/0 de 13 respondidas/)).toBeInTheDocument()
+    expect(await screen.findByText(/0 de 14 respondidas/)).toBeInTheDocument()
     // Mas ela ainda precisa chegar até mim.
     expect(screen.getByText(/ainda não me chegou/)).toBeInTheDocument()
   })

@@ -133,6 +133,15 @@ const BLOCOS = [
     resumo: 'É a parte que entrega sozinha, sem você precisar fazer nada.',
     perguntas: [
       {
+        id: 'tamanhoarquivos',
+        pergunta: 'Quanto pesam os arquivos do material pedagógico?',
+        porque:
+          'É o que decide o custo mensal da loja. O plano gratuito onde os arquivos vão ficar entrega 5 GB por mês: com PDF de 5 MB dá mais de mil downloads mensais, com PDF de 30 MB cai para 170. Se os seus estiverem pesados, quase sempre dá para reduzir sem perder qualidade de impressão — e aí o limite multiplica.',
+        dica: 'abra a pasta no computador e me diga o tamanho de uns dois ou três',
+        linhas: 2,
+        leiaMais: { texto: 'Entenda o que a loja custa', href: '/custos/' },
+      },
+      {
         id: 'marcadagua',
         pergunta:
           'Tudo bem o arquivo sair com o nome de quem comprou impresso nele?',
@@ -509,6 +518,12 @@ const Perguntas = () => {
                   </label>
 
                   <p className="pergunta-porque">{p.porque}</p>
+
+                  {p.leiaMais && (
+                    <Link href={p.leiaMais.href} className="pergunta-leia-mais" prefetch={false}>
+                      {p.leiaMais.texto} →
+                    </Link>
+                  )}
 
                   <textarea
                     id={`p-${p.id}`}

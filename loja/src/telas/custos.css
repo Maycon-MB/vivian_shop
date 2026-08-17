@@ -1,0 +1,170 @@
+/**
+ * A página que explica o custo da loja.
+ *
+ * Escrita para ser lida sozinha, num sábado, sem eu do lado. Por isso o
+ * texto é largo e espaçado: ela vai ler devagar, e cada número vem
+ * acompanhado da conta que o gerou.
+ */
+
+.custos { background: #FBF8F3; min-height: 100vh; }
+
+.custos .container { max-width: 720px; }
+
+.custos-topo { margin-bottom: 32px; }
+
+.custos-etiqueta {
+  margin: 0 0 6px;
+  color: #1F736F;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.custos-topo h1 {
+  margin: 0 0 12px;
+  color: #12305B;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.custos-intro {
+  margin: 0;
+  color: #4A5A6B;
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.custos-bloco {
+  background: #FFFFFF;
+  border: 1px solid #EDE7DD;
+  border-radius: 20px;
+  padding: 24px 22px;
+  margin-bottom: 16px;
+}
+
+.custos-bloco h2 {
+  margin: 0 0 12px;
+  color: #12305B;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.custos-bloco p {
+  margin: 0 0 12px;
+  color: #4A5A6B;
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+
+.custos-bloco p:last-child { margin-bottom: 0; }
+.custos-bloco strong { color: #12305B; }
+
+.custos-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custos-lista li {
+  padding-left: 15px;
+  border-left: 3px solid #E7F6F3;
+}
+
+.custos-lista strong {
+  display: block;
+  color: #12305B;
+  font-size: 15.5px;
+  margin-bottom: 3px;
+}
+
+.custos-lista span {
+  color: #4A5A6B;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* O número que responde a pergunta dela, destacado do resto do texto. */
+.custos-destaque {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 13px 16px;
+  background: #E7F6F3;
+  border-radius: 13px;
+  color: #1F736F !important;
+  font-weight: 600;
+}
+
+.custos-destaque svg { flex: 0 0 auto; margin-top: 2px; }
+
+.custos-nota,
+.custos-aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 15px;
+  border-radius: 13px;
+  font-size: 14.5px !important;
+  line-height: 1.55 !important;
+}
+
+.custos-nota { background: #F2F7F6; }
+
+/* O aviso de que os preços podem mudar não é decoração: é o que me
+   permite avisar dela sem parecer que mudei as regras no meio. */
+.custos-aviso { background: #FEF6E7; color: #6B4E10 !important; }
+
+.custos-nota svg,
+.custos-aviso svg { flex: 0 0 auto; margin-top: 2px; }
+
+.custos-tabela {
+  width: 100%;
+  margin: 0 0 14px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.custos-tabela th {
+  text-align: left;
+  padding: 9px 12px;
+  background: #F7FAFD;
+  color: #12305B;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.custos-tabela td {
+  padding: 11px 12px;
+  border-top: 1px solid #F0F4F9;
+  color: #4A5A6B;
+}
+
+.custos-tabela td strong { color: #1F736F; }
+
+.custos-resumo { background: #12305B; border-color: #12305B; }
+.custos-resumo h2 { color: #FFFFFF; }
+.custos-resumo p { color: #C9DAEC; }
+.custos-resumo .custos-tabela th { background: rgba(255, 255, 255, .08); color: #FFFFFF; }
+.custos-resumo .custos-tabela td { border-color: rgba(255, 255, 255, .12); color: #E4EDF6; }
+.custos-resumo .custos-tabela td strong { color: #FFD400; }
+
+.custos-voltar {
+  display: inline-block;
+  margin-top: 8px;
+  color: #1F736F;
+  font-size: 15px;
+  text-decoration: underline;
+}
+
+@media (max-width: 575.98px) {
+  .custos-bloco { padding: 20px 17px; }
+  .custos-tabela { font-size: 14px; }
+  .custos-tabela th, .custos-tabela td { padding: 9px 8px; }
+}
