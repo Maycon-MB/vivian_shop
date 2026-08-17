@@ -72,16 +72,37 @@ const conferir = async (nome, fn) => {
     }
   })
 
-  await conferir('o catálogo mostra os seis produtos', async () => {
+  await conferir('o catálogo mostra os produtos', async () => {
     const cartoes = await pagina.locator('.premium-card').count()
-    if (cartoes !== 6) throw new Error(`esperava 6 produtos, achei ${cartoes}`)
+    if (cartoes < 6) throw new Error(`esperava vários produtos, achei ${cartoes}`)
   })
 
   await conferir('o filtro por linha reduz a lista', async () => {
+    const antes = await pagina.locator('.premium-card').count()
+
     await pagina.getByRole('button', { name: 'Papelaria pedagógica', exact: true }).first().click()
     await pagina.waitForTimeout(600)
-    const cartoes = await pagina.locator('.premium-card').count()
-    if (cartoes !== 3) throw new Error(`esperava 3 na linha pedagógica, achei ${cartoes}`)
+    const depois = await pagina.locator('.premium-card').count()
+
+    // A conta exata mudaria a cada produto que a Vivian cadastrasse. O que
+    // precisa continuar valendo é que filtrar tira coisa da tela.
+    if (depois >= antes) throw new Error(`o filtro não reduziu: ${antes} antes, ${depois} depois`)
+    if (depois === 0) throw new Error('o filtro escondeu tudo')
+  })
+
+  await conferir('os temas levam para a página do tema', async () => {
+    await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+
+    // É assim que a cliente dela procura: pelo tema da festa, não pelo
+    // tipo do produto. Era o funcionamento da loja no Elo7.
+    const temas = await pagina.locator('.temas-lista a').count()
+    if (temas === 0) throw new Error('a vitrine não mostra tema nenhum')
+
+    await pagina.locator('.temas-lista a').first().click()
+    await pagina.waitForURL('**/tema/**', { timeout: 15000 })
+
+    const produtos = await pagina.locator('.tema-produtos li').count()
+    if (produtos === 0) throw new Error('o tema abriu sem produto')
   })
 
   await conferir('o card leva à página do produto', async () => {
@@ -91,11 +112,11 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('a página do produto mostra o mínimo e o total certos', async () => {
-    await pagina.goto(`${BASE}/produto/caderno-personalizado/`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/produto/caneca-personalizada/`, { waitUntil: 'networkidle' })
     const corpo = await pagina.locator('body').textContent()
     if (!corpo.includes('Mínimo de 10')) throw new Error('não avisa o mínimo de 10')
-    // R$ 32,00 x 10 = R$ 320,00
-    if (!corpo.includes('320,00')) throw new Error('o botão não mostra o total do pacote')
+    // A caneca sai por R$ 29,90 cada, e o mínimo são 10: R$ 299,00 o pacote.
+    if (!corpo.includes('299,00')) throw new Error('o botão não mostra o total do pacote')
   })
 
   await conferir('a quantidade não desce abaixo do mínimo', async () => {
@@ -107,11 +128,11 @@ const conferir = async (nome, fn) => {
     await pagina.getByRole('button', { name: 'Aumentar' }).click()
     await pagina.waitForTimeout(300)
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('352,00')) throw new Error('11 unidades deveriam somar R$ 352,00')
+    if (!corpo.includes('328,90')) throw new Error('11 unidades deveriam somar R$ 328,90')
   })
 
   await conferir('o produto digital não fala de frete nem de produção', async () => {
-    await pagina.goto(`${BASE}/produto/jogo-das-emocoes/`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/produto/primeiras-descobertas-cores/`, { waitUntil: 'networkidle' })
     const corpo = await pagina.locator('body').textContent()
     if (corpo.includes('dias úteis')) throw new Error('material digital não tem prazo de produção')
     if (corpo.includes('Mínimo de 10')) throw new Error('material digital não tem mínimo')
@@ -122,7 +143,10 @@ const conferir = async (nome, fn) => {
     // Um personalizado e depois um digital: o segundo tem que ser barrado.
     await pagina.locator('.premium-card').first().getByRole('button', { name: /Comprar/i }).click()
     await pagina.waitForTimeout(400)
-    await pagina.locator('.premium-card').nth(3).getByRole('button', { name: /Comprar/i }).click()
+
+    await pagina.getByRole('button', { name: 'Papelaria pedagógica', exact: true }).first().click()
+    await pagina.waitForTimeout(600)
+    await pagina.locator('.premium-card').first().getByRole('button', { name: /Comprar/i }).click()
     await pagina.waitForTimeout(600)
     const corpo = await pagina.locator('body').textContent()
     if (!corpo.includes('compras separadas')) throw new Error('deixou misturar as linhas')
@@ -177,7 +201,7 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('o carrinho sobrevive à troca de página', async () => {
-    await pagina.goto(`${BASE}/produto/caderno-personalizado/`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/produto/caneca-personalizada/`, { waitUntil: 'networkidle' })
     // O carrinho é guardado no navegador e sobrevive entre as verificações:
     // sem limpar, o total testado aqui carrega o que os testes anteriores
     // deixaram lá.
@@ -188,8 +212,9 @@ const conferir = async (nome, fn) => {
     await pagina.goto(`${BASE}/checkout/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(900)
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('Caderno personalizado')) throw new Error('o carrinho esvaziou ao mudar de página')
-    if (!corpo.includes('320,00')) throw new Error('o valor não chegou ao checkout')
+    if (!corpo.includes('Caneca personalizada')) throw new Error('o carrinho esvaziou ao mudar de página')
+    // 10 canecas a R$ 29,90.
+    if (!corpo.includes('299,00')) throw new Error('o valor não chegou ao checkout')
   })
 
   await conferir('a loja avisa que ainda é demonstração', async () => {
@@ -224,7 +249,16 @@ const conferir = async (nome, fn) => {
     // O desconto do Pix incide só sobre os produtos, nunca sobre o frete.
     // 5% de 320 são 16,00 — dar desconto sobre o frete faria a Vivian pagar
     // a diferença do próprio bolso em cada pedido.
-    if (!corpo.includes('16,00')) throw new Error('o desconto deveria ser 5% de 320, ou seja 16,00')
+    const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
+
+    const produtos = (corpo.match(/Produtos\s*R\$ ([\d.,]+)/) || [])[1]
+    const desconto = (corpo.match(/− R\$ ([\d.,]+)/) || [])[1]
+    if (!produtos || !desconto) throw new Error('não achei os produtos ou o desconto na tela')
+
+    const esperadoDesconto = emNumero(produtos) * 0.05
+    if (Math.abs(emNumero(desconto) - esperadoDesconto) > 0.01) {
+      throw new Error(`o desconto do Pix deveria ser ${esperadoDesconto.toFixed(2)}, e está ${desconto}`)
+    }
 
     const totalNaTela = (corpo.match(/Total\s*R\$ ([\d.,]+)/) || [])[1]
     if (!totalNaTela) throw new Error('não achei o total na tela')
@@ -232,8 +266,7 @@ const conferir = async (nome, fn) => {
     const freteNaTela = (corpo.match(/Frete\s*R\$ ([\d.,]+)/) || [])[1]
     if (!freteNaTela) throw new Error('não achei o frete na tela')
 
-    const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
-    const esperado = 320 - 16 + emNumero(freteNaTela)
+    const esperado = emNumero(produtos) - emNumero(desconto) + emNumero(freteNaTela)
     if (Math.abs(emNumero(totalNaTela) - esperado) > 0.01) {
       throw new Error(`total ${totalNaTela} não bate com ${esperado.toFixed(2)}`)
     }

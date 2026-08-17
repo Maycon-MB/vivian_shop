@@ -15,6 +15,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo';
+import { precoAtual, temPromocao, REGRAS_DO_PERSONALIZADO, acharTema } from './catalogo';
 import { useCarrinho } from './CarrinhoContexto';
 
 /**
@@ -32,12 +33,13 @@ import { useCarrinho } from './CarrinhoContexto';
 const PaginaProduto = ({ produto }) => {
   const { adicionar } = useCarrinho();
   const personalizado = produto.category === PERSONALIZADA;
+  const tema = acharTema(produto.tema);
   const minimo = personalizado ? MINIMO_PERSONALIZADO : 1;
 
   const [quantidade, setQuantidade] = useState(minimo);
   const [adicionado, setAdicionado] = useState(false);
 
-  const total = produto.price * quantidade;
+  const total = precoAtual(produto) * quantidade;
 
   const alterar = (delta) => {
     setQuantidade((atual) => Math.max(minimo, atual + delta));
@@ -91,7 +93,12 @@ const PaginaProduto = ({ produto }) => {
 
             <div className="produto-preco-bloco">
               <span className="produto-valor">
-                R$ {produto.price.toFixed(2).replace('.', ',')}
+                {temPromocao(produto) && (
+                  <s className="produto-preco-cheio">
+                    R$ {produto.price.toFixed(2).replace('.', ',')}
+                  </s>
+                )}
+                R$ {precoAtual(produto).toFixed(2).replace('.', ',')}
               </span>
               {personalizado && <span className="produto-unidade">cada unidade</span>}
             </div>
@@ -117,6 +124,23 @@ const PaginaProduto = ({ produto }) => {
                   Você imprime quantas vezes precisar, em casa ou na gráfica.
                 </p>
               </div>
+            )}
+
+            {/* O tema é o caminho de volta para o resto da festa: quem
+                está comprando a caneca do Mickey provavelmente também quer
+                a revista e o álbum. */}
+            {tema && tema.slug !== 'sem-tema' && (
+              <Link href={`/tema/${tema.slug}/`} className="produto-tema" prefetch={false}>
+                Ver tudo do tema <strong>{tema.nome}</strong>
+              </Link>
+            )}
+
+            {personalizado && (
+              <ul className="produto-regras">
+                {REGRAS_DO_PERSONALIZADO.map((regra) => (
+                  <li key={regra}>{regra}</li>
+                ))}
+              </ul>
             )}
 
             {produto.detalhes?.length > 0 && (

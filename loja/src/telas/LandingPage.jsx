@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { ShoppingCart, Heart, Search, ArrowRight, Star, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,7 +16,7 @@ import {
   totalCarrinho,
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
-import { PRODUTOS } from './catalogo';
+import { PRODUTOS, temasComProdutos } from './catalogo';
 import RodapeConfianca from './RodapeConfianca';
 import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
@@ -186,11 +187,33 @@ const LandingPage = () => {
       {/* Featured Catalog */}
       <section id="catalog" className="section-padding">
         <Container>
+          {/* Os temas vêm antes dos produtos porque é assim que a cliente
+              procura: ela está montando a festa do Mickey, não comprando
+              uma caneca. Era o funcionamento da loja no Elo7, onde há 86
+              coleções, e é o raciocínio que ela e as clientes dela já têm. */}
+          <div className="temas-vitrine">
+            <div className="temas-vitrine-topo">
+              <h2>Escolha por tema</h2>
+              <p>Tudo do mesmo tema junto — caneca, revista, álbum e lembrancinha.</p>
+            </div>
+
+            <ul className="temas-lista">
+              {temasComProdutos().map((tema) => (
+                <li key={tema.slug}>
+                  <Link href={`/tema/${tema.slug}/`} prefetch={false}>
+                    <strong>{tema.nome}</strong>
+                    <span>{tema.quantos === 1 ? '1 produto' : `${tema.quantos} produtos`}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
             <div className="mb-4 mb-md-0">
               <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#1F736F' }}>
                 <div style={{ width: '40px', height: '1px', backgroundColor: '#1F736F' }}></div>
-                <span className="small fw-black text-uppercase ls-widest">Coleções 2026</span>
+                <span className="small fw-black text-uppercase ls-widest">Todos os produtos</span>
               </div>
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
             </div>

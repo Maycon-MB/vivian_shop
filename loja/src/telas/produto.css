@@ -218,3 +218,63 @@
 
 .produto-no-carrinho { margin: 12px 0 0; font-size: 13.5px; font-weight: 700; color: #1F736F; }
 .produto-no-carrinho a { color: #12305B; }
+
+/* O preço cheio riscado ao lado do promocional. */
+.produto-preco-cheio {
+  margin-right: 9px;
+  color: #8B98A6;
+  font-size: .62em;
+  font-weight: 400;
+}
+
+/* As três regras que se repetiam em todos os anúncios do Elo7. Ficam aqui
+   uma vez, e não copiadas dentro de cada descrição — a segunda delas ("não
+   enviamos prévia") é o que evita a cliente exigir revisão de arte depois
+   de a peça estar impressa. */
+.produto-regras {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 15px 17px;
+  background: #FBF8F3;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.produto-regras li {
+  position: relative;
+  padding-left: 15px;
+  color: #4A5A6B;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.produto-regras li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #1F736F;
+}
+
+/* Caminho de volta para o resto do tema: quem leva a caneca do Mickey
+   costuma querer a revista e o álbum também. */
+.produto-tema {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 9px 15px;
+  background: #E7F6F3;
+  border-radius: 999px;
+  color: #1F736F;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+
+.produto-tema:hover,
+.produto-tema:focus-visible { background: #D6EDE9; color: #1F736F; }

@@ -27,7 +27,11 @@ export { podeAdicionar } from './dominio/carrinho'
  *
  * Some quando as telas passarem a usar o tipo `Produto` do domínio.
  */
-const precoDe = (item) => Number(item.preco ?? item.price) || 0
+const precoDe = (item) =>
+  /* O promocional vem primeiro porque é o que a pessoa vê na vitrine, e
+     cobrar o preço cheio de quem clicou no valor com desconto é o tipo de
+     erro que a cliente descobre no extrato do cartão. */
+  Number(item.precoPromocional ?? item.preco ?? item.price) || 0
 
 export const subtotalItem = (item) => precoDe(item) * (item.quantidade || 0)
 
