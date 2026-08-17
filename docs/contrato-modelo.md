@@ -134,7 +134,15 @@ h) registro de marca.
 | Domínio .com.br | endereço da loja | R$ 40,00 por ano |
 | Conta em instituição de pagamento | recebimento por Pix e cartão | taxa por transação |
 | Serviço de fretes | cálculo e emissão de etiquetas | por envio, repassado ao comprador |
-| Hospedagem | publicação da loja | R$ 0,00 na configuração atual |
+| Hospedagem da vitrine | publicação das páginas públicas | R$ 0,00 |
+| Banco de dados e autenticação | pedidos, acesso ao painel, estoque e cadastro de clientes | R$ 0,00 no plano inicial; entre R$ 130,00 e R$ 150,00 mensais quando o volume exigir plano pago |
+| Envio de e-mails aos compradores | confirmação de pedido e entrega do material digital | R$ 0,00 no plano inicial; cerca de R$ 100,00 mensais quando o volume exigir plano pago |
+
+6.3.1. Os valores acima são estimativas de agosto de 2026, sujeitas a alteração pelos respectivos fornecedores.
+
+6.3.2. **A remuneração prevista na cláusula 2 não inclui os custos desta cláusula**, que são contratados diretamente pela CONTRATANTE, em seu nome, e por ela pagos.
+
+6.3.3. Enquanto o volume de operação permitir os planos gratuitos, o custo desta cláusula limita-se ao domínio.
 
 6.4. Responsabilizar-se pela **titularidade e licenciamento** de todo conteúdo que enviar — imagens, personagens, marcas, textos e materiais —, isentando o CONTRATADO de qualquer responsabilidade por violação de direitos de terceiros no material fornecido.
 

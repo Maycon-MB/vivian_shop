@@ -1,5 +1,12 @@
 # O financeiro do projeto
 
+> **Corrigido em 17/08/2026.** A primeira versão deste documento tratava a
+> hospedagem como custo zero permanente. Está errado: aquilo vale para a
+> vitrine, e uma loja que vende precisa de banco de dados para pedidos,
+> login, estoque e clientes. Os custos reais, por fase, estão em
+> [infraestrutura-e-custos.md](infraestrutura-e-custos.md), e as tabelas
+> abaixo já refletem a correção.
+
 O que entra e o que sai, dos dois lados, com os números que existem hoje.
 
 **O que é estimativa está marcado.** As taxas de meio de pagamento e o
@@ -69,7 +76,12 @@ cláusula é o que faz a diferença entre R$ 100/mês e trabalho de graça.**
 | Uma vez por ano | registro.br | cerca de R$ 40 |
 
 No primeiro ano: **R$ 2.440**. A partir do segundo: **R$ 1.240 por ano**,
-ou cerca de R$ 103 por mês.
+ou cerca de R$ 103 por mês — **enquanto os planos gratuitos de banco de
+dados e e-mail derem conta**.
+
+Quando o volume exigir plano pago, entram de R$ 130 a R$ 275 mensais de
+infraestrutura, contratados por ela e em nome dela. O detalhamento por
+fase está em [infraestrutura-e-custos.md](infraestrutura-e-custos.md).
 
 ### O que ela paga por venda
 
@@ -111,10 +123,14 @@ Com uma comissão hipotética de 12%:
 diluído. As taxas do meio de pagamento existem nos dois cenários e por
 isso não entram na comparação.*
 
-**O ponto de virada fica perto de R$ 860 por mês.** Abaixo disso, a
-comissão do Elo7 é mais barata que a mensalidade fixa. Acima, a diferença
-cresce e não para de crescer — porque a mensalidade é fixa e a comissão
-não.
+**O ponto de virada fica perto de R$ 860 por mês** enquanto a
+infraestrutura for gratuita. Com a loja estabelecida e a infraestrutura
+paga, ele sobe para algo perto de **R$ 2.000 por mês**.
+
+Abaixo disso, a comissão do Elo7 é mais barata que o custo fixo. Acima, a
+diferença cresce e não para de crescer — porque o custo fixo é fixo e a
+comissão não. E ela só chega na faixa de infraestrutura paga se estiver
+vendendo o suficiente para ela caber.
 
 A tela de relatórios da loja mostra essa conta com os números reais dela,
 e diz na cara quando o mês foi fraco demais para compensar o fixo.
@@ -137,7 +153,7 @@ Elo7.
 | Se acontecer | Efeito |
 |---|---|
 | Ela vender muito acima do previsto | a hospedagem continua R$ 0 até um volume bem maior que o dela |
-| Precisar de banco de dados | Supabase tem plano gratuito; acima dele, cerca de US$ 25/mês, e a decisão passa a ser dela |
+| O volume passar do plano gratuito do banco | cerca de US$ 25/mês, e a decisão passa a ser dela (cláusula 6.2) |
 | Ela pedir funcionalidade nova | orçamento à parte, cláusula 2.5 |
 | O Elo7 cobrar menos do que 12% | o ponto de virada sobe, e a loja própria demora mais a compensar |
 
