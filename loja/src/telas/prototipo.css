@@ -491,10 +491,13 @@ body {
     box-shadow: none;
     background: rgba(255, 255, 255, .96);
     padding: 8px 12px;
-    overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    /* Duas linhas em vez de rolagem lateral. Com sete áreas, as três
+       últimas ficavam fora da tela, e nada indicava que a barra rolava —
+       ela simplesmente não saberia que existem. Duas linhas ocupam uns 30
+       pixels a mais e mostram tudo. */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
   }
 
   .view-switcher::-webkit-scrollbar { display: none; }

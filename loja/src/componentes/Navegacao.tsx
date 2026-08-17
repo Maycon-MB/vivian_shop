@@ -19,6 +19,7 @@ const AREAS = [
   { href: '/painel', rotulo: 'Minhas vendas', classe: 'admin' },
   { href: '/perguntas', rotulo: 'Perguntas', classe: 'ask' },
   { href: '/como-funciona', rotulo: 'Como funciona', classe: 'how' },
+  { href: '/custos', rotulo: 'Quanto custa', classe: 'custo' },
   { href: '/identidade', rotulo: 'Minha marca', classe: 'ident' },
   { href: '/andamento', rotulo: 'O que já fiz', classe: 'status' },
 ]
