@@ -80,6 +80,18 @@ vez em vez de abrir pela metade e mudar de regra no meio.
 única que precisaria mudar, porque o pagamento já está atrás de um
 contrato próprio.
 
+## Catálogo e temas
+
+| Decisão | Por quê | Custo de mudar |
+|---|---|---|
+| Produto se organiza por **tema**, e não por tipo | Foi ela quem pediu, e é como a cliente dela compra: quer alguma coisa do Mickey para a festa, não uma caneca. Era assim no Elo7, onde a loja tem 86 coleções. | — |
+| Tema sem produto não aparece na vitrine | Com 86 temas, uma lista cheia de links que não levam a nada é pior do que uma lista curta. | 2 minutos |
+| As descrições são as dela, sem eu reescrever | São as palavras que já venderam 343 produtos. Trocar por texto meu seria preferir o que eu acho bonito ao que funciona. | — |
+| Três frases viraram regra da loja, e não texto de cada produto | "Vai embalado com lapela", "a arte é a da foto, sem prévia" e o prazo em dias úteis se repetiam em todo anúncio. A do meio é a que evita a cliente exigir revisão de arte com a peça impressa. | — |
+| O preço promocional aparece com o cheio riscado ao lado | É como ela anuncia no Elo7, e some quando não há desconto. O carrinho cobra o promocional — cobrar o cheio de quem clicou no desconto é erro que a cliente descobre no extrato. | — |
+| **Mínimo de 10 por produto, confirmado em 17/08** | Regra nova dela, e não do Elo7 — por isso as descrições de lá não mencionam. A loja mostra o preço da peça e, ao lado, quanto sai o pacote de dez. | 5 minutos |
+| O catálogo entra por extração e planilha, nunca digitado | São 343 produtos que ela já escreveu uma vez. Digitar de novo custaria dias e criaria erro de preço; e ela ficaria dependendo de mim para toda correção. | — |
+
 ## Relatórios
 
 | Decisão | Por quê | Custo de mudar |

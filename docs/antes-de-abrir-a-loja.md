@@ -28,11 +28,22 @@ que precisa de ação está marcado assim.
 
 ## Dados que faltam
 
+Atualizado em 17/08/2026, depois das 83 mensagens dela de 16/08.
+
+- [x] ~~Descrições dos produtos~~ — chegaram, e estão na loja com as palavras dela
+- [x] ~~Formato do material pedagógico~~ — PDF
+- [x] ~~Logos em qualidade boa~~ e ~~Instagram~~ — `@feito.paravocepersonalizados`
+- [x] ~~Políticas da loja~~ — inclusive o atendimento de segunda a sexta, das 9h às 17h
+
+- [ ] **Preços dos personalizados.** Os que estão na loja hoje são **meus**, provisórios: ela mandou lista de preço só do material pedagógico. Estão marcados em `telas/catalogo.js` como `PENDENTE-VIVIAN`. **Nenhum deles pode cobrar de cliente.**
+- [ ] **Os 86 temas.** Existem 3 cadastrados. Entram pela extração da loja dela no Elo7.
+- [ ] **Os 343 produtos.** Existem 21. Mesma origem.
 - [ ] **CNPJ e razão social** do MEI — vão no rodapé, é o que dá segurança a quem nunca comprou
-- [ ] **Catálogo real**: nome, descrição, preço, foto, peso e medidas do pacote fechado de cada produto
+- [ ] **Fotos dos produtos** — nenhuma; todo produto está com espaço reservado
+- [ ] **Peso e medidas do pacote fechado de 10.** Ela mandou o tamanho da peça, que é outra coisa. Sem isso o frete sai errado e a diferença sai do bolso dela em cada pedido.
 - [ ] **Arquivos** da linha pedagógica, em PDF
 - [ ] **História dela**, para a página Quem faz
-- [ ] **Depoimentos reais**, com autorização de quem escreveu
+- [ ] **Autorização dos depoimentos.** Os 15 prints chegaram, e todos trazem o nome de clientes dela. Publicar nome de terceiro sem essa pessoa saber é problema, mesmo sendo elogio.
 - [ ] **Número de WhatsApp verdadeiro** — hoje está `5521900000000` em toda a loja
 
 ## Precisa de validação profissional
