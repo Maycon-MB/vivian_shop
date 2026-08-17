@@ -1,0 +1,169 @@
+# Infraestrutura e custos reais
+
+Correção de uma análise anterior minha, que tratava o GitHub Pages como
+solução final. Ele não é: é a vitrine da demonstração. **Uma loja que
+vende precisa de banco de dados** — produtos, pedidos, login, estoque,
+histórico de clientes — e isso tem custo.
+
+Os valores abaixo são de agosto de 2026 e **precisam ser conferidos na
+hora de contratar**: preço de nuvem muda, e plano gratuito muda mais
+ainda.
+
+---
+
+## O que a loja precisa de verdade
+
+| Peça | Para quê | Dá para ser estático? |
+|---|---|---|
+| Vitrine e páginas de produto | mostrar o catálogo | **sim** |
+| Catálogo (343 produtos, 86 temas) | dados dos produtos | sim, gerado no build |
+| Carrinho | montar o pedido | sim, fica no navegador |
+| **Pedidos** | guardar o que foi comprado | **não** |
+| **Login da Vivian** | acesso ao painel | **não** |
+| **Confirmação de pagamento** | o Mercado Pago avisa que pagou | **não** — precisa de endereço que receba o aviso |
+| **Estoque** | não vender o que acabou | **não** |
+| **Entrega do material digital** | link com validade de 7 dias | **não** |
+| **Clientes** | histórico, para ela vender de novo | **não** |
+
+As cinco últimas exigem servidor e banco. Não tem como contornar sem
+mentir para a cliente.
+
+---
+
+## A arquitetura que eu recomendo
+
+Manter a vitrine estática e colocar o banco atrás dela, em vez de mover a
+loja inteira para um servidor.
+
+```
+  Vitrine e catálogo   ->  arquivos estáticos, gerados no build
+  Pedidos, login,      ->  Supabase (Postgres + autenticação + arquivos)
+  clientes, estoque
+  Aviso de pagamento   ->  função do Supabase, chamada pelo Mercado Pago
+```
+
+**Por que assim, e não uma aplicação inteira num servidor:**
+
+1. A vitrine é o que mais recebe visita e o que menos muda. Servida como
+   arquivo, é rápida, barata e não cai.
+2. O banco só é acionado por quem compra ou por quem administra — uma
+   fração das visitas.
+3. O catálogo dela muda pouco: gerar no build e republicar resolve, e
+   ainda deixa a loja funcionando mesmo se o banco estiver fora do ar.
+4. Reaproveita tudo que já está construído. A separação por contratos que
+   fiz desde o começo existia exatamente para este momento.
+
+---
+
+## Os custos, por fase
+
+### Fase 1 — hoje, demonstração
+
+| Item | Custo |
+|---|---|
+| Vitrine (GitHub Pages) | R$ 0 |
+| Publicação automática | R$ 0 |
+| Formulário de perguntas | R$ 0 |
+| **Total** | **R$ 0/mês** |
+
+### Fase 2 — vendendo, volume inicial
+
+| Item | Plano | Custo |
+|---|---|---|
+| Vitrine | GitHub Pages | R$ 0 |
+| Banco, login e arquivos | Supabase, plano gratuito | R$ 0 |
+| Envio de e-mail | Resend ou similar, plano gratuito | R$ 0 |
+| Domínio | registro.br | R$ 40/ano |
+| **Total** | | **cerca de R$ 3/mês** |
+
+O plano gratuito do Supabase, em agosto de 2026, oferecia algo em torno de
+500 MB de banco, 1 GB de arquivos e 50 mil usuários ativos por mês. Para
+uma loja com dezenas de pedidos mensais, sobra muito.
+
+**Mas ele tem um risco que precisa ser dito:** planos gratuitos costumam
+pausar projetos inativos e podem mudar de regra sem aviso. Para uma loja
+que fatura, isso é risco de negócio, não economia.
+
+### Fase 3 — loja estabelecida
+
+| Item | Custo mensal |
+|---|---|
+| Banco e autenticação (Supabase Pro) | cerca de US$ 25 → **R$ 130 a R$ 150** |
+| Envio de e-mail (plano pago) | cerca de US$ 20 → **R$ 100 a R$ 120**, se o volume exigir |
+| Vitrine | R$ 0 |
+| Domínio | R$ 3/mês |
+| **Total** | **R$ 135 a R$ 275/mês** |
+
+---
+
+## O que isso muda para ela
+
+A conta que eu tinha apresentado antes estava incompleta. A real:
+
+| Fase | Manutenção | Infraestrutura | **Total por mês** |
+|---|---|---|---|
+| Demonstração | R$ 200* | R$ 0 | R$ 200 |
+| Vendendo, início | R$ 200* | R$ 3 | R$ 203 |
+| Depois do 12º mês, início | R$ 100 | R$ 3 | **R$ 103** |
+| Depois do 12º mês, estabelecida | R$ 100 | R$ 135 a R$ 275 | **R$ 235 a R$ 375** |
+
+*\* nos 12 primeiros meses, o valor é o do desenvolvimento.*
+
+### O ponto de virada muda
+
+Com comissão hipotética de 12% no Elo7:
+
+| Custo mensal aqui | Faturamento que empata |
+|---|---|
+| R$ 103 (início) | cerca de R$ 860 |
+| R$ 235 (estabelecida) | cerca de R$ 1.960 |
+| R$ 375 (volume alto) | cerca de R$ 3.125 |
+
+A boa notícia: **ela só chega na fase 3 se estiver vendendo bem**. Com
+R$ 5.000 de faturamento, a comissão do Elo7 seria R$ 600 contra R$ 235
+aqui — a diferença continua grande.
+
+A má notícia: **existe uma faixa em que a loja própria sai mais cara**, e
+é honesto dizer isso a ela antes, não depois.
+
+---
+
+## O que isso muda no contrato
+
+A cláusula 6.3 lista "hospedagem — R$ 0,00 na configuração atual". Está
+correto para hoje, mas incompleto para o que vem.
+
+**Precisa entrar:**
+
+1. Banco de dados e autenticação na lista de serviços contratados por ela,
+   em nome dela, com a faixa de custo estimada.
+2. A confirmação de que nada pago é contratado sem autorização dela — já
+   está na 6.2, e é o que a protege.
+3. Que a mensalidade de manutenção **não inclui** os custos de
+   infraestrutura, para não haver dúvida depois.
+
+Sem isso, daqui a seis meses aparece uma cobrança de R$ 150 que ela não
+esperava, e a conversa fica ruim por um mal-entendido meu.
+
+---
+
+## O que isso muda para o Maycon
+
+Nada, financeiramente — as contas ficam no nome dela e o custo é dela.
+
+O que muda é **o que precisa ser dito antes de assinar**. Vender uma loja
+dizendo "hospedagem R$ 0" e depois cobrar R$ 150 de infraestrutura é o
+tipo de coisa que destrói confiança, mesmo sendo tecnicamente verdade nas
+duas vezes.
+
+---
+
+## O que fazer agora
+
+1. **Conferir os preços** antes de qualquer promessa. Os daqui são de
+   agosto de 2026 e podem estar diferentes.
+2. **Corrigir a cláusula 6.3** do contrato, com a faixa realista.
+3. **Explicar a ela**, com a tabela de fases: hoje R$ 0, no começo quase
+   nada, e uma faixa entre R$ 135 e R$ 275 quando a loja estiver
+   estabelecida — que é quando ela vai estar faturando o suficiente para
+   isso caber.
