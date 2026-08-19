@@ -92,6 +92,45 @@ export default function Custos() {
             <strong>gravar aquele pedido</strong> num lugar de onde você possa ler depois. O
             mesmo vale para a sua senha do painel e para o estoque.
           </p>
+          <p>
+            É a diferença entre o <strong>cardápio</strong> e a <strong>comanda</strong>. O
+            cardápio é impresso uma vez e todo mundo lê o mesmo; a comanda é escrita de novo a
+            cada cliente, e você precisa dela depois para saber o que fazer. Ninguém anota
+            comanda no cardápio — por isso são duas coisas separadas, com contas separadas.
+          </p>
+
+          <table className="custos-tabela">
+            <thead>
+              <tr>
+                <th>Na sua loja</th>
+                <th>Fica onde</th>
+                <th>Custa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vitrine, fotos, descrições</td>
+                <td>hospedagem (o cardápio)</td>
+                <td>
+                  <strong>R$ 0</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>Pedidos, sua senha, estoque</td>
+                <td>banco de dados (a comanda)</td>
+                <td>
+                  <strong>R$ 0</strong> por muitos anos
+                </td>
+              </tr>
+              <tr>
+                <td>Suas atividades em PDF</td>
+                <td>seu Drive, como já estão</td>
+                <td>
+                  <strong>R$ 0</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <p className="custos-nota">
             <Info size={16} /> Esse lugar é o que a gente chama de banco de dados. É um serviço
             contratado, no seu nome, e o valor depende do quanto ele trabalha.
