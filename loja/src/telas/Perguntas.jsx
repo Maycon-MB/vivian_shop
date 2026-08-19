@@ -107,12 +107,12 @@ const BLOCOS = [
     resumo: 'Sem isso a loja continua mostrando produto de exemplo.',
     perguntas: [
       {
-        id: 'linkelo7',
-        pergunta: 'Qual o endereço da sua loja no Elo7?',
+        id: 'guardou',
+        pergunta: 'Você chegou a salvar alguma coisa antes do Elo7 fechar?',
         porque:
-          'Você já escreveu os 343 produtos uma vez. Com o link eu pego de lá os temas, os nomes, os preços e as descrições — em vez de você digitar tudo de novo. Se no painel tiver um botão de exportar produtos, melhor ainda: me manda o arquivo.',
-        dica: 'o endereço da loja, ou o arquivo exportado',
-        linhas: 2,
+          'Tentei pegar seus produtos direto de lá e descobri que a plataforma saiu do ar de vez, em maio — não sobrou nada para copiar. Então vale procurar: alguma planilha que você tenha baixado, os e-mails de venda que o Elo7 mandava (eles traziam nome do produto e preço), ou prints da sua loja. Qualquer uma dessas coisas economiza dias de digitação.',
+        dica: 'tenho planilha / tenho os e-mails / só tenho as fotos / não tenho nada',
+        linhas: 3,
       },
       {
         id: 'fotos',

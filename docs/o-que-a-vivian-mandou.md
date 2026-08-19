@@ -178,18 +178,18 @@ Da lista que ela mandou, com preço cheio e promocional:
 
 ## Como o catálogo completo vai entrar
 
-Pedir os 86 temas e os 343 produtos para ela digitar seria pedir que ela
-refizesse um trabalho que já fez. A informação existe, publicada e
-organizada, na loja dela no Elo7.
+> **Corrigido em 19/08/2026.** Os dois primeiros planos abaixo estavam
+> mortos quando eu os escrevi: **o Elo7 encerrou as atividades em 11 de
+> maio de 2026**, o painel de vendedor foi desativado e as páginas de
+> produto retornam 404. Não há o que extrair. Ver
+> [o-elo7-fechou.md](o-elo7-fechou.md).
 
-A ordem de tentar, da menos trabalhosa para a mais:
+~~1. Exportação do próprio Elo7~~ — painel desativado.
+~~2. Ler a loja pública dela~~ — páginas fora do ar, e sem cópia arquivada.
 
-1. **Exportação do próprio Elo7.** Se o painel dela tiver algo como
-   "exportar produtos", acabou — é um arquivo e ela não digita nada.
-2. **Ler a loja pública dela.** É o conteúdo dela, num site aberto: dá
-   para pegar os nomes das coleções, os produtos com preço e descrição, e
-   os endereços das fotos.
-3. **Planilha do Google**, que passa a ser onde ela mantém o catálogo.
+**3. Planilha do Google**, que passa a ser onde ela mantém o catálogo — e
+que agora é o único caminho. Ela não nasce preenchida por extração: nasce
+do que a Vivian tiver guardado.
 
 A planilha não nasce vazia: ela nasce com o que foi extraído, e a Vivian
 revisa em vez de digitar. Daí para frente é lá que ela cadastra produto

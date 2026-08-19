@@ -199,3 +199,56 @@ custa cerca de US$ 20 por mês, por pessoa.
 A loja não depende disso: a vitrine é estática e está no GitHub Pages, que
 não tem essa restrição. Mas fica registrado para o dia em que alguém —
 inclusive eu — pensar em "só mover para a Vercel, que é mais fácil".
+
+---
+
+# Levantamento de preços — verificado em 19/08/2026
+
+Os números abaixo saíram das páginas oficiais de cada serviço, não de
+memória. As URLs estão ao lado de cada bloco.
+
+## Banco de dados
+
+| | Supabase | Neon | Turso | Cloudflare D1 |
+|---|---|---|---|---|
+| Grátis — tamanho | 500 MB | 0,5 GB | 5 GB | 5 GB |
+| Grátis — uso | 5 GB de saída, 50 mil usuários ativos/mês | 100 CU-horas/mês | 500 mi leituras/mês | 5 mi leituras/dia |
+| Primeiro pago | **US$ 25/mês** | paga o uso, sem mensalidade | US$ 4,99/mês | US$ 5/mês mínimo |
+| Pausa por inatividade | **sim, após 1 semana** | dorme em 5 min, acorda sozinho | não confirmado | não pausa |
+| Risco de fatura surpresa | baixo — teto de gasto vem ligado | baixo — suspende em vez de cobrar | médio | médio |
+
+Fontes: [supabase.com/pricing](https://supabase.com/pricing) ·
+[neon.com/pricing](https://neon.com/pricing) ·
+[turso.tech/pricing](https://turso.tech/pricing) ·
+[developers.cloudflare.com/d1](https://developers.cloudflare.com/d1/platform/pricing/)
+
+### Uso comercial no plano gratuito
+
+Pergunta mais importante do levantamento, e a que nenhuma página de preço
+responde. Fui aos termos:
+
+- **Supabase: permitido.** Os Termos de Serviço não restringem o plano
+  gratuito a uso pessoal ou de teste, e a seção 2(a) fala em "uso para
+  propósitos comerciais internos do Cliente".
+  [supabase.com/terms](https://supabase.com/terms)
+- **Vercel: proibido.** O plano Hobby veda uso comercial de forma
+  explícita. Por isso está fora, apesar de ser o lugar mais óbvio para
+  publicar um projeto Next.js.
+
+### A escolha: Supabase, com uma ressalva
+
+Postgres, autenticação e API num pacote só — é o que menos exige
+construir. Para dezenas de pedidos por mês guardando texto, 500 MB não
+enche em anos.
+
+**A ressalva é a pausa por inatividade.** Projeto gratuito do Supabase
+pausa depois de 7 dias sem acesso, e a loja sairia do ar até alguém
+religar no painel. Uma loja com movimento nunca chega lá — mas "nunca"
+depende de haver movimento, e uma semana fraca é plausível.
+
+**Solução, sem custo:** a publicação automática já roda no GitHub Actions.
+Um agendamento semanal que faz uma consulta boba ao banco mantém o projeto
+vivo. Custa zero e resolve o problema antes de ele existir.
+
+Se um dia isso não bastar, o Pro a US$ 25/mês remove a pausa — e o teto de
+gasto vem ligado por padrão, o que protege contra fatura surpresa.

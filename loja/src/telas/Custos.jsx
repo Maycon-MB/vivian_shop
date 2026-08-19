@@ -154,6 +154,79 @@ export default function Custos() {
           </p>
         </section>
 
+        {/* ── O que sai de cada venda ──────────────────────────────────── */}
+        <section className="custos-bloco">
+          <h2>O que sai de cada venda</h2>
+          <p>
+            Esta é a parte que mais importa, porque acontece toda vez que alguém compra.
+          </p>
+
+          <table className="custos-tabela">
+            <thead>
+              <tr>
+                <th>Forma de pagamento</th>
+                <th>Fica com o Mercado Pago</th>
+                <th>Dinheiro cai</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Pix</strong>
+                </td>
+                <td>
+                  <strong>nada</strong>
+                </td>
+                <td>na hora</td>
+              </tr>
+              <tr>
+                <td>Cartão à vista</td>
+                <td>cerca de 4%</td>
+                <td>30 dias</td>
+              </tr>
+              <tr>
+                <td>Cartão parcelado</td>
+                <td>mais, conforme as parcelas</td>
+                <td>conforme o prazo</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="custos-aviso">
+            <AlertCircle size={16} /> Estes números precisam ser conferidos na sua conta: as
+            taxas do Mercado Pago mudam conforme o vendedor e o volume. Quando você abrir a
+            conta, a gente entra em "Custos de receber" e confirma os seus.
+          </p>
+        </section>
+
+        {/* ── O desconto do Pix ────────────────────────────────────────── */}
+        <section className="custos-bloco">
+          <h2>Uma decisão sua sobre o desconto do Pix</h2>
+          <p>
+            Eu tinha configurado <strong>5% de desconto no Pix</strong>, achando que o Pix
+            tinha uma taxa de mais ou menos 1%. Se ele for mesmo sem taxa, a conta muda:
+          </p>
+          <ul className="custos-lista">
+            <li>
+              <strong>Cliente paga no cartão</strong>
+              <span>você perde uns 4% de taxa</span>
+            </li>
+            <li>
+              <strong>Cliente paga no Pix com 5% de desconto</strong>
+              <span>você perde 5% de desconto</span>
+            </li>
+          </ul>
+          <p>
+            Ou seja: o desconto sai <strong>um pouco mais caro</strong> que a taxa do cartão. O
+            que você ganha em troca é receber na hora, em vez de esperar 30 dias.
+          </p>
+          <p className="custos-nota">
+            <Info size={16} /> Se preferir, dá para baixar para 3%: continua atraente para quem
+            compra, e aí o Pix fica mais barato para você nos dois sentidos. É decisão sua, e eu
+            mudo em cinco minutos.
+          </p>
+        </section>
+
         {/* ── O resumo honesto ─────────────────────────────────────────── */}
         <section className="custos-bloco custos-resumo">
           <h2>O resumo</h2>
