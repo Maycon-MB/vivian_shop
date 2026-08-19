@@ -49,7 +49,7 @@ publica o que já existe.
 |---|---|---|
 | Nome | como aparece na loja | **sim** |
 | Linha | Personalizada ou Pedagógica | **sim**, lista suspensa |
-| Tema | escolhido da aba Temas | **sim**, lista suspensa |
+| Tema | ela digita; o sistema reconhece | **sim** |
 | Tipo | Caneca, Revista, Álbum, Jogo… | não |
 | Preço | o preço normal | **sim** |
 | Preço promocional | se estiver em oferta | não |
@@ -59,11 +59,61 @@ publica o que já existe.
 | Medidas da caixa | altura × largura × comprimento, em cm | só para personalizado |
 | Pasta no Drive | link da pasta da atividade | só para digital |
 
-### Por que lista suspensa em Linha e Tema
+### O tema não é lista suspensa. É reconhecimento.
 
-Se ela escrever "mickey" numa linha e "Mickey" em outra, viram **dois
-temas diferentes** na loja, cada um com metade dos produtos. Lista suspensa
-elimina isso na origem.
+Lista suspensa fixa resolveria a duplicação e criaria três problemas
+piores: ela teria que **cadastrar o tema antes** de usar no produto, 86
+itens numa lista no celular é péssimo de usar, e colar de outro lugar
+quebraria a validação.
+
+Então ela digita o que quiser, e o sistema reconhece. Em três camadas:
+
+**1. O que é obviamente o mesmo, junta calado.**
+
+`mickey` · `MICKEY` · `  Mickey  ` · `Mickey!` · `Mickeý`
+
+Tudo isso vira o tema **Mickey** que já existe. Sem aviso, sem pergunta —
+não há dúvida nenhuma aqui.
+
+**2. O que é quase igual, pergunta antes de decidir.**
+
+Se ela escrever `Primeira Eucarista` e já existir `Primeira Eucaristia`, o
+sistema **não corrige sozinho**. Avisa:
+
+> *Você escreveu "Primeira Eucarista", e já existe o tema "Primeira
+> Eucaristia". É o mesmo? Se for, corrija para o nome que já existe. Se
+> forem temas diferentes mesmo, pode deixar como está.*
+
+E a publicação **acontece assim mesmo**. Segurar a loja inteira por uma
+letra seria pior do que publicar com dois temas parecidos.
+
+**3. O que é diferente, cria sozinho.**
+
+Tema novo nasce do próprio produto. Ela não precisa cadastrar antes.
+
+### As três coisas que impedem o sistema de ser burro
+
+**Nome curto não se junta.** `Bela` e `Belo` diferem em uma letra, mas
+provavelmente são temas diferentes — "A Bela e a Fera" e outra coisa
+qualquer. Juntar apagaria um tema inteiro da loja, e ela poderia nem
+perceber. Quanto mais curto o nome, menos tolerância.
+
+**Número não é erro de digitação.** `Turma 1` e `Turma 2` diferem em um
+caractere, mas ninguém digita 2 querendo 1. Sem essa regra, uma planilha
+com temas numerados viraria uma parede de avisos — e ela pararia de ler
+todos, inclusive os que importam.
+
+**Avisa uma vez, não quarenta.** Se o mesmo tema errado aparece em 40
+produtos, o aviso sai uma vez. Repetido 40 vezes vira ruído, e ruído se
+ignora.
+
+### A regra que atravessa tudo
+
+**Nunca juntar dois temas por conta própria quando há dúvida.**
+
+Juntar errado é silencioso: um tema some da loja e ninguém percebe.
+Perguntar custa uma linha de aviso. Entre os dois erros, o segundo é
+sempre preferível.
 
 ---
 
