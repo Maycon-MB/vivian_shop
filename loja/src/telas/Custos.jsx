@@ -195,7 +195,7 @@ export default function Custos() {
           <p className="custos-aviso">
             <AlertCircle size={16} /> Estes números precisam ser conferidos na sua conta: as
             taxas do Mercado Pago mudam conforme o vendedor e o volume. Quando você abrir a
-            conta, a gente entra em "Custos de receber" e confirma os seus.
+            conta, a gente entra em “Custos de receber” e confirma os seus.
           </p>
         </section>
 
