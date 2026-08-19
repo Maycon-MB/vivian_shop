@@ -22,6 +22,10 @@ import {
  * é digital e não tem nenhum dos dois.
  */
 
+/* PENDENTE-VIVIAN: a política dela diz 7 dias úteis; confirmar se
+   continua assim na loja nova. */
+const VALIDADE_DO_LINK = 7
+
 const ACTOR = {
   system: { label: 'Automático', className: 'by-system' },
   vivian: { label: 'Você faz', className: 'by-vivian' },
@@ -218,8 +222,13 @@ const HowItWorksPage = () => {
             <div className="card">
               <h3>{PEDAGOGICA}</h3>
               <p>
-                Digital. Vai para o e-mail e o WhatsApp na hora em que o pagamento aprova. Sem
-                mínimo, sem frete, sem produção — e sem trabalho seu.
+                Digital. As atividades continuam no seu Drive, do jeito que já estão. Quando o
+                pagamento aprova, a loja libera o acesso para o e-mail de quem comprou e manda o
+                link — na hora, sem depender de você estar em casa.
+              </p>
+              <p>
+                Depois de {VALIDADE_DO_LINK} dias o acesso é retirado sozinho, como você já faz.
+                Sem mínimo, sem frete e sem produção.
               </p>
             </div>
           </div>
