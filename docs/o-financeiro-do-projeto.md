@@ -79,9 +79,12 @@ No primeiro ano: **R$ 2.440**. A partir do segundo: **R$ 1.240 por ano**,
 ou cerca de R$ 103 por mês — **enquanto os planos gratuitos de banco de
 dados e e-mail derem conta**.
 
-Quando o volume exigir plano pago, entram de R$ 130 a R$ 275 mensais de
-infraestrutura, contratados por ela e em nome dela. O detalhamento por
-fase está em [infraestrutura-e-custos.md](infraestrutura-e-custos.md).
+Esse valor deve se manter por bastante tempo. Em 18/08 ela explicou que os
+arquivos do material pedagógico ficam no Drive dela, e que o que ela
+entrega é acesso, não arquivo — então o banco guarda só texto, e o plano
+gratuito leva anos para encher. Detalhes em
+[infraestrutura-e-custos.md](infraestrutura-e-custos.md) e
+[entrega-do-material-digital.md](entrega-do-material-digital.md).
 
 ### O que ela paga por venda
 

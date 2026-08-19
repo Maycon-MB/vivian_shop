@@ -83,6 +83,11 @@ const JA_SEI = [
       'Quem escolhe o tema vê tudo daquele tema junto — caneca, revista, álbum, lousa — como era no Elo7. Falta só cadastrar os seus, e para isso eu preciso do endereço da sua loja de lá.',
   },
   {
+    titulo: 'Como você entrega o material pedagógico',
+    texto:
+      'As atividades ficam no seu Drive, e quando alguém compra você libera o acesso para o e-mail da pessoa por 7 dias. Vai continuar assim — a diferença é que a loja passa a fazer isso sozinha, na hora do pagamento, sem depender de você estar em casa.',
+  },
+  {
     titulo: 'Seu Instagram e suas logos',
     texto:
       'Recebi: @feito.paravocepersonalizados, e os arquivos das duas logos em qualidade boa. As cores da loja saíram delas.',
@@ -133,13 +138,12 @@ const BLOCOS = [
     resumo: 'É a parte que entrega sozinha, sem você precisar fazer nada.',
     perguntas: [
       {
-        id: 'tamanhoarquivos',
-        pergunta: 'Quanto pesam os arquivos do material pedagógico?',
+        id: 'drive',
+        pergunta: 'Suas atividades estão todas organizadas numa pasta só do Drive?',
         porque:
-          'É o que decide o custo mensal da loja. O plano gratuito onde os arquivos vão ficar entrega 5 GB por mês: com PDF de 5 MB dá mais de mil downloads mensais, com PDF de 30 MB cai para 170. Se os seus estiverem pesados, quase sempre dá para reduzir sem perder qualidade de impressão — e aí o limite multiplica.',
-        dica: 'abra a pasta no computador e me diga o tamanho de uns dois ou três',
-        linhas: 2,
-        leiaMais: { texto: 'Entenda o que a loja custa', href: '/custos/' },
+          'Você me explicou que guarda tudo no Drive e libera o acesso por e-mail. Vou fazer a loja fazer isso sozinha: pagou, o acesso sai na hora e some depois de 7 dias, sem você precisar estar em casa. Para isso eu preciso saber como as pastas estão organizadas — uma pasta por atividade, ou tudo junto?',
+        dica: 'uma pasta por atividade / tudo numa pasta só / de outro jeito',
+        linhas: 3,
       },
       {
         id: 'marcadagua',
