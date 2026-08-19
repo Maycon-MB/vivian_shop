@@ -14,6 +14,7 @@ import {
   FASES,
   ORDEM_FASES,
   porFase,
+  QUEM_FAZ,
 } from '../decisoes';
 
 /**
@@ -175,7 +176,17 @@ const StatusPage = () => {
                     <li className={`etapa is-${fase}`} key={etapa.nome}>
                       <span className="etapa-marca" aria-hidden="true" />
                       <div>
-                        <strong>{etapa.nome}</strong>
+                        <strong>
+                          {etapa.nome}
+                          {/* De quem a etapa depende. Sem isto a lista vira
+                              só promessa minha, e ela não enxerga onde a
+                              bola está com ela. */}
+                          {etapa.quem && (
+                            <span className={`etapa-quem is-${QUEM_FAZ[etapa.quem].cor}`}>
+                              {QUEM_FAZ[etapa.quem].rotulo}
+                            </span>
+                          )}
+                        </strong>
                         <span>{etapa.detalhe}</span>
                         {etapa.prototipo && (
                           <span className="etapa-nota">Feito como amostra, para você ver e opinar</span>
