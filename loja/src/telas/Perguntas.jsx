@@ -249,6 +249,45 @@ const BLOCOS = [
     ],
   },
   {
+    id: 'contrato',
+    titulo: 'Para fechar o contrato',
+    resumo: 'Só falta isto. O resto já está escrito e pronto para você ler.',
+    perguntas: [
+      {
+        id: 'nomecompleto',
+        pergunta: 'Seu nome completo, como está no documento',
+        porque:
+          'É como você vai aparecer no contrato e no rodapé da loja. Se tiver nome de casada ou nome social, use o que está no documento que você vai assinar.',
+        dica: 'nome e sobrenomes completos',
+        linhas: 2,
+      },
+      {
+        id: 'cpf',
+        pergunta: 'Seu CPF',
+        porque:
+          'Vai na qualificação do contrato, junto do seu endereço, que eu já tenho. É o mesmo dado que você põe em qualquer contrato — não uso para mais nada.',
+        dica: '000.000.000-00',
+        linhas: 2,
+      },
+      {
+        id: 'cnpjmei',
+        pergunta: 'Você tem CNPJ, ou vende como pessoa física?',
+        porque:
+          'Muda a nota fiscal, muda o que aparece no rodapé da loja e muda o que o contador vai pedir. Se tiver MEI, me passe o número; se não tiver, é só dizer.',
+        dica: 'tenho MEI, número tal / não tenho / estou tirando',
+        linhas: 2,
+      },
+      {
+        id: 'estadocivil',
+        pergunta: 'Estado civil e profissão',
+        porque:
+          'Entra na qualificação das partes, que é o parágrafo de abertura de qualquer contrato. Profissão pode ser artesã, professora, o que você preferir.',
+        dica: 'ex: casada, artesã',
+        linhas: 2,
+      },
+    ],
+  },
+  {
     id: 'livre',
     titulo: 'Qualquer outra coisa',
     resumo: '',

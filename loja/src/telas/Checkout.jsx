@@ -305,9 +305,23 @@ const Checkout = () => {
               </div>
 
               {ehDigital && (
+                /* O material fica no Drive da Vivian, e o que se entrega é
+                   acesso, não arquivo. Com endereço do Google o acesso é
+                   liberado na hora; com outro provedor a pessoa cai numa
+                   tela de "solicitar acesso" e passa a depender de a Vivian
+                   ver a solicitação e liberar na mão — que é exatamente o
+                   trabalho manual que a loja veio eliminar.
+
+                   Por isso o pedido do Gmail aparece antes do pagamento, e
+                   não depois: depois já não dá para trocar. */
                 <p className="dica">
-                  <Download size={15} /> O arquivo chega neste e-mail assim que o pagamento for
-                  aprovado.
+                  <Download size={15} />
+                  <span>
+                    O material chega neste e-mail assim que o pagamento for aprovado.{' '}
+                    <strong>Se puder, use um e-mail do Gmail</strong> — com ele o acesso é
+                    liberado na hora. Com outro tipo de e-mail, pode ser preciso pedir
+                    liberação e esperar.
+                  </span>
                 </p>
               )}
             </section>

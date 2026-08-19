@@ -232,11 +232,17 @@ describe('checkout de material digital', () => {
     expect(resumo().getByText('não tem')).toBeInTheDocument()
   })
 
-  it('diz que o arquivo chega no e-mail informado', async () => {
+  it('pede um e-mail do Gmail, e explica por quê', async () => {
     comCarrinho([APOSTILA])
     abrir()
 
-    expect(await screen.findByText(/arquivo chega neste e-mail/i)).toBeInTheDocument()
+    /* O material fica no Drive da Vivian e o que se entrega é acesso. Com
+       endereço do Google sai na hora; com outro provedor a compradora cai
+       em "solicitar acesso" e volta a depender de a Vivian liberar na mão.
+       O pedido precisa aparecer antes do pagamento — depois já não dá para
+       trocar o e-mail. */
+    expect(await screen.findByText(/use um e-mail do Gmail/i)).toBeInTheDocument()
+    expect(screen.getByText(/acesso é liberado na hora/i)).toBeInTheDocument()
   })
 
   it('deixa concluir sem endereço', async () => {

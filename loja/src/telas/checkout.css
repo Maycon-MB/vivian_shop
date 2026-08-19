@@ -457,3 +457,10 @@
   font-size: 13.5px;
   line-height: 1.5;
 }
+
+/* A dica do material digital passou de uma linha para três, porque explica
+   o e-mail do Google. Alinhada ao centro, o ícone ficava no meio do
+   parágrafo em vez de junto da primeira palavra. */
+.dica { align-items: flex-start; line-height: 1.5; }
+.dica svg { margin-top: 2px; }
+.dica strong { color: #12305B; }
