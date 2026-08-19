@@ -183,3 +183,19 @@ mensais deixa de ser previsão para virar hipótese distante.
 
 Como isso funciona, e o que a loja automatiza, está em
 [entrega-do-material-digital.md](entrega-do-material-digital.md).
+
+---
+
+## Uma armadilha confirmada: Vercel não serve
+
+Verificado nos termos oficiais em 19/08/2026: **o plano gratuito da Vercel
+(Hobby) proíbe uso comercial.** Site que vende não pode usá-lo.
+
+Isso importa porque a Vercel é o lugar mais óbvio para publicar um projeto
+Next.js — é a empresa que faz o Next. Muita gente sobe lá por padrão, sem
+ler os termos, e fica em situação irregular sem saber. O plano seguinte
+custa cerca de US$ 20 por mês, por pessoa.
+
+A loja não depende disso: a vitrine é estática e está no GitHub Pages, que
+não tem essa restrição. Mas fica registrado para o dia em que alguém —
+inclusive eu — pensar em "só mover para a Vercel, que é mais fácil".
