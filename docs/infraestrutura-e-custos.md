@@ -167,3 +167,19 @@ duas vezes.
    nada, e uma faixa entre R$ 135 e R$ 275 quando a loja estiver
    estabelecida — que é quando ela vai estar faturando o suficiente para
    isso caber.
+
+---
+
+## Corrigido em 18/08/2026
+
+Os números de download deste documento **não valem mais**, e o motivo é
+bom: os arquivos do material pedagógico ficam no Google Drive da Vivian, e
+ela libera acesso por e-mail em vez de entregar arquivo. Nada disso passa
+pela loja.
+
+Sem PDF no meio, o que o banco guarda é texto — pedidos e cadastro. O
+plano gratuito leva anos para encher, e o cenário de R$ 130 a R$ 275
+mensais deixa de ser previsão para virar hipótese distante.
+
+Como isso funciona, e o que a loja automatiza, está em
+[entrega-do-material-digital.md](entrega-do-material-digital.md).

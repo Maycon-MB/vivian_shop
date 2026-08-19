@@ -9,9 +9,14 @@ import { Check, AlertCircle, Info } from 'lucide-react'
  * O que a loja custa, explicado para a Vivian.
  *
  * Existe porque eu quase deixei ela assinar um contrato acreditando que a
- * loja custaria R$ 100 por mês para sempre. Não custa: a vitrine é de
- * graça, mas guardar pedido, senha e arquivo é um serviço que começa
- * gratuito e passa a custar quando o movimento cresce.
+ * loja custaria R$ 100 por mês para sempre. A vitrine é de graça, mas
+ * guardar pedido e senha é serviço contratado.
+ *
+ * A primeira versão desta página assustava à toa: eu tinha assumido que os
+ * PDFs do material pedagógico ficariam guardados aqui, e projetei custo de
+ * armazenamento e de download em cima disso. Em 18/08 ela explicou que os
+ * arquivos ficam no Drive dela e que ela libera acesso por e-mail — então
+ * aquele custo nunca vai existir.
  *
  * Falar isso agora é chato. Falar daqui a oito meses, quando a cobrança
  * aparecer, é pior — ela se sentiria enganada, e com razão.
@@ -21,12 +26,6 @@ import { Check, AlertCircle, Info } from 'lucide-react'
  */
 
 const moeda = (v) => `R$ ${v.toFixed(2).replace('.', ',')}`
-
-/* Plano gratuito do Supabase em agosto de 2026. Os limites mudam, e por
-   isso a página mostra a conta, e não só o resultado. */
-const TRANSFERENCIA_GRATIS_MB = 5120
-
-const TAMANHOS = [5, 15, 30]
 
 export default function Custos() {
   return (
@@ -73,8 +72,8 @@ export default function Custos() {
             <li>
               <strong>O lugar que guarda os pedidos</strong>
               <span>
-                Começa de graça. Passa a custar cerca de {moeda(130)} por mês só quando o
-                movimento crescer — e é sobre isso que fala o resto desta página.
+                De graça, e por muitos anos. Só passa a custar se a loja crescer muito — e o
+                resto desta página explica por quê.
               </span>
             </li>
           </ul>
@@ -91,8 +90,7 @@ export default function Custos() {
           <p>
             Só que folheto não guarda nada. Quando alguém compra, alguma coisa precisa{' '}
             <strong>gravar aquele pedido</strong> num lugar de onde você possa ler depois. O
-            mesmo vale para a sua senha do painel, para o estoque e para os arquivos do
-            material pedagógico.
+            mesmo vale para a sua senha do painel e para o estoque.
           </p>
           <p className="custos-nota">
             <Info size={16} /> Esse lugar é o que a gente chama de banco de dados. É um serviço
@@ -116,57 +114,43 @@ export default function Custos() {
           </p>
         </section>
 
-        {/* ── O material digital ───────────────────────────────────────── */}
+        {/* ── O material digital ───────────────────────────────────── */}
         <section className="custos-bloco">
-          <h2>Quem decide o custo é o material pedagógico</h2>
+          <h2>E o material pedagógico?</h2>
           <p>
-            O que pesa não é guardar o arquivo — é <strong>entregar</strong>. Cada vez que uma
-            cliente baixa uma apostila, aquele arquivo trafega inteiro. O plano gratuito dá 5 GB
-            de tráfego por mês.
+            Você me explicou como faz: as atividades ficam no seu Drive e você libera o acesso
+            para o e-mail de quem compra, por 7 dias.
           </p>
-
-          <table className="custos-tabela">
-            <thead>
-              <tr>
-                <th>Se sua apostila pesar</th>
-                <th>Downloads por mês antes de passar do gratuito</th>
-              </tr>
-            </thead>
-            <tbody>
-              {TAMANHOS.map((mb) => (
-                <tr key={mb}>
-                  <td>{mb} MB</td>
-                  <td>
-                    <strong>{Math.floor(TRANSFERENCIA_GRATIS_MB / mb)}</strong> downloads
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
+          <p>
+            <strong>Vai continuar exatamente assim.</strong> Os arquivos não passam pela loja, e
+            por isso não ocupam espaço nem geram custo nenhum aqui.
+          </p>
+          <p className="custos-destaque">
+            <Check size={18} /> A diferença é que a loja vai fazer isso sozinha, na hora do
+            pagamento — sem você precisar estar em casa para liberar.
+          </p>
           <p className="custos-nota">
-            <Info size={16} /> Por isso eu perguntei quanto pesam os seus arquivos. Se
-            estiverem pesados, quase sempre dá para deixar mais leves sem perder nada na
-            impressão — e aí esses números multiplicam.
+            <Info size={16} /> Antes eu tinha imaginado que os arquivos ficariam guardados aqui,
+            e cheguei a te perguntar quanto eles pesavam. Do jeito que você faz, essa pergunta
+            deixou de existir — e o custo que ela geraria, também.
           </p>
         </section>
 
-        {/* ── Quando começa a pagar ────────────────────────────────────── */}
+        {/* ── Quando começa a pagar ────────────────────────────────── */}
         <section className="custos-bloco">
-          <h2>E se passar do gratuito?</h2>
+          <h2>Então quando isso passa a custar?</h2>
           <p>
-            Aí o serviço passa a custar cerca de {moeda(130)} por mês. Mas repare no que isso
-            significa: para passar do limite com apostilas de 15 MB, você precisaria vender{' '}
-            <strong>mais de 340 materiais digitais por mês</strong>.
-          </p>
-          <p className="custos-destaque">
-            <Check size={18} /> A {moeda(29.99)} cada, isso é mais de {moeda(10000)} num mês só
-            de material digital. Os {moeda(130)} seriam pouco mais de 1% disso.
+            Sobrando só texto para guardar — pedidos, cadastro, produtos —, o plano gratuito
+            leva <strong>muitos anos</strong> para encher. Não é uma preocupação para agora nem
+            para o ano que vem.
           </p>
           <p>
-            O custo só aparece quando a loja já está pagando ele com folga. E, mesmo assim,{' '}
-            <strong>nada é contratado sem você autorizar</strong> — está escrito no contrato.
-            Eu aviso antes, com o valor, e a decisão é sua.
+            Se um dia chegar lá, o serviço passa a custar cerca de {moeda(130)} por mês. Mas
+            para isso você já estaria vendendo num volume em que esse valor é pequeno.
+          </p>
+          <p>
+            E, de qualquer forma, <strong>nada é contratado sem você autorizar</strong> — está
+            escrito no contrato. Eu aviso antes, com o valor, e a decisão é sua.
           </p>
         </section>
 
@@ -197,7 +181,7 @@ export default function Custos() {
                 </td>
               </tr>
               <tr>
-                <td>Se o digital passar de ~340 downloads/mês</td>
+                <td>Se um dia o banco encher (muitos anos)</td>
                 <td>cerca de {moeda(233)}</td>
               </tr>
             </tbody>
