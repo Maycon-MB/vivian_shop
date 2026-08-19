@@ -175,6 +175,50 @@ export default function Custos() {
           </p>
         </section>
 
+        {/* ── O serviço, com nome ──────────────────────────────────────── */}
+        <section className="custos-bloco">
+          <h2>Qual é esse serviço, com nome</h2>
+          <p>
+            Ele se chama <strong>Supabase</strong>. É onde vão ficar os seus pedidos, a sua
+            senha do painel, o estoque e o cadastro de quem compra.
+          </p>
+
+          <table className="custos-tabela">
+            <thead>
+              <tr>
+                <th>O plano gratuito dá</th>
+                <th>Você usaria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>500 MB de espaço</td>
+                <td>alguns MB por ano</td>
+              </tr>
+              <tr>
+                <td>50 mil pessoas acessando por mês</td>
+                <td>algumas centenas</td>
+              </tr>
+              <tr>
+                <td>e não cobra por passar do limite</td>
+                <td>ele avisa e para, em vez de mandar conta</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="custos-destaque">
+            <Check size={18} /> A conta fica no seu nome, com eu como convidado. A loja é sua de
+            verdade — se um dia você trocar de desenvolvedor, leva tudo com você.
+          </p>
+
+          <p className="custos-nota">
+            <Info size={16} /> Uma coisa que eu preciso te contar porque é o único senão: se a
+            loja passar 7 dias sem ninguém acessar, esse serviço adormece e a loja para até
+            alguém religar. Já resolvi isso: o sistema faz sozinho uma visita por semana, e
+            isso não custa nada. Só estou te contando para você saber que existe.
+          </p>
+        </section>
+
         {/* ── Quando começa a pagar ────────────────────────────────── */}
         <section className="custos-bloco">
           <h2>Então quando isso passa a custar?</h2>

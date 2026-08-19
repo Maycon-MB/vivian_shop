@@ -49,7 +49,7 @@ export const QUEM = {
   maycon: 'Eu decidi',
 }
 
-export const ATUALIZADO_EM = '13 de agosto de 2026'
+export const ATUALIZADO_EM = '19 de agosto de 2026'
 
 export const DECISOES = [
   {
@@ -243,73 +243,122 @@ export const FASES = {
   depois: { rotulo: 'Mais para frente', ordem: 4 },
 }
 
+/* Cada etapa diz de quem ela depende. Sem isso a lista vira só uma
+   promessa minha, e ela não consegue ver onde a bola está com ela. */
+export const QUEM_FAZ = {
+  maycon: { rotulo: 'comigo', cor: 'maycon' },
+  vivian: { rotulo: 'com você', cor: 'vivian' },
+  ambos: { rotulo: 'nós dois', cor: 'ambos' },
+}
+
 export const ETAPAS = [
   {
     nome: 'Identidade visual',
     detalhe: 'Cores, letras e o jeito da loja, tirados das suas duas logos.',
     fase: 'pronto',
+    quem: 'maycon',
   },
   {
     nome: 'A loja para quem compra',
-    detalhe: 'Vitrine, filtro por linha, página de cada produto e carrinho com as suas regras de venda.',
+    detalhe:
+      'Vitrine com seus produtos organizados por tema, página de cada produto, carrinho com o mínimo de 10 e as duas linhas separadas.',
     fase: 'pronto',
-    prototipo: true,
-  },
-  {
-    nome: 'Seu painel completo',
-    detalhe: 'Visão geral com gráficos, pedidos, seus produtos, mensagens, marketing e configurações.',
-    fase: 'pronto',
-    prototipo: true,
-  },
-  {
-    nome: 'Explicação de como tudo funciona',
-    detalhe: 'O passo a passo de uma venda, do pagamento até o envio.',
-    fase: 'pronto',
-  },
-  {
-    nome: 'Esta página de acompanhamento',
-    detalhe: 'Para nós dois vermos o que já ficou decidido e o que falta.',
-    fase: 'pronto',
+    quem: 'maycon',
   },
   {
     nome: 'Tela de fechar a compra',
-    detalhe: 'Onde a pessoa põe o endereço, escolhe o frete entre Correios e Jadlog, e paga.',
+    detalhe:
+      'Endereço, escolha do frete entre Correios e Jadlog, Pix ou cartão. Funciona de ponta a ponta, ainda sem cobrar de verdade.',
+    fase: 'pronto',
+    quem: 'maycon',
+  },
+  {
+    nome: 'Seu painel',
+    detalhe:
+      'Pedidos, o que produzir agora, seus produtos, mensagens e os relatórios de fechamento do mês.',
+    fase: 'pronto',
+    quem: 'maycon',
+  },
+  {
+    nome: 'Testes automáticos',
+    detalhe:
+      'A cada mudança, o sistema compra sozinho para conferir se nada quebrou, e só publica se passar.',
+    fase: 'pronto',
+    quem: 'maycon',
+  },
+  {
+    nome: 'Suas descrições e políticas',
+    detalhe: 'O que você me mandou em 16/08 já está na loja, com as suas palavras.',
+    fase: 'pronto',
+    quem: 'ambos',
+  },
+
+  {
+    nome: 'Conta no Mercado Pago',
+    detalhe:
+      'É o que trava todo o resto: sem ela não dá para receber, e sem receber não há pedido para o painel mostrar. Precisa ser aberta no seu nome.',
     fase: 'fazendo',
+    quem: 'vivian',
+  },
+  {
+    nome: 'Seus produtos com foto',
+    detalhe:
+      'Não precisa dos 343 para abrir. Dez com foto boa já vendem, e o resto entra depois sem parar a loja.',
+    fase: 'fazendo',
+    quem: 'vivian',
+  },
+
+  {
+    nome: 'Onde os pedidos ficam guardados',
+    detalhe:
+      'O lugar que guarda pedido, sua senha e o cadastro das clientes. Começa de graça e assim fica por muitos anos.',
+    fase: 'proximo',
+    quem: 'maycon',
   },
   {
     nome: 'Pagamento de verdade',
-    detalhe: 'Ligar a loja à sua conta do Mercado Pago, para o dinheiro cair direto para você.',
+    detalhe: 'Ligar a loja à sua conta, para o dinheiro cair direto para você.',
     fase: 'proximo',
-  },
-  {
-    nome: 'Etiqueta e declaração saindo prontas',
-    detalhe: 'Frete calculado de verdade e os dois documentos prontos para imprimir.',
-    fase: 'proximo',
+    quem: 'maycon',
   },
   {
     nome: 'Entrega do material pedagógico',
-    detalhe: 'O arquivo indo sozinho para o e-mail assim que o pagamento é aprovado.',
+    detalhe:
+      'A loja libera o acesso no seu Drive assim que o pagamento aprova, e retira depois de 7 dias — sem você precisar estar em casa.',
     fase: 'proximo',
+    quem: 'ambos',
   },
   {
-    nome: 'Seu catálogo de verdade',
-    detalhe: 'Trocar os produtos de exemplo pelos seus, com as suas fotos e preços.',
+    nome: 'Etiqueta e declaração saindo prontas',
+    detalhe: 'Frete calculado com a tarifa real e os dois documentos prontos para imprimir.',
     fase: 'proximo',
+    quem: 'ambos',
   },
   {
-    nome: 'Endereço próprio e loja no ar',
-    detalhe: 'Registrar o endereço do site e abrir a loja para o público.',
+    nome: 'Endereço próprio da loja',
+    detalhe: 'Registrar o nome .com.br no seu CPF. Custa cerca de R$ 40 por ano.',
+    fase: 'proximo',
+    quem: 'vivian',
+  },
+
+  {
+    nome: 'Todo o resto do catálogo',
+    detalhe:
+      'Os 343 produtos e os 86 temas, cadastrados por você numa planilha, sem depender de mim.',
     fase: 'depois',
+    quem: 'ambos',
   },
   {
     nome: 'Posts no Instagram',
     detalhe: 'Começa depois que a loja estiver vendendo, para o post ter para onde mandar as pessoas.',
     fase: 'depois',
+    quem: 'ambos',
   },
   {
     nome: 'Anúncios pagos',
     detalhe: 'Por último, quando já soubermos o que mais vende.',
     fase: 'depois',
+    quem: 'ambos',
   },
 ]
 
