@@ -221,19 +221,62 @@ export default function Custos() {
 
         {/* ── Quando começa a pagar ────────────────────────────────── */}
         <section className="custos-bloco">
-          <h2>Então quando isso passa a custar?</h2>
+          <h2>A partir de quantos acessos eu pago?</h2>
           <p>
-            Sobrando só texto para guardar — pedidos, cadastro, produtos —, o plano gratuito
-            leva <strong>muitos anos</strong> para encher. Não é uma preocupação para agora nem
-            para o ano que vem.
+            Esta é a pergunta certa, e ela tem uma parte que engana:{' '}
+            <strong>visitar a sua loja não gasta nada do banco.</strong> As páginas vêm prontas,
+            de outro lugar. O banco só é usado quando alguém <em>compra</em> ou quando{' '}
+            <em>você entra no painel</em>.
           </p>
-          <p>
-            Se um dia chegar lá, o serviço passa a custar cerca de {moeda(130)} por mês. Mas
-            para isso você já estaria vendendo num volume em que esse valor é pequeno.
+
+          <table className="custos-tabela">
+            <thead>
+              <tr>
+                <th>O limite</th>
+                <th>Você paga a partir de</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pessoas visitando a loja</td>
+                <td>
+                  <strong>182 mil por mês</strong> — e mesmo assim não cobra
+                </td>
+              </tr>
+              <tr>
+                <td>Pedidos guardados</td>
+                <td>
+                  <strong>102 mil pedidos</strong> acumulados
+                </td>
+              </tr>
+              <tr>
+                <td>Vendas por mês</td>
+                <td>
+                  cerca de <strong>35 mil vendas</strong> num mês só
+                </td>
+              </tr>
+              <tr>
+                <td>Você entrando no painel</td>
+                <td>o limite é 50 mil pessoas; você é uma</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="custos-destaque">
+            <Check size={18} /> Mesmo com 500 pedidos por mês — dez vezes o que você fazia —, o
+            espaço levaria 17 anos para encher.
           </p>
+
           <p>
-            E, de qualquer forma, <strong>nada é contratado sem você autorizar</strong> — está
-            escrito no contrato. Eu aviso antes, com o valor, e a decisão é sua.
+            Ou seja: <strong>na prática você não vai pagar isso.</strong> O número que faria
+            você pagar é maior do que a sua loja precisa chegar. Está escrito aqui porque, se um
+            dia acontecer, você já vai saber que existe — e não descobrir numa fatura.
+          </p>
+
+          <p>
+            Se chegar lá, o serviço passa a custar cerca de {moeda(130)} por mês. E{' '}
+            <strong>nada é contratado sem você autorizar</strong>: está no contrato. Eu aviso
+            antes, com o valor, e a decisão é sua.
           </p>
         </section>
 

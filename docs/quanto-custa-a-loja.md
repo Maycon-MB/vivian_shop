@@ -172,3 +172,29 @@ https://maycon-mb.github.io/vivian_shop/perguntas/
 *Os valores de serviços foram conferidos em 19/08/2026 nas páginas
 oficiais. Preço de internet muda: se algum deles mudar, eu te aviso antes
 de qualquer cobrança.*
+
+---
+
+## A partir de quantos acessos você paga
+
+Esta pergunta tem uma parte que engana: **visitar a loja não gasta nada do
+banco de dados.** As páginas vêm prontas, de outro lugar, e não passam por
+ele. O banco só é usado quando alguém **compra** ou quando **você entra no
+painel**.
+
+São, portanto, dois limites diferentes:
+
+| O limite | Você começaria a pagar a partir de |
+|---|---|
+| Pessoas visitando a loja | **182 mil por mês** — e mesmo aí não cobra |
+| Pedidos guardados | **102 mil pedidos** acumulados |
+| Vendas num mês | cerca de **35 mil vendas** |
+| Você entrando no painel | o limite é 50 mil pessoas; você é uma |
+
+Para dimensionar: a 50 pedidos por mês, o espaço levaria **170 anos** para
+encher. Mesmo com 500 pedidos mensais — dez vezes o que você fazia no
+Elo7 —, levaria 17 anos.
+
+**Na prática, você não vai pagar isso.** O número que faria você pagar é
+maior do que a sua loja precisa chegar. Está escrito aqui porque, se um dia
+acontecer, você já vai saber que existe — e não descobrir numa fatura.
