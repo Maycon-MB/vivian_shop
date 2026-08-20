@@ -143,7 +143,12 @@ def converter(linhas, documento):
             continue
 
         if texto.startswith('## '):
-            documento.add_page_break() if documento.paragraphs else None
+            # Quebra de pagina so antes do anexo. Antes havia uma antes de
+            # cada secao, e como toda clausula do contrato e uma secao, o
+            # documento saia com uma clausula por pagina e a primeira quase
+            # vazia.
+            if 'ANEXO' in texto.upper() and documento.paragraphs:
+                documento.add_page_break()
             p = documento.add_paragraph()
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             run = p.add_run(texto[3:].strip())
@@ -180,15 +185,22 @@ def converter(linhas, documento):
 
         p = documento.add_paragraph()
         escrever_com_negrito(p, texto)
-        # Justificado, menos nas linhas de assinatura.
-        if '____' not in texto:
-            p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        # Alinhado a esquerda, e nao justificado: sem hifenizacao, o
+        # justificado espalha as palavras e abre corredores brancos no meio
+        # do paragrafo. Contrato precisa ser lido, nao admirado.
+        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     if dentro_de_tabela:
         fechar_tabela()
 
 
 def main():
+    # Aceita origem e destino na linha de comando, para servir a todos os
+    # documentos e nao so ao contrato.
+    global ORIGEM, DESTINO
+    if len(sys.argv) >= 3:
+        ORIGEM, DESTINO = sys.argv[1], sys.argv[2]
+
     if not os.path.exists(ORIGEM):
         print(f'não achei {ORIGEM}')
         print('gere primeiro a versão preenchível a partir de docs/contrato-modelo.md')
