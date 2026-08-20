@@ -55,7 +55,7 @@ export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout
           </>
         ) : (
           <>
-            Loja em construção — os produtos e preços são exemplos, e nada é cobrado de verdade.
+            Loja em construção: os produtos e preços são exemplos, e nada é cobrado de verdade.
           </>
         )}
       </div>

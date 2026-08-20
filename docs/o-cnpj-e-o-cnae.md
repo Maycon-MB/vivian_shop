@@ -2,13 +2,13 @@
 
 Levantado em 19/08/2026, a partir de fontes públicas. **Não sou contador**
 e isto não substitui um. Serve para você chegar na conversa com um sabendo
-o que perguntar — e para você não descobrir o problema numa fiscalização.
+o que perguntar, e para você não descobrir o problema numa fiscalização.
 
 ---
 
 ## A situação
 
-Seu MEI está registrado em **9511-8/00 — Reparação e manutenção de
+Seu MEI está registrado em **9511-8/00, Reparação e manutenção de
 computadores e de equipamentos periféricos**. É a única atividade, sem
 CNAE secundário.
 
@@ -20,7 +20,7 @@ sistema, nem manutenção de software.
 **Programador não pode ser MEI.** Não é questão de escolher o CNAE certo:
 não existe CNAE de desenvolvimento que o MEI aceite.
 
-Os CNAEs de TI — 6201, 6202, 6203, 6204 e 6209 — **são todos proibidos ao
+Os CNAEs de TI (6201, 6202, 6203, 6204 e 6209) **são todos proibidos ao
 MEI**, porque a lei trata desenvolvimento como atividade intelectual, e o
 MEI não abrange atividade intelectual.
 
@@ -28,21 +28,21 @@ O que o MEI aceita em tecnologia é só:
 
 | CNAE | O que é |
 |---|---|
-| 9511-8/00 | reparação de computadores — **o seu** |
+| 9511-8/00 | reparação de computadores, **o seu** |
 | 6190-6/99 | outras atividades de telecomunicação |
 | 4751-2/01 | comércio de equipamentos de informática |
 | 8599-6/03 | instrução e treinamento |
 
 Nenhum deles cobre "desenvolvi uma loja virtual".
 
-> Existe um projeto de lei — o PLP 25/2026 — propondo incluir atividades
+> Existe um projeto de lei (o PLP 25/2026) propondo incluir atividades
 > de tecnologia no MEI. **Não foi aprovado.** Não dá para contar com ele.
 
 ## O risco concreto
 
 Não é multa imediata. É desenquadramento: a Receita pode entender que a
 atividade exercida não é a declarada, tirar você do MEI **com efeito
-retroativo**, e recalcular os tributos como empresa normal no período —
+retroativo**, e recalcular os tributos como empresa normal no período,
 com juros e multa.
 
 O gatilho costuma ser a nota fiscal: descrição de serviço que não bate com
@@ -64,8 +64,8 @@ O custo tem duas partes:
 | **Anexo V** (padrão para desenvolvimento) | **15,5%** do faturamento |
 | **Anexo III** (se o Fator R ≥ 28%) | **6%** do faturamento |
 
-O **Fator R** é a razão entre a folha de pagamento — incluindo o seu
-pró-labore — e o faturamento dos últimos 12 meses. Se você se paga o
+O **Fator R** é a razão entre a folha de pagamento (incluindo o seu
+pró-labore) e o faturamento dos últimos 12 meses. Se você se paga o
 suficiente, cai no Anexo III e paga menos que a metade.
 
 Na prática, para quem trabalha sozinho, manter o Fator R acima de 28% é
@@ -95,7 +95,7 @@ Com o faturamento de hoje:
 | **Total mensal** | **~R$ 80** | **R$ 270 a R$ 609** |
 
 **O contrato da Vivian inteiro é R$ 200 por mês.** Migrar para ME hoje
-custaria mais do que ela paga — o enquadramento correto consumiria o
+custaria mais do que ela paga, o enquadramento correto consumiria o
 cliente inteiro e ainda sobraria conta.
 
 Essa é a tensão real, e não adianta fingir que não existe.
@@ -127,7 +127,7 @@ Perto de **R$ 5.000 por mês** o percentual começa a ficar aceitável.
    > que faturamento compensa migrar para ME no Simples com Fator R?"*
 
 3. **Perguntar sobre o que já foi emitido.** Se você já emitiu notas de
-   desenvolvimento pelo MEI, isso precisa ser avaliado — inclusive o do
+   desenvolvimento pelo MEI, isso precisa ser avaliado, inclusive o do
    outro projeto.
 
 4. **Não parar de trabalhar por causa disso.** O risco é real, mas é de

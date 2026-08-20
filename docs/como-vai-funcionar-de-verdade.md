@@ -24,7 +24,7 @@ quando cai. Nada disso cabe em R$ 100 por mês.
 | **Google Drive + Apps Script** | guarda e libera o material digital | já é dela | R$ 0 |
 | **Serviço de e-mail** | confirmação e link para a compradora | falta criar | R$ 0 |
 
-Falta também o **cálculo de frete e emissão de etiqueta** — Melhor Envio
+Falta também o **cálculo de frete e emissão de etiqueta**, Melhor Envio
 ou equivalente. Hoje o frete é calculado com a regra real de peso cubado,
 mas com tarifa aproximada.
 
@@ -64,7 +64,7 @@ mas com tarifa aproximada.
 
 O ponto do desenho: **a vitrine não fala com o banco.** Quem visita a loja
 só baixa arquivos prontos. O banco só entra em cena quando alguém compra
-ou quando a Vivian administra — uma fração mínima dos acessos.
+ou quando a Vivian administra, uma fração mínima dos acessos.
 
 É isso que mantém o custo em zero e a loja rápida.
 
@@ -88,7 +88,7 @@ ou quando a Vivian administra — uma fração mínima dos acessos.
 | 10 | Marca como enviado, o rastreio vai por e-mail | Supabase e e-mail | simulado |
 
 O passo 5 é o mais importante e o que menos se vê. É ele que garante que o
-pedido só existe **depois** de o dinheiro entrar — e não quando alguém
+pedido só existe **depois** de o dinheiro entrar, e não quando alguém
 clica em "pagar".
 
 ## Uma venda digital, passo a passo
@@ -105,7 +105,7 @@ clica em "pagar".
 | 9 | **Sete dias depois, o acesso é removido** | Apps Script, agendado |
 | 10 | A Vivian recebe um aviso do que aconteceu | e-mail |
 
-Os arquivos **nunca saem do Drive dela**. É o jeito que ela já usa — a
+Os arquivos **nunca saem do Drive dela**. É o jeito que ela já usa, a
 diferença é que os passos 7 e 9, que hoje ela faz na mão, passam a
 acontecer sozinhos.
 
@@ -115,19 +115,19 @@ acontecer sozinhos.
 
 A ordem importa: cada item depende do anterior.
 
-### 1. Domínio — **ela**, 30 minutos
+### 1. Domínio: **ela**, 30 minutos
 
 Registrar no registro.br, **no CPF dela**. R$ 40 por ano.
 
 Depois disso eu aponto o domínio para o GitHub Pages e configuro o
-certificado de segurança — o cadeado do navegador. Leva algumas horas para
+certificado de segurança, o cadeado do navegador. Leva algumas horas para
 propagar.
 
 > Enquanto isso não acontece, a loja funciona no endereço atual. O domínio
 > é o que a faz parecer profissional, e o que ela leva com ela se um dia
 > trocar de desenvolvedor.
 
-### 2. Mercado Pago — **ela**, algumas horas a dias
+### 2. Mercado Pago: **ela**, algumas horas a dias
 
 Criar conta de vendedor, no CPF ou CNPJ dela, e passar pela verificação.
 Depois, gerar as credenciais de integração e me passar.
@@ -135,7 +135,7 @@ Depois, gerar as credenciais de integração e me passar.
 **É o item que trava todo o resto.** Sem ele não há venda, e sem venda não
 há pedido para gravar.
 
-### 3. Supabase — **eu**, 1 dia
+### 3. Supabase: **eu**, 1 dia
 
 Criar o projeto, montar as tabelas, ligar o login do painel e escrever a
 função que recebe o aviso do Mercado Pago.
@@ -143,27 +143,27 @@ função que recebe o aviso do Mercado Pago.
 A conta fica no nome dela, com você como colaborador. Assim a loja é dela
 de verdade, e não fica presa a uma conta minha.
 
-### 4. Serviço de e-mail — **eu**, algumas horas
+### 4. Serviço de e-mail: **eu**, algumas horas
 
 Configurar o envio e verificar o domínio dela. Depende do item 1: e-mail
 enviado de domínio não verificado cai em spam.
 
-### 5. Entrega automática do material — **eu**, 1 dia
+### 5. Entrega automática do material: **eu**, 1 dia
 
 O Apps Script que concede e revoga o acesso no Drive. Depende de ela
-autorizar o script na conta dela — um clique, que ela pode revogar quando
+autorizar o script na conta dela, um clique, que ela pode revogar quando
 quiser.
 
 Também depende de saber **como as pastas estão organizadas**. Está no
 formulário.
 
-### 6. Frete de verdade — **eu**, 1 dia
+### 6. Frete de verdade: **eu**, 1 dia
 
 Ligar o cálculo à tarifa real e a emissão de etiqueta. Depende de ela criar
 conta no Melhor Envio, e de me passar **peso e medidas do pacote fechado**
 de cada produto.
 
-### 7. Catálogo — **ela e eu**
+### 7. Catálogo: **ela e eu**
 
 Os produtos com foto. Não precisa dos 343 para abrir: **dez já vendem.**
 
@@ -188,7 +188,7 @@ Foi por isso que eu montei assim desde o começo.
 
 ## O caminho mais curto até a primeira venda
 
-Se a ideia for abrir rápido — e deveria ser, porque ela está sem faturar
+Se a ideia for abrir rápido, e deveria ser, porque ela está sem faturar
 desde maio:
 
 1. **Mercado Pago** (ela)
@@ -196,7 +196,7 @@ desde maio:
 3. **Dez produtos com foto** (ela)
 
 Com esses três, a loja vende. Domínio, frete automático e entrega
-automática do digital podem entrar depois, com a loja já no ar — enquanto
+automática do digital podem entrar depois, com a loja já no ar, enquanto
 isso, o frete sai por combinação no WhatsApp e o material digital ela
 libera na mão, como já fazia.
 

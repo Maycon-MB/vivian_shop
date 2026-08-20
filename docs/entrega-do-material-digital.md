@@ -1,7 +1,7 @@
 # Como o material digital é entregue
 
 Corrige o que eu tinha assumido. Em 18/08/2026 a Vivian explicou como
-funciona de verdade, e é diferente — e melhor — do que eu imaginava.
+funciona de verdade, e é diferente (e melhor) do que eu imaginava.
 
 ## O que eu tinha assumido
 
@@ -25,7 +25,7 @@ manda o link, e depois de sete dias remove.
 
 **Some o custo que eu tinha projetado.** Sem PDF no banco, não há
 armazenamento nem tráfego de download para pagar. O que sobra no banco são
-pedidos e cadastro — texto, que cabe de sobra no plano gratuito por muitos
+pedidos e cadastro, texto, que cabe de sobra no plano gratuito por muitos
 anos.
 
 **Ela não perde o controle dos arquivos.** Continuam no Drive dela, onde
@@ -44,7 +44,7 @@ O trabalho hoje é manual, e prende ela:
 > que ficar sempre vendo se tinha alguma compra ou não."*
 
 É o oposto do que material digital deveria ser. A cliente paga e espera
-horas — às vezes até a Vivian chegar em casa.
+horas, às vezes até a Vivian chegar em casa.
 
 **Isso a loja automatiza:** pagamento confirmado, a permissão é concedida
 ao e-mail da compradora e o link sai na hora. Sete dias depois, o acesso
@@ -53,8 +53,8 @@ fazer nada.
 
 ## Como fazer, sem custo novo
 
-O Google Apps Script — o mesmo tipo de script que já recebe as respostas
-do formulário — tem acesso ao Drive. Dá para:
+O Google Apps Script (o mesmo tipo de script que já recebe as respostas
+do formulário) tem acesso ao Drive. Dá para:
 
 1. receber o aviso de pagamento aprovado;
 2. conceder acesso ao e-mail da compradora na pasta ou arquivo do produto;
@@ -72,7 +72,7 @@ saírem do lugar onde já estão.
 > e-mail [do Google], automaticamente já vai e ela já baixa."*
 
 O compartilhamento do Drive funciona melhor com endereço Google. Com outro
-provedor, a compradora cai numa tela de "solicitar acesso" — e aí a
+provedor, a compradora cai numa tela de "solicitar acesso", e aí a
 automação quebra e volta a depender da Vivian.
 
 **Na tela de compra do material digital, isso precisa estar escrito**,

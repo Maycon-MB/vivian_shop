@@ -3,7 +3,7 @@
 Escrito para a Vivian, em 19 de agosto de 2026.
 
 Este documento existe porque a conta mudou duas vezes desde que a gente
-começou a conversar — sempre para menos —, e eu prefiro que você tenha o
+começou a conversar (sempre para menos), e eu prefiro que você tenha o
 número certo por escrito a que descubra numa fatura.
 
 **O que está aqui foi conferido nas páginas oficiais de cada empresa.** O
@@ -29,7 +29,7 @@ E, por venda: **Pix não tem taxa nenhuma.** Cartão fica em torno de 4%.
 
 São três coisas diferentes, e só a primeira vai para mim.
 
-### 1. Para mim — R$ 200, depois R$ 100
+### 1. Para mim: R$ 200, depois R$ 100
 
 R$ 200 por mês durante 12 meses, todo dia 10. Do 13º mês em diante, R$ 100
 por mês de manutenção.
@@ -37,7 +37,7 @@ por mês de manutenção.
 Isso cobre construir a loja, manter no ar, corrigir o que quebrar,
 atualizar e te atender.
 
-### 2. O endereço da loja — R$ 40 por ano
+### 2. O endereço da loja: R$ 40 por ano
 
 O nome que a pessoa digita no navegador, tipo `feitoparavoce.com.br`.
 
@@ -47,7 +47,7 @@ cartão**. Dá uns R$ 3,33 por mês.
 Fica no seu nome de propósito: assim a loja é sua de verdade. Se um dia a
 gente parar de trabalhar junto, você não perde o endereço.
 
-### 3. Os serviços que fazem a loja funcionar — R$ 0 por muito tempo
+### 3. Os serviços que fazem a loja funcionar: R$ 0 por muito tempo
 
 Aqui é onde eu errei duas vezes e corrigi duas vezes. O número certo,
 hoje, é **zero**.
@@ -67,7 +67,7 @@ O que eu escolhi se chama **Supabase**. O plano gratuito dele oferece:
 - e não cobra nada por passar do limite: ele avisa e para, em vez de gerar
   fatura
 
-Para você guardar pedido e cadastro — que é texto — **500 MB levam anos**.
+Para você guardar pedido e cadastro (que é texto), **500 MB levam anos**.
 Um pedido ocupa mais ou menos o espaço de uma mensagem de WhatsApp.
 
 *Fonte: supabase.com/pricing, consultado em 19/08/2026.*
@@ -75,7 +75,7 @@ Um pedido ocupa mais ou menos o espaço de uma mensagem de WhatsApp.
 ### E as suas atividades pedagógicas?
 
 **Não ocupam nada aqui.** Elas continuam no seu Drive, do jeito que já
-estão, e a loja só libera o acesso para o e-mail de quem comprou — como
+estão, e a loja só libera o acesso para o e-mail de quem comprou, como
 você já faz hoje, só que sozinha e na hora.
 
 Foi isso que derrubou o custo. Antes eu tinha imaginado guardar os PDFs na
@@ -105,7 +105,7 @@ compra.
 > **Isto precisa ser conferido na sua conta.** As taxas do Mercado Pago
 > variam conforme o vendedor e o volume, e o site deles não deixou eu ler
 > a página oficial de fora. Quando você abrir a conta, entramos juntos em
-> "Custos de receber" e confirmamos os números reais — que são os seus, e
+> "Custos de receber" e confirmamos os números reais, que são os seus, e
 > não os de uma tabela genérica.
 
 ### Uma decisão que é sua
@@ -120,7 +120,7 @@ Ou seja, **o desconto de 5% custa um pouco mais caro que a taxa do
 cartão**. O que você ganha em troca é receber **na hora**, em vez de
 esperar 30 dias.
 
-Se preferir, dá para baixar o desconto para 3% — continua atraente para
+Se preferir, dá para baixar o desconto para 3%, continua atraente para
 quem compra, e aí o Pix passa a ser mais barato para você nos dois
 sentidos. **É decisão sua, e eu mudo em cinco minutos.**
 
@@ -144,7 +144,7 @@ não.
 > Os 12% são chute meu. **Me diga quanto o Elo7 tirava de cada venda** e
 > eu refaço esta tabela com o número certo.
 
-Em mês fraco, o fixo pesa mais. Em mês bom, a diferença é grande — e só
+Em mês fraco, o fixo pesa mais. Em mês bom, a diferença é grande, e só
 cresce.
 
 ---
@@ -158,11 +158,11 @@ cresce.
 
 ## O que eu ainda preciso de você
 
-1. **Quanto o Elo7 tirava de cada venda** — para a tabela acima virar
+1. **Quanto o Elo7 tirava de cada venda**: para a tabela acima virar
    conta de verdade
-2. **Quantos pedidos por mês** você fazia lá — para eu saber de que lado
+2. **Quantos pedidos por mês** você fazia lá: para eu saber de que lado
    do ponto de equilíbrio você está
-3. **Nome completo, CPF e estado civil** — para fechar o contrato
+3. **Nome completo, CPF e estado civil**: para fechar o contrato
 
 Tudo isso está no formulário:
 https://maycon-mb.github.io/vivian_shop/perguntas/
@@ -186,15 +186,15 @@ São, portanto, dois limites diferentes:
 
 | O limite | Você começaria a pagar a partir de |
 |---|---|
-| Pessoas visitando a loja | **182 mil por mês** — e mesmo aí não cobra |
+| Pessoas visitando a loja | **182 mil por mês**, e mesmo aí não cobra |
 | Pedidos guardados | **102 mil pedidos** acumulados |
 | Vendas num mês | cerca de **35 mil vendas** |
 | Você entrando no painel | o limite é 50 mil pessoas; você é uma |
 
 Para dimensionar: a 50 pedidos por mês, o espaço levaria **170 anos** para
-encher. Mesmo com 500 pedidos mensais — dez vezes o que você fazia no
-Elo7 —, levaria 17 anos.
+encher. Mesmo com 500 pedidos mensais, dez vezes o que você fazia no
+Elo7, levaria 17 anos.
 
 **Na prática, você não vai pagar isso.** O número que faria você pagar é
 maior do que a sua loja precisa chegar. Está escrito aqui porque, se um dia
-acontecer, você já vai saber que existe — e não descobrir numa fatura.
+acontecer, você já vai saber que existe, e não descobrir numa fatura.

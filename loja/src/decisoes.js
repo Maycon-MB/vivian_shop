@@ -27,7 +27,7 @@ export const ESTADOS = {
   proposto: {
     rotulo: 'Decidi por conta',
     titulo: 'O que eu resolvi sem te perguntar.',
-    descricao: 'Coisas técnicas que não precisam te tomar tempo. Estão aqui para você saber — se discordar de alguma, é só falar.',
+    descricao: 'Coisas técnicas que não precisam te tomar tempo. Estão aqui para você saber: se discordar de alguma, é só falar.',
   },
   aprovado: {
     rotulo: 'Combinado',
@@ -59,7 +59,7 @@ export const DECISOES = [
     quem: 'maycon',
     data: '10/08/2026',
     estado: 'aguardando',
-    pergunta: 'Está parecendo a sua marca? Essa é a hora de mudar — depois que a loja estiver construída em cima disso, fica bem mais caro.',
+    pergunta: 'Está parecendo a sua marca? Essa é a hora de mudar, porque depois que a loja estiver construída em cima disso, fica bem mais caro.',
   },
   {
     id: 10,
@@ -78,7 +78,7 @@ export const DECISOES = [
     quem: 'maycon',
     data: '11/08/2026',
     estado: 'aguardando',
-    pergunta: 'Você topa? Se preferir sem, é só dizer — mas é melhor decidir agora, porque depois teria que refazer tudo que já foi vendido.',
+    pergunta: 'Você topa? Se preferir sem, é só dizer, mas é melhor decidir agora, porque depois teria que refazer tudo que já foi vendido.',
   },
   {
     id: 14,
@@ -142,7 +142,7 @@ export const DECISOES = [
     id: 12,
     assunto: 'Aviso por WhatsApp',
     decisao: 'No começo, o e-mail sai sozinho e o WhatsApp é um botão que abre a conversa com a mensagem já escrita, para você só enviar.',
-    porque: 'Para o envio ser totalmente automático, seria preciso um número dedicado que sai do WhatsApp normal. Você perderia o número que usa para atender pessoalmente — e esse atendimento direto é uma das melhores coisas que a sua loja tem.',
+    porque: 'Para o envio ser totalmente automático, seria preciso um número dedicado que sai do WhatsApp normal. Você perderia o número que usa para atender pessoalmente, e esse atendimento direto é uma das melhores coisas que a sua loja tem.',
     quem: 'maycon',
     data: '11/08/2026',
     estado: 'proposto',
@@ -185,7 +185,7 @@ export const DECISOES = [
   {
     id: 3,
     assunto: 'Pedido mínimo',
-    decisao: 'Mínimo de 10 unidades de cada produto. Não dá para comprar 1 caneca — o mínimo são 10 canecas. Quem quiser dois modelos leva 10 de cada.',
+    decisao: 'Mínimo de 10 unidades de cada produto. Não dá para comprar 1 caneca: o mínimo são 10 canecas. Quem quiser dois modelos leva 10 de cada.',
     quem: 'vivian',
     data: '11/08/2026',
     estado: 'aprovado',
@@ -324,7 +324,7 @@ export const ETAPAS = [
   {
     nome: 'Entrega do material pedagógico',
     detalhe:
-      'A loja libera o acesso no seu Drive assim que o pagamento aprova, e retira depois de 7 dias — sem você precisar estar em casa.',
+      'A loja libera o acesso no seu Drive assim que o pagamento aprova, e retira depois de 7 dias, sem você precisar estar em casa.',
     fase: 'proximo',
     quem: 'ambos',
   },

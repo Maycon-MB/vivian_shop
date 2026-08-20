@@ -16,7 +16,7 @@ celular.
 Tem outras três vantagens que a tela não teria:
 
 - **Corrigir preço em massa** é arrastar uma coluna, não abrir 40 telas
-- **Colar de outro lugar** funciona — se ela achar alguma exportação antiga
+- **Colar de outro lugar** funciona: se ela achar alguma exportação antiga
 - **Ver os 343 de uma vez**, coisa que nenhum painel faz bem
 
 Quando o banco existir, a planilha vira uma importação única e o cadastro
@@ -28,22 +28,22 @@ passa para o painel. Nada do que ela escrever se perde.
 
 Três abas.
 
-### Aba 1 — `Comece por aqui`
+### Aba 1: `Comece por aqui`
 
 Instruções em português, sem jargão, com um exemplo preenchido. É a
 primeira coisa que ela vê ao abrir.
 
-### Aba 2 — `Temas`
+### Aba 2: `Temas`
 
 | Coluna | O que vai | Exemplo |
 |---|---|---|
 | Nome do tema | como ela chama | Mickey |
 | Descrição | uma frase para a página do tema | A turma do Mickey para festa e lembrancinha |
 
-Uma linha por tema. São 86, mas ela pode mandar aos poucos — cada envio
+Uma linha por tema. São 86, mas ela pode mandar aos poucos, cada envio
 publica o que já existe.
 
-### Aba 3 — `Produtos`
+### Aba 3: `Produtos`
 
 | Coluna | O que vai | Obrigatório? |
 |---|---|---|
@@ -72,8 +72,7 @@ Então ela digita o que quiser, e o sistema reconhece. Em três camadas:
 
 `mickey` · `MICKEY` · `  Mickey  ` · `Mickey!` · `Mickeý`
 
-Tudo isso vira o tema **Mickey** que já existe. Sem aviso, sem pergunta —
-não há dúvida nenhuma aqui.
+Tudo isso vira o tema **Mickey** que já existe. Sem aviso, sem pergunta: não há dúvida nenhuma aqui.
 
 **2. O que é quase igual, pergunta antes de decidir.**
 
@@ -94,13 +93,13 @@ Tema novo nasce do próprio produto. Ela não precisa cadastrar antes.
 ### As três coisas que impedem o sistema de ser burro
 
 **Nome curto não se junta.** `Bela` e `Belo` diferem em uma letra, mas
-provavelmente são temas diferentes — "A Bela e a Fera" e outra coisa
+provavelmente são temas diferentes: "A Bela e a Fera" e outra coisa
 qualquer. Juntar apagaria um tema inteiro da loja, e ela poderia nem
 perceber. Quanto mais curto o nome, menos tolerância.
 
 **Número não é erro de digitação.** `Turma 1` e `Turma 2` diferem em um
 caractere, mas ninguém digita 2 querendo 1. Sem essa regra, uma planilha
-com temas numerados viraria uma parede de avisos — e ela pararia de ler
+com temas numerados viraria uma parede de avisos, e ela pararia de ler
 todos, inclusive os que importam.
 
 **Avisa uma vez, não quarenta.** Se o mesmo tema errado aparece em 40
@@ -127,7 +126,7 @@ sempre preferível.
 ### O botão, e não uma atualização automática
 
 O botão existe de propósito. Sem ele, a loja publicaria a planilha no meio
-de uma edição — produto sem preço, tema pela metade — e quem estivesse
+de uma edição (produto sem preço, tema pela metade), e quem estivesse
 comprando naquele instante veria a bagunça.
 
 Com o botão, ela decide quando o que escreveu está pronto para o público.
@@ -138,7 +137,7 @@ O sistema não publica pela metade. Ele avisa, na própria planilha, em
 português:
 
 > *"A linha 34 está sem preço."*
-> *"O tema 'Mikey' não existe na aba Temas — você quis dizer 'Mickey'?"*
+> *"O tema 'Mikey' não existe na aba Temas. Você quis dizer 'Mickey'?"*
 > *"O produto 'Caneca' aparece duas vezes."*
 
 Nada vai ao ar até ela corrigir. É melhor a loja não atualizar do que
@@ -149,7 +148,7 @@ atualizar errado.
 ## O que isso muda para ela
 
 Hoje, para trocar um preço, ela me manda mensagem e espera. Depois disso,
-ela troca e publica — em dois minutos, no domingo à noite, sem mim.
+ela troca e publica, em dois minutos, no domingo à noite, sem mim.
 
 **É a diferença entre ter um site e ter uma loja.**
 
@@ -158,7 +157,7 @@ ela troca e publica — em dois minutos, no domingo à noite, sem mim.
 ## O que falta para eu montar
 
 Só uma resposta, que está no formulário: **como as pastas do Drive estão
-organizadas** — uma por atividade, ou tudo junto. É o que define a coluna
+organizadas**, uma por atividade, ou tudo junto. É o que define a coluna
 do material digital.
 
 O resto eu monto sem depender de nada: a planilha, as listas suspensas, as

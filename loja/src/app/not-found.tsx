@@ -90,7 +90,7 @@ export default function NaoEncontrada() {
                 marginBottom: '0.75rem',
               }}
             >
-              Esse endereço mudou de lugar ou saiu do ar — pode ser um link antigo.
+              Esse endereço mudou de lugar ou saiu do ar. Pode ser um link antigo.
               A loja está no ar normalmente, é só voltar para o começo e continuar
               de lá.
             </p>

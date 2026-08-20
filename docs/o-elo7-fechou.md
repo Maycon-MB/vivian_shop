@@ -48,15 +48,15 @@ E explica coisas que eu tinha lido como entusiasmo:
 
 Os dois planos que eu tinha escrito para trazer o catálogo:
 
-1. ~~Exportar do painel do Elo7~~ — o painel foi desativado
-2. ~~Ler a loja pública dela~~ — as páginas retornam 404
+1. ~~Exportar do painel do Elo7~~: o painel foi desativado
+2. ~~Ler a loja pública dela~~: as páginas retornam 404
 
 Também não há cópia utilizável: o Wayback Machine arquivou a home e as
 páginas de categoria do Elo7, mas **nenhuma captura das páginas dela**.
 Arquivistas cobrem o que é popular, e loja de artesã pequena não é.
 
 O que sobrou na internet são **8 títulos de produto** do "Projeto Educar",
-preservados no índice de buscadores — só o nome e um trecho da descrição.
+preservados no índice de buscadores, só o nome e um trecho da descrição.
 As páginas não abrem.
 
 ## De onde o catálogo vai vir
@@ -71,7 +71,7 @@ Só dela. E vale procurar em quatro lugares, do melhor para o pior:
 3. **As fotos no computador e no celular dela.** As imagens dos produtos
    são originais dela, e provavelmente estão lá.
 4. **Prints.** Ela já mandou 56 anexos, incluindo capturas de tela. Pode
-   haver mais — print de vitrine mostra nome de tema e de produto.
+   haver mais, print de vitrine mostra nome de tema e de produto.
 
 Se nada disso existir, o catálogo se reconstrói do zero, produto a
 produto, com ela. É trabalhoso, mas é possível: ela lembra dos produtos,
@@ -82,9 +82,9 @@ tem as artes e sabe os preços.
 Se ela está sem vender desde maio, **cada semana a mais é dinheiro que ela
 não ganha**. O que separa a loja de vender é curto:
 
-1. conta no Mercado Pago — depende dela
-2. um punhado de produtos cadastrados com foto — não precisa dos 343
-3. domínio — R$ 40 e algumas horas
+1. conta no Mercado Pago, depende dela
+2. um punhado de produtos cadastrados com foto, não precisa dos 343
+3. domínio, R$ 40 e algumas horas
 
 **Não é preciso ter o catálogo inteiro para abrir.** Dez produtos com foto
 boa já vendem. O resto entra depois, pela planilha, sem parar a loja.
@@ -94,7 +94,7 @@ produtos estarem prontos.
 
 ## O que dizer a ela
 
-Ela sabe que o Elo7 fechou — viveu isso. O que talvez ela não saiba é que
+Ela sabe que o Elo7 fechou, viveu isso. O que talvez ela não saiba é que
 **as senhas que ela me mandou não servem mais para nada**, porque o painel
 foi desativado. Não é preciso alarmar; é preciso dizer, e aproveitar para
 pedir que troque as senhas de qualquer forma, já que trafegaram pelo

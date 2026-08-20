@@ -21,6 +21,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { chromium } = require(path.join(__dirname, '..', 'loja', 'node_modules', 'playwright'))
+const { fotografar, ARGS_DO_NAVEGADOR } = require('./fotografar-pdf.cjs')
 
 const PASTA = path.join(process.env.USERPROFILE || process.env.HOME, 'Documents', 'vivian-contrato')
 
@@ -216,13 +217,14 @@ function converter(markdown) {
    corpo porque texto longo se lê melhor com serifa no papel; sem serifa
    nos títulos, para separar. As cores são as da loja. */
 
-const estilo = (rodape) => `
+const estilo = () => `
+  /* A numeração fica só no rodapé do próprio Chrome (footerTemplate).
+     Uma caixa @bottom-center aqui imprimia um segundo rodapé por cima do
+     primeiro, o que só apareceu quando passei a conferir o PDF de
+     verdade em vez de fotografar o HTML. */
   @page {
     size: A4;
     margin: 22mm 20mm 20mm 20mm;
-    @bottom-center {
-      content: "${rodape} — página " counter(page) " de " counter(pages);
-    }
   }
 
   * { box-sizing: border-box; }
@@ -231,7 +233,7 @@ const estilo = (rodape) => `
     font-family: "Times New Roman", Times, serif;
     font-size: 11.5pt;
     line-height: 1.5;
-    color: #1B1B1B;
+    color: #000000;
     margin: 0;
     /* Alinhado à esquerda de propósito: sem hifenização, o justificado
        abre corredores brancos no meio do parágrafo. */
@@ -241,7 +243,7 @@ const estilo = (rodape) => `
 
   h1, h2, h3, h4 {
     font-family: "Times New Roman", Times, serif;
-    color: #12305B;
+    color: #000000;
     /* Título nunca fica sozinho no pé da página. */
     break-after: avoid;
     page-break-after: avoid;
@@ -260,7 +262,7 @@ const estilo = (rodape) => `
     font-size: 11.5pt;
     margin: 7mm 0 2.5mm;
     padding-bottom: 1.2mm;
-    border-bottom: .6pt solid #C9D6E5;
+    border-bottom: .6pt solid #9A9A9A;
     text-transform: uppercase;
     letter-spacing: .02em;
   }
@@ -286,7 +288,7 @@ const estilo = (rodape) => `
     widows: 3;
   }
 
-  strong { font-weight: 700; color: #0F1B2D; }
+  strong { font-weight: 700; }
 
   ul { margin: 0 0 3mm; padding-left: 6mm; }
   li { margin-bottom: 1.2mm; }
@@ -294,8 +296,8 @@ const estilo = (rodape) => `
   blockquote {
     margin: 3mm 0;
     padding: 2.5mm 4mm;
-    background: #F4F7FA;
-    border-left: 2pt solid #1F736F;
+    background: #F2F2F2;
+    border-left: 2pt solid #666666;
     font-size: 10pt;
     break-inside: avoid;
   }
@@ -311,37 +313,36 @@ const estilo = (rodape) => `
 
   th {
     text-align: left;
-    background: #12305B;
-    color: #FFFFFF;
+    background: #EAEAEA;
+    color: #000000;
     font-family: "Times New Roman", Times, serif;
     font-weight: 700;
     padding: 1.8mm 2.5mm;
+    border-bottom: 1pt solid #000000;
   }
 
   td {
     padding: 1.8mm 2.5mm;
-    border-bottom: .5pt solid #DCE4EC;
+    border-bottom: .5pt solid #BFBFBF;
     vertical-align: top;
   }
 
-  tr:nth-child(even) td { background: #F7F9FC; }
-
   hr {
     border: 0;
-    border-top: .5pt solid #D8E0E9;
+    border-top: .5pt solid #BFBFBF;
     margin: 5mm 0;
   }
 
   code {
     font-family: Consolas, monospace;
     font-size: 9.5pt;
-    background: #F1F4F8;
+    background: #F2F2F2;
     padding: 0 1mm;
   }
 
-  a { color: #1F736F; text-decoration: none; }
+  a { color: #000000; text-decoration: underline; }
 
-  del { color: #7A7A7A; }
+  del { color: #555555; }
 
   .alinea {
     margin: 0 0 2mm 6mm;
@@ -352,7 +353,13 @@ const estilo = (rodape) => `
      O bloco inteiro fica junto e nunca racha entre duas páginas: contrato
      com a linha de assinatura órfã no topo da folha seguinte parece
      rascunho, e é o primeiro lugar onde alguém repara. */
-  .bloco-local { margin: 10mm 0 8mm; }
+  /* "Local e data" nunca fica sozinho no pe de uma folha, com as
+     assinaturas na seguinte: quem assina espera ver a data junto. */
+  .bloco-local {
+    margin: 10mm 0 8mm;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
 
   .bloco-assinaturas,
   .bloco-testemunhas {
@@ -404,7 +411,7 @@ async function gerar(navegador, caminhoMd, nome, { comPreview = false } = {}) {
   const corpo = converter(markdown)
 
   const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-    <title>${nome}</title><style>${estilo(nome)}</style></head>
+    <title>${nome}</title><style>${estilo()}</style></head>
     <body>${corpo}</body></html>`
 
   const pagina = await navegador.newPage()
@@ -420,40 +427,21 @@ async function gerar(navegador, caminhoMd, nome, { comPreview = false } = {}) {
     headerTemplate: '<span></span>',
     footerTemplate: `
       <div style="width:100%;font-family:Calibri,sans-serif;font-size:7.5pt;
-                  color:#8A94A0;padding:0 20mm;display:flex;
+                  color:#000000;padding:0 20mm;display:flex;
                   justify-content:space-between;">
         <span>${nome}</span>
         <span>página <span class="pageNumber"></span> de <span class="totalPages"></span></span>
       </div>`,
   })
 
-  /* Uma imagem de cada página, para eu conferir com os olhos antes de
-     mandar. Foi olhando que apareceram os dois defeitos anteriores — o
-     texto estava íntegro nas duas vezes, o layout é que não. */
-  if (comPreview) {
-    const pasta = path.join(PASTA, 'preview')
-    fs.mkdirSync(pasta, { recursive: true })
-
-    // Aplica as margens do papel no preview: sem isso eu conferia um
-    // layout diferente do que sai no PDF.
-    await pagina.addStyleTag({
-      content: 'body { padding: 22mm 20mm 20mm 20mm; background: #FFF; }',
-    })
-    await pagina.setViewportSize({ width: 794, height: 1123 })
-    const altura = await pagina.evaluate(() => document.body.scrollHeight)
-    const paginas = Math.ceil(altura / 1123)
-
-    for (let i = 0; i < Math.min(paginas, 12); i++) {
-      await pagina.evaluate((y) => window.scrollTo(0, y), i * 1123)
-      await pagina.waitForTimeout(120)
-      await pagina.screenshot({
-        path: path.join(pasta, `${nome} - p${String(i + 1).padStart(2, '0')}.png`),
-      })
-    }
-    console.log(`  ${paginas} página(s) fotografadas`)
-  }
-
   await pagina.close()
+
+  /* Foto de cada página, para eu conferir com os olhos antes de mandar.
+     Fotografa o PDF, não o HTML: rolar a página HTML de 1123 em 1123 px
+     ignora as quebras do CSS, e era exatamente na quebra que o contrato
+     estragava. Enquanto conferi assim, o segundo rodapé e a assinatura
+     rachada passaram batidos. */
+  if (comPreview) await fotografar(navegador, destino)
 
   const tamanho = Math.round(fs.statSync(destino).size / 1024)
   console.log(`  ${nome}.pdf — ${tamanho} KB`)
@@ -471,7 +459,7 @@ const DOCUMENTOS = [
 ]
 
 ;(async () => {
-  const navegador = await chromium.launch()
+  const navegador = await chromium.launch({ args: ARGS_DO_NAVEGADOR })
 
   const [arg1, arg2] = process.argv.slice(2)
 
