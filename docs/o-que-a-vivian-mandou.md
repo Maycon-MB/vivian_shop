@@ -5,7 +5,7 @@ já usava no Elo7, as descrições dos produtos, as fotos, os preços e as
 duas logos em qualidade boa.
 
 Os arquivos estão em `C:\Users\MayconBruno\Documents\vivian-16-08\`, fora
-deste repositório de propósito — 15 daquelas capturas são avaliações da
+deste repositório de propósito, 15 daquelas capturas são avaliações da
 loja dela com **nome de clientes reais**, e este repositório é público.
 
 ---
@@ -20,7 +20,7 @@ A captura das avaliações mostra o que a loja dela era no Elo7:
 | Coleções (temas) | **86** |
 | Avaliações | 13, todas positivas |
 | No ar desde | 2025 |
-| De onde envia | Rio de Janeiro — RJ |
+| De onde envia | Rio de Janeiro / RJ |
 
 Eu vinha construindo para uma loja de 6 produtos. São 343, organizados em
 86 temas. Isso muda o que precisa existir antes de abrir.
@@ -34,17 +34,17 @@ Eu vinha construindo para uma loja de 6 produtos. São 343, organizados em
 
 Hoje a loja separa por **linha** (personalizada / pedagógica) e mais nada.
 Quem procura "Mickey" não acha. Com 86 temas, a busca por tema não é
-enfeite: é como a cliente dela compra — ela não quer uma caneca, quer
+enfeite: é como a cliente dela compra, ela não quer uma caneca, quer
 alguma coisa do Mickey para a festa do filho.
 
 ## A contradição, e como ficou
 
 Em 11/08 ela disse: **mínimo de 10 unidades por produto**, "não dá para
 comprar 1 caneca". As descrições que ela mandou depois falam sempre de uma
-peça só, com o preço unitário do Elo7 — as duas coisas não podiam estar
+peça só, com o preço unitário do Elo7, as duas coisas não podiam estar
 certas ao mesmo tempo.
 
-**Resolvido em 17/08: o mínimo de 10 vale.** É regra nova, e não do Elo7 —
+**Resolvido em 17/08: o mínimo de 10 vale.** É regra nova, e não do Elo7:
 por isso as descrições de lá não a mencionam. A loja mostra o preço por
 unidade e, ao lado, quanto sai o pacote fechado de dez.
 
@@ -56,7 +56,7 @@ unidade e, ao lado, quanto sai o pacote fechado de dez.
 PDF. "Ficando sob a responsabilidade do cliente a impressão."
 
 ### Validade do link de download
-7 dias úteis — é o que ela já praticava. Depois disso o link expira e
+7 dias úteis, é o que ela já praticava. Depois disso o link expira e
 "para ter acesso ao material, somente realizando uma nova compra".
 
 ### Horário de atendimento
@@ -95,15 +95,15 @@ lojas.
 ### Depoimentos
 15 capturas das avaliações do Elo7. **Todas com nome de cliente real.**
 Antes de publicar qualquer uma, ela precisa pedir autorização a cada
-pessoa — depoimento com nome de terceiro sem consentimento é problema, e
+pessoa, depoimento com nome de terceiro sem consentimento é problema, e
 com inicial só ("M. L.") perde a força e ainda assim identifica.
 
 ### Como ela quer a página do produto
 Mandou a tela de cadastro do Elo7. O que ela usa e a loja não tem:
 
-- **Preço promocional** — "de R$ 39,99 por R$ 29,99". Ela usa isso em
+- **Preço promocional**: "de R$ 39,99 por R$ 29,99". Ela usa isso em
   quase todos os digitais.
-- **Quantidade em estoque** — os digitais ficam com 1000 unidades, que na
+- **Quantidade em estoque**: os digitais ficam com 1000 unidades, que na
   prática é "sem limite".
 - **Marcação de produto digital**, que muda a entrega.
 
@@ -145,17 +145,17 @@ Da lista que ela mandou, com preço cheio e promocional:
 
 | Material | De | Por |
 |---|---|---|
-| Primeiras Descobertas — Cores | 39,99 | 29,99 |
+| Primeiras Descobertas - Cores | 39,99 | 29,99 |
 | Formação de Palavras | 35,00 | 29,99 |
 | Datas Comemorativas | 32,00 | 27,99 |
 | Aumentativo e Diminutivo | 49,99 | 39,99 |
-| Frases para Leitura | — | 29,99 |
+| Frases para Leitura | - | 29,99 |
 | Desenvolvimento das Habilidades | 30,00 | 25,99 |
 | Sinônimos e Antônimos | 32,00 | 26,99 |
 | Letra Inicial e Final | 40,00 | 29,99 |
-| Atividades Adaptadas — Matemática | 49,00 | 29,99 |
-| Atividades Adaptadas — Vogais | — | 29,99 |
-| Alfabeto Ilustrado | — | 25,99 |
+| Atividades Adaptadas - Matemática | 49,00 | 29,99 |
+| Atividades Adaptadas - Vogais | - | 29,99 |
+| Alfabeto Ilustrado | - | 25,99 |
 
 ---
 
@@ -184,16 +184,16 @@ Da lista que ela mandou, com preço cheio e promocional:
 > produto retornam 404. Não há o que extrair. Ver
 > [o-elo7-fechou.md](o-elo7-fechou.md).
 
-~~1. Exportação do próprio Elo7~~ — painel desativado.
-~~2. Ler a loja pública dela~~ — páginas fora do ar, e sem cópia arquivada.
+~~1. Exportação do próprio Elo7~~, painel desativado.
+~~2. Ler a loja pública dela~~, páginas fora do ar, e sem cópia arquivada.
 
-**3. Planilha do Google**, que passa a ser onde ela mantém o catálogo — e
+**3. Planilha do Google**, que passa a ser onde ela mantém o catálogo, e
 que agora é o único caminho. Ela não nasce preenchida por extração: nasce
 do que a Vivian tiver guardado.
 
 A planilha não nasce vazia: ela nasce com o que foi extraído, e a Vivian
 revisa em vez de digitar. Daí para frente é lá que ela cadastra produto
-novo, corrige preço e cria tema — sem depender de mim estar disponível.
+novo, corrige preço e cria tema, sem depender de mim estar disponível.
 
 ### Por que planilha, e não uma tela de cadastro
 
@@ -222,6 +222,6 @@ vez de publicar um catálogo torto.
 | Descrições dos produtos | **dela**, sem eu reescrever |
 | Medidas e materiais | **dela** |
 | Preços do material pedagógico | **dela**, com o promocional |
-| Preços dos personalizados | **meus** — ela não mandou. Marcados no código como pendentes |
+| Preços dos personalizados | **meus**, ela não mandou. Marcados no código como pendentes |
 | Temas | 3 dos 86 |
 | Fotos | nenhuma: todo produto está com espaço reservado |

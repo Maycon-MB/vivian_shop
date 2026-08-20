@@ -1,10 +1,10 @@
-# Contrato de prestação de serviços — modelo
+# Contrato de prestação de serviços: modelo
 
 Versionado sem dado pessoal, porque este repositório é público. A versão
 preenchida fica em `C:\Users\MayconBruno\Documents\vivian-contrato\`, fora
 do Git, e o `.docx` para mandar sai de `scripts/gerar_contrato.py`.
 
-Segue a estrutura do contrato de `automacao_instagram/entregas/` — mesmo
+Segue a estrutura do contrato de `automacao_instagram/entregas/`, mesmo
 tom, mesma numeração, mesmas garantias. Dois contratos do mesmo prestador
 com formatos diferentes é o tipo de coisa que se percebe.
 
@@ -28,7 +28,7 @@ As partes têm entre si justo e contratado o seguinte:
 
 ---
 
-## PREÂMBULO — RECONHECIMENTO DA RELAÇÃO JÁ EM CURSO
+## PREÂMBULO: RECONHECIMENTO DA RELAÇÃO JÁ EM CURSO
 
 As partes reconhecem que os trabalhos tiveram início em agosto de 2026, antes da assinatura deste instrumento, e que já foram entregues: a arquitetura da loja, as telas públicas, o painel de administração, o fluxo completo de compra em ambiente de demonstração, os relatórios gerenciais e o canal de coleta de informações da CONTRATANTE.
 
@@ -146,7 +146,7 @@ h) registro de marca.
 
 6.3.3. Enquanto o volume de operação permitir os planos gratuitos, o custo desta cláusula limita-se ao domínio.
 
-6.4. Responsabilizar-se pela **titularidade e licenciamento** de todo conteúdo que enviar — imagens, personagens, marcas, textos e materiais —, isentando o CONTRATADO de qualquer responsabilidade por violação de direitos de terceiros no material fornecido.
+6.4. Responsabilizar-se pela **titularidade e licenciamento** de todo conteúdo que enviar (imagens, personagens, marcas, textos e materiais), isentando o CONTRATADO de qualquer responsabilidade por violação de direitos de terceiros no material fornecido.
 
 6.5. Responsabilizar-se integralmente pelas obrigações perante seus próprios clientes: qualidade, prazos, produção, entrega, trocas, devoluções e emissão de documento fiscal.
 
@@ -188,7 +188,7 @@ h) registro de marca.
 
 ## 10. LIMITAÇÃO DE RESPONSABILIDADE
 
-10.1. O CONTRATADO **garante a execução do serviço, não resultados comerciais**. Volume de visitas, número de vendas e faturamento dependem de fatores externos — preço, produto, divulgação, sazonalidade, concorrência e atendimento da própria CONTRATANTE — e não são objeto de garantia.
+10.1. O CONTRATADO **garante a execução do serviço, não resultados comerciais**. Volume de visitas, número de vendas e faturamento dependem de fatores externos (preço, produto, divulgação, sazonalidade, concorrência e atendimento da própria CONTRATANTE) e não são objeto de garantia.
 
 10.2. O CONTRATADO não responde por: (a) alterações de política, preço ou disponibilidade de serviços de terceiros (instituições de pagamento, transportadoras, provedores de hospedagem e de e-mail); (b) suspensão ou bloqueio de contas da CONTRATANTE por decisão de terceiros, salvo culpa comprovada do CONTRATADO; (c) extravio, atraso ou avaria de encomendas, de responsabilidade da transportadora; (d) danos indiretos, lucros cessantes ou perda de oportunidade comercial.
 
@@ -208,7 +208,7 @@ h) registro de marca.
 
 ---
 
-## 12. PROTEÇÃO DE DADOS PESSOAIS (LGPD — Lei 13.709/2018)
+## 12. PROTEÇÃO DE DADOS PESSOAIS (LGPD, Lei 13.709/2018)
 
 12.1. **Papéis:** a CONTRATANTE é a **Controladora** dos dados pessoais de seus clientes. O CONTRATADO atua como **Operador**, tratando tais dados exclusivamente conforme instruções da Controladora e para as finalidades deste contrato (arts. 5º, VI e VII, e 39 da LGPD).
 
@@ -218,7 +218,7 @@ h) registro de marca.
 
 12.4. **Segurança:** o CONTRATADO adotará medidas técnicas e administrativas adequadas: controle de acesso, criptografia em trânsito (TLS), senhas armazenadas com hash e backups criptografados.
 
-12.5. **Transferência internacional (art. 33, LGPD):** a execução dos serviços pode envolver tratamento por operadores sediados no exterior — provedores de hospedagem, de pagamento e de envio de e-mail. O CONTRATADO se compromete a contratar exclusivamente fornecedores que ofereçam garantias de conformidade equivalentes às exigidas pela LGPD.
+12.5. **Transferência internacional (art. 33, LGPD):** a execução dos serviços pode envolver tratamento por operadores sediados no exterior, provedores de hospedagem, de pagamento e de envio de e-mail. O CONTRATADO se compromete a contratar exclusivamente fornecedores que ofereçam garantias de conformidade equivalentes às exigidas pela LGPD.
 
 12.6. **Incidentes:** o CONTRATADO comunicará à CONTRATANTE qualquer incidente de segurança envolvendo dados pessoais em até **48 (quarenta e oito) horas** da ciência, com descrição do ocorrido, dados afetados e medidas adotadas, para que a Controladora avalie a comunicação à ANPD e aos titulares.
 
@@ -250,11 +250,11 @@ E por estarem justas e contratadas, as partes assinam o presente instrumento.
 
 **Local e data:** ______________________, ____ de _______________ de 2026.
 
-**CONTRATADO:** Maycon Bruno Montes Gomes Constancio — CNPJ 62.382.173/0001-79
+**CONTRATADO:** Maycon Bruno Montes Gomes Constancio, CNPJ 62.382.173/0001-79
 
 `_______________________________________`
 
-**CONTRATANTE:** [nome completo] — CPF ___.___.___-__
+**CONTRATANTE:** [nome completo], CPF ___.___.___-__
 
 `_______________________________________`
 
@@ -266,9 +266,9 @@ CPF:                             CPF:
 
 ---
 
-# ANEXO I — ETAPAS DE ENTREGA
+# ANEXO I: ETAPAS DE ENTREGA
 
-## Etapa A — Já entregue
+## Etapa A: Já entregue
 
 | # | Entrega |
 |---|---|
@@ -281,7 +281,7 @@ CPF:                             CPF:
 | 7 | Canal de coleta de informações da CONTRATANTE |
 | 8 | Testes automatizados e publicação contínua |
 
-## Etapa B — Depende da CONTRATANTE ou de terceiros
+## Etapa B: Depende da CONTRATANTE ou de terceiros
 
 | # | Entrega | Depende de |
 |---|---|---|

@@ -73,7 +73,7 @@ export async function enviarRespostas(respostas) {
       return {
         ok: false,
         motivo:
-          'Não consegui enviar agora — pode ser a internet. Suas respostas continuam guardadas aqui, tente de novo em instantes ou use o WhatsApp.',
+          'Não consegui enviar agora, pode ser a internet. Suas respostas continuam guardadas aqui, tente de novo em instantes ou use o WhatsApp.',
       }
     }
   }

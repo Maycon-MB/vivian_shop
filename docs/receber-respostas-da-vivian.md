@@ -1,7 +1,7 @@
 # Como ligar o recebimento das respostas
 
 O formulário em `/perguntas/` manda as respostas da Vivian direto para uma
-planilha sua. Isto aqui é o que falta montar do seu lado — uma vez só,
+planilha sua. Isto aqui é o que falta montar do seu lado, uma vez só,
 cerca de 10 minutos.
 
 Enquanto não estiver montado, a página funciona igual e o botão do
@@ -13,7 +13,7 @@ WhatsApp continua sendo a saída. Nada quebra.
 
 Crie uma planilha no Google Drive. Nome sugerido: **Respostas da Vivian**.
 
-Não precisa criar coluna nenhuma — o script cria o cabeçalho sozinho na
+Não precisa criar coluna nenhuma, o script cria o cabeçalho sozinho na
 primeira resposta.
 
 ## 2. Abrir o editor de script
@@ -94,7 +94,7 @@ No editor: **Implantar → Nova implantação**.
 > **Sobre "qualquer pessoa":** é necessário, porque quem envia é o navegador
 > da Vivian, sem conta nenhuma. O endereço gerado é longo e aleatório, e
 > ninguém que não o tenha consegue mandar nada. O script só escreve na
-> planilha — não lê, não apaga, não devolve o que já está lá. O risco real
+> planilha, não lê, não apaga, não devolve o que já está lá. O risco real
 > é alguém que descobrisse o endereço poder escrever linhas de lixo, e
 > nesse caso basta gerar outra implantação.
 
@@ -114,7 +114,7 @@ Crie o arquivo `loja/.env.local` com:
 NEXT_PUBLIC_FORMULARIO_URL=https://script.google.com/macros/s/AKfycb.../exec
 ```
 
-Este arquivo **não vai para o Git** — está no `.gitignore`. Para o site
+Este arquivo **não vai para o Git**, está no `.gitignore`. Para o site
 publicado receber a variável, ela também precisa existir no GitHub:
 
 **Settings → Secrets and variables → Actions → Variables → New variable**
@@ -134,11 +134,11 @@ respostas**. A linha deve aparecer na planilha em segundos.
 ## O que acontece se der errado
 
 A página tenta enviar e, se não conseguir, diz isso em vez de fingir que
-deu certo — e oferece o botão do WhatsApp como saída. A resposta continua
+deu certo, e oferece o botão do WhatsApp como saída. A resposta continua
 guardada no aparelho dela, então nada se perde.
 
 Se você ver a Vivian dizendo que enviou e a planilha estiver vazia:
 
 1. Confira se o endereço do passo 3 ainda responde "pronto para receber"
-2. Uma **nova implantação** gera um endereço novo — editar o script e
+2. Uma **nova implantação** gera um endereço novo: editar o script e
    publicar de novo pode ter trocado o endereço. Atualize a variável.

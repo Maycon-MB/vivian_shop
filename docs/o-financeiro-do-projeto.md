@@ -11,7 +11,7 @@ O que entra e o que sai, dos dois lados, com os números que existem hoje.
 
 **O que é estimativa está marcado.** As taxas de meio de pagamento e o
 valor do imposto mudam, e o que o Elo7 cobrava dela ninguém aqui sabe
-ainda — é uma das perguntas em aberto.
+ainda, é uma das perguntas em aberto.
 
 ---
 
@@ -48,7 +48,7 @@ hora**. Se tiver custado 100, dão R$ 24.
 
 Isso está **abaixo do mercado** para desenvolvimento de e-commerce sob
 medida com testes automatizados, acessibilidade auditada e publicação
-contínua. Não é crítica ao acordo — é o número, para ficar registrado.
+contínua. Não é crítica ao acordo, é o número, para ficar registrado.
 
 Onde a conta melhora: a manutenção. R$ 100 por mês para um site estático
 que se publica sozinho, com testes que rodam a cada envio, tende a custar
@@ -59,7 +59,7 @@ que se publica sozinho, com testes que rodam a cada envio, tende a custar
 Não é o preço. É o **escopo aberto**: "manutenção" sem limite escrito vira
 funcionalidade nova toda semana pelos mesmos R$ 100.
 
-O contrato trata disso na cláusula 2.5 — funcionalidade nova, mudança de
+O contrato trata disso na cláusula 2.5, funcionalidade nova, mudança de
 escopo e redesenho ficam fora da manutenção e são orçados à parte. **Essa
 cláusula é o que faz a diferença entre R$ 100/mês e trabalho de graça.**
 
@@ -76,30 +76,30 @@ cláusula é o que faz a diferença entre R$ 100/mês e trabalho de graça.**
 | Uma vez por ano | registro.br | cerca de R$ 40 |
 
 No primeiro ano: **R$ 2.440**. A partir do segundo: **R$ 1.240 por ano**,
-ou cerca de R$ 103 por mês — **enquanto os planos gratuitos de banco de
+ou cerca de R$ 103 por mês, **enquanto os planos gratuitos de banco de
 dados e e-mail derem conta**.
 
 Esse valor deve se manter por bastante tempo. Em 18/08 ela explicou que os
 arquivos do material pedagógico ficam no Drive dela, e que o que ela
-entrega é acesso, não arquivo — então o banco guarda só texto, e o plano
+entrega é acesso, não arquivo, então o banco guarda só texto, e o plano
 gratuito leva anos para encher. Detalhes em
 [infraestrutura-e-custos.md](infraestrutura-e-custos.md) e
 [entrega-do-material-digital.md](entrega-do-material-digital.md).
 
 ### O que ela paga por venda
 
-*(estimativas — as taxas variam por meio de pagamento, prazo de
+*(estimativas: as taxas variam por meio de pagamento, prazo de
 recebimento e negociação)*
 
 | Meio | Taxa aproximada | Em R$ 100 de venda |
 |---|---|---|
 | Pix | cerca de 1% | cerca de R$ 1 |
 | Cartão à vista | cerca de 5% | cerca de R$ 5 |
-| Cartão parcelado | mais que isso, cresce com o número de parcelas | — |
+| Cartão parcelado | mais que isso, cresce com o número de parcelas | - |
 
 O frete não é custo dela: é cobrado do comprador e repassado à
-transportadora. Por isso ele **nunca entra no faturamento** dos relatórios
-— somar frete ao que ela ganhou é o jeito mais comum de fechar o mês
+transportadora. Por isso ele **nunca entra no faturamento** dos relatórios.
+Somar frete ao que ela ganhou é o jeito mais comum de fechar o mês
 achando que lucrou.
 
 O desconto de 5% no Pix sai da margem dela, e existe para empurrar a
@@ -131,7 +131,7 @@ infraestrutura for gratuita. Com a loja estabelecida e a infraestrutura
 paga, ele sobe para algo perto de **R$ 2.000 por mês**.
 
 Abaixo disso, a comissão do Elo7 é mais barata que o custo fixo. Acima, a
-diferença cresce e não para de crescer — porque o custo fixo é fixo e a
+diferença cresce e não para de crescer, porque o custo fixo é fixo e a
 comissão não. E ela só chega na faixa de infraestrutura paga se estiver
 vendendo o suficiente para ela caber.
 

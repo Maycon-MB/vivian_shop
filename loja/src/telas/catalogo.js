@@ -39,7 +39,7 @@ import { BASE } from '../base'
    de repetido em cada anúncio. */
 export const REGRAS_DO_PERSONALIZADO = [
   'Já vai embalado em saquinho transparente com lapela no tema.',
-  'Você recebe exatamente como está na foto — muda só o nome e a idade. Não enviamos prévia para aprovação.',
+  'Você recebe exatamente como está na foto: muda só o nome e a idade. Não enviamos prévia para aprovação.',
   `Produção de ${PRAZO_PRODUCAO} dias úteis, sem contar sábado, domingo e feriado. O prazo da transportadora vem depois disso.`,
 ]
 
