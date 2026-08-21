@@ -136,8 +136,13 @@ jobs:
 
       # O site já montado segue para a publicação sem ser montado de novo:
       # publicar um artefato diferente do que foi testado anularia o teste.
+      #
+      # O botão "Run workflow" também publica. Sem isso, mudar uma variável
+      # do repositório (DOMINIO_PRONTO, o endereço do formulário) não tinha
+      # como chegar ao ar: só rodava os testes, e era preciso inventar um
+      # commit vazio para publicar.
       - name: guardar o site montado
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         uses: actions/upload-artifact@v4
         with:
           name: site
@@ -147,7 +152,7 @@ jobs:
 
   publicar:
     needs: conferir
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
