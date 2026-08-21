@@ -64,7 +64,12 @@ export default function PaginaTema({ slug }) {
                   <span className="tema-produto-foto">
                     {produto.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={produto.image} alt={produto.name} />
+                      <img
+                        src={produto.mini || produto.image}
+                        alt={produto.name}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     ) : (
                       <span>Aqui entra a foto</span>
                     )}
