@@ -5,7 +5,7 @@ Como a Vivian passa a receber pelas vendas, e por que não é igual ao Elo7.
 Este documento é registro meu. **Não vira PDF e não vai para ela agora**:
 enquanto o contrato não estiver respondido, nada de material novo. O que
 ela precisa decidir está no formulário, em
-[/perguntas](https://maycon-mb.github.io/vivian_shop/perguntas/), no grupo
+[/perguntas](https://feitoparavocepapelaria.com.br/perguntas/), no grupo
 "Receber o dinheiro".
 
 ---

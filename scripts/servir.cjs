@@ -9,8 +9,9 @@
  * prática trafega perto de 30 KB — e a conclusão vira "preciso arrancar o
  * Bootstrap", que é uma reforma enorme baseada num número errado.
  *
- * Também serve sob /vivian_shop, que é o caminho real da publicação, para
- * os testes não passarem localmente e quebrarem no ar por causa disso.
+ * Serve no mesmo caminho que a publicação usa, para os testes não passarem
+ * localmente e quebrarem no ar por causa de caminho diferente. Com
+ * `DOMINIO_PRONTO=true` é a raiz; sem, é /vivian_shop.
  */
 
 const http = require('http')
@@ -20,7 +21,7 @@ const zlib = require('zlib')
 
 const PORTA = Number(process.argv[2]) || 4173
 const RAIZ = path.join(__dirname, '..', 'dist')
-const PREFIXO = '/vivian_shop'
+const PREFIXO = process.env.DOMINIO_PRONTO === 'true' ? '' : '/vivian_shop'
 
 const TIPOS = {
   '.html': 'text/html; charset=utf-8',

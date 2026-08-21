@@ -18,7 +18,12 @@ const { chromium } = require(path.join(__dirname, '..', 'loja', 'node_modules', 
 /* Sem endereço informado, testa o site publicado. Na automação do GitHub
    não há site publicado ainda — o que se testa lá é o site recém-montado,
    servido na própria máquina, e o endereço chega por BASE_DA_LOJA. */
-const BASE = process.argv[2] || process.env.BASE_DA_LOJA || 'https://maycon-mb.github.io/vivian_shop'
+const BASE =
+  process.argv[2] ||
+  process.env.BASE_DA_LOJA ||
+  (process.env.DOMINIO_PRONTO === 'true'
+    ? 'https://feitoparavocepapelaria.com.br'
+    : 'https://maycon-mb.github.io/vivian_shop')
 
 /* Onde a tela do momento da falha é guardada. Mensagem de erro raramente
    basta para entender o que quebrou; a imagem quase sempre basta. */

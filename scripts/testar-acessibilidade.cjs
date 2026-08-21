@@ -23,7 +23,12 @@ const path = require('path')
 const { chromium } = require(path.join(__dirname, '..', 'loja', 'node_modules', 'playwright'))
 const AxeBuilder = require(path.join(__dirname, '..', 'loja', 'node_modules', '@axe-core/playwright')).default
 
-const BASE = process.argv[2] || process.env.BASE_DA_LOJA || 'https://maycon-mb.github.io/vivian_shop'
+const BASE =
+  process.argv[2] ||
+  process.env.BASE_DA_LOJA ||
+  (process.env.DOMINIO_PRONTO === 'true'
+    ? 'https://feitoparavocepapelaria.com.br'
+    : 'https://maycon-mb.github.io/vivian_shop')
 
 /** Uma de cada tipo de tela. Produto e painel repetem estrutura entre si. */
 const TELAS = [
