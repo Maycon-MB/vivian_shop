@@ -162,7 +162,7 @@ describe('formulário de perguntas', () => {
     )
 
     // Contá-la faria a barra dizer "16 de 15" e parecer defeito.
-    expect(await screen.findByText(/0 de 18 respondidas/)).toBeInTheDocument()
+    expect(await screen.findByText(/0 de 21 respondidas/)).toBeInTheDocument()
     // Mas ela ainda precisa chegar até mim.
     expect(screen.getByText(/ainda não me chegou/)).toBeInTheDocument()
   })
@@ -204,5 +204,38 @@ describe('formulário de perguntas', () => {
     // Pedir credencial por formulário é o começo de um vazamento. O texto
     // diz explicitamente para ela não mandar.
     expect(await screen.findByText(/Não me mande a chave nem a senha/)).toBeInTheDocument()
+  })
+
+  it('pergunta se a cliente sai da loja para pagar', async () => {
+    render(<Perguntas />)
+
+    // Decide o desenho inteiro do pagamento, e é escolha dela: sair leva a
+    // tela conhecida do Mercado Pago, ficar mantém a loja com a cara dela.
+    expect(await screen.findByLabelText(/sair da sua loja para pagar/i)).toBeInTheDocument()
+  })
+
+  it('pergunta até quantas vezes ela quer parcelar', async () => {
+    render(<Perguntas />)
+
+    // Parcelamento vende mais e custa mais. Quem decide quanto da margem
+    // dela vai embora nisso é ela.
+    expect(await screen.findByLabelText(/cart[ãa]o parcelado/i)).toBeInTheDocument()
+  })
+
+  it('pergunta se o desconto do Pix continua em 5%', async () => {
+    render(<Perguntas />)
+
+    // Se o Pix for mesmo 0% para ela, 5% de desconto custa mais caro que a
+    // taxa do cartão. A loja está configurada com 5% até ela decidir.
+    expect(await screen.findByLabelText(/desconto.*Pix/i)).toBeInTheDocument()
+  })
+
+  it('explica que a conta do banco não recebe as vendas', async () => {
+    render(<Perguntas />)
+
+    // No Elo7 bastava informar a conta porque quem recebia era o Elo7. Aqui
+    // quem recebe é ela, e o banco só recebe o saque. Sem isso explicado,
+    // ela responde a pergunta errada.
+    expect(await screen.findByText(/quem recebia o dinheiro era o Elo7/i)).toBeInTheDocument()
   })
 })

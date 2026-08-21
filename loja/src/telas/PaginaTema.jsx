@@ -83,7 +83,7 @@ export default function PaginaTema({ slug }) {
 
                     {personalizado && (
                       <span className="tema-produto-minimo">
-                        <Package size={13} /> mínimo de {MINIMO_PERSONALIZADO} —{' '}
+                        <Package size={13} /> mínimo de {MINIMO_PERSONALIZADO}:{' '}
                         {moeda(precoAtual(produto) * MINIMO_PERSONALIZADO)} o pacote
                       </span>
                     )}

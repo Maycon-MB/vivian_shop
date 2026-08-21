@@ -194,7 +194,7 @@ const LandingPage = () => {
           <div className="temas-vitrine">
             <div className="temas-vitrine-topo">
               <h2>Escolha por tema</h2>
-              <p>Tudo do mesmo tema junto — caneca, revista, álbum e lembrancinha.</p>
+              <p>Tudo do mesmo tema junto, caneca, revista, álbum e lembrancinha.</p>
             </div>
 
             <ul className="temas-lista">
@@ -273,7 +273,7 @@ const LandingPage = () => {
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#C4436B" /></div>
                 <h4 className="fw-black fs-5 mb-3">Se vier errado, eu refaço</h4>
-                <p className="small text-muted mb-0">Faço cada peça uma a uma. Se chegar com defeito ou diferente do que combinamos, eu refaço — sem discussão e sem custo para você.</p>
+                <p className="small text-muted mb-0">Faço cada peça uma a uma. Se chegar com defeito ou diferente do que combinamos, eu refaço, sem discussão e sem custo para você.</p>
               </div>
             </Col>
           </Row>

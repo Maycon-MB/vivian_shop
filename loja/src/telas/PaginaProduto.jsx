@@ -107,7 +107,7 @@ const PaginaProduto = ({ produto }) => {
               <div className="produto-regra-bloco">
                 <p>
                   <strong>Mínimo de {MINIMO_PERSONALIZADO} unidades.</strong> É feito sob
-                  encomenda, uma a uma — por isso o pedido tem uma quantidade mínima.
+                  encomenda, uma a uma, por isso o pedido tem uma quantidade mínima.
                 </p>
                 <p className="produto-prazo">
                   Fica pronto em <strong>{PRAZO_PRODUCAO} dias úteis</strong> depois do
@@ -118,7 +118,7 @@ const PaginaProduto = ({ produto }) => {
               <div className="produto-regra-bloco digital">
                 <p>
                   <strong>É um arquivo digital.</strong> Chega no seu e-mail assim que o
-                  pagamento é aprovado — sem frete e sem espera.
+                  pagamento é aprovado, sem frete e sem espera.
                 </p>
                 <p className="produto-prazo">
                   Você imprime quantas vezes precisar, em casa ou na gráfica.

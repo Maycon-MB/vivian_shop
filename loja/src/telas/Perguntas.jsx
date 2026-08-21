@@ -24,7 +24,7 @@ import { enviarRespostas, podeEnviar } from '@/servicos/enviarRespostas';
  */
 
 /* O WhatsApp do Maycon, e não o da loja: quem recebe estas respostas é
-   quem está construindo, não quem vende. O 55 na frente é o país — sem
+   quem está construindo, não quem vende. O 55 na frente é o país, sem
    ele o link não abre para quem estiver fora do Brasil. */
 const WHATSAPP_DO_MAYCON = '5521974587181';
 
@@ -50,7 +50,7 @@ const JA_SEI = [
   {
     titulo: 'Mínimo de 10 e prazo de 5 dias',
     texto:
-      'Cada produto personalizado sai de 10 em 10 — não dá para comprar 1 caneca, o mínimo são 10 canecas. Nada é pronta entrega: a produção leva 5 dias úteis depois que o pagamento é confirmado.',
+      'Cada produto personalizado sai de 10 em 10, não dá para comprar 1 caneca, o mínimo são 10 canecas. Nada é pronta entrega: a produção leva 5 dias úteis depois que o pagamento é confirmado.',
   },
   {
     titulo: 'Digital e personalizado não se misturam',
@@ -60,7 +60,7 @@ const JA_SEI = [
   {
     titulo: 'De onde sai e por onde vai',
     texto:
-      'Os envios saem do Rio de Janeiro, do CEP [dado pessoal removido], por Correios ou Jadlog — as duas que você já usava. O endereço vai impresso como remetente em toda etiqueta, e quem compra consegue ver.',
+      'Os envios saem do Rio de Janeiro, do CEP [dado pessoal removido], por Correios ou Jadlog, as duas que você já usava. O endereço vai impresso como remetente em toda etiqueta, e quem compra consegue ver.',
   },
   {
     titulo: 'A declaração de conteúdo continua',
@@ -80,12 +80,12 @@ const JA_SEI = [
   {
     titulo: 'Os temas, do jeito que você pediu',
     texto:
-      'Quem escolhe o tema vê tudo daquele tema junto — caneca, revista, álbum, lousa — como era no Elo7. Falta só cadastrar os seus, e para isso eu preciso do endereço da sua loja de lá.',
+      'Quem escolhe o tema vê tudo daquele tema junto (caneca, revista, álbum, lousa), como era no Elo7. Falta só cadastrar os seus, e para isso eu preciso do endereço da sua loja de lá.',
   },
   {
     titulo: 'Como você entrega o material pedagógico',
     texto:
-      'As atividades ficam no seu Drive, e quando alguém compra você libera o acesso para o e-mail da pessoa por 7 dias. Vai continuar assim — a diferença é que a loja passa a fazer isso sozinha, na hora do pagamento, sem depender de você estar em casa.',
+      'As atividades ficam no seu Drive, e quando alguém compra você libera o acesso para o e-mail da pessoa por 7 dias. Vai continuar assim, a diferença é que a loja passa a fazer isso sozinha, na hora do pagamento, sem depender de você estar em casa.',
   },
   {
     titulo: 'Seu Instagram e suas logos',
@@ -95,7 +95,7 @@ const JA_SEI = [
 ]
 
 /* Guarda quantas respostas já saíram daqui. É o que separa "escrevi" de
-   "mandei" — e essa diferença é a única falha séria deste formulário:
+   "mandei", e essa diferença é a única falha séria deste formulário:
    sem servidor, uma resposta que ela escreve e não envia é, para quem
    está do outro lado, idêntica a uma resposta que nunca existiu. */
 const CHAVE_ENVIADO = 'feito-para-voce:respostas-enviadas';
@@ -110,7 +110,7 @@ const BLOCOS = [
         id: 'guardou',
         pergunta: 'Você chegou a salvar alguma coisa antes do Elo7 fechar?',
         porque:
-          'Tentei pegar seus produtos direto de lá e descobri que a plataforma saiu do ar de vez, em maio — não sobrou nada para copiar. Então vale procurar: alguma planilha que você tenha baixado, os e-mails de venda que o Elo7 mandava (eles traziam nome do produto e preço), ou prints da sua loja. Qualquer uma dessas coisas economiza dias de digitação.',
+          'Tentei pegar seus produtos direto de lá e descobri que a plataforma saiu do ar de vez, em maio, não sobrou nada para copiar. Então vale procurar: alguma planilha que você tenha baixado, os e-mails de venda que o Elo7 mandava (eles traziam nome do produto e preço), ou prints da sua loja. Qualquer uma dessas coisas economiza dias de digitação.',
         dica: 'tenho planilha / tenho os e-mails / só tenho as fotos / não tenho nada',
         linhas: 3,
       },
@@ -118,7 +118,7 @@ const BLOCOS = [
         id: 'fotos',
         pergunta: 'De quais produtos você já tem foto?',
         porque:
-          'A foto é o que vende. Onde não tiver, eu deixo um espaço reservado — melhor isso do que foto de banco de imagem, que a cliente percebe.',
+          'A foto é o que vende. Onde não tiver, eu deixo um espaço reservado, melhor isso do que foto de banco de imagem, que a cliente percebe.',
         dica: 'pode mandar as fotos no WhatsApp mesmo, aos poucos',
         linhas: 3,
       },
@@ -126,7 +126,7 @@ const BLOCOS = [
         id: 'medidas',
         pergunta: 'Quanto pesa e qual o tamanho da caixa de cada pacote de 10?',
         porque:
-          'É o que faz o frete sair certo. Como o mínimo é 10, a gente cadastra o pacote fechado do jeito que você já envia — mede uma vez e nunca mais. Se errar para menos, a diferença sai do seu bolso em cada pedido.',
+          'É o que faz o frete sair certo. Como o mínimo é 10, a gente cadastra o pacote fechado do jeito que você já envia, mede uma vez e nunca mais. Se errar para menos, a diferença sai do seu bolso em cada pedido.',
         dica: 'ex: 10 cadernos = 1,8 kg, caixa de 30 x 25 x 12 cm. Balança de cozinha e fita métrica resolvem.',
         linhas: 5,
       },
@@ -141,7 +141,7 @@ const BLOCOS = [
         id: 'drive',
         pergunta: 'Suas atividades estão todas organizadas numa pasta só do Drive?',
         porque:
-          'Você me explicou que guarda tudo no Drive e libera o acesso por e-mail. Vou fazer a loja fazer isso sozinha: pagou, o acesso sai na hora e some depois de 7 dias, sem você precisar estar em casa. Para isso eu preciso saber como as pastas estão organizadas — uma pasta por atividade, ou tudo junto?',
+          'Você me explicou que guarda tudo no Drive e libera o acesso por e-mail. Vou fazer a loja fazer isso sozinha: pagou, o acesso sai na hora e some depois de 7 dias, sem você precisar estar em casa. Para isso eu preciso saber como as pastas estão organizadas, uma pasta por atividade, ou tudo junto?',
         dica: 'uma pasta por atividade / tudo numa pasta só / de outro jeito',
         linhas: 3,
       },
@@ -150,7 +150,7 @@ const BLOCOS = [
         pergunta:
           'Tudo bem o arquivo sair com o nome de quem comprou impresso nele?',
         porque:
-          'É o que segura o repasse: quem compra pensa duas vezes antes de passar adiante um arquivo com o próprio nome. Não atrapalha o uso — dá para imprimir e usar normalmente.',
+          'É o que segura o repasse: quem compra pensa duas vezes antes de passar adiante um arquivo com o próprio nome. Não atrapalha o uso, dá para imprimir e usar normalmente.',
         dica: 'pode / prefiro que não / quero ver como fica antes',
         linhas: 2,
       },
@@ -159,7 +159,7 @@ const BLOCOS = [
   {
     id: 'dinheiro',
     titulo: 'Receber o dinheiro',
-    resumo: 'Isso eu não consigo decidir por você — a conta é sua.',
+    resumo: 'Isso eu não consigo decidir por você, a conta é sua.',
     perguntas: [
       {
         id: 'cnpj',
@@ -171,10 +171,35 @@ const BLOCOS = [
       },
       {
         id: 'pix',
-        pergunta: 'Qual conta você quer que receba as vendas?',
+        pergunta: 'Para qual conta você quer sacar o dinheiro das vendas?',
         porque:
-          'Não me mande a chave nem a senha por aqui. Só preciso saber se é a mesma conta que você já usa, para configurarmos junto quando chegar a hora.',
-        dica: 'a conta de sempre / uma conta nova / ainda vou abrir',
+          'No Elo7 bastava informar a conta porque quem recebia o dinheiro era o Elo7, e depois repassava para você. Aqui é diferente: quem recebe é você. O dinheiro cai no Mercado Pago e de lá vai para o seu banco, automático ou quando você mandar. Então a conta do Bradesco não recebe as vendas, ela recebe os saques. Não me mande a chave nem a senha por aqui: só preciso saber se é a conta de sempre.',
+        dica: 'a conta de sempre do Bradesco / outra conta',
+        linhas: 2,
+      },
+      {
+        id: 'checkout',
+        pergunta:
+          'Na hora de pagar, a cliente pode sair da sua loja para pagar no Mercado Pago, ou você prefere que ela pague sem sair?',
+        porque:
+          'As duas funcionam, e nenhuma é mais segura que a outra: o dinheiro cai no mesmo lugar. Sair leva ela para a tela do Mercado Pago, que muita gente já conhece e confia, e é a que abre a loja mais cedo. Pagar sem sair mantém tudo com a cara da sua loja do começo ao fim, e demora um pouco mais para eu construir. Se você não tiver preferência, eu começo pela primeira e a gente troca depois, sem custo.',
+        dica: 'pode sair / prefiro que fique na minha loja / decide você',
+        linhas: 3,
+      },
+      {
+        id: 'parcelas',
+        pergunta: 'Você quer aceitar cartão parcelado? Até quantas vezes?',
+        porque:
+          'Parcelado vende mais, principalmente em pedido de festa, que costuma ser mais caro. Mas a taxa cresce com o número de parcelas, e você recebe mais tarde. Você pode também aceitar parcelado só acima de um valor. No Elo7 isso era decidido por eles; aqui é seu.',
+        dica: 'ex: até 3x / até 6x / só à vista / parcelado só acima de R$ 200',
+        linhas: 2,
+      },
+      {
+        id: 'descontopix',
+        pergunta: 'O desconto de 5% no Pix continua?',
+        porque:
+          'Eu tinha colocado 5% achando que o Pix teria taxa. Se ele for mesmo 0% para você, esse desconto sai do seu bolso e custa um pouco mais caro do que a taxa do cartão. Baixar para 3% continua atraente para quem compra e sobra mais para você. Está em 5% na loja até você decidir, e mudar leva cinco minutos.',
+        dica: 'mantém 5% / baixa para 3% / tira o desconto',
         linhas: 2,
       },
       {
@@ -189,7 +214,7 @@ const BLOCOS = [
         id: 'volume',
         pergunta: 'Mais ou menos quantos pedidos por mês você fazia no Elo7?',
         porque:
-          'É o que diz se a estrutura mais barata aguenta ou se vamos precisar de outra. Chute mesmo já ajuda — não precisa ser número exato.',
+          'É o que diz se a estrutura mais barata aguenta ou se vamos precisar de outra. Chute mesmo já ajuda, não precisa ser número exato.',
         dica: 'ex: uns 20 por mês, mais na volta às aulas',
         linhas: 2,
       },
@@ -204,7 +229,7 @@ const BLOCOS = [
         id: 'whatsapp',
         pergunta: 'Qual número aparece no botão de WhatsApp da loja?',
         porque:
-          'Hoje está um número de exemplo. Se for o seu pessoal, vale pensar se você quer ele público — depois que sai no ar, sai.',
+          'Hoje está um número de exemplo. Se for o seu pessoal, vale pensar se você quer ele público, depois que sai no ar, sai.',
         dica: 'pode ser o meu de sempre / quero um número só da loja',
         linhas: 2,
       },
@@ -219,7 +244,7 @@ const BLOCOS = [
         id: 'historia',
         pergunta: 'Como você começou a fazer isso?',
         porque:
-          'A página "Quem faz" está com um texto meu, provisório, e quem tem que contar essa história é você. Pode escrever do seu jeito, ou mandar um áudio no WhatsApp que eu transformo em texto — sem inventar nada.',
+          'A página "Quem faz" está com um texto meu, provisório, e quem tem que contar essa história é você. Pode escrever do seu jeito, ou mandar um áudio no WhatsApp que eu transformo em texto, sem inventar nada.',
         dica: 'quando começou, por que, para quem você faz',
         linhas: 5,
       },
@@ -227,7 +252,7 @@ const BLOCOS = [
         id: 'autorizacao',
         pergunta: 'Posso publicar os elogios que você me mandou, com o nome de quem escreveu?',
         porque:
-          'Recebi os 15 prints, obrigado. Só que eles têm o nome das suas clientes, e publicar o nome de alguém sem essa pessoa saber é problema — mesmo sendo elogio. O caminho é você mandar uma mensagem para cada uma perguntando. Se preferir, dá para publicar só o texto, sem nome nenhum.',
+          'Recebi os 15 prints, obrigado. Só que eles têm o nome das suas clientes, e publicar o nome de alguém sem essa pessoa saber é problema, mesmo sendo elogio. O caminho é você mandar uma mensagem para cada uma perguntando. Se preferir, dá para publicar só o texto, sem nome nenhum.',
         dica: 'vou pedir autorização / pode publicar sem o nome / prefiro não usar',
         linhas: 2,
       },
@@ -242,7 +267,7 @@ const BLOCOS = [
         id: 'dominio',
         pergunta: 'Qual endereço você quer? Ex: feitoparavoce.com.br',
         porque:
-          'Custa por volta de R$ 40 por ano e é seu, não meu — fica no seu nome. Se alguém registrar antes, perdemos o nome. Me diga dois ou três que você gosta, em ordem.',
+          'Custa por volta de R$ 40 por ano e é seu, não meu, fica no seu nome. Se alguém registrar antes, perdemos o nome. Me diga dois ou três que você gosta, em ordem.',
         dica: 'primeira opção, segunda, terceira',
         linhas: 3,
       },
@@ -265,7 +290,7 @@ const BLOCOS = [
         id: 'cpf',
         pergunta: 'Seu CPF',
         porque:
-          'Vai na qualificação do contrato, junto do seu endereço, que eu já tenho. É o mesmo dado que você põe em qualquer contrato — não uso para mais nada.',
+          'Vai na qualificação do contrato, junto do seu endereço, que eu já tenho. É o mesmo dado que você põe em qualquer contrato, não uso para mais nada.',
         dica: '000.000.000-00',
         linhas: 2,
       },
@@ -326,14 +351,14 @@ const montarTexto = (respostas) => {
     partes.push(`*${bloco.titulo}*`);
     respondidas.forEach((p) => {
       partes.push(`${p.pergunta}`);
-      partes.push(`— ${respostas[p.id].trim()}`);
+      partes.push(`- ${respostas[p.id].trim()}`);
       partes.push('');
     });
   });
 
   const naoRespondidas = TOTAL - Object.values(respostas).filter((r) => r?.trim()).length;
   if (naoRespondidas > 0) {
-    partes.push(`(faltam ${naoRespondidas} — respondo depois)`);
+    partes.push(`(faltam ${naoRespondidas}, respondo depois)`);
   }
 
   return partes.join('\n');
@@ -374,7 +399,7 @@ const Perguntas = () => {
   }, []);
 
   /* Grava a cada tecla. Ela vai responder no celular, entre uma coisa e
-     outra, e vai fechar a aba no meio — perder o que já escreveu é o tipo
+     outra, e vai fechar a aba no meio, perder o que já escreveu é o tipo
      de coisa que faz alguém não voltar a preencher. */
   useEffect(() => {
     if (!carregado) return;
@@ -429,8 +454,8 @@ const Perguntas = () => {
   }, [pendentes]);
 
   /* Chamado quando ela usa o botão do WhatsApp ou copia o texto. Não
-     prova que a mensagem foi enviada — o envio acontece dentro do
-     WhatsApp, fora daqui — mas é o ponto a partir do qual cobrar de novo
+     prova que a mensagem foi enviada, o envio acontece dentro do
+     WhatsApp, fora daqui, mas é o ponto a partir do qual cobrar de novo
      seria implicância. */
   const marcarComoEnviadas = () => {
     const total = respondidas + (temCorrecao ? 1 : 0);
@@ -450,7 +475,7 @@ const Perguntas = () => {
 
     /* O primeiro envio do dia costuma passar de 20 segundos: o serviço que
        recebe fica adormecido e precisa acordar. Sem dizer nada, a Vivian
-       vê "Enviando…" parado e conclui que travou — e aí aperta de novo, ou
+       vê "Enviando…" parado e conclui que travou, e aí aperta de novo, ou
        fecha a página achando que não foi. */
     const avisarDemora = setTimeout(() => setDemorando(true), 6000);
 
@@ -513,7 +538,7 @@ const Perguntas = () => {
           <h2>O que você já me contou</h2>
           <p className="perguntas-jasei-intro">
             Isto veio das nossas conversas. Dá uma lida rápida: se eu entendi alguma coisa
-            errada, me fala — é melhor descobrir agora do que depois de a loja estar pronta.
+            errada, me fala, é melhor descobrir agora do que depois de a loja estar pronta.
           </p>
 
           <ul>
@@ -600,7 +625,7 @@ const Perguntas = () => {
         <section className="perguntas-fim">
           <h2>Pronto para mandar?</h2>
           <p>
-            Pode mandar com o que já respondeu — o resto fica guardado aqui e você manda de novo
+            Pode mandar com o que já respondeu, o resto fica guardado aqui e você manda de novo
             depois. O texto vai listar só o que você preencheu.
           </p>
 
@@ -621,7 +646,7 @@ const Perguntas = () => {
 
           {demorando && (
             <p className="perguntas-demora" role="status">
-              Está demorando mais que o normal, mas não fechei nada — pode esperar mais um
+              Está demorando mais que o normal, mas não fechei nada, pode esperar mais um
               pouquinho. Suas respostas continuam guardadas aqui de qualquer jeito.
             </p>
           )}
@@ -629,7 +654,7 @@ const Perguntas = () => {
           <div className="perguntas-acoes">
             {/* O envio direto é a ação principal porque funciona igual no
                 computador e no celular. O WhatsApp fica ao lado, para quem
-                prefere conversar — e como saída se o envio falhar. */}
+                prefere conversar, e como saída se o envio falhar. */}
             {podeEnviar && (
               <button
                 type="button"

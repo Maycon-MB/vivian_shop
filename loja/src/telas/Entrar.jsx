@@ -56,7 +56,7 @@ const Entrar = () => {
             <Form.Group>
               {/* O rótulo precisa apontar para o campo. Sem o par
                   htmlFor/id, quem usa leitor de tela ouve "campo de senha"
-                  sem saber de qual formulário — e clicar no texto "Senha"
+                  sem saber de qual formulário, e clicar no texto "Senha"
                   não põe o cursor no campo. */}
               <Form.Label htmlFor="entrar-senha">Senha</Form.Label>
               <Form.Control

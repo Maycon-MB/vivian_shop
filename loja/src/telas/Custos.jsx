@@ -72,7 +72,7 @@ export default function Custos() {
             <li>
               <strong>O lugar que guarda os pedidos</strong>
               <span>
-                De graça, e por muitos anos. Só passa a custar se a loja crescer muito — e o
+                De graça, e por muitos anos. Só passa a custar se a loja crescer muito, e o
                 resto desta página explica por quê.
               </span>
             </li>
@@ -83,7 +83,7 @@ export default function Custos() {
         <section className="custos-bloco">
           <h2>Por que esse terceiro custo existe</h2>
           <p>
-            As páginas da loja — a vitrine, as fotos, os produtos — são como um folheto: iguais
+            As páginas da loja (a vitrine, as fotos, os produtos) são como um folheto: iguais
             para todo mundo, prontas antes de alguém chegar. Isso é de graça, e continua de
             graça mesmo com muita gente visitando.
           </p>
@@ -96,7 +96,7 @@ export default function Custos() {
             É a diferença entre o <strong>cardápio</strong> e a <strong>comanda</strong>. O
             cardápio é impresso uma vez e todo mundo lê o mesmo; a comanda é escrita de novo a
             cada cliente, e você precisa dela depois para saber o que fazer. Ninguém anota
-            comanda no cardápio — por isso são duas coisas separadas, com contas separadas.
+            comanda no cardápio, por isso são duas coisas separadas, com contas separadas.
           </p>
 
           <table className="custos-tabela">
@@ -166,12 +166,12 @@ export default function Custos() {
           </p>
           <p className="custos-destaque">
             <Check size={18} /> A diferença é que a loja vai fazer isso sozinha, na hora do
-            pagamento — sem você precisar estar em casa para liberar.
+            pagamento, sem você precisar estar em casa para liberar.
           </p>
           <p className="custos-nota">
             <Info size={16} /> Antes eu tinha imaginado que os arquivos ficariam guardados aqui,
             e cheguei a te perguntar quanto eles pesavam. Do jeito que você faz, essa pergunta
-            deixou de existir — e o custo que ela geraria, também.
+            deixou de existir, e o custo que ela geraria, também.
           </p>
         </section>
 
@@ -208,7 +208,7 @@ export default function Custos() {
 
           <p className="custos-destaque">
             <Check size={18} /> A conta fica no seu nome, com eu como convidado. A loja é sua de
-            verdade — se um dia você trocar de desenvolvedor, leva tudo com você.
+            verdade, se um dia você trocar de desenvolvedor, leva tudo com você.
           </p>
 
           <p className="custos-nota">
@@ -240,7 +240,7 @@ export default function Custos() {
               <tr>
                 <td>Pessoas visitando a loja</td>
                 <td>
-                  <strong>182 mil por mês</strong> — e mesmo assim não cobra
+                  <strong>182 mil por mês</strong>, e mesmo assim não cobra
                 </td>
               </tr>
               <tr>
@@ -263,14 +263,14 @@ export default function Custos() {
           </table>
 
           <p className="custos-destaque">
-            <Check size={18} /> Mesmo com 500 pedidos por mês — dez vezes o que você fazia —, o
+            <Check size={18} /> Mesmo com 500 pedidos por mês (dez vezes o que você fazia), o
             espaço levaria 17 anos para encher.
           </p>
 
           <p>
             Ou seja: <strong>na prática você não vai pagar isso.</strong> O número que faria
             você pagar é maior do que a sua loja precisa chegar. Está escrito aqui porque, se um
-            dia acontecer, você já vai saber que existe — e não descobrir numa fatura.
+            dia acontecer, você já vai saber que existe, e não descobrir numa fatura.
           </p>
 
           <p>

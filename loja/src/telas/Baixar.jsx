@@ -76,7 +76,7 @@ const Baixar = () => {
               <strong>Este link vale até 19 de agosto</strong>
               <p>
                 Depois disso ele para de funcionar. Baixe e guarde o arquivo no seu computador
-                ou celular — se perder, é só me chamar que eu reenvio.
+                ou celular, se perder, é só me chamar que eu reenvio.
               </p>
             </div>
           </div>
@@ -87,7 +87,7 @@ const Baixar = () => {
               <strong>Seu nome sai impresso no arquivo</strong>
               <p>
                 Pequeno, no rodapé de cada página. É o que permite vender material digital sem
-                que ele acabe circulando em grupo — e é o que mantém o preço baixo para quem
+                que ele acabe circulando em grupo, e é o que mantém o preço baixo para quem
                 compra.
               </p>
             </div>

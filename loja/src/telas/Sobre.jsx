@@ -36,7 +36,7 @@ const Sobre = () => (
           <div className="sobre-texto">
             <p>
               Comecei fazendo material para as crianças que eu atendia. Cada uma precisava de
-              uma coisa diferente — uma rotina que desse para ver, uma atividade com menos
+              uma coisa diferente, uma rotina que desse para ver, uma atividade com menos
               informação na folha, uma letra maior. Como não achava pronto, eu fazia.
             </p>
 
@@ -49,7 +49,7 @@ const Sobre = () => (
             <p>
               Hoje são duas linhas. A <strong>papelaria personalizada</strong>, que sai daqui
               feita à mão e chega pelo correio. E a <strong>papelaria pedagógica</strong>, que
-              é digital, para você imprimir quantas vezes precisar — porque material de
+              é digital, para você imprimir quantas vezes precisar, porque material de
               criança rasga, molha e some, e você não deveria comprar de novo por isso.
             </p>
           </div>

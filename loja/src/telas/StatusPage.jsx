@@ -104,7 +104,7 @@ const StatusPage = () => {
             </h2>
             <p>
               Conversa de WhatsApp se perde. Aqui fica o que já foi decidido, o que está sendo
-              construído e o que ainda depende de você — para nenhum de nós dois precisar lembrar
+              construído e o que ainda depende de você, para nenhum de nós dois precisar lembrar
               de cabeça daqui a três meses.
             </p>
             <p>
@@ -130,7 +130,7 @@ const StatusPage = () => {
 
           {/* Esta página mostra o que está esperando resposta, mas o lugar
               de responder é o formulário. Sem este aviso, ela lê as
-              perguntas aqui, responde na cabeça e segue — e nada chega. */}
+              perguntas aqui, responde na cabeça e segue, e nada chega. */}
           <Link className="ir-para-perguntas" href="/perguntas/" prefetch={false}>
             <strong>Responder o que está esperando</strong>
             <span>
@@ -148,7 +148,7 @@ const StatusPage = () => {
           </Link>
 
           <div className="note">
-            <strong>Onde estamos:</strong> as telas da loja e do seu painel já estão de pé — não
+            <strong>Onde estamos:</strong> as telas da loja e do seu painel já estão de pé, não
             são mais desenho, é o site de verdade. O que ainda é de mentira são os produtos, os
             preços e os pedidos que aparecem neles: entram os seus quando você mandar. Falta
             ligar o pagamento e o cálculo de frete.

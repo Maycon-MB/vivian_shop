@@ -125,7 +125,7 @@ const COSTS = [
 ];
 
 const NOT_YET = [
-  'Nota fiscal automática — precisa ser configurada junto com seu contador.',
+  'Nota fiscal automática, precisa ser configurada junto com seu contador.',
   'Retirada em mãos e entrega própria no Rio.',
   'Cupom de desconto e programa de indicação.',
   'Área de cliente para rebaixar o material comprado.',
@@ -224,7 +224,7 @@ const HowItWorksPage = () => {
               <p>
                 Digital. As atividades continuam no seu Drive, do jeito que já estão. Quando o
                 pagamento aprova, a loja libera o acesso para o e-mail de quem comprou e manda o
-                link — na hora, sem depender de você estar em casa.
+                link, na hora, sem depender de você estar em casa.
               </p>
               <p>
                 Depois de {VALIDADE_DO_LINK} dias o acesso é retirado sozinho, como você já faz.
@@ -271,7 +271,7 @@ const HowItWorksPage = () => {
             </p>
             <p>
               Na loja isso é automático. Se já tem personalizado no carrinho e a pessoa tenta
-              somar um material digital, aparece um aviso explicando que são compras separadas —
+              somar um material digital, aparece um aviso explicando que são compras separadas,
               ela não descobre isso só no fim.
             </p>
           </div>
@@ -317,7 +317,7 @@ const HowItWorksPage = () => {
             <h2>O que continua saindo do seu bolso.</h2>
             <p>
               Sair do Elo7 acaba com a comissão sobre cada venda. Não acaba com taxa de pagamento
-              nem com frete — isso existe em qualquer loja.
+              nem com frete, isso existe em qualquer loja.
             </p>
           </div>
 
@@ -362,7 +362,7 @@ const HowItWorksPage = () => {
         <div className="wrap">
           <p>
             Dúvida sobre qualquer passo aqui, me chama. Se alguma parte parecer complicada demais
-            para o seu dia a dia, é sinal de que eu preciso simplificar — não de que você precisa
+            para o seu dia a dia, é sinal de que eu preciso simplificar, não de que você precisa
             aprender.
           </p>
         </div>
