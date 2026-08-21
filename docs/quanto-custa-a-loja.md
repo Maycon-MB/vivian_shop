@@ -39,7 +39,8 @@ atualizar e te atender.
 
 ### 2. O endereço da loja: R$ 40 por ano
 
-O nome que a pessoa digita no navegador, tipo `feitoparavoce.com.br`.
+O nome que a pessoa digita no navegador. Registrado em 21/08/2026:
+**feitoparavocepapelaria.com.br**, válido até 21/08/2027.
 
 Pago uma vez por ano, direto no registro.br, **no seu nome e no seu
 cartão**. Dá uns R$ 3,33 por mês.
@@ -165,7 +166,7 @@ cresce.
 3. **Nome completo, CPF e estado civil**: para fechar o contrato
 
 Tudo isso está no formulário:
-https://maycon-mb.github.io/vivian_shop/perguntas/
+https://feitoparavocepapelaria.com.br/perguntas/
 
 ---
 

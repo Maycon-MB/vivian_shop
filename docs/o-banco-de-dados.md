@@ -109,7 +109,7 @@ projeto pausa depois de 7 dias sem uso, pausado não conta no limite.
 ## O que ainda não está escrito
 
 **Criar a cobrança.** Depende do checkout que ela ainda não escolheu, em
-[/perguntas](https://maycon-mb.github.io/vivian_shop/perguntas/). É a única
+[/perguntas](https://feitoparavocepapelaria.com.br/perguntas/). É a única
 parte do pagamento que muda conforme a resposta.
 
 **A escrita do pedido.** Hoje o pedido nasce no navegador

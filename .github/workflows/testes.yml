@@ -57,9 +57,9 @@ jobs:
         working-directory: loja
 
       # Monta pelo mesmo script que publica, e não por `next build` direto:
-      # o que vai ao ar tem caminho /vivian_shop e redirecionamentos dos
-      # endereços antigos. Testar artefato diferente do publicado é testar
-      # outra coisa.
+      # o que vai ao ar tem o CNAME do domínio próprio e os
+      # redirecionamentos dos endereços antigos. Testar artefato diferente
+      # do publicado é testar outra coisa.
       # O endereço que recebe as respostas da Vivian é uma variável do
       # repositório, e não um segredo: ele vai dentro do JavaScript da
       # página, então qualquer pessoa que abra o site consegue lê-lo de
@@ -91,7 +91,7 @@ jobs:
       - name: subir o site
         run: |
           node scripts/servir.cjs 4173 &
-          npx --yes wait-on http://127.0.0.1:4173/vivian_shop/ --timeout 60000
+          npx --yes wait-on http://127.0.0.1:4173/ --timeout 60000
 
       - name: instalar o navegador
         run: npx playwright install --with-deps chromium
@@ -100,17 +100,17 @@ jobs:
       - name: comprar de ponta a ponta
         run: node scripts/testar-navegacao.cjs
         env:
-          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+          BASE_DA_LOJA: http://127.0.0.1:4173
 
       - name: acessibilidade
         run: node scripts/testar-acessibilidade.cjs
         env:
-          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+          BASE_DA_LOJA: http://127.0.0.1:4173
 
       - name: peso e tempo das telas
         run: node scripts/medir-desempenho.cjs
         env:
-          BASE_DA_LOJA: http://127.0.0.1:4173/vivian_shop
+          BASE_DA_LOJA: http://127.0.0.1:4173
 
       # Quando a compra falha, a mensagem de erro raramente basta: o que
       # resolve é ver a tela no instante em que quebrou.
