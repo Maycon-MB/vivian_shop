@@ -3,19 +3,27 @@ import type { NextConfig } from 'next'
 /**
  * Exportação estática para o GitHub Pages.
  *
- * A loja mora na raiz do domínio próprio, feitoparavocepapelaria.com.br,
- * registrado no nome da Vivian em 21/08/2026.
+ * Onde a loja mora depende de uma variável, e não de uma branch parada.
  *
- * Antes disso ela morava em /vivian_shop, que é o caminho que o GitHub
- * Pages dá a um repositório sem domínio. Com domínio próprio o site passa
- * a ser servido na raiz, e o prefixo deixa de existir: mantê-lo faria todo
- * link e toda imagem apontarem para feitoparavocepapelaria.com.br/vivian_shop/,
- * que não existe.
+ * Sem domínio, o GitHub Pages serve um repositório em
+ * maycon-mb.github.io/vivian_shop, e o prefixo precisa existir. Com o
+ * domínio feitoparavocepapelaria.com.br, registrado no nome da Vivian em
+ * 21/08/2026, o site passa a ser servido na raiz e o prefixo tem que
+ * sumir: mantê-lo faria todo link apontar para
+ * feitoparavocepapelaria.com.br/vivian_shop/, que não existe.
  *
- * Os endereços antigos continuam funcionando: o próprio GitHub redireciona
- * maycon-mb.github.io/vivian_shop/... para o domínio novo.
+ * A troca é `DOMINIO_PRONTO=true` nas variáveis do repositório, ligada
+ * quando o DNS estiver de pé. Ficar esperando numa branch seria pior: o
+ * trabalho some de vista, e quem der `git pull` na máquina errada não vê
+ * nada disso.
+ *
+ * Em `npm run dev` a loja sempre roda na raiz, com ou sem domínio, para o
+ * prefixo não atrapalhar o desenvolvimento.
  */
-const base = ''
+const publicando = process.env.PUBLICAR_GITHUB_PAGES === 'true'
+const dominioProprio = process.env.DOMINIO_PRONTO === 'true'
+
+const base = publicando && !dominioProprio ? '/vivian_shop' : ''
 
 const nextConfig: NextConfig = {
   output: 'export',

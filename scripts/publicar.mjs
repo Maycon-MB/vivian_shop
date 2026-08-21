@@ -3,7 +3,9 @@
  *
  *     node scripts/publicar.mjs
  *
- * Publica a loja em Next na raiz de feitoparavocepapelaria.com.br.
+ * Publica a loja em Next. Onde ela mora depende de DOMINIO_PRONTO: com a
+ * variável ligada, na raiz de feitoparavocepapelaria.com.br; sem ela, em
+ * maycon-mb.github.io/vivian_shop, que é onde está hoje.
  *
  * O protótipo em Vite saiu do ar quando a loja passou a ter tudo que ele
  * tinha. Ele continua no repositório, em src/, como referência do que foi
@@ -21,6 +23,11 @@ const dist = path.join(raiz, 'dist')
 const loja = path.join(raiz, 'loja')
 const saida = path.join(loja, 'out')
 
+/* A mesma chave que o next.config.ts lê. Ligada, a loja vai para a raiz do
+   domínio; desligada, continua sob /vivian_shop. */
+const dominioProprio = process.env.DOMINIO_PRONTO === 'true'
+const prefixo = dominioProprio ? '' : '/vivian_shop'
+
 const rodar = (comando, cwd, env = {}) => {
   console.log(`\n> ${comando}`)
   // A variável vai pelo ambiente, e não como prefixo do comando: prefixo
@@ -29,7 +36,7 @@ const rodar = (comando, cwd, env = {}) => {
 }
 
 console.log('1/2 · construindo a loja')
-rodar('npm run build', loja)
+rodar('npm run build', loja, { PUBLICAR_GITHUB_PAGES: 'true' })
 
 if (!existsSync(saida)) {
   console.error(`\nA exportação não gerou ${saida}. Confira output: "export" em next.config.ts.`)
@@ -53,16 +60,20 @@ writeFileSync(path.join(dist, '.nojekyll'), '')
 /**
  * O domínio próprio, no nome da Vivian.
  *
- * Este arquivo é o que diz ao GitHub Pages qual endereço serve este site.
- * Sem ele, o site volta a responder só em maycon-mb.github.io/vivian_shop
- * na próxima publicação — e o domínio, que já está pago, passa a responder
- * "There isn't a GitHub Pages site here".
+ * Este arquivo é o que diz ao GitHub Pages qual endereço serve este site, e
+ * escrevê-lo é o que efetiva a troca. Por isso ele só aparece com
+ * DOMINIO_PRONTO ligado: publicar o CNAME antes de o DNS resolver faz o
+ * GitHub redirecionar o endereço antigo para um domínio que ainda não
+ * existe, e a loja some do ar até a propagação terminar.
  *
  * Escrito aqui, e não commitado à mão na branch de publicação, porque o
- * gh-pages apaga o que não está em dist/. Já aconteceu com muita gente:
- * o domínio "se desconfigura sozinho" a cada deploy, e ninguém entende.
+ * gh-pages apaga o que não está em dist/. É assim que um domínio "se
+ * desconfigura sozinho" a cada deploy, e ninguém entende por quê.
  */
-writeFileSync(path.join(dist, 'CNAME'), 'feitoparavocepapelaria.com.br\n')
+if (dominioProprio) {
+  writeFileSync(path.join(dist, 'CNAME'), 'feitoparavocepapelaria.com.br\n')
+  console.log('  CNAME escrito: feitoparavocepapelaria.com.br')
+}
 
 /**
  * Endereços antigos continuam funcionando.
@@ -78,7 +89,7 @@ const REDIRECIONAR = ['', 'painel', 'como-funciona', 'andamento', 'identidade']
 
 for (const rota of REDIRECIONAR) {
   const pasta = path.join(dist, 'loja', rota)
-  const destino = `/${rota ? `${rota}/` : ''}`
+  const destino = `${prefixo}/${rota ? `${rota}/` : ''}`
 
   mkdirSync(pasta, { recursive: true })
   writeFileSync(
