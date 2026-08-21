@@ -1,6 +1,6 @@
 # O endereço da loja
 
-`feitoparavocepapelaria.com.br`, registrado em 21/08/2026.
+**No ar em https://feitoparavocepapelaria.com.br desde 21/08/2026.**
 
 Registro meu. Não vira PDF.
 
@@ -132,18 +132,50 @@ loja. Endereços conferidos na documentação do GitHub em 21/08/2026.
 
 ---
 
-## O que falta, na ordem
+## Como ficou, e o que foi conferido
 
-1. ~~Registrar o domínio~~ feito e pago
-2. ~~Contato técnico~~ feito, `MBMGC2`
-3. ~~Tirar o `basePath` do código~~ feito, na `main`, atrás de
-   `DOMINIO_PRONTO`
-4. **Esperar a transição e cadastrar os nove registros**
-5. Conferir que o domínio resolve para os IPs do GitHub
-6. Ligar `DOMINIO_PRONTO=true` nas variáveis do repositório
-7. Rodar o workflow (qualquer envio serve, ou o botão "Run workflow")
-8. Ligar o HTTPS obrigatório quando o certificado sair, o que leva de
-   minutos a algumas horas
+Tudo feito em 21/08/2026, no mesmo dia:
+
+1. ~~Registrar o domínio~~
+2. ~~Contato técnico~~ `MBMGC2`
+3. ~~Tirar o `basePath` do código~~ na `main`, atrás de `DOMINIO_PRONTO`
+4. ~~Cadastrar os nove registros~~
+5. ~~Conferir a propagação~~
+6. ~~`DOMINIO_PRONTO=true`~~
+7. ~~Publicar~~
+8. ~~HTTPS obrigatório~~
+
+Conferido contra o site no ar, e não presumido:
+
+| O quê | Resultado |
+|---|---|
+| `https://feitoparavocepapelaria.com.br/` | 200 |
+| `https://www.feitoparavocepapelaria.com.br/` | 200 |
+| `http://` | 301 para `https://` |
+| Certificado | válido, emitido no mesmo dia |
+| Endereço antigo | 301 para o domínio |
+| Links com o prefixo velho | zero |
+| Navegação completa | 25 de 25 |
+| Links | 37 páginas, todas respondem |
+
+### Os dois erros do caminho
+
+**Um IP com uma letra a menos.** O `185.199.110.15` estava sem o `3` final.
+Pegou porque conferi a tela linha por linha em vez de aceitar o "feito".
+Um IP errado no meio de quatro não derruba o site: ele fica lento e falha
+em uma tentativa a cada quatro, que é o tipo de defeito que ninguém
+associa a DNS.
+
+**CNAME na raiz.** A nona entrada tinha sido criada em
+`feitoparavocepapelaria.com.br` em vez de `www`. CNAME não pode conviver
+com registros A no mesmo nome: não é preciosismo, é inválido, e o
+resultado é imprevisível.
+
+**E um terceiro, meu:** o botão "Run workflow" não publicava. A condição
+do job exigia `push`, então ligar a variável rodou os testes verdes e não
+mudou nada no ar. Eu tinha documentado esse passo errado aqui mesmo.
+Corrigido: agora publica também no `workflow_dispatch`, o que vale para
+qualquer variável futura.
 
 ---
 
