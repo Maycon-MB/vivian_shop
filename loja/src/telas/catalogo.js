@@ -398,6 +398,23 @@ export const PRODUTOS = [
   },
 ]
 
+/**
+ * O que a loja mostra hoje: só o que tem foto.
+ *
+ * Ela mandou 41 fotos, que cobrem 13 dos 21 produtos. Uma vitrine com um
+ * terço dos cartões escrito "aqui entra a foto" passa impressão de obra
+ * parada, e é o contrário do que ela precisa transmitir para quem chega
+ * pelo Instagram.
+ *
+ * Escondido, e não apagado: as descrições e os preços são dela, vieram do
+ * Elo7 e custaram tempo. Quando a foto chegar, o produto volta sozinho,
+ * sem ninguém precisar redigitar nada.
+ *
+ * Quando o cadastro pela própria Vivian existir, isso vira a coluna
+ * `ativo` do banco e a decisão passa a ser dela, produto a produto.
+ */
+export const PUBLICADOS = PRODUTOS.filter((produto) => produto.image)
+
 /** Encontra o produto pelo pedaço do endereço. */
 export const acharPorSlug = (slug) => PRODUTOS.find((produto) => produto.slug === slug)
 
@@ -409,7 +426,7 @@ export const temPromocao = (produto) =>
   typeof produto.precoPromocional === 'number' && produto.precoPromocional < produto.price
 
 export const produtosDoTema = (slugDoTema) =>
-  PRODUTOS.filter((produto) => produto.tema === slugDoTema)
+  PUBLICADOS.filter((produto) => produto.tema === slugDoTema)
 
 export const acharTema = (slugDoTema) => TEMAS.find((tema) => tema.slug === slugDoTema)
 

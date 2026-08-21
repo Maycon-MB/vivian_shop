@@ -16,7 +16,7 @@ import {
   totalCarrinho,
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
-import { PRODUTOS, temasComProdutos } from './catalogo';
+import { PUBLICADOS, temasComProdutos } from './catalogo';
 import RodapeConfianca from './RodapeConfianca';
 import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
@@ -26,7 +26,7 @@ import { BASE } from '../base'
  * Nada aqui é produto real: os itens, preços e fotos entram quando a
  * cliente enviar o catálogo dela.
  */
-const products = PRODUTOS;
+const products = PUBLICADOS;
 
 const LandingPage = () => {
   const [showCart, setShowCart] = useState(false);
