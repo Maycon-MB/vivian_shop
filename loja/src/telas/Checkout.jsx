@@ -51,7 +51,7 @@ const validar = ({ dados, precisaEndereco, frete }) => {
   const erros = {};
 
   if (dados.nome.trim().split(/\s+/).length < 2) {
-    erros.nome = 'Escreva seu nome e sobrenome — é o que vai na etiqueta.';
+    erros.nome = 'Escreva seu nome e sobrenome, é o que vai na etiqueta.';
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(dados.email.trim())) {
@@ -123,7 +123,7 @@ const Checkout = () => {
      que o computador podia ter feito.
 
      A cotação guarda junto o CEP que a originou. Assim, quando a pessoa
-     apaga um dígito, o preço some sozinho — sem o efeito precisar limpar
+     apaga um dígito, o preço some sozinho, sem o efeito precisar limpar
      nada. Preço de frete que sobrevive à troca do CEP é o tipo de erro que
      só aparece depois de a pessoa já ter pago pelo valor errado. */
   useEffect(() => {
@@ -309,7 +309,7 @@ const Checkout = () => {
                    acesso, não arquivo. Com endereço do Google o acesso é
                    liberado na hora; com outro provedor a pessoa cai numa
                    tela de "solicitar acesso" e passa a depender de a Vivian
-                   ver a solicitação e liberar na mão — que é exatamente o
+                   ver a solicitação e liberar na mão, que é exatamente o
                    trabalho manual que a loja veio eliminar.
 
                    Por isso o pedido do Gmail aparece antes do pagamento, e
@@ -318,7 +318,7 @@ const Checkout = () => {
                   <Download size={15} />
                   <span>
                     O material chega neste e-mail assim que o pagamento for aprovado.{' '}
-                    <strong>Se puder, use um e-mail do Gmail</strong> — com ele o acesso é
+                    <strong>Se puder, use um e-mail do Gmail</strong>, com ele o acesso é
                     liberado na hora. Com outro tipo de e-mail, pode ser preciso pedir
                     liberação e esperar.
                   </span>
@@ -358,7 +358,7 @@ const Checkout = () => {
                           value={dados.cidade}
                           onChange={preencher('cidade')}
                           autoComplete="address-level2"
-                          placeholder="Rio de Janeiro — RJ"
+                          placeholder="Rio de Janeiro / RJ"
                         />
                       </Form.Group>
 

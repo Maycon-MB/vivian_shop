@@ -167,7 +167,7 @@ const PedidoConfirmado = () => {
           <h2>Precisa de alguma coisa?</h2>
           <p>
             Quem responde é a Vivian, a mesma pessoa que faz as peças. Pode chamar a qualquer
-            hora — ela responde quando puder.
+            hora, ela responde quando puder.
           </p>
 
           <div className="confirmado-acoes">

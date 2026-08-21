@@ -159,7 +159,7 @@ const RodapeConfianca = () => (
                 com o nome de outra criança não pode ser revendida: se a
                 devolução acontecer, o prejuízo é inteiro da Vivian.
                 Por isso o texto informa o direito sem prometer nada além
-                dele, e pede contato antes — o acerto caso a caso protege
+                dele, e pede contato antes, o acerto caso a caso protege
                 os dois lados melhor que uma promessa larga demais. */}
             <span>
               Comprou pela internet e se arrependeu? O Código de Defesa do Consumidor te dá{' '}
@@ -217,7 +217,7 @@ const RodapeConfianca = () => (
           Enviado do Rio de Janeiro, RJ
         </span>
 
-        {/* Lacuna proposital — ver comentário do topo do arquivo. */}
+        {/* Lacuna proposital, ver comentário do topo do arquivo. */}
         <span style={{ fontStyle: 'italic', fontSize: '.8rem' }}>
           CNPJ e razão social entram aqui assim que a Vivian informar os dados.
         </span>

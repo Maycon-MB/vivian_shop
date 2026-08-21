@@ -70,7 +70,7 @@ const OPEN_QUESTIONS = [
   },
   {
     title: 'Sua história',
-    detail: 'Como o Projeto Educar começou, para quem você faz esse material, o que mudou para alguma família. Loja nova não tem reputação — tem história. É o que constrói confiança em quem chega pela primeira vez.',
+    detail: 'Como o Projeto Educar começou, para quem você faz esse material, o que mudou para alguma família. Loja nova não tem reputação, tem história. É o que constrói confiança em quem chega pela primeira vez.',
   },
   {
     title: 'De onde você envia',
@@ -184,7 +184,7 @@ const IdentityPage = () => {
               <p>
                 O verde-água e o rosa saíram do anel e do coração da logo <strong>Feito para
                 Você</strong>. O amarelo saiu do lápis e dos respingos do <strong>Projeto
-                Educar</strong>. As duas logos já eram azuis — esse azul virou a tinta do site
+                Educar</strong>. As duas logos já eram azuis, esse azul virou a tinta do site
                 inteiro.
               </p>
             </div>
@@ -230,7 +230,7 @@ const IdentityPage = () => {
 
           <div className="note">
             <strong>Sobre o amarelo:</strong> amarelo puro sobre branco é praticamente invisível
-            para quem enxerga pouco. Por isso ele nunca vira cor de letra — só preenchimento, com
+            para quem enxerga pouco. Por isso ele nunca vira cor de letra, só preenchimento, com
             a tinta azul escrita por cima. É a diferença entre usar a cor da marca e usar a cor
             errado.
           </div>
@@ -250,7 +250,7 @@ const IdentityPage = () => {
               <div>
                 <div className="spec-display">Cada pequena descoberta</div>
                 <p className="spec-note">
-                  Serif com cantos levemente amaciados — carrega o feito à mão sem virar letra
+                  Serif com cantos levemente amaciados, carrega o feito à mão sem virar letra
                   cursiva. Aparece só em títulos, nunca em texto corrido.
                 </p>
               </div>
@@ -262,8 +262,8 @@ const IdentityPage = () => {
                 <p className="spec-body">
                   Todo o texto da loja, do nome do produto ao botão de finalizar compra. Esta
                   fonte foi desenhada pelo Braille Institute para que letras parecidas não se
-                  confundam: o i maiúsculo, o l minúsculo e o número 1 têm formas diferentes —
-                  Il1 — e o zero é cortado.
+                  confundam: o i maiúsculo, o l minúsculo e o número 1 têm formas diferentes,
+                  Il1, e o zero é cortado.
                 </p>
                 <p className="spec-note">
                   Isso não é detalhe de designer. Boa parte de quem compra a linha Projeto Educar

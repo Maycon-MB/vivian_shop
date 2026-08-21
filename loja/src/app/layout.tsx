@@ -8,7 +8,7 @@ import { WhatsAppDaLoja } from '@/componentes/WhatsAppDaLoja'
 import { FaixasDoTopo } from '@/componentes/FaixasDoTopo'
 
 /* A Atkinson Hyperlegible é escolha funcional, não estética: foi desenhada
-   pelo Braille Institute para diferenciar caracteres que se confundem —
+   pelo Braille Institute para diferenciar caracteres que se confundem,
    i maiúsculo, l minúsculo e o número 1 têm formas distintas, e o zero é
    cortado. Boa parte de quem compra a linha pedagógica compra justamente
    por acessibilidade. */

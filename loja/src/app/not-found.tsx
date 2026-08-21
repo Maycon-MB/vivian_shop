@@ -5,18 +5,18 @@ import { MessageCircle, ArrowLeft, Search } from 'lucide-react'
 /* POR QUE ESTA PÁGINA EXISTE
    Sem ela, um endereço que não existe cai na tela preta padrão do Next, com
    "404 This page could not be found". Quem compra aqui é mãe, professora,
-   psicopedagoga — quase sempre no celular, muitas vindas de um link antigo do
+   psicopedagoga, quase sempre no celular, muitas vindas de um link antigo do
    Instagram. Essa tela preta parece site fora do ar: a pessoa fecha e vai embora.
 
    DECISÃO DE TOM
-   Nada de "erro 404", "recurso não encontrado" ou "URL inválida" — isso não quer
+   Nada de "erro 404", "recurso não encontrado" ou "URL inválida", isso não quer
    dizer nada para o público dela e ainda assusta. O texto fala como a Vivian
    falaria atendendo: assume a bagunça do nosso lado ("esse endereço mudou de
    lugar"), não culpa quem clicou, e em uma frase já diz o que fazer agora.
 
    O WHATSAPP É O CAMINHO PRINCIPAL, não a última opção: quem cai aqui vindo de
    um link de produto que saiu do ar geralmente quer justamente aquele produto,
-   e como tudo é feito sob encomenda, a conversa resolve — a Vivian refaz.
+   e como tudo é feito sob encomenda, a conversa resolve, a Vivian refaz.
 
    A ordem do texto é a ordem em que um leitor de tela vai ler: o que aconteceu,
    o que fazer, e só então os caminhos. Tudo com estilo inline de propósito,

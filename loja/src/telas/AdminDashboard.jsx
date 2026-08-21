@@ -97,9 +97,9 @@ const AdminDashboard = () => {
    * pedagógica é entregue na hora do pagamento.
    */
   const [orders, setOrders] = useState([
-    { id: '#0003', customer: 'Exemplo — pedido digital', items: 'Apostila de alfabetização adaptada', total: 47.00, status: 'Entregue por e-mail', date: 'Hoje, 14:20', niche: 'Papelaria pedagógica' },
-    { id: '#0002', customer: 'Exemplo — pedido personalizado', items: '10x Caderno personalizado', total: 320.00, status: 'Em produção', date: 'Hoje, 11:05', niche: 'Papelaria personalizada' },
-    { id: '#0001', customer: 'Exemplo — pronto para envio', items: '10x Cartela de adesivos', total: 180.00, status: 'Pronto para envio', date: 'Ontem, 19:30', niche: 'Papelaria personalizada' },
+    { id: '#0003', customer: 'Exemplo: pedido digital', items: 'Apostila de alfabetização adaptada', total: 47.00, status: 'Entregue por e-mail', date: 'Hoje, 14:20', niche: 'Papelaria pedagógica' },
+    { id: '#0002', customer: 'Exemplo: pedido personalizado', items: '10x Caderno personalizado', total: 320.00, status: 'Em produção', date: 'Hoje, 11:05', niche: 'Papelaria personalizada' },
+    { id: '#0001', customer: 'Exemplo: pronto para envio', items: '10x Cartela de adesivos', total: 180.00, status: 'Pronto para envio', date: 'Ontem, 19:30', niche: 'Papelaria personalizada' },
   ]);
 
   const triggerToast = (msg) => {
@@ -190,7 +190,7 @@ const AdminDashboard = () => {
       icone: <ShoppingBag size={20} />,
       cor: '#1F736F',
       nota: 'sem contar o frete',
-      info: 'Soma dos pedidos pagos neste mês, sem contar o frete — o frete é dos Correios, não seu.',
+      info: 'Soma dos pedidos pagos neste mês, sem contar o frete, o frete é dos Correios, não seu.',
     },
     {
       rotulo: 'Clientes',
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
                   titulo="Quanto entrou por dia"
                   subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
                   cor="#1F736F"
-                  info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais — dá para postar no Instagram justamente nesse dia."
+                  info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais, dá para postar no Instagram justamente nesse dia."
                   acao={
                     <span className="d-flex align-items-center gap-3">
                       <span className="d-flex gap-3 small fw-bold" style={{ color: '#5F6F80' }}>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                   titulo="Na sua bancada"
                   subtitulo="O que produzir primeiro."
                   cor="#C4436B"
-                  info="A barra mostra quanto do prazo combinado já passou — não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
+                  info="A barra mostra quanto do prazo combinado já passou, não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
                   acao={<span className="selo-exemplo">exemplo</span>}
                 >
                   <FilaProducao />
@@ -337,7 +337,7 @@ const AdminDashboard = () => {
                   titulo="Marketing"
                   subtitulo="Post sugerido para esta semana."
                   cor="#1F736F"
-                  info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda — nada vai para o seu Instagram sem você aprovar."
+                  info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda, nada vai para o seu Instagram sem você aprovar."
                   semPadding
                 >
                   <MarketingIA approving={approving} onApprove={handleApprovePost} />
