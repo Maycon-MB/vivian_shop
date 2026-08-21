@@ -453,6 +453,41 @@ const Perguntas = () => {
     return () => window.removeEventListener('beforeunload', perguntarAntesDeSair);
   }, [pendentes]);
 
+  /* A tarja some quando o botão de enviar entra na tela.
+
+     Ela é fixa no rodapé e serve para empurrar a Vivian até o botão. Com o
+     botão à vista, ela deixa de ajudar e passa a atrapalhar: fica por cima
+     dele, e o toque não faz nada. Foi o que a Vivian relatou em 21/08,
+     dizendo que o botão "está na parte errada, não dá pra clicar".
+
+     Havia uma defesa antes disto, um `margin-bottom` de 92px no fim da
+     página. Ela não bastava: no celular a tarja quebra em cinco linhas e
+     passa de 140px, e mesmo com a margem certa ela ainda cobriria o botão
+     no meio da rolagem. Reservar espaço resolve o fim da página; sumir
+     resolve a página inteira. */
+  const [chegouNoFim, setChegouNoFim] = useState(false);
+  const observadorDoFim = useRef(null);
+
+  /* Ref de callback, e não `useRef` com efeito: a página começa vazia até
+     montar no navegador, então na hora em que um `useEffect` com lista de
+     dependências vazia roda, a seção ainda não existe no documento. O
+     callback é chamado quando o elemento entra de verdade. */
+  const observarOFim = (elemento) => {
+    observadorDoFim.current?.disconnect();
+    observadorDoFim.current = null;
+
+    if (!elemento || typeof IntersectionObserver === 'undefined') return;
+
+    observadorDoFim.current = new IntersectionObserver(
+      ([entrada]) => setChegouNoFim(entrada.isIntersecting),
+      // Um pedaço do bloco já basta: esperar ele inteiro deixaria a tarja
+      // por cima do botão em tela pequena, que é justamente o caso dela.
+      { threshold: 0.01 },
+    );
+
+    observadorDoFim.current.observe(elemento);
+  };
+
   /* Chamado quando ela usa o botão do WhatsApp ou copia o texto. Não
      prova que a mensagem foi enviada, o envio acontece dentro do
      WhatsApp, fora daqui, mas é o ponto a partir do qual cobrar de novo
@@ -608,7 +643,7 @@ const Perguntas = () => {
           </section>
         ))}
 
-        {pendentes > 0 && (
+        {pendentes > 0 && !chegouNoFim && (
           <div className="perguntas-pendente" role="status">
             <strong>
               {pendentes === 1
@@ -622,7 +657,7 @@ const Perguntas = () => {
           </div>
         )}
 
-        <section className="perguntas-fim">
+        <section className="perguntas-fim" ref={observarOFim}>
           <h2>Pronto para mandar?</h2>
           <p>
             Pode mandar com o que já respondeu, o resto fica guardado aqui e você manda de novo

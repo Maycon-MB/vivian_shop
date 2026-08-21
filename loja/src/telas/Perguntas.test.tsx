@@ -1,6 +1,6 @@
 import React from 'react'
-import { describe, it, expect } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import Perguntas from './Perguntas'
@@ -228,6 +228,45 @@ describe('formulário de perguntas', () => {
     // Se o Pix for mesmo 0% para ela, 5% de desconto custa mais caro que a
     // taxa do cartão. A loja está configurada com 5% até ela decidir.
     expect(await screen.findByLabelText(/desconto.*Pix/i)).toBeInTheDocument()
+  })
+
+  it('esconde a tarja amarela quando o botão de enviar está na tela', async () => {
+    // A tarja é fixa no rodapé e existe para empurrar ela até o botão.
+    // Quando o botão já está à vista, ela deixa de ajudar e passa a
+    // atrapalhar: cobre o próprio botão, e o toque não faz nada. Foi
+    // exatamente o que a Vivian relatou em 21/08.
+    const observadores: Array<(v: boolean) => void> = []
+
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        constructor(callback: (entradas: { isIntersecting: boolean }[]) => void) {
+          observadores.push((visivel) => callback([{ isIntersecting: visivel }]))
+        }
+        observe() {}
+        disconnect() {}
+        unobserve() {}
+      },
+    )
+
+    render(<Perguntas />)
+
+    await userEvent.type(
+      await screen.findByLabelText(/salvar alguma coisa antes do Elo7 fechar/),
+      'tenho planilha',
+    )
+    expect(await screen.findByText(/ainda não me chegou/)).toBeInTheDocument()
+
+    // O bloco de envio entrou na tela.
+    act(() => observadores.forEach((avisar) => avisar(true)))
+
+    await waitFor(() =>
+      expect(screen.queryByText(/ainda não me chegou/)).not.toBeInTheDocument(),
+    )
+
+    // E volta quando ela rola para cima de novo, porque o risco continua.
+    act(() => observadores.forEach((avisar) => avisar(false)))
+    expect(await screen.findByText(/ainda não me chegou/)).toBeInTheDocument()
   })
 
   it('explica que a conta do banco não recebe as vendas', async () => {
