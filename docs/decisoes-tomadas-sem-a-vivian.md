@@ -8,7 +8,7 @@ Nada aqui é irreversível. A coluna "custo de mudar" é honesta: onde estiver
 escrito "cinco minutos", é cinco minutos mesmo.
 
 As perguntas que eu **não** consegui decidir sozinho estão em
-[/perguntas](https://maycon-mb.github.io/vivian_shop/perguntas/): são as
+[/perguntas](https://feitoparavocepapelaria.com.br/perguntas/): são as
 que dependem de dinheiro, de conta bancária ou do que ela promete às
 clientes dela.
 

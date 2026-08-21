@@ -10,15 +10,25 @@
  * publica normalmente e só quem clica descobre. Rodar isto depois de cada
  * publicação custa segundos.
  */
-const BASE = 'https://maycon-mb.github.io'
-const INICIOS = ['/vivian_shop/']
+/* Aceita endereço por argumento ou ambiente para poder rodar contra o
+   servidor local, que é o mesmo artefato que vai ao ar. Antes daqui só
+   apontava para o site publicado, e conferir links de uma versão que
+   ainda não subiu era impossível. */
+const BASE = (
+  process.argv[2] ||
+  process.env.BASE_DA_LOJA ||
+  (process.env.DOMINIO_PRONTO === 'true'
+    ? 'https://feitoparavocepapelaria.com.br'
+    : 'https://maycon-mb.github.io/vivian_shop')
+).replace(/\/$/, '')
+const INICIOS = ['/']
 
 const visitadas = new Set()
 const problemas = []
 const fila = [...INICIOS.map((u) => ({ url: u, veioDe: '(início)' }))]
 
 const ehInterno = (href) =>
-  href.startsWith('/vivian_shop') ||
+  href.startsWith('/') ||
   (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:'))
 
 const absolutizar = (href, de) => {
@@ -52,7 +62,7 @@ const absolutizar = (href, de) => {
       if (!ehInterno(href)) continue
       if (href.endsWith('.css') || href.endsWith('.ico') || href.endsWith('.png')) continue
       const alvo = absolutizar(href, url)
-      if (!alvo.startsWith('/vivian_shop')) continue
+      if (!alvo.startsWith('/')) continue
       if (!visitadas.has(alvo)) fila.push({ url: alvo, veioDe: url })
     }
   }
