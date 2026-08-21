@@ -14,8 +14,13 @@
    servidor local, que é o mesmo artefato que vai ao ar. Antes daqui só
    apontava para o site publicado, e conferir links de uma versão que
    ainda não subiu era impossível. */
-const BASE = (process.argv[2] || process.env.BASE_DA_LOJA || 'https://feitoparavocepapelaria.com.br')
-  .replace(/\/$/, '')
+const BASE = (
+  process.argv[2] ||
+  process.env.BASE_DA_LOJA ||
+  (process.env.DOMINIO_PRONTO === 'true'
+    ? 'https://feitoparavocepapelaria.com.br'
+    : 'https://maycon-mb.github.io/vivian_shop')
+).replace(/\/$/, '')
 const INICIOS = ['/']
 
 const visitadas = new Set()

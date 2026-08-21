@@ -62,10 +62,35 @@ Manter o `basePath` faria todo link e toda imagem apontarem para
 `feitoparavocepapelaria.com.br/vivian_shop/`, que não existe. O site
 publicaria "com sucesso" e abriria quebrado.
 
-Por isso a ordem é **código, DNS, publicação** — e nunca publicação antes
-do DNS: no instante em que o CNAME entra no ar, o GitHub passa a
-redirecionar o endereço antigo para o domínio, e se ele ainda não resolver,
-a loja fica inacessível até a propagação.
+Por isso a ordem é **código, DNS, publicação**, e nunca publicação antes do
+DNS: no instante em que o CNAME entra no ar, o GitHub passa a redirecionar
+o endereço antigo para o domínio, e se ele ainda não resolver, a loja fica
+inacessível até a propagação terminar.
+
+### A chave: `DOMINIO_PRONTO`
+
+O código dos dois mundos vive na `main`, e quem decide qual vale é uma
+variável do repositório:
+
+| `DOMINIO_PRONTO` | Onde a loja mora | CNAME |
+|---|---|---|
+| ausente ou `false` | `maycon-mb.github.io/vivian_shop` | não escrito |
+| `true` | raiz de `feitoparavocepapelaria.com.br` | escrito a cada build |
+
+Isso existe porque a alternativa era deixar a mudança numa branch esperando
+o DNS. Branch parada é trabalho invisível: quem der `git pull` em outra
+máquina não vê nada, e o que está pendente só existe na cabeça de quem
+criou.
+
+Ligar em **Settings → Secrets and variables → Actions → aba Variables**,
+que é a mesma aba do `NEXT_PUBLIC_FORMULARIO_URL`. Não é segredo: o valor
+aparece no HTML publicado de qualquer forma.
+
+A próxima publicação depois de ligar já vira a chave. Nenhum merge, nenhuma
+branch, nenhum comando local.
+
+Os dois modos têm teste: montei e rodei a navegação completa nos dois, 25
+de 25 em cada um.
 
 O `CNAME` é escrito pelo `publicar.mjs` a cada build. Não pode ser
 commitado à mão na branch de publicação: o `gh-pages` apaga o que não está
@@ -111,11 +136,13 @@ loja. Endereços conferidos na documentação do GitHub em 21/08/2026.
 
 1. ~~Registrar o domínio~~ feito e pago
 2. ~~Contato técnico~~ feito, `MBMGC2`
-3. ~~Tirar o `basePath` do código~~ feito, na branch `dominio-proprio`
+3. ~~Tirar o `basePath` do código~~ feito, na `main`, atrás de
+   `DOMINIO_PRONTO`
 4. **Esperar a transição e cadastrar os nove registros**
 5. Conferir que o domínio resolve para os IPs do GitHub
-6. Só então mandar a branch para a `main`, que publica sozinha
-7. Ligar o HTTPS obrigatório quando o certificado sair, o que leva de
+6. Ligar `DOMINIO_PRONTO=true` nas variáveis do repositório
+7. Rodar o workflow (qualquer envio serve, ou o botão "Run workflow")
+8. Ligar o HTTPS obrigatório quando o certificado sair, o que leva de
    minutos a algumas horas
 
 ---
