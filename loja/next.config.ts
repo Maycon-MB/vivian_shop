@@ -3,17 +3,19 @@ import type { NextConfig } from 'next'
 /**
  * Exportação estática para o GitHub Pages.
  *
- * A loja é servida na raiz de /vivian_shop/. Foi para lá quando passou a
- * ter tudo que o protótipo em Vite tinha — e mais: o protótipo entregava
- * HTML vazio, com o conteúdo aparecendo só depois do JavaScript, o que
- * deixava o Google vendo uma página em branco.
+ * A loja mora na raiz do domínio próprio, feitoparavocepapelaria.com.br,
+ * registrado no nome da Vivian em 21/08/2026.
  *
- * `basePath` só é aplicado na publicação: em `npm run dev` a loja roda na
- * raiz, sem prefixo, para não atrapalhar o desenvolvimento.
+ * Antes disso ela morava em /vivian_shop, que é o caminho que o GitHub
+ * Pages dá a um repositório sem domínio. Com domínio próprio o site passa
+ * a ser servido na raiz, e o prefixo deixa de existir: mantê-lo faria todo
+ * link e toda imagem apontarem para feitoparavocepapelaria.com.br/vivian_shop/,
+ * que não existe.
+ *
+ * Os endereços antigos continuam funcionando: o próprio GitHub redireciona
+ * maycon-mb.github.io/vivian_shop/... para o domínio novo.
  */
-const publicando = process.env.PUBLICAR_GITHUB_PAGES === 'true'
-
-const base = publicando ? '/vivian_shop' : ''
+const base = ''
 
 const nextConfig: NextConfig = {
   output: 'export',

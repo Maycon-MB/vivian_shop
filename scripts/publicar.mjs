@@ -3,7 +3,7 @@
  *
  *     node scripts/publicar.mjs
  *
- * Publica a loja em Next na raiz de /vivian_shop/.
+ * Publica a loja em Next na raiz de feitoparavocepapelaria.com.br.
  *
  * O protótipo em Vite saiu do ar quando a loja passou a ter tudo que ele
  * tinha. Ele continua no repositório, em src/, como referência do que foi
@@ -29,7 +29,7 @@ const rodar = (comando, cwd, env = {}) => {
 }
 
 console.log('1/2 · construindo a loja')
-rodar('npm run build', loja, { PUBLICAR_GITHUB_PAGES: 'true' })
+rodar('npm run build', loja)
 
 if (!existsSync(saida)) {
   console.error(`\nA exportação não gerou ${saida}. Confira output: "export" em next.config.ts.`)
@@ -51,17 +51,34 @@ cpSync(saida, dist, { recursive: true })
 writeFileSync(path.join(dist, '.nojekyll'), '')
 
 /**
+ * O domínio próprio, no nome da Vivian.
+ *
+ * Este arquivo é o que diz ao GitHub Pages qual endereço serve este site.
+ * Sem ele, o site volta a responder só em maycon-mb.github.io/vivian_shop
+ * na próxima publicação — e o domínio, que já está pago, passa a responder
+ * "There isn't a GitHub Pages site here".
+ *
+ * Escrito aqui, e não commitado à mão na branch de publicação, porque o
+ * gh-pages apaga o que não está em dist/. Já aconteceu com muita gente:
+ * o domínio "se desconfigura sozinho" a cada deploy, e ninguém entende.
+ */
+writeFileSync(path.join(dist, 'CNAME'), 'feitoparavocepapelaria.com.br\n')
+
+/**
  * Endereços antigos continuam funcionando.
  *
  * Enquanto a loja morava em /vivian_shop/loja/, esses links foram mandados
  * por WhatsApp. Link que um dia funcionou e depois responde 404 é pior que
  * link que nunca existiu: quem recebeu acha que o site saiu do ar.
+ *
+ * Os endereços /vivian_shop/... não precisam de redirecionamento nosso: o
+ * GitHub redireciona sozinho para o domínio quando ele está configurado.
  */
 const REDIRECIONAR = ['', 'painel', 'como-funciona', 'andamento', 'identidade']
 
 for (const rota of REDIRECIONAR) {
   const pasta = path.join(dist, 'loja', rota)
-  const destino = `/vivian_shop/${rota ? `${rota}/` : ''}`
+  const destino = `/${rota ? `${rota}/` : ''}`
 
   mkdirSync(pasta, { recursive: true })
   writeFileSync(

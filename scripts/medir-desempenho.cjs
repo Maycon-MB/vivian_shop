@@ -17,7 +17,7 @@
 const path = require('path')
 const { chromium } = require(path.join(__dirname, '..', 'loja', 'node_modules', 'playwright'))
 
-const BASE = process.argv[2] || process.env.BASE_DA_LOJA || 'https://maycon-mb.github.io/vivian_shop'
+const BASE = process.argv[2] || process.env.BASE_DA_LOJA || 'https://feitoparavocepapelaria.com.br'
 
 /* 4G ruim: ~1,6 Mb/s de descida e 150ms de ida e volta. */
 const REDE = {
