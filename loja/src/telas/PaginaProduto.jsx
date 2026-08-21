@@ -205,7 +205,7 @@ const PaginaProduto = ({ produto }) => {
                 {personalizado ? 'Correios e Jadlog, com rastreio' : 'Entrega imediata por e-mail'}
               </li>
               <li>
-                <MessageCircle size={17} /> Dúvida? Fale direto com a Vivian
+                <MessageCircle size={17} /> Dúvida? Fale direto com quem faz
               </li>
             </ul>
           </Col>

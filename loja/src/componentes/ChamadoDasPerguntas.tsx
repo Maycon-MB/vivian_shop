@@ -66,7 +66,7 @@ export function ChamadoDasPerguntas() {
       <div className="container">
         <div className="row align-items-center g-2">
           <div className="col-12 col-md-8 col-lg-9">
-            <strong className="chamado-titulo">Vivian, é você?</strong>
+            <strong className="chamado-titulo">Você é a dona desta loja?</strong>
             <span className="chamado-detalhe">
               {comecou
                 ? `Você já respondeu ${respondidas} das minhas perguntas. Faltam ${faltam}.`

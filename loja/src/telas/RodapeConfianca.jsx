@@ -219,7 +219,7 @@ const RodapeConfianca = () => (
 
         {/* Lacuna proposital, ver comentário do topo do arquivo. */}
         <span style={{ fontStyle: 'italic', fontSize: '.8rem' }}>
-          CNPJ e razão social entram aqui assim que a Vivian informar os dados.
+          CNPJ e razão social entram aqui assim que a loja informar os dados.
         </span>
 
         <span style={{ marginLeft: 'auto' }}>© {anoAtual} Feito para você! Personalizados</span>

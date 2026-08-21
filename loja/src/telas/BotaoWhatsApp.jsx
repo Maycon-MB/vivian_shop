@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import { MessageCircle } from 'lucide-react';
+import { WhatsApp } from './icones-marca';
 
 /**
  * Botão flutuante de WhatsApp.
@@ -20,7 +20,7 @@ import { MessageCircle } from 'lucide-react';
  *    a ~96px do fim da tela — respirando acima da barra, no canto direito.
  *
  * 2) No celular ele vira só o ícone. Tela de celular é pequena e o texto
- *    "Falar com a Vivian" cobriria produto. No computador sobra espaço, e
+ *    "Falar no WhatsApp" cobriria produto. No computador sobra espaço, e
  *    aí o texto entra, porque um círculo verde sozinho nem todo mundo sabe
  *    o que é.
  *
@@ -33,7 +33,7 @@ import { MessageCircle } from 'lucide-react';
 
 // PENDENTE-LANCAMENTO: número de exemplo. Trocar pelo da Vivian.
 const NUMERO = '5521900000000';
-const MENSAGEM = 'Oi, Vivian! Vi a sua loja e queria tirar uma dúvida sobre um produto.';
+const MENSAGEM = 'Oi! Vi a sua loja e queria tirar uma dúvida sobre um produto.';
 const LINK = `https://wa.me/${NUMERO}?text=${encodeURIComponent(MENSAGEM)}`;
 
 const cores = {
@@ -118,7 +118,7 @@ const BotaoWhatsApp = () => {
       href={LINK}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Falar com a Vivian no WhatsApp"
+      aria-label="Falar no WhatsApp"
       style={{
         // Repetidos aqui de propósito: se por qualquer motivo o <style>
         // acima não for aplicado, o botão ainda aparece no lugar certo,
@@ -136,8 +136,8 @@ const BotaoWhatsApp = () => {
         textDecoration: 'none',
       }}
     >
-      <MessageCircle size={22} strokeWidth={2.2} aria-hidden="true" />
-      <span className="bt-whats-rotulo">Falar com a Vivian</span>
+      <WhatsApp size={22} />
+      <span className="bt-whats-rotulo">Falar no WhatsApp</span>
     </a>
   </>
   );
