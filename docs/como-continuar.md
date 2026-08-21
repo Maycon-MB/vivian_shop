@@ -58,8 +58,13 @@ nenhum. O repositório tem as versões convertidas e reduzidas, que servem
 para o site e não servem para refazer nada com mais qualidade.
 
 Junto delas está a `conversa.md`, que é o que permitiu ligar cada foto ao
-produto certo, e os 15 prints do painel do Elo7 — que são a única cópia
-que sobrou do catálogo de 343 produtos dela.
+produto certo, e 15 prints do Elo7: um do painel de produtos e catorze das
+avaliações.
+
+**O conteúdo desses prints já está transcrito** em
+[o-que-sobrou-do-elo7.md](o-que-sobrou-do-elo7.md), então a informação
+sobrevive mesmo que os arquivos se percam. O que se perde são as imagens
+em si e a possibilidade de reler o que ficou cortado na tela.
 
 **Sobe para o Drive antes de qualquer coisa.** Não entra no repositório
 porque é material dela, e o repositório é público.
