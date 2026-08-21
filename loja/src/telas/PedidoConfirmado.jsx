@@ -124,7 +124,7 @@ const PedidoConfirmado = () => {
                 </span>
                 <div>
                   <strong>Pagamento confirmado</strong>
-                  <p>A Vivian já foi avisada e o seu pedido entrou na fila.</p>
+                  <p>O seu pedido já entrou na fila de produção.</p>
                 </div>
               </li>
               <li className="agora">
@@ -166,7 +166,7 @@ const PedidoConfirmado = () => {
         <section className="confirmado-ajuda">
           <h2>Precisa de alguma coisa?</h2>
           <p>
-            Quem responde é a Vivian, a mesma pessoa que faz as peças. Pode chamar a qualquer
+            Quem responde é a mesma pessoa que faz as peças. Pode chamar a qualquer
             hora, ela responde quando puder.
           </p>
 

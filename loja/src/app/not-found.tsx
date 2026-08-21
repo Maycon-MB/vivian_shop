@@ -118,7 +118,7 @@ export default function NaoEncontrada() {
                 }}
               >
                 <MessageCircle size={20} strokeWidth={2.25} aria-hidden="true" />
-                Falar com a Vivian no WhatsApp
+                Falar no WhatsApp
               </a>
 
               <Link

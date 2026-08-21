@@ -119,8 +119,8 @@ const LandingPage = () => {
                     PERSONALIZADOS SOB ENCOMENDA & MATERIAL PEDAGÓGICO DIGITAL
                 </div>
                 <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Fraunces', color: '#12305B', lineHeight: 1.1 }}>
-                  Design que acolhe e <br/>
-                  <span style={{ color: '#1F736F' }}>organiza</span> vidas.
+                  Detalhes que encantam, <br/>
+                  <span style={{ color: '#1F736F' }}>personalizados</span> para você.
                 </h1>
                 <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: 'clamp(16px, 4vw, 20px)' }}>
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
@@ -131,7 +131,7 @@ const LandingPage = () => {
                   </Button>
                   <Button
                     as="a"
-                    href="https://wa.me/5521900000000?text=Oi%20Vivian!%20Vi%20sua%20loja%20e%20queria%20tirar%20uma%20d%C3%BAvida."
+                    href="https://wa.me/5521900000000?text=Oi!%20Vi%20a%20sua%20loja%20e%20queria%20tirar%20uma%20d%C3%BAvida."
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="outline-dark"
@@ -150,7 +150,7 @@ const LandingPage = () => {
                         <Truck size={18} /> Envio para todo o Brasil
                     </span>
                     <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
-                        <MessageCircle size={18} /> Atendimento direto com a Vivian
+                        <MessageCircle size={18} /> Atendimento direto com quem faz
                     </span>
                 </div>
               </motion.div>
@@ -160,16 +160,33 @@ const LandingPage = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1 }}
-                className="position-relative"
               >
-                <div className="rounded-5 overflow-hidden shadow-2xl" style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)' }}>
-                  <img src={`${BASE}hero_boutique_vivian_1778705287616.webp`} alt="Mesa de trabalho com cadernos, adesivos e material pedagógico adaptado" className="w-100" />
+                {/* A logo dela, e não foto de banco de imagem.
+
+                    O que estava aqui era uma papelaria genérica de
+                    catálogo: bonita, e de outra pessoa. A Vivian pediu a
+                    troca em 21/08, e tem razão — a loja é dela e quem
+                    chega precisa reconhecer a marca que já viu no
+                    Instagram e no Elo7.
+
+                    O fundo acompanha o azul-claro do próprio arquivo, para
+                    a faixa não parecer recortada dentro do cartão. */}
+                <div
+                  className="rounded-5 overflow-hidden shadow-2xl d-flex align-items-center justify-content-center p-4 p-lg-5"
+                  style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)', backgroundColor: '#C1EBFD' }}
+                >
+                  <img
+                    src={`${BASE}logo-feito-para-voce.webp`}
+                    alt="Feito Para Você! Papelaria Personalizada"
+                    className="w-100"
+                    style={{ maxWidth: '520px' }}
+                  />
                 </div>
                 {/* Espaço reservado para um depoimento real. Inventar a fala
                     de uma mãe atípica para vender material de inclusão é o
                     tipo de coisa que destrói a confiança que a loja depende
                     de construir. */}
-                <div className="position-absolute bottom-0 start-0 m-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '280px' }}>
+                <div className="mt-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '320px' }}>
                   <div className="d-flex gap-1 mb-2" style={{ color: '#A8C6E8' }}>
                     {[1,2,3,4,5].map(s => <Star key={s} size={12} />)}
                   </div>
