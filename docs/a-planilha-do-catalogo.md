@@ -154,6 +154,46 @@ ela troca e publica, em dois minutos, no domingo à noite, sem mim.
 
 ---
 
+## O que já está escrito
+
+A leitura da planilha existe e tem teste:
+[planilha.ts](../loja/src/dominio/planilha.ts), com 31 testes. Ela não
+depende de banco, de conta contratada nem da planilha existir ainda.
+
+### O que ela entende sem reclamar
+
+Porque é o que uma pessoa digita de verdade, no celular, ao longo de
+semanas:
+
+| Ela escreve | Vira |
+|---|---|
+| `R$ 39,99`, `39,99`, `39.99`, `1.299,90` | 39.99 e 1299.90 |
+| coluna fora de ordem, colada de outro lugar | achada pelo nome |
+| `Preço`, `preco`, ` PREÇO ` | a mesma coluna |
+| `Personalizada`, `Pedagógica` | as duas linhas de venda |
+| `30 x 25 x 12` | altura, largura e comprimento |
+| linha em branco no meio | ignorada, não é produto |
+| `mickey`, `MICKEY`, `Mickey!` | o tema **Mickey** |
+
+### O que faz a publicação parar
+
+Sempre com o número da linha, para ela achar na tela:
+
+- produto sem nome, ou sem preço
+- preço promocional maior ou igual ao cheio
+- o mesmo produto duas vezes, que senão um sobrescreveria o outro calado
+- personalizado sem peso ou sem medida, que faz o frete sair errado
+- digital sem a pasta do Drive, que não teria o que entregar
+
+**Nada vai ao ar enquanto houver um erro.** Melhor a loja não atualizar do
+que atualizar errado.
+
+Uma decisão que vale registrar: célula vazia devolve "nada", e nunca zero.
+Preço vazio é erro; preço zero seria produto de graça. Confundir os dois
+publicaria a loja inteira valendo R$ 0,00.
+
+---
+
 ## O que falta para eu montar
 
 Só uma resposta, que está no formulário: **como as pastas do Drive estão
