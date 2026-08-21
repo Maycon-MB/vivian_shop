@@ -1,7 +1,10 @@
 # O banco de dados
 
-O que está escrito, o que falta, e como sai do papel em dez minutos quando
-a conta existir.
+**O banco está de pé desde 21/08/2026**: projeto `loja`, organização
+`Feito para você`, região São Paulo. As quatro migrações foram aplicadas e
+conferidas contra o banco de verdade.
+
+O que cada uma faz, e o que ainda falta.
 
 Registro meu. Não vira PDF.
 
@@ -13,6 +16,8 @@ Registro meu. Não vira PDF.
 |---|---|
 | `supabase/migracoes/0001_catalogo.sql` | temas e produtos |
 | `supabase/migracoes/0002_pedidos.sql` | pedidos, itens e avisos de pagamento |
+| `supabase/migracoes/0003_cadastro_pela_dona.sql` | login dela, fotos no produto, balde de arquivos |
+| `supabase/migracoes/0004_primeira_dona.sql` | a primeira conta criada vira a dona |
 | `supabase/funcoes/aviso-de-pagamento/index.ts` | o endereço que o Mercado Pago chama |
 | [avisoDePagamento.ts](../loja/src/dominio/avisoDePagamento.ts) | as regras, com 30 testes |
 
@@ -93,16 +98,32 @@ outro. Organização separada custa R$ 0 e resolve.
 Limites confirmados em 21/08/2026: 2 projetos ativos por organização,
 projeto pausa depois de 7 dias sem uso, pausado não conta no limite.
 
-**Os passos:**
+**Feito em 21/08:**
 
-1. Criar a organização e o projeto, na conta dela
-2. Colar `0001` e depois `0002` no editor SQL, nesta ordem
-3. Preencher as variáveis, nenhuma delas no navegador:
-   `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`,
-   `SUPABASE_SERVICE_ROLE_KEY`
-4. Publicar a função e cadastrar o endereço dela no painel do Mercado Pago
-5. `NEXT_PUBLIC_SUPABASE_URL` no build: é o que faz a loja trocar o
+1. ~~Organização e projeto~~ `Feito para você` / `loja`, em São Paulo
+2. ~~Migrações~~ aplicadas pela API de gerenciamento, que é o mesmo caminho
+   que o MCP usa
+3. ~~Conferir o isolamento~~ testado com chave pública e com duas contas
+
+**A conta ficou no nome do Maycon, e não no dela.** Foi decisão dele, em
+21/08, com dois motivos: não dar trabalho a ela, e poder vender isto como
+produto, cada cliente com o próprio domínio e a própria organização.
+
+Isso cria uma tensão com a cláusula 6.3 do contrato, que promete a loja
+como dela. Enquanto o banco estiver numa conta que não é dela, a parte que
+mais importa — pedidos e cadastro das clientes — não é. **A saída é uma
+cláusula de portabilidade**: obrigação de entregar um dump completo em
+prazo definido, se ela pedir, e de transferir a organização se ela quiser
+assumir. Sem isso, a loja é vendida como dela e entregue como alugada.
+
+**O que falta:**
+
+1. As variáveis, nenhuma delas no navegador: `MERCADOPAGO_ACCESS_TOKEN`,
+   `MERCADOPAGO_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`
+2. Publicar a função e cadastrar o endereço dela no painel do Mercado Pago
+3. `NEXT_PUBLIC_SUPABASE_URL` no build: é o que faz a loja trocar o
    catálogo de exemplo pelo banco, sem mudar uma linha de tela
+4. As contas e o chat, em [contas-e-conversas.md](contas-e-conversas.md)
 
 ---
 
