@@ -42,10 +42,16 @@ const ProductCard = ({ product, addToCart }) => {
           </div>
 
           {product.image ? (
+            /* A miniatura, e não a foto grande: a vitrine mostra treze
+               de uma vez, e servir o arquivo cheio em cada cartão levava a
+               página a 1,3 MB no celular. O `loading="lazy"` completa: o
+               que está abaixo da dobra só baixa se a pessoa rolar. */
             <img
-              src={product.image}
+              src={product.mini || product.image}
               alt={product.name}
               className="w-100"
+              loading="lazy"
+              decoding="async"
               style={{ height: '300px', objectFit: 'cover' }}
             />
           ) : (

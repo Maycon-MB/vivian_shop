@@ -72,9 +72,16 @@ const conferir = async (nome, fn) => {
   await conferir('a loja abre e mostra o nome certo', async () => {
     await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
     const titulo = await pagina.locator('h1').first().textContent()
-    if (!titulo.includes('acolhe') && !titulo.includes('Feito')) {
+    // A frase é dela, e ela pode trocar de novo. O que não pode é a
+    // primeira tela abrir sem título nenhum, ou com texto de exemplo.
+    if (!titulo || titulo.trim().length < 12 || /lorem|exemplo|placeholder/i.test(titulo)) {
       throw new Error(`título inesperado: ${titulo}`)
     }
+
+    // A logo dela precisa estar ali: foi o pedido de 21/08, e é a
+    // diferença entre a loja parecer dela ou parecer modelo pronto.
+    const logo = await pagina.locator('img[alt*="Feito Para Você"]').count()
+    if (!logo) throw new Error('a logo da loja não está na primeira tela')
   })
 
   await conferir('o catálogo mostra os produtos', async () => {
