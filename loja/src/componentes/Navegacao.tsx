@@ -4,31 +4,31 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 /**
- * Barra que troca entre as áreas do projeto.
+ * A barra de cima, para quem está comprando.
  *
- * Substitui o roteamento por hash do protótipo por rotas de verdade: cada
- * área ganha endereço próprio, que dá para mandar no WhatsApp e que o
- * Google consegue indexar.
+ * Até 24/08 ela listava as sete áreas do projeto na mesma linha: a loja,
+ * as vendas da Vivian, as perguntas em aberto, quanto a loja custa a ela,
+ * a justificativa do design e o relatório de entregas. Quatro dos sete
+ * itens eram conversa nossa, aparecendo para quem entrou querendo comprar
+ * uma caneca.
+ *
+ * Era a maior causa da "cara de demonstração", mais do que qualquer cor
+ * ou fonte: loja de verdade não tem "o que já fiz" no menu.
+ *
+ * O que é dela continua existindo, atrás do login. O que é nosso vira
+ * documento. Aqui fica só o que serve a quem está comprando.
  */
 
 const AREAS = [
-  /* Os nomes são os que a Vivian usaria, não os que eu usaria.
-     "Painel" é palavra de quem programa; ela não vai ao painel, vai ver
-     as vendas. "Andamento" e "Identidade" não dizem nada sozinhos. */
   { href: '/', rotulo: 'A loja', classe: 'landing' },
-  { href: '/painel', rotulo: 'Minhas vendas', classe: 'admin' },
-  { href: '/perguntas', rotulo: 'Perguntas', classe: 'ask' },
   { href: '/como-funciona', rotulo: 'Como funciona', classe: 'how' },
-  { href: '/custos', rotulo: 'Quanto custa', classe: 'custo' },
-  { href: '/identidade', rotulo: 'Minha marca', classe: 'ident' },
-  { href: '/andamento', rotulo: 'O que já fiz', classe: 'status' },
 ]
 
 export function Navegacao() {
   const caminho = usePathname()
 
   return (
-    <nav className="view-switcher" aria-label="Áreas do projeto">
+    <nav className="view-switcher" aria-label="Navegação da loja">
       {AREAS.map((area) => {
         const ativo = area.href === '/' ? caminho === '/' : caminho.startsWith(area.href)
 
