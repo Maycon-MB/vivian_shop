@@ -11,13 +11,19 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 
 | Peça | Estado |
 |---|---|
-| Loja pública | no ar, com 13 produtos e as fotos dela |
+| Loja pública | no ar, com **342 produtos dela** e 140 temas |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Formulário de perguntas | no ar, respostas chegam por Apps Script |
-| Banco de dados | criado, 4 migrações aplicadas e testadas, **vazio** |
-| Login e cadastro | **não existe**, `/entrar` é maquete |
+| Banco de dados | 7 migrações aplicadas, catálogo importado da Elojinha |
+| Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
+| Painel: publicar produto | funciona, um a um ou o tipo inteiro |
+| Painel: criar e editar produto | **não existe** |
 | Pagamento | simulado; conta Mercado Pago dela já existe |
+| Medição de visita | **não existe**, e trava anúncio pago |
 | Frete e e-mail | simulados |
+
+A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
+dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
+`athos-gg`.
 
 O que falta, em ordem: [docs/contas-e-conversas.md](docs/contas-e-conversas.md).
 
@@ -27,7 +33,7 @@ O que falta, em ordem: [docs/contas-e-conversas.md](docs/contas-e-conversas.md).
 
 ```
 cd loja && npm install
-npm test                      # 278 testes de regra e de tela
+npm test                      # 357 testes de regra e de tela
 npm run build
 
 cd ..
@@ -45,6 +51,15 @@ DOMINIO_PRONTO=true BASE_DA_LOJA=http://127.0.0.1:4173 node scripts/verificar-li
 ```
 
 Publicar é `git push` na `main`. O workflow testa e publica sozinho.
+
+**O catálogo entra no build, e não no navegador.** O `publicar.mjs` busca
+os produtos publicados antes de gerar as páginas. Isso é o que faz a loja
+abrir rápida no 4G e o Google ler as 342 páginas de produto — e significa
+que publicar no painel só muda o site na publicação seguinte.
+
+As telas da Vivian exigem login. Para rodar os testes de navegação contra
+elas, defina `TESTE_DONA_EMAIL` e `TESTE_DONA_SENHA`; sem isso, elas são
+puladas em vez de falharem.
 
 ---
 
