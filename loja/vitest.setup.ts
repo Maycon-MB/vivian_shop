@@ -1,3 +1,4 @@
+import { createElement } from 'react'
 import '@testing-library/jest-dom/vitest'
 
 import { cleanup } from '@testing-library/react'
@@ -52,8 +53,9 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('next/link', () => ({
-  default: ({ children, href, ...resto }: { children: React.ReactNode; href: string }) => {
-    const React = require('react')
-    return React.createElement('a', { href, ...resto }, children)
-  },
+  /* `createElement` em vez de JSX, e o React importado no topo do arquivo:
+     um `require` aqui dentro é a única linha de todo o projeto que o lint
+     recusa, e ela existia só porque este arquivo não tinha o import. */
+  default: ({ children, href, ...resto }: { children: React.ReactNode; href: string }) =>
+    createElement('a', { href, ...resto }, children),
 }))
