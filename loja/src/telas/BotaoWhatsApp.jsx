@@ -102,7 +102,7 @@ const cssDoBotao = `
 /* Telas onde falar com a Vivian não é a saída. Na de perguntas, quem lê é
    a própria Vivian: um botão convidando ela a se chamar no WhatsApp é
    confuso, e ainda cobre o campo de resposta no celular. */
-const SEM_BOTAO = ['/perguntas', '/painel'];
+const SEM_BOTAO = ['/admin'];
 
 const BotaoWhatsApp = () => {
   const caminho = usePathname();

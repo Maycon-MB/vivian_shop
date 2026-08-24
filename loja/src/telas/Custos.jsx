@@ -393,7 +393,7 @@ export default function Custos() {
           </p>
         </section>
 
-        <Link href="/perguntas/" className="custos-voltar" prefetch={false}>
+        <Link href="/admin/perguntas/" className="custos-voltar" prefetch={false}>
           Voltar para as perguntas
         </Link>
       </Container>

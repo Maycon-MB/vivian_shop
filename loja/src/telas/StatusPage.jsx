@@ -131,7 +131,7 @@ const StatusPage = () => {
           {/* Esta página mostra o que está esperando resposta, mas o lugar
               de responder é o formulário. Sem este aviso, ela lê as
               perguntas aqui, responde na cabeça e segue, e nada chega. */}
-          <Link className="ir-para-perguntas" href="/perguntas/" prefetch={false}>
+          <Link className="ir-para-perguntas" href="/admin/perguntas/" prefetch={false}>
             <strong>Responder o que está esperando</strong>
             <span>
               As perguntas ficam todas numa página só, e dá para responder aos poucos: o que
@@ -139,7 +139,7 @@ const StatusPage = () => {
             </span>
           </Link>
 
-          <Link className="ir-para-custos" href="/custos/" prefetch={false}>
+          <Link className="ir-para-custos" href="/admin/sobre-o-site/custos/" prefetch={false}>
             <strong>Quanto isso vai te custar por mês</strong>
             <span>
               O que você paga para mim, o que paga para terceiros, e a partir de quanta venda

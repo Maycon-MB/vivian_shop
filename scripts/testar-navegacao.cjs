@@ -165,11 +165,31 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('o painel abre e mostra os números', async () => {
-    await pagina.goto(`${BASE}/painel/`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/admin/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(1800)
     const corpo = await pagina.locator('body').textContent()
     if (!corpo.includes('Bem-vinda')) throw new Error('painel não abriu')
     if (corpo.includes('R$ 0,00')) throw new Error('os números pararam em zero')
+  })
+
+  await conferir('o painel tem navegação própria, e não a da loja', async () => {
+    await pagina.goto(`${BASE}/admin/`, { waitUntil: 'networkidle' })
+
+    // A área dela não mostra as faixas da loja nem o botão de WhatsApp:
+    // ela não precisa de aviso de demonstração nem de um botão para
+    // chamar a si mesma.
+    const temFaixa = await pagina.locator('.aviso-demonstracao').count()
+    const temWhats = await pagina.locator('.bt-whats').count()
+    if (temFaixa || temWhats) throw new Error('a área dela ainda mostra coisa da loja')
+
+    const lateral = await pagina.locator('.sidebar-nav').count()
+    if (!lateral) throw new Error('a barra lateral do painel não apareceu')
+
+    // As páginas dela que não são o painel também precisam ser
+    // alcançáveis por ali: antes de 24/08 ela só chegava às perguntas por
+    // uma faixa no meio da vitrine.
+    const paraAsPerguntas = await pagina.locator('a[href$="/admin/perguntas/"]').count()
+    if (!paraAsPerguntas) throw new Error('a barra não leva às perguntas')
   })
 
   await conferir('o menu do painel troca de aba', async () => {
@@ -304,7 +324,7 @@ const conferir = async (nome, fn) => {
     }
     if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
 
-    await pagina.goto(`${BASE}/painel/?aba=pedidos`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/admin/?aba=pedidos`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(1200)
     if ((await pagina.locator('.pedido-daloja').count()) === 0) {
       throw new Error('o pedido comprado não chegou ao painel da Vivian')
@@ -312,7 +332,7 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('os relatórios separam o que é dela do frete', async () => {
-    await pagina.goto(`${BASE}/painel/?aba=relatorios`, { waitUntil: 'networkidle' })
+    await pagina.goto(`${BASE}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
     // Espera o bloco existir em vez de esperar um tempo fixo: a tela só
     // desenha depois de ler os pedidos guardados, e um segundo cravado
     // passa na minha máquina e falha na máquina lenta da automação.
@@ -389,9 +409,12 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('endereço antigo redireciona para o novo', async () => {
+    // Dois saltos: /loja/painel é do tempo do protótipo em Vite, e
+    // /painel é de antes de a área dela ganhar lugar próprio, em 24/08.
+    // Os dois foram mandados por WhatsApp e continuam circulando.
     await pagina.goto(`${BASE}/loja/painel/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(900)
-    if (!pagina.url().includes('/painel')) throw new Error(`ficou em ${pagina.url()}`)
+    if (!pagina.url().includes('/admin')) throw new Error(`ficou em ${pagina.url()}`)
     if (pagina.url().includes('/loja/')) throw new Error('não saiu do endereço antigo')
   })
 

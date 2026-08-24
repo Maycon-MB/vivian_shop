@@ -1,4 +1,5 @@
 import Custos from '@/telas/Custos'
+import { VoltarAoPainel } from '@/componentes/VoltarAoPainel'
 import '@/telas/custos.css'
 
 export const metadata = {
@@ -8,5 +9,10 @@ export const metadata = {
 }
 
 export default function Pagina() {
-  return <Custos />
+  return (
+    <>
+      <VoltarAoPainel />
+      <Custos />
+    </>
+  )
 }

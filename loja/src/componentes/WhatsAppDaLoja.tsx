@@ -17,7 +17,7 @@ import BotaoWhatsApp from '@/telas/BotaoWhatsApp'
  * botões para a mesma coisa na mesma tela fazem a pessoa parar para
  * escolher entre eles, e nenhum dos dois é a escolha que importa ali.
  */
-const SEM_BOTAO = ['/painel', '/entrar', '/baixar', '/pedido-confirmado', '/sobre']
+const SEM_BOTAO = ['/admin', '/baixar', '/pedido-confirmado', '/sobre']
 
 export function WhatsAppDaLoja() {
   const caminho = usePathname()

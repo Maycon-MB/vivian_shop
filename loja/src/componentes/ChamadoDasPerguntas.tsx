@@ -48,7 +48,7 @@ export function ChamadoDasPerguntas() {
   }, [])
 
   if (estaTudoReal) return null
-  if (caminho?.startsWith('/perguntas')) return null
+  if (caminho?.startsWith('/admin')) return null
 
   // Enquanto não sabe quantas foram respondidas, não mostra nada: aparecer
   // dizendo "19 perguntas" e trocar para "faltam 4" um instante depois faz
@@ -75,7 +75,7 @@ export function ChamadoDasPerguntas() {
           </div>
 
           <div className="col-12 col-md-4 col-lg-3 d-flex justify-content-md-end">
-            <Link href="/perguntas/" className="chamado-botao" prefetch={false}>
+            <Link href="/admin/perguntas/" className="chamado-botao" prefetch={false}>
               {comecou ? 'Continuar' : 'Ver as perguntas'} <ArrowRight size={16} />
             </Link>
           </div>

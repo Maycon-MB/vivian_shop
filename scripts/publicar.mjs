@@ -14,7 +14,7 @@
  */
 
 import { execSync } from 'node:child_process'
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
@@ -76,6 +76,30 @@ if (dominioProprio) {
 }
 
 /**
+ * O atalho que o Next pede e não exporta.
+ *
+ * Quando a loja e a área da Vivian ganharam layouts separados, em 24/08, a
+ * loja passou a viver num grupo de rota — `(loja)`. A exportação estática
+ * grava o dado dessa rota como pasta, `__next.!KGxvamEp/__PAGE__.txt`, mas
+ * o navegador o pede como arquivo, `__next.!KGxvamEp.__PAGE__.txt`.
+ *
+ * O resultado é um 404 em toda navegação. A página funciona, porque isso é
+ * só a busca antecipada do conteúdo, mas o erro aparece no console de quem
+ * abre a loja — e o nosso teste de navegação reprova console sujo, com
+ * razão: é assim que defeito de verdade se esconde.
+ *
+ * Aqui a pasta vira também arquivo, com o nome que o navegador pede.
+ */
+for (const nome of readdirSync(dist)) {
+  const caminho = path.join(dist, nome)
+  if (!nome.startsWith('__next.') || !statSync(caminho).isDirectory()) continue
+
+  for (const dentro of readdirSync(caminho)) {
+    writeFileSync(path.join(dist, `${nome}.${dentro}`), readFileSync(path.join(caminho, dentro)))
+  }
+}
+
+/**
  * Endereços antigos continuam funcionando.
  *
  * Enquanto a loja morava em /vivian_shop/loja/, esses links foram mandados
@@ -86,6 +110,19 @@ if (dominioProprio) {
  * GitHub redireciona sozinho para o domínio quando ele está configurado.
  */
 const REDIRECIONAR = ['', 'painel', 'como-funciona', 'andamento', 'identidade']
+
+/* Os endereços que mudaram quando a área da Vivian ganhou lugar próprio,
+   em 24/08. O /perguntas foi mandado para ela por WhatsApp e continua
+   circulando; link que um dia funcionou e depois responde 404 é pior do
+   que link que nunca existiu. */
+const MUDARAM = {
+  'perguntas': '/admin/perguntas/',
+  'painel': '/admin/',
+  'custos': '/admin/sobre-o-site/custos/',
+  'identidade': '/admin/sobre-o-site/marca/',
+  'andamento': '/admin/sobre-o-site/entregas/',
+  'entrar': '/admin/entrar/',
+}
 
 for (const rota of REDIRECIONAR) {
   const pasta = path.join(dist, 'loja', rota)
@@ -111,6 +148,30 @@ for (const rota of REDIRECIONAR) {
   )
 }
 
-console.log(`  ${REDIRECIONAR.length} endereços antigos redirecionados`)
+for (const [de, para] of Object.entries(MUDARAM)) {
+  const pasta = path.join(dist, de)
+  const destino = `${prefixo}${para}`
+
+  mkdirSync(pasta, { recursive: true })
+  writeFileSync(
+    path.join(pasta, 'index.html'),
+    `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecionando…</title>
+    <link rel="canonical" href="${destino}" />
+    <meta http-equiv="refresh" content="0; url=${destino}" />
+    <script>window.location.replace('${destino}')</script>
+  </head>
+  <body>
+    <p>Esta página mudou de endereço. <a href="${destino}">Continuar</a>.</p>
+  </body>
+</html>
+`
+  )
+}
+
+console.log(`  ${REDIRECIONAR.length + Object.keys(MUDARAM).length} endereços antigos redirecionados`)
 
 console.log('\nPronto. Publicar com:\n  npx gh-pages -d dist --dotfiles\n')

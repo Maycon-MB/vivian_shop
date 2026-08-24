@@ -35,7 +35,7 @@ const TELAS = [
   { caminho: '/', nome: 'a loja' },
   { caminho: '/produto/caderno-personalizado/', nome: 'a página de um produto' },
   { caminho: '/checkout/', nome: 'o checkout' },
-  { caminho: '/perguntas/', nome: 'o formulário de perguntas' },
+  { caminho: '/admin/perguntas/', nome: 'o formulário de perguntas' },
   { caminho: '/painel/', nome: 'o painel' },
   { caminho: '/painel/?aba=pedidos', nome: 'os pedidos' },
   { caminho: '/painel/?aba=relatorios', nome: 'os relatórios' },
