@@ -1,0 +1,223 @@
+/* A tela onde ela decide o que a loja vende.
+
+   Pensada para o celular primeiro: ela administra entre um pedido e
+   outro, em pé, com o aparelho numa mão. No computador a tabela ganha ar,
+   mas o desenho de base é o estreito. */
+
+.meus-produtos {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.produtos-topo h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: #12305B;
+}
+
+.produtos-conta {
+  margin: 0;
+  color: #5F6F80;
+  font-size: 14.5px;
+}
+
+.produtos-conta strong { color: #1F736F; }
+
+.produtos-busca {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  border: 1.5px solid #D8E0E9;
+  border-radius: 12px;
+  background: #FFFFFF;
+  color: #5F6F80;
+}
+
+.produtos-busca input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  /* 16px, e nunca menos: abaixo disso o iPhone dá zoom sozinho ao focar
+     o campo, e a pessoa perde o lugar na tela. */
+  font-size: 16px;
+  color: #12305B;
+  background: transparent;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.produtos-erro {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: rgba(200, 60, 60, .1);
+  color: #8B1E1E;
+  font-size: 14.5px;
+}
+
+.produtos-vazio, .produtos-carregando {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5F6F80;
+  font-size: 15px;
+}
+
+.produtos-grupo {
+  background: #FFFFFF;
+  border: 1px solid #E6EBF1;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.produtos-grupo-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #E6EBF1;
+}
+
+.produtos-grupo-topo h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #12305B;
+}
+
+.produtos-grupo-topo span {
+  font-size: 13px;
+  color: #5F6F80;
+}
+
+.produtos-lote {
+  margin-left: auto;
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #1F736F;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.produtos-tabela {
+  width: 100%;
+  /* Fixa a largura pelas colunas declaradas, e não pelo conteúdo: nome de
+     produto dela chega a 45 letras, e sem isto a tabela cresce até caber a
+     maior palavra e vaza da tela do celular. */
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+.produtos-tabela td { overflow-wrap: anywhere; min-width: 0; }
+
+.produtos-tabela th {
+  text-align: left;
+  padding: 9px 15px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #5F6F80;
+  background: #F7F8FA;
+}
+
+.produtos-tabela td {
+  padding: 11px 15px;
+  border-top: 1px solid #EEF2F6;
+  color: #12305B;
+}
+
+.produtos-tabela td:last-child { text-align: right; }
+
+.produtos-publicar, .produtos-tirar {
+  min-height: 44px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.produtos-publicar { background: #12305B; color: #FFFFFF; }
+
+.produtos-tirar {
+  background: transparent;
+  color: #5F6F80;
+  border-color: #D8E0E9;
+}
+
+.produtos-lote:disabled,
+.produtos-publicar:disabled,
+.produtos-tirar:disabled { opacity: .55; }
+
+/* No celular a tabela vira lista.
+
+   Três colunas não cabem em 390px: o preço saía cortado e o botão de
+   publicar ficava fora da tela — justamente o que ela veio fazer aqui.
+   Rolar de lado para achar o botão é o tipo de coisa que faz alguém
+   desistir e me mandar mensagem.
+
+   A marcação continua sendo tabela, que é o que ela é; o que muda é o
+   desenho. */
+@media (max-width: 640px) {
+  /* Desfaz o `min-width: 560px` que o protótipo aplica a toda tabela do
+     painel. Aquela regra existe para tabelas de pedido, que têm seis
+     colunas e realmente precisam rolar de lado; esta tem três e vira
+     lista. Sem desfazer, o botão de publicar fica a 478px numa tela de
+     390 — existe, é clicável pelo teste, e nenhuma pessoa alcança. */
+  .painel .produtos-tabela,
+  .produtos-tabela { min-width: 0; }
+
+  .produtos-tabela thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .produtos-tabela,
+  .produtos-tabela tbody,
+  .produtos-tabela tr,
+  .produtos-tabela td {
+    display: block;
+    width: 100%;
+  }
+
+  .produtos-tabela tr {
+    display: grid;
+    /* `minmax(0, 1fr)` e não `1fr`: um item de grade tem largura mínima
+       igual ao próprio conteúdo, e com isso a linha ficava mais larga que
+       a tela — o botão de publicar saía do lado direito, fora do alcance. */
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 12px;
+    padding: 12px 15px;
+    border-top: 1px solid #EEF2F6;
+  }
+
+  .produtos-tabela td {
+    padding: 0;
+    border: 0;
+  }
+
+  /* Nome ocupa a primeira coluna; preço embaixo dele; botão à direita,
+     ocupando as duas linhas. */
+  .produtos-tabela td:nth-child(1) { grid-column: 1; grid-row: 1; font-weight: 600; }
+  .produtos-tabela td:nth-child(2) { grid-column: 1; grid-row: 2; color: #5F6F80; font-size: 13.5px; }
+  .produtos-tabela td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; text-align: right; }
+
+  .produtos-lote { margin-left: 0; width: 100%; }
+}

@@ -27,6 +27,9 @@ import CartaoKpi from './painel/CartaoKpi';
 import CartaoPainel from './painel/CartaoPainel';
 import AbaPedidos from './painel/AbaPedidos';
 import AbaProdutos from './painel/AbaProdutos';
+import MeusProdutos from './painel/MeusProdutos';
+import './painel/produtos.css';
+import { temBanco } from '@/servicos/autenticacao';
 import AbaMensagens from './painel/AbaMensagens';
 import AbaMarketing from './painel/AbaMarketing';
 import AbaConfiguracoes from './painel/AbaConfiguracoes';
@@ -390,9 +393,15 @@ const AdminDashboard = () => {
 
         {activeTab === 'marketing' && <AbaMarketing />}
 
-        {activeTab === 'catalogo' && (
-          <AbaProdutos onNovoProduto={() => setShowNewProduct(true)} />
-        )}
+        {/* Com banco, a lista é a do catálogo dela: 343 produtos vindos da
+            Elojinha, com busca e publicação em lote. Sem banco, fica a tela
+            de exemplo, que é o que roda na demonstração. */}
+        {activeTab === 'catalogo' &&
+          (temBanco() ? (
+            <MeusProdutos />
+          ) : (
+            <AbaProdutos onNovoProduto={() => setShowNewProduct(true)} />
+          ))}
 
         {activeTab === 'relatorios' && <AbaRelatorios />}
 
