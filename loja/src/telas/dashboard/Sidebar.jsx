@@ -2,6 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
+
+import { sair, temBanco } from '@/servicos/autenticacao';
 import { Nav, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import {
   ClipboardList,
@@ -60,6 +62,13 @@ const PAGINAS = [
 ];
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlternarRecolhida }) => {
+  const sairDaConta = async () => {
+    if (temBanco()) await sair();
+    // Recarrega em vez de navegar: assim nada do que estava na tela
+    // sobrevive em memória depois de sair.
+    window.location.href = '/admin/entrar/';
+  };
+
   const selecionar = (id) => {
     onTabChange(id);
     if (typeof window !== 'undefined' && window.innerWidth < 992) onClose();
@@ -159,7 +168,10 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlterna
         </Nav>
 
         <div className="sidebar-rodape">
-          <Button variant="link" className="sidebar-item sair">
+          {/* Sair de verdade: até 24/08 este botão não fazia nada, e a
+              sessão continuava aberta no aparelho. Num celular que ela
+              empresta para a filha, isso é o painel inteiro exposto. */}
+          <Button variant="link" className="sidebar-item sair" onClick={sairDaConta}>
             <span className="sidebar-item-icone">
               <LogOut size={16} />
             </span>

@@ -85,6 +85,10 @@ jobs:
         env:
           NEXT_PUBLIC_FORMULARIO_URL: ${{ vars.NEXT_PUBLIC_FORMULARIO_URL }}
           DOMINIO_PRONTO: ${{ vars.DOMINIO_PRONTO }}
+          # Não são segredo: vão dentro do JavaScript da página de qualquer
+          # forma. Quem protege os dados é a política do banco.
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       # Onde a loja mora muda com a variável DOMINIO_PRONTO, e os testes
       # precisam bater no mesmo caminho que a publicação montou. Calcular
@@ -116,6 +120,12 @@ jobs:
 
       - name: comprar de ponta a ponta
         run: node scripts/testar-navegacao.cjs
+        env:
+          # Conta de teste que é dona da loja. Sem ela, as telas da Vivian
+          # são puladas em vez de falharem: quem clona o repositório não
+          # tem acesso ao banco.
+          TESTE_DONA_EMAIL: ${{ secrets.TESTE_DONA_EMAIL }}
+          TESTE_DONA_SENHA: ${{ secrets.TESTE_DONA_SENHA }}
 
       - name: acessibilidade
         run: node scripts/testar-acessibilidade.cjs

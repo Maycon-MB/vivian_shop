@@ -60,6 +60,31 @@ const conferir = async (nome, fn) => {
 ;(async () => {
   const navegador = await chromium.launch()
   const pagina = await navegador.newPage({ viewport: { width: 1440, height: 900 } })
+
+  /* A área da Vivian passou a exigir login em 24/08. O teste entra uma vez
+     só, antes de tudo, com uma conta de teste que é dona da loja.
+
+     Uma vez só, e no começo, por um motivo que custou caro para descobrir:
+     os testes compartilham a mesma aba e continuam de onde o anterior
+     parou. Entrar no meio navega para fora do que o teste anterior deixou
+     na tela, e a falha aparece três testes depois, em outro lugar.
+
+     Sem as credenciais no ambiente, as telas dela são puladas em vez de
+     falharem: quem clona o repositório não tem acesso ao banco, e teste
+     vermelho por falta de credencial ensina a ignorar teste vermelho. */
+  const EMAIL_DE_TESTE = process.env.TESTE_DONA_EMAIL
+  const SENHA_DE_TESTE = process.env.TESTE_DONA_SENHA
+  const podeEntrar = Boolean(EMAIL_DE_TESTE && SENHA_DE_TESTE)
+
+  if (podeEntrar) {
+    await pagina.goto(`${BASE}/admin/entrar/`, { waitUntil: 'networkidle' })
+    await pagina.getByLabel('Seu e-mail').fill(EMAIL_DE_TESTE)
+    await pagina.getByLabel('Sua senha').fill(SENHA_DE_TESTE)
+    await pagina.getByRole('button', { name: /entrar/i }).click()
+    await pagina.waitForURL(/\/admin\/?$/, { timeout: 20000 })
+  } else {
+    console.log('  (pulando as telas da dona: faltam TESTE_DONA_EMAIL e TESTE_DONA_SENHA)')
+  }
   paginaAtual = pagina
 
   // Erro no console é defeito, mesmo que a tela pareça certa.
@@ -164,7 +189,9 @@ const conferir = async (nome, fn) => {
     if (!corpo.includes('compras separadas')) throw new Error('deixou misturar as linhas')
   })
 
-  await conferir('o painel abre e mostra os números', async () => {
+  const conferirDaDona = podeEntrar ? conferir : async () => {}
+
+  await conferirDaDona('o painel abre e mostra os números', async () => {
     await pagina.goto(`${BASE}/admin/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(1800)
     const corpo = await pagina.locator('body').textContent()
@@ -172,7 +199,7 @@ const conferir = async (nome, fn) => {
     if (corpo.includes('R$ 0,00')) throw new Error('os números pararam em zero')
   })
 
-  await conferir('o painel tem navegação própria, e não a da loja', async () => {
+  await conferirDaDona('o painel tem navegação própria, e não a da loja', async () => {
     await pagina.goto(`${BASE}/admin/`, { waitUntil: 'networkidle' })
 
     // A área dela não mostra as faixas da loja nem o botão de WhatsApp:
@@ -192,14 +219,14 @@ const conferir = async (nome, fn) => {
     if (!paraAsPerguntas) throw new Error('a barra não leva às perguntas')
   })
 
-  await conferir('o menu do painel troca de aba', async () => {
+  await conferirDaDona('o menu do painel troca de aba', async () => {
     await pagina.getByRole('button', { name: 'Pedidos', exact: true }).click()
     await pagina.waitForTimeout(700)
     const corpo = await pagina.locator('body').textContent()
     if (!corpo.includes('Precisa de você')) throw new Error('não chegou em Pedidos')
   })
 
-  await conferir('o endereço guarda a aba aberta', async () => {
+  await conferirDaDona('o endereço guarda a aba aberta', async () => {
     const url = pagina.url()
     if (!url.includes('aba=pedidos')) throw new Error(`endereço não acompanhou: ${url}`)
   })
@@ -234,10 +261,17 @@ const conferir = async (nome, fn) => {
 
   await conferir('o carrinho sobrevive à troca de página', async () => {
     await pagina.goto(`${BASE}/produto/caneca-personalizada/`, { waitUntil: 'networkidle' })
-    // O carrinho é guardado no navegador e sobrevive entre as verificações:
-    // sem limpar, o total testado aqui carrega o que os testes anteriores
-    // deixaram lá.
-    await pagina.evaluate(() => window.localStorage.clear())
+    /* Zera só o que é da loja, e não o navegador inteiro.
+
+       Este teste limpava tudo, e tudo passou a incluir a sessão da dona
+       depois que o login existiu: o carrinho zerava, e três testes adiante
+       o painel não abria mais. A falha aparecia longe da causa, que é o
+       pior tipo. */
+    await pagina.evaluate(() => {
+      Object.keys(window.localStorage)
+        .filter((chave) => chave.startsWith('feito-para-voce:'))
+        .forEach((chave) => window.localStorage.removeItem(chave))
+    })
     await pagina.reload({ waitUntil: 'networkidle' })
     await pagina.getByRole('button', { name: /Adicionar/ }).click()
     await pagina.waitForTimeout(700)
@@ -324,15 +358,22 @@ const conferir = async (nome, fn) => {
     }
     if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
 
+    if (!podeEntrar) return
+
     await pagina.goto(`${BASE}/admin/?aba=pedidos`, { waitUntil: 'networkidle' })
-    await pagina.waitForTimeout(1200)
+    /* O guarda pergunta ao banco quem está entrando antes de desenhar
+       qualquer coisa, e essa pergunta termina depois do `networkidle`.
+       Esperar a barra lateral é esperar o painel existir de verdade. */
+    await pagina.locator('.sidebar-nav').first().waitFor({ state: 'attached', timeout: 20000 })
+    await pagina.waitForTimeout(800)
     if ((await pagina.locator('.pedido-daloja').count()) === 0) {
       throw new Error('o pedido comprado não chegou ao painel da Vivian')
     }
   })
 
-  await conferir('os relatórios separam o que é dela do frete', async () => {
+  await conferirDaDona('os relatórios separam o que é dela do frete', async () => {
     await pagina.goto(`${BASE}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
+    await pagina.locator('.sidebar-nav').first().waitFor({ state: 'attached', timeout: 20000 })
     // Espera o bloco existir em vez de esperar um tempo fixo: a tela só
     // desenha depois de ler os pedidos guardados, e um segundo cravado
     // passa na minha máquina e falha na máquina lenta da automação.
