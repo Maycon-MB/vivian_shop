@@ -2,6 +2,15 @@
 
 Descoberto em 19/08/2026, investigando como extrair o catálogo dela.
 
+> **Atualização de 23/08:** o catálogo não estava perdido. Ela migrou a
+> papelaria personalizada para a Elojinha quando o Elo7 fechou, e os 343
+> produtos foram recuperados de lá, com foto, peso e medidas. Ver
+> [o-catalogo-voltou.md](o-catalogo-voltou.md).
+>
+> O que este documento descreve continua verdade — a plataforma fechou e
+> levou o histórico junto. O que estava errado era a conclusão que eu tirei
+> disso sem perguntar a ela.
+
 **O Elo7 encerrou as atividades em 11 de maio de 2026.** Não é
 instabilidade, bloqueio nem manutenção: a plataforma inteira saiu do ar.
 
