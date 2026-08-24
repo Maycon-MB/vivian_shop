@@ -34,8 +34,23 @@ Nenhuma chave está aqui, e é de propósito: o repositório é público.
 | Chave de serviço do banco | painel do projeto → Settings → API |
 | Login do registro.br | conta `MBMGC2` |
 | Acesso ao GitHub | `gh auth login` |
+| Login da Elojinha | com a Vivian, e **a senha precisa ser trocada** |
 
 Guarde no Bitwarden, não em arquivo.
+
+**O `.env.local` não vem no clone**, e sem ele a loja roda em modo de
+demonstração: catálogo de exemplo, e a área da dona abre sem pedir senha.
+Copie `loja/.env.example` para `loja/.env.local` e preencha com as duas
+chaves públicas do projeto, que estão no painel do Supabase em
+Settings → API:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://kbvgdnrymwfavgkxqvjh.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
+Essas duas não são segredo: elas vão dentro do JavaScript da página de
+qualquer forma. O que nunca sai do servidor é a chave de serviço.
 
 ### 2. O MCP do Supabase
 
@@ -79,16 +94,28 @@ lugar nenhum.
 
 ## O estado que não está em arquivo nenhum
 
-**O banco está vazio.** Projeto `loja`, organização `Feito para você`, em
-São Paulo. As quatro migrações estão aplicadas, mas não há nenhum produto,
-nenhum pedido e **nenhuma dona cadastrada**.
+**O banco está cheio.** Projeto `loja`, organização `Feito para você`, em
+São Paulo, com sete migrações aplicadas, 343 produtos e 140 temas vindos
+da Elojinha. Desses, 342 estão publicados e aparecem na loja.
 
-A primeira conta que se cadastrar vira a dona da loja, automaticamente. A
-tela para isso ainda não existe.
+**Existe uma conta de dona, e ela é de teste**:
+`testes@feitoparavocepapelaria.com.br`. Serve para os testes de navegação
+entrarem no painel; a senha está nos segredos do repositório, em
+`TESTE_DONA_EMAIL` e `TESTE_DONA_SENHA`.
 
-**A loja no ar não usa o banco ainda.** Ela lê o catálogo de um arquivo,
-`loja/src/telas/catalogo.js`. A troca acontece quando
-`NEXT_PUBLIC_SUPABASE_URL` existir no build, e em nenhum outro lugar.
+**O cadastro público ainda está aberto**, e a primeira conta criada numa
+loja sem dona vira a dona. Como já existe uma, quem se cadastrar agora não
+vira nada — mas o cadastro precisa ser desligado quando a Vivian assumir.
+
+**A confirmação de e-mail está desligada** no Supabase até o Resend
+existir. Com ela ligada e sem serviço de envio, a conta nasce travada
+esperando um e-mail que nunca chega.
+
+**O catálogo entra no build.** O `publicar.mjs` roda o
+`baixar-catalogo.mjs` antes de gerar as páginas, e o resultado fica em
+`loja/src/dados/catalogo-publicado.json`. Esse arquivo é versionado de
+propósito: sem ele, quem clonar sem credencial construiria uma loja vazia
+em vez de uma loja de demonstração.
 
 ---
 
