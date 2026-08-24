@@ -7,3 +7,4 @@ dist-ssr
 .tempmediaStorage
 .brain
 loja/telas-da-falha/
+loja/.env.local

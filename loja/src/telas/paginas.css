@@ -324,3 +324,35 @@
 .baixar-pagina .acao-whats-grande { background: #1F736F; color: #FFFFFF; border: 0; }
 .baixar-pagina .acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
 .baixar-pagina .acao-voltar { border: 1px solid #A8C6E8; color: #12305B; }
+
+/* O aviso do que a conta vai poder fazer, na tela de criar conta.
+
+   Existe porque prometer errado é pior do que não prometer: quem chega
+   sem convite precisa saber antes de preencher tudo que a conta não vai
+   administrar nada. */
+.entrar-aviso {
+  margin: 0 0 16px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: rgba(31, 115, 111, .1);
+  color: #12305B;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.entrar-criar {
+  margin: 16px 0 0;
+  font-size: 14.5px;
+  color: #5F6F80;
+  text-align: center;
+}
+
+.entrar-criar a { color: #1F736F; font-weight: 700; }
+
+@keyframes girar { to { transform: rotate(360deg); } }
+
+.girando { animation: girar 1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .girando { animation: none; }
+}

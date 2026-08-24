@@ -2,31 +2,66 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Container, Form, Button } from 'react-bootstrap';
-import { ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+
+import { conferirEntrada, mensagemDoErro } from '@/dominio/entrada';
+import { entrar as entrarNoBanco, temBanco } from '@/servicos/autenticacao';
 
 /**
- * Entrar no painel.
+ * A porta da área da loja.
  *
- * Uma pessoa só usa esta tela, então ela não tem cadastro nem escolha de
- * perfil — só o necessário para entrar e voltar quando esquecer a senha.
+ * Quem entra aqui são a Vivian e a Lilian, no celular, poucas vezes por
+ * semana. O caminho feliz é fácil; o que decide se elas voltam é o que
+ * acontece quando dá errado.
  *
- * O erro não diz se o e-mail existe. Mensagem do tipo "e-mail não
- * cadastrado" conta a quem está tentando invadir qual metade ele acertou.
+ * Por isso três coisas que parecem detalhe e não são:
+ *
+ *   - o que dá para conferir antes de enviar é conferido aqui, para o
+ *     "faltou o e-mail" não custar dez segundos de internet ruim
+ *   - o botão trava enquanto tenta, senão dois toques viram duas
+ *     tentativas e o servidor começa a barrar por excesso
+ *   - o erro chega em português e sem dizer se a conta existe
+ *
+ * A senha não passa por este código: vai direto para o Supabase, que
+ * guarda o hash. Nem eu nem ela veem.
  */
 const Entrar = () => {
-  const [erro, setErro] = useState(false);
+  const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [erro, setErro] = useState('');
   const [enviando, setEnviando] = useState(false);
 
-  const entrar = (evento) => {
+  const enviar = async (evento) => {
     evento.preventDefault();
+    if (enviando) return;
+
+    const conferencia = conferirEntrada({ email, senha });
+    if (!conferencia.ok) {
+      setErro(conferencia.aviso);
+      return;
+    }
+
+    if (!temBanco()) {
+      setErro('O login ainda não está ligado neste ambiente.');
+      return;
+    }
+
+    setErro('');
     setEnviando(true);
 
-    // Demonstração: a verificação de verdade acontece no servidor.
-    setTimeout(() => {
+    const problema = await entrarNoBanco(email, senha);
+
+    if (problema) {
+      setErro(mensagemDoErro(problema));
       setEnviando(false);
-      setErro(true);
-    }, 900);
+      return;
+    }
+
+    router.replace('/admin/');
   };
 
   return (
@@ -34,62 +69,64 @@ const Entrar = () => {
       <Container className="py-5">
         <div className="entrar-caixa">
           <div className="entrar-marca">
-            <span>Feito para você!</span>
-            <strong>Personalizados</strong>
+            <strong>Feito para você!</strong>
+            <span>Personalizados</span>
           </div>
 
-          <h1>Entrar no painel</h1>
           <p className="entrar-sub">A loja é sua. Este é o lugar de administrar ela.</p>
 
-          <Form onSubmit={entrar} className="entrar-form">
-            <Form.Group>
-              <Form.Label htmlFor="entrar-email">E-mail</Form.Label>
+          <Form onSubmit={enviar} className="entrar-form" noValidate>
+            <Form.Group className="mb-3" controlId="entrar-email">
+              <Form.Label>Seu e-mail</Form.Label>
               <Form.Control
-                id="entrar-email"
                 type="email"
-                required
-                placeholder="seu@email.com"
-                autoComplete="username"
+                inputMode="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={enviando}
               />
             </Form.Group>
 
-            <Form.Group>
-              {/* O rótulo precisa apontar para o campo. Sem o par
-                  htmlFor/id, quem usa leitor de tela ouve "campo de senha"
-                  sem saber de qual formulário, e clicar no texto "Senha"
-                  não põe o cursor no campo. */}
-              <Form.Label htmlFor="entrar-senha">Senha</Form.Label>
+            <Form.Group className="mb-3" controlId="entrar-senha">
+              <Form.Label>Sua senha</Form.Label>
               <Form.Control
-                id="entrar-senha"
                 type="password"
-                required
                 autoComplete="current-password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                disabled={enviando}
               />
             </Form.Group>
 
             {erro && (
               <p className="entrar-erro" role="alert">
-                E-mail ou senha não conferem. Confira e tente de novo.
+                {erro}
               </p>
             )}
 
             <Button type="submit" className="entrar-botao" disabled={enviando}>
-              {enviando ? 'Entrando…' : 'Entrar'}
+              {enviando ? (
+                <>
+                  <Loader2 size={17} className="girando" aria-hidden="true" /> Entrando…
+                </>
+              ) : (
+                'Entrar'
+              )}
             </Button>
-
-            <button type="button" className="entrar-esqueci">
-              Esqueci minha senha
-            </button>
           </Form>
 
+          <p className="entrar-criar">
+            Primeira vez? <Link href="/admin/criar-conta/" prefetch={false}>Criar a minha conta</Link>
+          </p>
+
           <p className="entrar-seguranca">
-            <ShieldCheck size={15} /> Esta tela é uma demonstração: ainda não existe senha de
-            verdade. Quando a loja entrar no ar, só você terá acesso.
+            A sua senha fica guardada embaralhada, e nem eu consigo ver.
           </p>
         </div>
 
-        <Link href="/" className="entrar-voltar">
-          <ArrowLeft size={15} /> Voltar para a loja
+        <Link href="/" className="entrar-voltar" prefetch={false}>
+          ← Ver a loja
         </Link>
       </Container>
     </div>
