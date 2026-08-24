@@ -1,5 +1,7 @@
 import { PERSONALIZADA, PEDAGOGICA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo'
 import { BASE } from '../base'
+import { escolherCatalogo } from '../dominio/catalogoDoBanco'
+import doBanco from '../dados/catalogo-publicado.json'
 
 /**
  * O catálogo da loja.
@@ -43,16 +45,15 @@ export const REGRAS_DO_PERSONALIZADO = [
   `Produção de ${PRAZO_PRODUCAO} dias úteis, sem contar sábado, domingo e feriado. O prazo da transportadora vem depois disso.`,
 ]
 
-/* PENDENTE-VIVIAN: os 86 temas da loja dela. Estes são os que apareceram
-   no material de 16/08. A estrutura aguenta os 86 sem mudança nenhuma —
-   falta só a lista. */
-export const TEMAS = [
+/* Os temas de exemplo, usados enquanto ela não publicar nada. Os dela
+   vivem no banco: são 140, vindos dos nomes dos 343 produtos. */
+const TEMAS_DE_EXEMPLO = [
   { slug: 'mickey', nome: 'Mickey', descricao: 'A turma do Mickey para festa e lembrancinha.' },
   { slug: 'primeira-eucaristia', nome: 'Primeira Eucaristia', descricao: 'Para a celebração e as lembrancinhas do dia.' },
   { slug: 'sem-tema', nome: 'Sem tema definido', descricao: 'Produtos que ainda não foram separados por tema.' },
 ]
 
-export const PRODUTOS = [
+const PRODUTOS_DE_EXEMPLO = [
   {
     id: 1,
     slug: 'jogo-2-em-1-velha-e-forca',
@@ -397,6 +398,22 @@ export const PRODUTOS = [
     detalhes: ['Arquivo em PDF para imprimir quantas vezes quiser'],
   },
 ]
+
+/**
+ * O catálogo que vai ao ar.
+ *
+ * Vem do banco quando ela tem produto publicado, e dos exemplos enquanto
+ * não tem. A escolha acontece na hora de gerar o site, com o arquivo que
+ * o `scripts/baixar-catalogo.mjs` escreve.
+ *
+ * Isso significa que publicar no painel não muda a loja na hora: a página
+ * é gerada uma vez e servida pronta, que é o que a deixa rápida no 4G e
+ * legível para o Google. O site passa a mostrar depois da próxima
+ * publicação.
+ */
+export const PRODUTOS = escolherCatalogo(doBanco.produtos, PRODUTOS_DE_EXEMPLO)
+
+export const TEMAS = escolherCatalogo(doBanco.temas, TEMAS_DE_EXEMPLO)
 
 /**
  * O que a loja mostra hoje: só o que tem foto.

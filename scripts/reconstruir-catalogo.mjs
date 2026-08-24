@@ -75,10 +75,25 @@ const texto = (bruto, chave, deTras = false) => {
 
     if (c === BARRA) {
       const seguinte = bruto[i + 1]
-      if (seguinte === 'n') saida += '\n'
-      else if (seguinte === 't') saida += '\t'
-      else if (seguinte === 'r') saida += ''
-      else saida += seguinte
+
+      /* O texto vem escapado duas vezes: uma pelo JSON do produto, outra
+         pelo payload do Next que o embrulha. Sem tratar a barra dupla, a
+         descrição dela chegava na loja com "\n" e "\u003e" escritos por
+         extenso, no meio da frase, para a cliente ler. */
+      if (seguinte === BARRA) { saida += BARRA; i += 2; continue }
+      if (seguinte === 'n') { saida += String.fromCharCode(10); i += 2; continue }
+      if (seguinte === 'r') { i += 2; continue }
+      if (seguinte === 't') { saida += String.fromCharCode(9); i += 2; continue }
+      if (seguinte === 'u') {
+        const codigo = bruto.slice(i + 2, i + 6)
+        if (/^[0-9a-fA-F]{4}$/.test(codigo)) {
+          saida += String.fromCharCode(parseInt(codigo, 16))
+          i += 6
+          continue
+        }
+      }
+
+      saida += seguinte
       i += 2
       continue
     }
@@ -89,7 +104,13 @@ const texto = (bruto, chave, deTras = false) => {
     i++
   }
 
+  /* Segunda passada: o payload escapa o que já vinha escapado, e o que
+     sobra é a sequência "barra n" escrita por extenso no meio da frase.
+     Texto de produto não tem barra invertida de verdade, então trocar é
+     seguro — e sem isso a cliente dela lê "\n" no meio da descrição. */
   return saida
+    .split(BARRA + 'n').join(String.fromCharCode(10))
+    .split(BARRA + 't').join(String.fromCharCode(9))
 }
 
 const produtoDoAdmin = (html) => {

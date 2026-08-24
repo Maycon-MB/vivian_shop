@@ -21,9 +21,20 @@ describe('a vitrine só mostra o que está pronto', () => {
     expect(semFoto).toEqual([])
   })
 
-  it('não apaga o que está escondido', () => {
-    // O dado continua no catálogo, esperando a foto.
-    expect(PRODUTOS.length).toBeGreaterThan(PUBLICADOS.length)
+  it('não apaga: o que não tem foto fica de fora, e continua no catálogo', () => {
+    /* Esta conta mudou de significado em 24/08, quando o catálogo passou a
+       vir do banco.
+
+       Antes, o catálogo era um arquivo com 21 produtos e 8 sem foto, então
+       sobrava diferença. Agora o que chega aqui é o que ela publicou, e
+       ela só publica o que está pronto — a diferença some, e some por um
+       bom motivo.
+
+       O que continua valendo é a regra: sem foto, não vai para a vitrine.
+       Escondido, e nunca apagado. */
+    const semFoto = PRODUTOS.filter((p) => !p.image)
+
+    expect(PRODUTOS.length - PUBLICADOS.length).toBe(semFoto.length)
   })
 
   it('mostra tudo que já tem foto', () => {

@@ -28,6 +28,18 @@ import { BASE } from '../base'
  */
 const products = PUBLICADOS;
 
+/* Só as linhas que têm produto no ar.
+
+   O catálogo dela veio da Elojinha, que recebeu apenas a papelaria
+   personalizada: o material pedagógico ficou no Projeto Educar e nunca
+   migrou. Mostrar o filtro assim mesmo é oferecer um botão que só leva a
+   uma tela vazia, e quem clica conclui que a loja está quebrada.
+
+   Quando ela cadastrar o material pedagógico, o filtro volta sozinho. */
+const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA].filter(
+  (linha) => linha === 'Todas' || products.some((p) => p.category === linha),
+);
+
 const LandingPage = () => {
   const [showCart, setShowCart] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Todas');
@@ -70,7 +82,7 @@ const LandingPage = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold py-4 py-lg-0" style={{ fontSize: '11px', letterSpacing: '2px' }}>
-              {['Todas', PERSONALIZADA, PEDAGOGICA].map(cat => (
+              {LINHAS_COM_PRODUTO.map(cat => (
                 <button 
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
@@ -235,7 +247,7 @@ const LandingPage = () => {
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
             </div>
             <div className="d-flex flex-wrap justify-content-center gap-2">
-              {['Todas', PERSONALIZADA, PEDAGOGICA].map(cat => (
+              {LINHAS_COM_PRODUTO.map(cat => (
                 <Button 
                   key={cat}
                   onClick={() => setActiveCategory(cat)}

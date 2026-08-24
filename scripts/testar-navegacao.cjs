@@ -114,17 +114,27 @@ const conferir = async (nome, fn) => {
     if (cartoes < 6) throw new Error(`esperava vários produtos, achei ${cartoes}`)
   })
 
-  await conferir('o filtro por linha reduz a lista', async () => {
+  await conferir('o filtro por linha só oferece o que existe', async () => {
+    /* O catálogo dela veio da Elojinha, que recebeu apenas a papelaria
+       personalizada: o material pedagógico ficou no Projeto Educar e nunca
+       migrou. O filtro daquela linha não pode aparecer enquanto não houver
+       produto nela, senão é um botão que leva a uma tela vazia — e quem
+       clica conclui que a loja está quebrada. */
     const antes = await pagina.locator('.premium-card').count()
+    if (antes === 0) throw new Error('a vitrine abriu sem produto nenhum')
 
-    await pagina.getByRole('button', { name: 'Papelaria pedagógica', exact: true }).first().click()
-    await pagina.waitForTimeout(600)
-    const depois = await pagina.locator('.premium-card').count()
+    const linhas = await pagina
+      .getByRole('button', { name: /^Papelaria/ })
+      .allTextContents()
 
-    // A conta exata mudaria a cada produto que a Vivian cadastrasse. O que
-    // precisa continuar valendo é que filtrar tira coisa da tela.
-    if (depois >= antes) throw new Error(`o filtro não reduziu: ${antes} antes, ${depois} depois`)
-    if (depois === 0) throw new Error('o filtro escondeu tudo')
+    for (const linha of linhas) {
+      await pagina.getByRole('button', { name: linha, exact: true }).first().click()
+      await pagina.waitForTimeout(500)
+
+      const depois = await pagina.locator('.premium-card').count()
+      if (depois === 0) throw new Error(`o filtro "${linha}" não mostra nada`)
+      if (depois > antes) throw new Error(`o filtro "${linha}" mostrou mais que o total`)
+    }
   })
 
   await conferir('os temas levam para a página do tema', async () => {
@@ -149,23 +159,56 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('a página do produto mostra o mínimo e o total certos', async () => {
-    await pagina.goto(`${BASE}/produto/caneca-personalizada/`, { waitUntil: 'networkidle' })
+    /* O produto vem da vitrine, e não de um endereço escrito à mão.
+
+       Este teste apontava para /produto/caneca-personalizada/, que era um
+       slug do meu catálogo de exemplo. Quando o catálogo dela entrou, esse
+       endereço deixou de existir, a página abriu vazia e as três provas
+       seguintes falharam em cascata — todas culpando a tela errada.
+
+       A conta também não pode ser fixa: o preço e o mínimo são dela, e
+       mudam. O que precisa continuar valendo é o total bater com o preço
+       vezes o mínimo. */
+    await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+    await pagina.locator('a[href*="/produto/"]').first().click()
+    await pagina.waitForURL(/\/produto\//, { timeout: 20000 })
+    await pagina.locator('.produto-imagem').first().waitFor({ timeout: 15000 })
+
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('Mínimo de 10')) throw new Error('não avisa o mínimo de 10')
-    // A caneca sai por R$ 29,90 cada, e o mínimo são 10: R$ 299,00 o pacote.
-    if (!corpo.includes('299,00')) throw new Error('o botão não mostra o total do pacote')
+
+    const minimo = Number((corpo.match(/Mínimo de (\d+) unidades/) || [])[1])
+    if (!minimo) throw new Error('a página não avisa o mínimo')
+
+    const emNumero = (texto) => Number(texto.replace(/\./g, '').replace(',', '.'))
+    const unitario = emNumero((corpo.match(/R\$ ([\d.,]+)\s*cada/) || [])[1] || '0')
+    if (!unitario) throw new Error('a página não mostra o preço de cada peça')
+
+    const esperado = (unitario * minimo).toFixed(2).replace('.', ',')
+    if (!corpo.includes(esperado)) {
+      throw new Error(`o total do pacote deveria ser ${esperado}`)
+    }
   })
 
   await conferir('a quantidade não desce abaixo do mínimo', async () => {
     const menos = pagina.getByRole('button', { name: 'Diminuir' })
-    if (!(await menos.isDisabled())) throw new Error('dá para descer abaixo de 10')
+    if (!(await menos.isDisabled())) throw new Error('dá para descer abaixo do mínimo')
   })
 
   await conferir('aumentar a quantidade recalcula o total', async () => {
+    const antes = await pagina.locator('body').textContent()
+    const minimo = Number((antes.match(/Mínimo de (\d+) unidades/) || [])[1])
+    const emNumero = (texto) => Number(texto.replace(/\./g, '').replace(',', '.'))
+    const unitario = emNumero((antes.match(/R\$ ([\d.,]+)\s*cada/) || [])[1] || '0')
+
     await pagina.getByRole('button', { name: 'Aumentar' }).click()
-    await pagina.waitForTimeout(300)
-    const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('328,90')) throw new Error('11 unidades deveriam somar R$ 328,90')
+    await pagina.waitForTimeout(400)
+
+    const esperado = (unitario * (minimo + 1)).toFixed(2).replace('.', ',')
+    const depois = await pagina.locator('body').textContent()
+
+    if (!depois.includes(esperado)) {
+      throw new Error(`${minimo + 1} unidades deveriam somar R$ ${esperado}`)
+    }
   })
 
   await conferir('o produto digital não fala de frete nem de produção', async () => {
@@ -175,7 +218,28 @@ const conferir = async (nome, fn) => {
     if (corpo.includes('Mínimo de 10')) throw new Error('material digital não tem mínimo')
   })
 
-  await conferir('o carrinho impede misturar as duas linhas', async () => {
+  /* Daqui para baixo, o que precisa das duas linhas de venda.
+
+     O catálogo dela veio da Elojinha, que recebeu só a papelaria
+     personalizada: os 37 produtos do Projeto Educar, que são o digital,
+     nunca migraram. Sem um produto de cada linha não dá para provar que a
+     loja impede misturar os dois no mesmo carrinho.
+
+     Pular é melhor do que falhar: teste vermelho por falta de dado ensina
+     a ignorar teste vermelho. Quando o digital dela entrar, isto volta a
+     rodar sozinho. */
+  await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+  /* Nomes distintos, e não botões: o mesmo filtro aparece no cabeçalho e
+     na vitrine, então contar botões daria dois com uma linha só. */
+  const rotulos = await pagina.getByRole('button', { name: /^Papelaria/ }).allTextContents()
+  const linhasNaLoja = new Set(rotulos.map((r) => r.trim())).size
+  const conferirDuasLinhas = linhasNaLoja > 1 ? conferir : async () => {}
+
+  if (linhasNaLoja <= 1) {
+    console.log('  (pulando o que precisa das duas linhas: a loja só tem a personalizada)')
+  }
+
+  await conferirDuasLinhas('o carrinho impede misturar as duas linhas', async () => {
     await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
     // Um personalizado e depois um digital: o segundo tem que ser barrado.
     await pagina.locator('.premium-card').first().getByRole('button', { name: /Comprar/i }).click()
@@ -260,27 +324,46 @@ const conferir = async (nome, fn) => {
   })
 
   await conferir('o carrinho sobrevive à troca de página', async () => {
-    await pagina.goto(`${BASE}/produto/caneca-personalizada/`, { waitUntil: 'networkidle' })
+    /* O produto sai da vitrine, e o valor esperado sai da própria página.
+
+       Antes isto apontava para /produto/caneca-personalizada/ e conferia
+       "R$ 299,00", que eram o slug e o preço do meu catálogo de exemplo.
+       Com o catálogo dela no ar, o endereço deixou de existir e o teste
+       passou a acusar o carrinho por um erro que era do teste. */
+    await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+
     /* Zera só o que é da loja, e não o navegador inteiro.
 
        Este teste limpava tudo, e tudo passou a incluir a sessão da dona
        depois que o login existiu: o carrinho zerava, e três testes adiante
-       o painel não abria mais. A falha aparecia longe da causa, que é o
-       pior tipo. */
+       o painel não abria mais. A falha aparecia longe da causa. */
     await pagina.evaluate(() => {
       Object.keys(window.localStorage)
         .filter((chave) => chave.startsWith('feito-para-voce:'))
         .forEach((chave) => window.localStorage.removeItem(chave))
     })
     await pagina.reload({ waitUntil: 'networkidle' })
+
+    await pagina.locator('a[href*="/produto/"]').first().click()
+    await pagina.waitForURL(/\/produto\//, { timeout: 20000 })
+    await pagina.locator('.produto-imagem').first().waitFor({ timeout: 15000 })
+
+    const naPagina = await pagina.locator('body').textContent()
+    const nome = (await pagina.locator('h1').first().textContent()).trim()
+    const minimo = Number((naPagina.match(/Mínimo de (\d+) unidades/) || [])[1] || 1)
+    const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
+    const unitario = emNumero((naPagina.match(/R\$ ([\d.,]+)\s*cada/) || [])[1] || '0')
+
     await pagina.getByRole('button', { name: /Adicionar/ }).click()
     await pagina.waitForTimeout(700)
     await pagina.goto(`${BASE}/checkout/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(900)
+
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('Caneca personalizada')) throw new Error('o carrinho esvaziou ao mudar de página')
-    // 10 canecas a R$ 29,90.
-    if (!corpo.includes('299,00')) throw new Error('o valor não chegou ao checkout')
+    if (!corpo.includes(nome)) throw new Error('o carrinho esvaziou ao mudar de página')
+
+    const esperado = (unitario * minimo).toFixed(2).replace('.', ',')
+    if (!corpo.includes(esperado)) throw new Error(`o valor não chegou ao checkout: ${esperado}`)
   })
 
   await conferir('a loja avisa que ainda é demonstração', async () => {
