@@ -28,16 +28,18 @@ import { situacaoDaDona, temBanco } from '@/servicos/autenticacao'
  */
 export function ExigirDona({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const [liberado, setLiberado] = useState(false)
+
+  /* Sem banco configurado, a área continua aberta como sempre foi: é o
+     ambiente de demonstração, onde não há dado de ninguém e as telas
+     mostram exemplos.
+
+     Isso vira o valor inicial, e não um `setState` dentro do efeito: com
+     `setState` a tela desenhava uma vez fechada e outra aberta, e o lint
+     avisa com razão que isso encadeia renderizações. */
+  const [liberado, setLiberado] = useState(() => !temBanco())
 
   useEffect(() => {
-    /* Sem banco configurado, a área continua aberta como sempre foi. É o
-       caso do ambiente de demonstração, onde não há dado de ninguém: as
-       telas mostram exemplos. */
-    if (!temBanco()) {
-      setLiberado(true)
-      return
-    }
+    if (!temBanco()) return
 
     let valendo = true
 
