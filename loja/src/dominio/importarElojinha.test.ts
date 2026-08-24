@@ -121,8 +121,19 @@ describe('virar um produto da nossa loja', () => {
     expect(paraProduto(bruto).linha).toBe(LINHA_PERSONALIZADA)
   })
 
-  it('aplica o mínimo de 10, que é regra dela e não da plataforma', () => {
+  it('usa o mínimo que ela cadastrou, quando ele vem', () => {
+    // 12 dos 343 produtos dela têm mínimo 1, e não 10. Fixar dez apagaria
+    // uma decisão dela em cada um deles.
+    expect(paraProduto({ ...bruto, minimo: '1' }).minimo).toBe(1)
+    expect(paraProduto({ ...bruto, minimo: '10' }).minimo).toBe(10)
+  })
+
+  it('cai no mínimo de 10 quando o dado não vem', () => {
     expect(paraProduto(bruto).minimo).toBe(10)
+  })
+
+  it('usa o prazo em dias que ela cadastrou', () => {
+    expect(paraProduto({ ...bruto, prazo_producao: '7' }).prazoProducao).toBe(7)
   })
 
   it('separa as fotos e guarda a primeira como capa', () => {

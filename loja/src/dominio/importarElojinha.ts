@@ -56,6 +56,11 @@ export const tipoETema = (nome: string): { tipo: string; tema: string } => {
 const PRAZO_PADRAO = 5
 
 export const prazoEmDias = (texto: string): number => {
+  // Já vem como número quando sai do painel dela ("5"); vem embrulhado em
+  // frase quando sai da vitrine ("Sob encomenda: 5 dias").
+  const soNumero = (texto ?? '').trim()
+  if (/^\d+$/.test(soNumero)) return Number(soNumero)
+
   const dias = texto?.match(/(\d+)\s*dias?/i)
 
   return dias ? Number(dias[1]) : PRAZO_PADRAO
@@ -69,6 +74,7 @@ export interface LinhaDaElojinha {
   preco_promocional?: string
   descricao?: string
   prazo_producao?: string
+  minimo?: string
   fotos?: string
   peso_g?: string
   alt_cm?: string
@@ -125,7 +131,9 @@ export const paraProduto = (bruto: LinhaDaElojinha): ProdutoImportado => {
     linha: LINHA_PERSONALIZADA,
     tipo: desofuscar(tipo),
     tema: desofuscar(tema),
-    minimo: MINIMO_DELA,
+    // O que ela cadastrou vale mais do que o meu padrão: 12 dos 343
+    // produtos têm mínimo 1, e fixar dez apagaria essa decisão dela.
+    minimo: lerNumero(bruto.minimo ?? '') ?? MINIMO_DELA,
     prazoProducao: prazoEmDias(bruto.prazo_producao ?? ''),
     fotos: (bruto.fotos ?? '')
       .split(';')
