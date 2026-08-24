@@ -34,7 +34,13 @@ const PaginaProduto = ({ produto }) => {
   const { adicionar } = useCarrinho();
   const personalizado = produto.category === PERSONALIZADA;
   const tema = acharTema(produto.tema);
-  const minimo = personalizado ? MINIMO_PERSONALIZADO : 1;
+  /* O mínimo é o daquele produto, e não uma constante da loja.
+
+     Enquanto o catálogo era o meu arquivo de exemplo, dez valia para tudo
+     e a constante bastava. O catálogo dela mostra que 12 dos 342 produtos
+     têm mínimo 1: exigir dez neles impediria a venda de coisa que ela
+     vende avulsa. */
+  const minimo = produto.minimo ?? (personalizado ? MINIMO_PERSONALIZADO : 1);
 
   const [quantidade, setQuantidade] = useState(minimo);
   const [adicionado, setAdicionado] = useState(false);
@@ -106,7 +112,7 @@ const PaginaProduto = ({ produto }) => {
             {personalizado ? (
               <div className="produto-regra-bloco">
                 <p>
-                  <strong>Mínimo de {MINIMO_PERSONALIZADO} unidades.</strong> É feito sob
+                  <strong>Mínimo de {minimo} unidades.</strong> É feito sob
                   encomenda, uma a uma, por isso o pedido tem uma quantidade mínima.
                 </p>
                 <p className="produto-prazo">

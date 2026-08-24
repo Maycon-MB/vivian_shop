@@ -35,7 +35,12 @@ const rodar = (comando, cwd, env = {}) => {
   execSync(comando, { cwd, stdio: 'inherit', shell: true, env: { ...process.env, ...env } })
 }
 
-console.log('1/2 · construindo a loja')
+/* O catálogo dela entra antes do build: a loja é estática, e as páginas
+   precisam do produto em mãos na hora de gerar. */
+console.log('1/3 · buscando o catálogo publicado')
+rodar('node scripts/baixar-catalogo.mjs', raiz)
+
+console.log('\n2/3 · construindo a loja')
 rodar('npm run build', loja, { PUBLICAR_GITHUB_PAGES: 'true' })
 
 if (!existsSync(saida)) {
