@@ -79,9 +79,19 @@ const enderecoDe = (nome) =>
   nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
     .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
-if (temas.length) {
+/* Dois nomes diferentes podem virar o mesmo endereço: "P.e.p.p.a P.i.g" e
+   "Peppa Pig" são o mesmo tema depois de tirar os pontos, e "Mickey" e
+   "mickey" também. Mandar os dois na mesma leva faz o banco recusar tudo,
+   dizendo que a linha seria afetada duas vezes. */
+const porEndereco = new Map()
+for (const nome of temas) {
+  const endereco = enderecoDe(nome)
+  if (!porEndereco.has(endereco)) porEndereco.set(endereco, nome)
+}
+
+if (porEndereco.size) {
   const { error } = await banco.from('temas').upsert(
-    temas.map((nome) => ({ slug: enderecoDe(nome), nome })),
+    [...porEndereco].map(([slug, nome]) => ({ slug, nome })),
     { onConflict: 'slug' },
   )
   if (error) throw error
@@ -109,10 +119,23 @@ const paraBanco = (p) => ({
   ativo: false,
 })
 
-const { error } = await banco.from('produtos').upsert(produtos.map(paraBanco), { onConflict: 'slug' })
-if (error) throw error
+const porSlug = new Map()
+for (const produto of produtos) {
+  if (!porSlug.has(produto.slug)) porSlug.set(produto.slug, produto)
+}
 
-console.log(`${produtos.length} produtos gravados, ${temas.length} temas`)
+/* Em levas: 343 produtos com descrição de mil letras cada passam do que a
+   API aceita numa requisição só. */
+const TAMANHO_DA_LEVA = 50
+const todos = [...porSlug.values()]
+
+for (let i = 0; i < todos.length; i += TAMANHO_DA_LEVA) {
+  const leva = todos.slice(i, i + TAMANHO_DA_LEVA).map(paraBanco)
+  const { error } = await banco.from('produtos').upsert(leva, { onConflict: 'slug' })
+  if (error) throw error
+}
+
+console.log(`${produtos.length} produtos gravados, ${porEndereco.size} temas`)
 if (recusados.length) {
   console.log(`\n${recusados.length} recusados:`)
   for (const r of recusados) console.log('  ' + r)

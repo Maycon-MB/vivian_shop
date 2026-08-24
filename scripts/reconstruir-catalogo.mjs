@@ -3,96 +3,164 @@
  *
  *     node scripts/reconstruir-catalogo.mjs [pasta] [saida.csv]
  *
- * Existe porque o robô de extração truncou o CSV ao recomeçar, e os 60
- * produtos que já estavam lá sumiram. O HTML cru sobreviveu, e foi
- * justamente por isso que eu pedi para salvá-lo: parser errado se
- * conserta lendo o arquivo, sem raspar a loja de novo.
+ * A extração salvou, para cada produto, a página da vitrine e a página de
+ * edição do painel. É da página de edição que sai o que importa e não
+ * aparece em lugar nenhum público: peso, medidas da embalagem, estoque e
+ * o mínimo por pedido.
  *
- * Lê o `application/ld+json` de cada página, que é dado estruturado de
- * verdade — nome, descrição, preço e imagens. É mais confiável do que ler
- * o HTML renderizado, que muda quando eles mexem no layout.
+ * Ler o HTML salvo, e não raspar a loja de novo, foi o que salvou o
+ * trabalho quando o CSV do robô foi truncado no meio. Parser errado se
+ * conserta relendo o arquivo.
+ *
+ * Uma descoberta que muda o frete: o painel chama os campos de "Peso do
+ * lote" e "Altura do lote", e o dado traz `shipping_dimensions_per_unit:
+ * false`. As medidas são do pacote fechado, e não de uma peça — que é
+ * exatamente como ela despacha, de dez em dez.
  */
 
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
 const pasta = process.argv[2] ?? path.join(process.env.USERPROFILE, 'Documents', 'vivian-elojinha')
-/* Nome próprio, e não o mesmo arquivo do robô de extração: os dois
-   escrevendo no mesmo caminho já se sobrescreveram uma vez. */
 const saida = process.argv[3] ?? path.join(pasta, 'catalogo-reconstruido.csv')
 
 const COLUNAS = [
   'slug', 'nome', 'preco', 'preco_promocional', 'descricao',
-  'prazo_producao', 'tema', 'peso_g', 'alt_cm', 'larg_cm', 'comp_cm',
-  'fotos', 'estoque',
+  'prazo_producao', 'minimo', 'peso_g', 'alt_cm', 'larg_cm', 'comp_cm',
+  'estoque', 'fotos',
 ]
 
 /** Campo no formato RFC 4180: tudo entre aspas, aspas internas dobradas. */
 const campo = (valor) => `"${String(valor ?? '').replace(/"/g, '""')}"`
 
-const produtoDoHtml = (html, slug) => {
-  const blocos = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)]
+const BARRA = String.fromCharCode(92)
 
-  for (const bloco of blocos) {
-    let dado
-    try {
-      dado = JSON.parse(bloco[1])
-    } catch {
-      continue
-    }
-    if (dado['@type'] !== 'Product') continue
+/* O payload do Next chega com as aspas escapadas dentro de uma string.
+   Sem desfazer isso, nenhuma busca encontra os campos. */
+const desescapar = (html) => html.split(BARRA + '"').join('"')
 
-    const imagens = Array.isArray(dado.image) ? dado.image : [dado.image].filter(Boolean)
+const numero = (texto, chave) => {
+  const marca = `"${chave}":`
+  const inicio = texto.indexOf(marca)
+  if (inicio < 0) return ''
 
-    /* O preço promocional não está no schema.org: ele vem no payload do
-       Next, escapado. Ler de lá é o que evita confundir "sem promoção"
-       com "não consegui achar". */
-    const promo = html.match(/\\"promotional_price\\":(null|"[\d.]+")/)
+  const resto = texto.slice(inicio + marca.length, inicio + marca.length + 24)
+  const achado = resto.match(/^-?[\d.]+/)
 
-    return {
-      slug,
-      nome: dado.name ?? '',
-      preco: dado.offers?.price ?? '',
-      preco_promocional: promo && promo[1] !== 'null' ? promo[1].replace(/"/g, '') : '',
-      descricao: dado.description ?? '',
-      // O prazo aparece no texto da página, não no dado estruturado.
-      prazo_producao: (html.match(/Sob encomenda:\s*(\d+\s*dias?)/i) ?? [])[0] ?? '',
-      tema: '',
-      peso_g: '', alt_cm: '', larg_cm: '', comp_cm: '',
-      fotos: imagens.join(';'),
-      estoque: '',
-    }
-  }
-
-  return null
+  return achado ? Number(achado[0]) : ''
 }
 
-/* As páginas do painel são as mesmas dos produtos, salvas com o prefixo
-   "admin_" quando o robô entrou logado. Importar as duas criaria cada
-   produto duas vezes, com endereços diferentes, e a loja mostraria tudo
-   em dobro. Fica a pública, que é a que tem o dado estruturado. */
-const arquivos = readdirSync(path.join(pasta, 'html'))
-  .filter((a) => a.endsWith('.html'))
-  .filter((a) => !a.startsWith('admin_') && !['login.html', 'store.html'].includes(a))
+/**
+ * O valor de um campo de texto do JSON.
+ *
+ * Percorre caractere a caractere em vez de montar uma expressão regular:
+ * a descrição dela tem aspas, quebras de linha e barras invertidas, e
+ * toda tentativa de escrever isso como regex dentro de template literal
+ * virou barra escapando barra escapando barra. Mais longo, e sem como
+ * interpretar errado.
+ */
+const texto = (bruto, chave, deTras = false) => {
+  const marca = `"${chave}":"`
+  /* De trás para frente quando o mesmo nome de campo aparece mais de uma
+     vez no bloco. É o caso de "name": o nome da loja vem antes do nome do
+     produto, e ler o primeiro trouxe "Feito para Você!" em 343 linhas. */
+  const inicio = deTras ? bruto.lastIndexOf(marca) : bruto.indexOf(marca)
+  if (inicio < 0) return ''
 
-const produtos = []
+  let i = inicio + marca.length
+  let saida = ''
+
+  while (i < bruto.length) {
+    const c = bruto[i]
+
+    if (c === BARRA) {
+      const seguinte = bruto[i + 1]
+      if (seguinte === 'n') saida += '\n'
+      else if (seguinte === 't') saida += '\t'
+      else if (seguinte === 'r') saida += ''
+      else saida += seguinte
+      i += 2
+      continue
+    }
+
+    if (c === '"') break
+
+    saida += c
+    i++
+  }
+
+  return saida
+}
+
+const produtoDoAdmin = (html) => {
+  const cru = desescapar(html)
+
+  // O bloco do formulário de edição é o único que traz shipping_weight.
+  const i = cru.indexOf('"shipping_weight"')
+  if (i < 0) return null
+
+  const bloco = cru.slice(Math.max(0, i - 8000), i + 600)
+
+  const slug = texto(bloco, 'slug') || texto(cru, 'slug')
+  if (!slug) return null
+
+  return {
+    slug,
+    nome: texto(bloco, 'name', true),
+    preco: numero(bloco, 'price'),
+    preco_promocional: numero(bloco, 'promotional_price'),
+    descricao: texto(bloco, 'description'),
+    prazo_producao: numero(bloco, 'production_time_days'),
+    minimo: numero(bloco, 'min_quantity'),
+    peso_g: numero(bloco, 'shipping_weight'),
+    alt_cm: numero(bloco, 'shipping_height'),
+    larg_cm: numero(bloco, 'shipping_width'),
+    comp_cm: numero(bloco, 'shipping_length'),
+    estoque: numero(bloco, 'stock'),
+    fotos: '',
+  }
+}
+
+const arquivos = readdirSync(path.join(pasta, 'html')).filter((a) => a.endsWith('.html'))
+const doPainel = arquivos.filter((a) => a.startsWith('admin'))
+
+const produtos = new Map()
 const semDado = []
 
-for (const arquivo of arquivos) {
+for (const arquivo of doPainel) {
   const html = readFileSync(path.join(pasta, 'html', arquivo), 'utf8')
-  const produto = produtoDoHtml(html, arquivo.replace(/\.html$/, ''))
+  const produto = produtoDoAdmin(html)
 
-  if (produto) produtos.push(produto)
+  if (produto) produtos.set(produto.slug, produto)
   else semDado.push(arquivo)
+}
+
+/* As fotos vêm da pasta local, e não do endereço do CDN deles: o Elo7
+   fechou e levou tudo junto, e loja que pode fechar amanhã não é lugar de
+   guardar o acervo dela. */
+for (const produto of produtos.values()) {
+  const dela = path.join(pasta, 'fotos', produto.slug)
+  if (!existsSync(dela)) continue
+
+  produto.fotos = readdirSync(dela)
+    .filter((a) => /\.(jpe?g|png|webp)$/i.test(a))
+    .sort()
+    .join(';')
 }
 
 const linhas = [
   COLUNAS.join(','),
-  ...produtos.map((p) => COLUNAS.map((c) => campo(p[c])).join(',')),
+  ...[...produtos.values()].map((p) => COLUNAS.map((c) => campo(p[c])).join(',')),
 ]
 
 writeFileSync(saida, linhas.join('\n') + '\n', 'utf8')
 
-console.log(`${produtos.length} produtos reconstruídos de ${arquivos.length} páginas`)
-if (semDado.length) console.log(`sem dado estruturado: ${semDado.join(', ')}`)
+const todos = [...produtos.values()]
+const comPeso = todos.filter((p) => p.peso_g).length
+const comFoto = todos.filter((p) => p.fotos).length
+
+console.log(`${produtos.size} produtos reconstruídos de ${doPainel.length} páginas do painel`)
+console.log(`  ${comPeso} com peso e medidas`)
+console.log(`  ${comFoto} com foto`)
+if (semDado.length) console.log(`  ${semDado.length} páginas sem dado de produto`)
 console.log(`escrito em ${saida}`)
