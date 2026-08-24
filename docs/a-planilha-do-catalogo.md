@@ -2,8 +2,20 @@
 
 Como a Vivian vai cadastrar os produtos dela sem depender de mim.
 
-Virou o único caminho: o Elo7 fechou em maio e não há nada para extrair de
-lá. Os 343 produtos e os 86 temas existem só com ela.
+> **Atualização de 24/08: a planilha não foi construída, e não precisa
+> mais ser.** Os 343 produtos vieram da Elojinha com descrição, preço,
+> foto, peso e medidas, e hoje estão no banco. Ela cadastra pelo painel,
+> em [/admin](https://feitoparavocepapelaria.com.br/admin/).
+>
+> O que deste documento continua valendo são as **regras de tema**, que
+> foram construídas, testadas e usadas na importação: juntar o que é
+> obviamente igual, perguntar no que é parecido, e nunca decidir sozinho
+> quando há dúvida. Elas estão em
+> [temas.ts](../loja/src/dominio/temas.ts), com 23 testes.
+>
+> O leitor de planilha também existe e tem 31 testes
+> ([planilha.ts](../loja/src/dominio/planilha.ts)). Serve para o dia em que
+> ela quiser mandar produto em massa, e foi o que leu o CSV da importação.
 
 ---
 
