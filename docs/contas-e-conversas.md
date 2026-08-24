@@ -103,23 +103,29 @@ vê `[]`, inclusive quem comprou.
 - política de leitura: quem compra lê o próprio, a dona lê todos
 - o pedido nasce ligado à conta na hora da compra
 
-### 2. As telas de entrar e de criar conta
+### 2. ~~As telas de entrar e de criar conta~~ feito em 24/08
 
-Hoje `/entrar` é maquete: não tem senha, não tem sessão, e quem digitar
-`/painel` entra. Precisa de:
+- ~~criar conta, entrar, sair~~
+- ~~`/admin` trancado atrás da sessão **e** da `donas_da_loja`~~
+- ~~uma dona convida outra, por e-mail~~
+- **recuperar senha**: falta, e depende do Resend
+- **desligar o cadastro público**: assim que ela assumir a loja
 
-- criar conta, entrar, sair
-- recuperar senha
-- `/painel` trancado atrás da sessão **e** da `donas_da_loja`
-- desligar o cadastro público assim que ela assumir a loja
+A confirmação de e-mail está desligada no Supabase até o Resend existir.
+Com ela ligada e sem serviço de envio, a conta nasce travada esperando um
+e-mail que nunca chega.
 
 ### 3. O cadastro de produtos por ela
 
-- lista em tabela com busca, como ela usava no Elo7
-- criar, editar, publicar e despublicar
-- subir foto, com redução no navegador antes de enviar
-  ([fotoDoProduto.ts](../loja/src/dominio/fotoDoProduto.ts), 14 testes)
+- ~~lista em tabela com busca, como ela usava no Elo7~~
+- ~~publicar e despublicar, um a um ou o tipo inteiro~~
+- **criar e editar**: falta, e é o que ela vai sentir primeiro
+- **subir foto**: falta a tela; as regras estão prontas em
+  [fotoDoProduto.ts](../loja/src/dominio/fotoDoProduto.ts), com 14 testes
 - reordenar a vitrine
+
+Publicar em lote existe por causa dos números dela: são 58 Lousas Mágicas
+iguais, variando só a arte. Uma a uma seriam 58 toques no celular.
 
 ### 4. O chat dentro da loja
 
@@ -131,7 +137,13 @@ Hoje `/entrar` é maquete: não tem senha, não tem sessão, e quem digitar
   a IA só responde a partir do catálogo e das políticas dela, e o que sair
   disso vira "vou chamar a dona da loja".
 
-### 5. Fora do escopo por ora
+### 5. Medir visita e venda
 
-Busca na loja para quem compra, e o "Minhas vendas" apontando para o
-painel de verdade. Dependem das telas de sessão existirem.
+Não existe, e trava o anúncio pago: sem saber quantos entram e quantos
+compram, anunciar é apostar. Ver
+[como-a-loja-ganha-visita.md](como-a-loja-ganha-visita.md).
+
+### 6. Fora do escopo por ora
+
+Busca na loja para quem compra. Os 37 produtos digitais do Projeto Educar,
+que nunca foram para a Elojinha e por isso não estão na loja.
