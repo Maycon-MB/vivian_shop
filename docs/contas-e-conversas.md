@@ -8,7 +8,7 @@ Registro meu. Não vira PDF.
 
 ## O que já está de pé
 
-O banco existe desde 21/08/2026, no projeto `loja`, em São Paulo. Quatro
+O banco existe desde 21/08/2026, no projeto `loja`, em São Paulo. Sete
 migrações aplicadas e conferidas contra o banco de verdade, não no papel:
 
 | Teste | Resultado |
@@ -26,7 +26,15 @@ O último par é o que sustenta o resto: **não é o login que dá poder**. É
 estar na tabela `donas_da_loja`. Quem criar conta amanhã continua sem ver
 pedido de ninguém.
 
-Os dados de teste foram apagados. O banco está vazio, esperando ela.
+Os dados de teste foram apagados.
+
+Desde 24/08 o banco não está mais vazio: guarda os **343 produtos** que
+vieram da Elojinha, com peso, medidas e foto, e **140 temas**. Deles, 342
+estão publicados e aparecem na loja.
+
+Também desde 24/08, uma dona convida outra por e-mail. Fazia falta desde
+que a Vivian avisou que a irmã, a Lilian, resolve as coisas da loja junto
+com ela.
 
 ---
 
