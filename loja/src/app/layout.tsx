@@ -4,8 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../telas/prototipo.css'
 import './globals.css'
 import { ProvedorCarrinho } from '@/telas/CarrinhoContexto'
-import { WhatsAppDaLoja } from '@/componentes/WhatsAppDaLoja'
-import { FaixasDoTopo } from '@/componentes/FaixasDoTopo'
 
 /* A Atkinson Hyperlegible é escolha funcional, não estética: foi desenhada
    pelo Braille Institute para diferenciar caracteres que se confundem,
@@ -39,11 +37,10 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${fraunces.variable} ${atkinson.variable}`}>
       <body>
         <ProvedorCarrinho>
-          <div className="app-container">
-            <FaixasDoTopo />
-            <main>{children}</main>
-            <WhatsAppDaLoja />
-          </div>
+          {/* Sem faixas e sem botão de WhatsApp aqui: eles são da loja, e
+              cada área traz o que é seu. Ver (loja)/layout.tsx e
+              admin/layout.tsx. */}
+          <div className="app-container">{children}</div>
         </ProvedorCarrinho>
       </body>
     </html>

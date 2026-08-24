@@ -1,4 +1,5 @@
 import Perguntas from '@/telas/Perguntas'
+import { VoltarAoPainel } from '@/componentes/VoltarAoPainel'
 import '@/telas/perguntas.css'
 
 export const metadata = {
@@ -8,5 +9,10 @@ export const metadata = {
 }
 
 export default function Pagina() {
-  return <Perguntas />
+  return (
+    <>
+      <VoltarAoPainel />
+      <Perguntas />
+    </>
+  )
 }

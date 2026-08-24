@@ -40,7 +40,7 @@ const TELAS = [
   { caminho: '/', nome: 'a loja', limitePesoKb: 700, limiteMs: 6000 },
   { caminho: '/produto/caderno-personalizado/', nome: 'um produto', limitePesoKb: 320, limiteMs: 4000 },
   { caminho: '/checkout/', nome: 'o checkout', limitePesoKb: 320, limiteMs: 4000 },
-  { caminho: '/perguntas/', nome: 'as perguntas', limitePesoKb: 320, limiteMs: 4000 },
+  { caminho: '/admin/perguntas/', nome: 'as perguntas', limitePesoKb: 320, limiteMs: 4000 },
   // O painel tem gráficos, mas eles agora chegam depois da tela abrir.
   { caminho: '/painel/', nome: 'o painel', limitePesoKb: 400, limiteMs: 4500 },
   { caminho: '/painel/?aba=relatorios', nome: 'os relatórios', limitePesoKb: 400, limiteMs: 4500 },

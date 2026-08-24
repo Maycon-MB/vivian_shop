@@ -1,0 +1,32 @@
+/* A área da Vivian.
+
+   Quase nada aqui de propósito: o painel traz o layout dele, com barra
+   lateral fixa e conteúdo ao lado. Uma primeira versão deste arquivo
+   definia uma grade de duas colunas para uma barra lateral própria, e o
+   resultado foi o conteúdo do painel espremido numa coluna de 100px —
+   duas camadas disputando a mesma decisão.
+
+   O que sobrou é o que as páginas sem painel precisam: fundo e o caminho
+   de volta. */
+
+.admin-area {
+  min-height: 100vh;
+  background: #F7F8FA;
+}
+
+/* O caminho de volta nas páginas que não são o painel. Sem ele, quem entra
+   pelas perguntas fica em beco sem saída: o único jeito de voltar é o
+   botão do navegador, que em celular muita gente não sabe que existe. */
+.admin-voltar-linha {
+  margin: 0;
+  padding: 14px 16px 0;
+}
+
+.admin-voltar-linha a {
+  color: #12305B;
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+}
+
+.admin-voltar-linha a:hover { text-decoration: underline; }

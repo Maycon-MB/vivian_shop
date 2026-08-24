@@ -1,8 +1,14 @@
 'use client'
 
 import React from 'react';
+import Link from 'next/link';
 import { Nav, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import {
+  ClipboardList,
+  HelpCircle,
+  Palette,
+  Store,
+  Wallet,
   TrendingUp,
   ShoppingBag,
   Mail,
@@ -36,6 +42,21 @@ const ITENS = [
   { id: 'mensagens', icone: <MessageSquare size={18} />, rotulo: 'Mensagens' },
   { id: 'marketing', icone: <Mail size={18} />, rotulo: 'Marketing' },
   { id: 'config', icone: <Settings size={18} />, rotulo: 'Configurações' },
+];
+
+/* O que não é aba do painel, e sim página com endereço próprio.
+
+   Entraram aqui em 24/08, quando a área da Vivian saiu de dentro da loja.
+   Antes ela chegava às perguntas por uma faixa azul no meio da vitrine, um
+   remendo que aparecia para quem estava comprando.
+
+   Ficam separados das abas por uma linha, porque são coisas de natureza
+   diferente: aba é parte do painel, isto sai dele. */
+const PAGINAS = [
+  { href: '/admin/perguntas/', icone: <HelpCircle size={18} />, rotulo: 'Perguntas para você' },
+  { href: '/admin/sobre-o-site/custos/', icone: <Wallet size={18} />, rotulo: 'O que a loja custa' },
+  { href: '/admin/sobre-o-site/marca/', icone: <Palette size={18} />, rotulo: 'A sua marca' },
+  { href: '/admin/sobre-o-site/entregas/', icone: <ClipboardList size={18} />, rotulo: 'O que já foi feito' },
 ];
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlternarRecolhida }) => {
@@ -115,6 +136,26 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onClose, recolhida, onAlterna
               </OverlayTrigger>
             );
           })}
+        </Nav>
+
+        <Nav className="sidebar-itens sidebar-paginas">
+          {PAGINAS.map((pagina) => (
+            <Link
+              key={pagina.href}
+              href={pagina.href}
+              prefetch={false}
+              className="sidebar-item"
+              title={recolhida ? pagina.rotulo : undefined}
+            >
+              <span className="sidebar-item-icone">{pagina.icone}</span>
+              {!recolhida && <span className="sidebar-item-rotulo">{pagina.rotulo}</span>}
+            </Link>
+          ))}
+
+          <Link href="/" prefetch={false} className="sidebar-item" title={recolhida ? 'Ver a loja' : undefined}>
+            <span className="sidebar-item-icone"><Store size={18} /></span>
+            {!recolhida && <span className="sidebar-item-rotulo">Ver a loja</span>}
+          </Link>
         </Nav>
 
         <div className="sidebar-rodape">
