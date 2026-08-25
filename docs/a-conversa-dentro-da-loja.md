@@ -117,7 +117,7 @@ O Maycon escreveu à Vivian em 24/08, e ela respondeu "Ótimo":
 | Nome e e-mail pedidos antes de escalar | feito |
 | Ela responde depois por e-mail | feito, pelo programa de e-mail dela |
 | Comprar sem criar conta | intacto |
-| **Ela ser avisada da mensagem** | **falta** |
+| **Ela ser avisada da mensagem** | código pronto, falta ligar o Resend |
 
 A terceira linha é a razão de o e-mail ser pedido à cliente, e por isso
 "Responder por e-mail" é o botão principal do painel, e não responder pela
@@ -125,13 +125,15 @@ loja. O `mailto:` abre o Gmail dela com a pergunta da cliente já citada, e
 não depende de serviço de envio nenhum: quem manda é o programa de e-mail
 dela.
 
-**A última linha é a que ainda não cumpre o combinado.** "Mandar a mensagem
-pra você" hoje significa deixá-la no painel. Se ela não abrir o painel, não
-fica sabendo. Para a loja avisar por e-mail é preciso o Resend, que está na
-fila em [contas-e-conversas.md](contas-e-conversas.md).
+**A última linha depende de uma coisa fora do código.** O gatilho e a
+função que mandam o e-mail existem desde 25/08, com teste, mas só
+disparam depois de o Resend estar ligado: conta criada, domínio
+verificado e chaves guardadas. Passo a passo em
+[ligar-o-resend.md](ligar-o-resend.md).
 
-Enquanto isso, vale ela combinar de abrir o painel uma vez por dia, e vale
-dizer isso a ela em vez de deixar descobrir sozinha.
+**Enquanto não estiver ligado, ela não é avisada de nada** e só vê a
+mensagem abrindo o painel. Vale dizer isso a ela em vez de deixar
+descobrir sozinha.
 
 ---
 

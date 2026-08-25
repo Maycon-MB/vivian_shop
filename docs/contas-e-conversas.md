@@ -95,6 +95,11 @@ confirmação de pedido e entrega do material digital.
 `feitoparavocepapelaria.com.br`. A verificação são três registros de DNS,
 no mesmo painel do registro.br onde a gente cadastrou os nove.
 
+Em 25/08 o Maycon aprovou contratar. O código do nosso lado está pronto:
+a função e o gatilho do aviso de mensagem nova existem e têm teste. O que
+falta é criar a conta, verificar o domínio e guardar as chaves. Passo a
+passo em [ligar-o-resend.md](ligar-o-resend.md).
+
 ---
 
 ## O que falta construir

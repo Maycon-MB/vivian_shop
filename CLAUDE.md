@@ -20,7 +20,8 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | simulado; conta Mercado Pago dela já existe |
 | Medição de visita | **não existe**, e trava anúncio pago |
-| Frete e e-mail | simulados |
+| Frete | simulado |
+| E-mail | código pronto; falta ligar o Resend |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
 dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
