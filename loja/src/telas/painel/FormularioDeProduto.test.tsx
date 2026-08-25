@@ -12,8 +12,13 @@ import userEvent from '@testing-library/user-event'
  */
 
 const salvarProduto = vi.fn()
+const enviarFoto = vi.fn()
 const buscarParaEditar = vi.fn()
 const listarTemas = vi.fn()
+
+vi.mock('@/dados/fotosDaDona', () => ({
+  enviarFoto: (...args: unknown[]) => enviarFoto(...args),
+}))
 
 vi.mock('@/dados/produtosDaDona', () => ({
   salvarProduto: (...args: unknown[]) => salvarProduto(...args),
@@ -27,6 +32,10 @@ beforeEach(() => {
   salvarProduto.mockReset().mockResolvedValue('id-novo')
   buscarParaEditar.mockReset()
   listarTemas.mockReset().mockResolvedValue([{ id: 'tema-1', nome: 'Peppa Pig' }])
+  enviarFoto.mockReset().mockResolvedValue({
+    cheia: 'https://balde/lousa/0-cheia.webp',
+    mini: 'https://balde/lousa/0-mini.webp',
+  })
 })
 
 const preencher = async (usuario: ReturnType<typeof userEvent.setup>) => {
@@ -183,5 +192,69 @@ describe('editar um produto que já existe', () => {
     await usuario.click(screen.getByRole('button', { name: /salvar produto/i }))
 
     expect(await screen.findByRole('alert')).toHaveTextContent(/já existe um produto com esse nome/i)
+  })
+})
+
+describe('a foto do produto', () => {
+  const foto = () =>
+    new File([new Uint8Array([1, 2, 3])], 'lousa.jpg', { type: 'image/jpeg' })
+
+  it('sobe na hora de escolher, e não junto com o resto', async () => {
+    /* Se esperasse o "salvar", ela ficaria olhando a tela parada sem
+       saber se a foto foi, e um erro de rede levaria junto tudo o que ela
+       já tinha digitado. */
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.upload(screen.getByLabelText(/escolher a foto/i), foto())
+
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalled())
+    expect(enviarFoto.mock.calls[0][1]).toBe('lousa-magica')
+    expect(salvarProduto).not.toHaveBeenCalled()
+  })
+
+  it('guarda os dois endereços no produto', async () => {
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.type(screen.getByLabelText(/preço de cada peça/i), '13,70')
+    await usuario.upload(screen.getByLabelText(/escolher a foto/i), foto())
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalled())
+
+    await usuario.click(screen.getByRole('button', { name: /salvar produto/i }))
+
+    await waitFor(() => expect(salvarProduto).toHaveBeenCalled())
+    expect(salvarProduto.mock.calls[0][0]).toMatchObject({
+      imagem: 'https://balde/lousa/0-cheia.webp',
+      imagem_mini: 'https://balde/lousa/0-mini.webp',
+    })
+  })
+
+  it('cobra o nome antes da foto, e diz por quê', async () => {
+    /* O nome vira o endereço do produto, que é a pasta onde a foto mora.
+       Sem ele, o arquivo não teria onde ficar. */
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.upload(screen.getByLabelText(/escolher a foto/i), foto())
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/nome ao produto antes/i)
+    expect(enviarFoto).not.toHaveBeenCalled()
+  })
+
+  it('diz o que houve quando a foto não sobe', async () => {
+    // O recado da regra chega inteiro: "Isso não é uma foto" ajuda; "erro
+    // 400" não.
+    enviarFoto.mockRejectedValue(new Error('Isso não é uma foto. Mande uma imagem do produto.'))
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.upload(screen.getByLabelText(/escolher a foto/i), foto())
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/não é uma foto/i)
   })
 })

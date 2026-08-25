@@ -37,6 +37,8 @@ export interface Formulario {
   larg_cm: string
   comp_cm: string
   pasta_drive: string
+  imagem: string
+  imagem_mini: string
   ativo: boolean
 }
 
@@ -57,6 +59,8 @@ export const FORMULARIO_VAZIO: Formulario = {
   larg_cm: '',
   comp_cm: '',
   pasta_drive: '',
+  imagem: '',
+  imagem_mini: '',
   ativo: false,
 }
 
@@ -148,6 +152,8 @@ export interface LinhaParaSalvar {
   larg_cm: number | null
   comp_cm: number | null
   pasta_drive: string | null
+  imagem: string | null
+  imagem_mini: string | null
   ativo: boolean
 }
 
@@ -169,6 +175,8 @@ export const paraOBanco = (f: Formulario, slugAtual?: string): LinhaParaSalvar =
   larg_cm: lerNumero(f.larg_cm),
   comp_cm: lerNumero(f.comp_cm),
   pasta_drive: f.pasta_drive.trim() || null,
+  imagem: f.imagem.trim() || null,
+  imagem_mini: f.imagem_mini.trim() || null,
   ativo: f.ativo,
 })
 
@@ -190,6 +198,8 @@ export const doBanco = (linha: Record<string, unknown>): Formulario => {
     larg_cm: texto(linha.larg_cm),
     comp_cm: texto(linha.comp_cm),
     pasta_drive: texto(linha.pasta_drive),
+    imagem: texto(linha.imagem),
+    imagem_mini: texto(linha.imagem_mini),
     ativo: Boolean(linha.ativo),
   }
 }

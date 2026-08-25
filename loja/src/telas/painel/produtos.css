@@ -589,3 +589,57 @@
 .conversa-item-aqui summary:hover { color: #12305B; }
 
 .conversa-item-aqui .conversa-item-resposta { margin-top: 10px; }
+
+/* ── A foto do produto ───────────────────────────────────────────────── */
+
+.produto-foto-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.produto-foto-previa {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  background: #F8FAFC;
+}
+
+.produto-foto-vazia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  margin: 0;
+  border: 1px dashed #D8DEE7;
+  border-radius: 14px;
+  background: #F8FAFC;
+  color: #8A93A5;
+  font-size: .84rem;
+  text-align: center;
+}
+
+/* O <input type="file"> de verdade fica escondido dentro do rótulo: o
+   botão do navegador não aceita estilo e escreve "Nenhum arquivo
+   selecionado" em inglês em alguns aparelhos. */
+.produto-foto-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #D8DEE7;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #12305B;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.produto-foto-botao:hover { border-color: #1F736F; }
+.produto-foto-botao input { display: none; }
