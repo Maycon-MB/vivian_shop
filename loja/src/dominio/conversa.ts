@@ -185,3 +185,42 @@ export const problemasDoRecado = (
 
   return achados
 }
+
+/**
+ * O e-mail que ela manda para a cliente, já escrito.
+ *
+ * É o que o Maycon prometeu à Vivian em 24/08, e a razão de o e-mail ser
+ * pedido à cliente:
+ *
+ *   > "se você não estiver online no momento, ainda dá pra responder
+ *   > depois por e-mail, em vez de perder a cliente"
+ *
+ * Quem envia é o programa de e-mail dela, e não a loja. Por isso isto
+ * funciona hoje, sem depender do serviço de envio que ainda falta
+ * contratar: o `mailto:` abre o Gmail dela com tudo preenchido, faltando
+ * só a resposta.
+ *
+ * A pergunta da cliente vai citada no corpo. Sem isso ela responde um
+ * e-mail que chega solto, e a cliente não lembra do que se trata,
+ * exatamente o problema do WhatsApp que ela queria resolver.
+ */
+export const emailDeResposta = (
+  nome: string,
+  email: string,
+  pergunta: string,
+): string => {
+  const assunto = 'Sobre a sua dúvida na Feito para Você'
+
+  const corpo = [
+    `Oi, ${nome.trim().split(' ')[0] || 'tudo bem'}!`,
+    '',
+    'Você perguntou:',
+    `"${pergunta.trim()}"`,
+    '',
+    '',
+    'Feito para Você! Papelaria Personalizada',
+    'https://feitoparavocepapelaria.com.br',
+  ].join(String.fromCharCode(10))
+
+  return `mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`
+}

@@ -1,9 +1,14 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Loader2, Send, Mail } from 'lucide-react';
+import { Loader2, Send, Mail, Check } from 'lucide-react';
 
-import { listarConversas, responderConversa } from '@/dados/conversasDaDona';
+import { emailDeResposta } from '@/dominio/conversa';
+import {
+  listarConversas,
+  marcarRespondida,
+  responderConversa,
+} from '@/dados/conversasDaDona';
 
 /**
  * As conversas, do lado dela.
@@ -18,6 +23,12 @@ import { listarConversas, responderConversa } from '@/dados/conversasDaDona';
  *   2. **Quem ainda espera vem primeiro.** Não é a mais recente no topo,
  *      é a que está sem resposta. A dúvida antes da compra tem prazo de
  *      validade curto: a cliente está montando a festa hoje.
+ *   3. **Responder por e-mail vem antes de responder na loja.** Foi o que
+ *      o Maycon prometeu a ela em 24/08, e é a razão de o e-mail ser
+ *      pedido à cliente: "se você não estiver online no momento, ainda dá
+ *      pra responder depois por e-mail, em vez de perder a cliente". O
+ *      `mailto:` abre o programa de e-mail dela com tudo escrito, e não
+ *      depende de serviço de envio nenhum.
  */
 
 const quando = (iso) => {
@@ -45,6 +56,7 @@ const MinhasConversas = () => {
   const [erro, setErro] = useState('');
   const [respostas, setRespostas] = useState({});
   const [enviando, setEnviando] = useState(null);
+  const [marcando, setMarcando] = useState(null);
 
   const carregar = () =>
     listarConversas()
@@ -76,6 +88,20 @@ const MinhasConversas = () => {
       setErro(recadoDoErro(e));
     } finally {
       setEnviando(null);
+    }
+  };
+
+  const marcar = async (id) => {
+    setErro('');
+    setMarcando(id);
+
+    try {
+      await marcarRespondida(id);
+      await carregar();
+    } catch (e) {
+      setErro(recadoDoErro(e));
+    } finally {
+      setMarcando(null);
     }
   };
 
@@ -141,37 +167,67 @@ const MinhasConversas = () => {
             ))}
           </div>
 
-          <div className="conversa-item-resposta">
-            <label>
-              <span className="visualmente-oculto">Responder para {conversa.nome}</span>
-              <textarea
-                rows={2}
-                value={respostas[conversa.id] ?? ''}
-                onChange={(e) =>
-                  setRespostas((atuais) => ({ ...atuais, [conversa.id]: e.target.value }))
-                }
-                placeholder="Escreva a sua resposta"
-              />
-            </label>
-
-            <button
-              type="button"
-              className="conversa-enviar"
-              onClick={() => responder(conversa.id)}
-              disabled={enviando === conversa.id || !(respostas[conversa.id] ?? '').trim()}
+          {/* O e-mail vem primeiro: é o caminho que a cliente espera, e o
+              único que a alcança quando ela não está mais no site. */}
+          <div className="conversa-item-principal">
+            <a
+              className="conversa-por-email"
+              href={emailDeResposta(
+                conversa.nome,
+                conversa.email,
+                conversa.mensagens.find((m) => m.quem === 'cliente')?.texto ?? '',
+              )}
             >
-              <Send size={15} aria-hidden="true" />
-              {enviando === conversa.id ? 'Enviando…' : 'Responder'}
-            </button>
+              <Mail size={15} aria-hidden="true" /> Responder por e-mail
+            </a>
+
+            {!conversa.respondida && (
+              <button
+                type="button"
+                className="conversa-marcar"
+                onClick={() => marcar(conversa.id)}
+                disabled={marcando === conversa.id}
+              >
+                <Check size={15} aria-hidden="true" />
+                {marcando === conversa.id ? 'Marcando…' : 'Já respondi'}
+              </button>
+            )}
           </div>
 
-          {/* A cliente lê a resposta voltando à loja. Enquanto o envio de
-              e-mail não existe, ela precisa saber disso para não esperar
-              uma mensagem que não vai chegar. */}
-          <p className="conversa-item-aviso">
-            A resposta aparece na loja quando a cliente voltar. O aviso por e-mail entra
-            quando o serviço de envio estiver contratado.
-          </p>
+          <details className="conversa-item-aqui">
+            <summary>Ou responder aqui pela loja</summary>
+
+            <div className="conversa-item-resposta">
+              <label>
+                <span className="visualmente-oculto">Responder para {conversa.nome}</span>
+                <textarea
+                  rows={2}
+                  value={respostas[conversa.id] ?? ''}
+                  onChange={(e) =>
+                    setRespostas((atuais) => ({ ...atuais, [conversa.id]: e.target.value }))
+                  }
+                  placeholder="Escreva a sua resposta"
+                />
+              </label>
+
+              <button
+                type="button"
+                className="conversa-enviar"
+                onClick={() => responder(conversa.id)}
+                disabled={enviando === conversa.id || !(respostas[conversa.id] ?? '').trim()}
+              >
+                <Send size={15} aria-hidden="true" />
+                {enviando === conversa.id ? 'Enviando…' : 'Responder'}
+              </button>
+            </div>
+
+            {/* Ela precisa saber que isto não avisa a cliente, senão fica
+                esperando uma resposta que a cliente não viu. */}
+            <p className="conversa-item-aviso">
+              A cliente lê isto quando voltar à loja. Ela não é avisada: por isso o e-mail
+              acima é o caminho principal.
+            </p>
+          </details>
         </article>
       ))}
     </section>

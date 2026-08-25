@@ -119,9 +119,12 @@ const Conversa = () => {
         { quem: 'cliente', texto: texto.trim() },
         {
           quem: 'loja',
+          /* A resposta vai pelo e-mail dela, do programa de e-mail dela.
+             É o que o Maycon prometeu à Vivian em 24/08, e é o único
+             caminho que alcança a cliente depois de ela fechar o site. */
           texto:
-            `Recebi, ${nome.trim().split(' ')[0]}. A resposta chega no seu e-mail, e também ` +
-            'aqui se você voltar nesta página.',
+            `Recebi, ${nome.trim().split(' ')[0]}. A loja responde no seu e-mail. ` +
+            'Se você voltar aqui, a resposta também aparece nesta conversa.',
         },
       ]);
 

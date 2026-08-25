@@ -536,3 +536,56 @@
 }
 
 .conversas-painel .conversa-enviar:disabled { opacity: .55; cursor: default; }
+
+.conversa-item-principal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* O e-mail é o caminho principal, e o desenho diz isso: preenchido, do
+   tamanho de um botão de verdade. Responder pela loja fica dobrado
+   embaixo, porque não avisa a cliente. */
+.conversa-por-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: #1F736F;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: .9rem;
+  text-decoration: none;
+}
+
+.conversa-por-email:hover { color: #FFFFFF; filter: brightness(1.06); }
+
+.conversa-marcar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #D8DEE7;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #55617A;
+  font-size: .88rem;
+  cursor: pointer;
+}
+
+.conversa-marcar:hover { border-color: #1F736F; color: #12305B; }
+.conversa-marcar:disabled { opacity: .55; }
+
+.conversa-item-aqui summary {
+  color: #55617A;
+  font-size: .86rem;
+  cursor: pointer;
+}
+
+.conversa-item-aqui summary:hover { color: #12305B; }
+
+.conversa-item-aqui .conversa-item-resposta { margin-top: 10px; }

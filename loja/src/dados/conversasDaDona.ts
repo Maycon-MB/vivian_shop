@@ -80,3 +80,22 @@ export const responderConversa = async (id: string, texto: string): Promise<void
 
   if (erroDaMarca) throw new Error(erroDaMarca.message)
 }
+
+/**
+ * Ela respondeu por fora, pelo próprio e-mail.
+ *
+ * Existe porque o caminho prometido à Vivian em 24/08 é o e-mail, e o
+ * `mailto:` sai do painel sem passar pela loja: o banco não tem como
+ * saber que ela mandou. Sem este botão, a conversa ficaria marcada como
+ * "esperando você" para sempre, e a fila perderia o sentido.
+ */
+export const marcarRespondida = async (id: string): Promise<void> => {
+  const agora = new Date().toISOString()
+
+  const { error } = await bancoDoNavegador()
+    .from('conversas')
+    .update({ respondida_em: agora, atualizado_em: agora })
+    .eq('id', id)
+
+  if (error) throw new Error(error.message)
+}
