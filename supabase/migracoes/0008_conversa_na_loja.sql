@@ -5,6 +5,11 @@
 -- sem dizer de quem é nem de qual pedido, e ela procura no meio de conversa
 -- pessoal. Aqui a conversa nasce colada à loja.
 --
+-- Rodar duas vezes não dá erro: tudo aqui é `if not exists` ou
+-- `create or replace`. A primeira versão não era assim, e a segunda
+-- execução parava em `relation "conversas" already exists` no meio,
+-- deixando dúvida sobre o que tinha sido aplicado e o que não.
+--
 -- ── O problema difícil: quem compra não tem conta ──────────────────────
 --
 -- Ficou decidido que ninguém é obrigado a se cadastrar para perguntar. Só
@@ -26,7 +31,7 @@
 -- confere ela mesma, e devolve apenas aquela conversa. Não há consulta
 -- direta a fazer.
 
-create table conversas (
+create table if not exists conversas (
   id uuid primary key default gen_random_uuid(),
 
   -- A chave de acesso de quem abriu a conversa. Vive no navegador dela,
@@ -54,9 +59,9 @@ comment on table conversas is 'Uma conversa de quem compra, dentro da loja. Sem 
 comment on column conversas.token is 'Chave de acesso. Quem a tem lê a conversa; ela nunca sai do navegador de quem abriu.';
 comment on column conversas.escalada is 'A cliente pediu para falar com a loja. Só estas aparecem no painel.';
 
-create index conversas_para_o_painel on conversas (atualizado_em desc) where escalada;
+create index if not exists conversas_para_o_painel on conversas (atualizado_em desc) where escalada;
 
-create table mensagens (
+create table if not exists mensagens (
   id uuid primary key default gen_random_uuid(),
   conversa_id uuid not null references conversas (id) on delete cascade,
 
@@ -71,7 +76,7 @@ create table mensagens (
 
 comment on table mensagens is 'As falas de uma conversa. "loja" é a Vivian respondendo pelo painel.';
 
-create index mensagens_da_conversa on mensagens (conversa_id, criado_em);
+create index if not exists mensagens_da_conversa on mensagens (conversa_id, criado_em);
 
 -- ── Quem pode ler ───────────────────────────────────────────────────────
 --
@@ -81,21 +86,25 @@ create index mensagens_da_conversa on mensagens (conversa_id, criado_em);
 alter table conversas enable row level security;
 alter table mensagens enable row level security;
 
+drop policy if exists "só a dona lê as conversas" on conversas;
 create policy "só a dona lê as conversas"
   on conversas for select
   to authenticated
   using (e_dona_da_loja());
 
+drop policy if exists "só a dona lê as mensagens" on mensagens;
 create policy "só a dona lê as mensagens"
   on mensagens for select
   to authenticated
   using (e_dona_da_loja());
 
+drop policy if exists "a dona responde" on mensagens;
 create policy "a dona responde"
   on mensagens for insert
   to authenticated
   with check (e_dona_da_loja() and quem = 'loja');
 
+drop policy if exists "a dona marca a conversa" on conversas;
 create policy "a dona marca a conversa"
   on conversas for update
   to authenticated
