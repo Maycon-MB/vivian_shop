@@ -73,17 +73,22 @@ que ela quis dizer.
 
 ---
 
-## O que ficou por conferir
+## O único conserto de texto, e o seu limite
 
-**A avaliação da Claudia perdeu uma quebra de linha na extração** e está
-na loja como "EU AMEIIIII SAO LINDOSOBRIGADA". O original provavelmente
-tinha "SÃO LINDOS" e "OBRIGADA" em linhas separadas, mas isso é suposição
-minha e eu não invento o que a cliente escreveu.
+**A avaliação da Claudia perdeu uma quebra de linha na extração** e chegou
+como "EU AMEIIIII SAO LINDOSOBRIGADA". O espaço foi devolvido, e nada
+mais: a maiúscula é dela, os quatro is de "AMEIIIII" são dela, e "SAO" sem
+til é como ela digitou.
 
-Está publicada assim. **Vale conferir com a Vivian contra o print
-original** e corrigir a linha em
-[avaliacoes.json](../loja/src/dados/avaliacoes.json), que é um arquivo, e
-não banco.
+Isso não contradiz o "nada é corrigido" da seção acima, e a diferença é a
+regra toda: **o que a cliente escreveu fica; o que a nossa extração
+quebrou é consertado.** "Adorai" é da Mariana e continua lá.
+
+O conserto mora em
+[importar-avaliacoes.mjs](../scripts/importar-avaliacoes.mjs), e não no
+arquivo gerado, para não se perder na próxima importação. Se o print
+original aparecer e disser outra coisa, é esse mapa que muda: o CSV é o
+que a plataforma entregou, e fica como veio.
 
 ---
 
