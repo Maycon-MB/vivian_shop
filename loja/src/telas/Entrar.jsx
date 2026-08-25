@@ -116,6 +116,12 @@ const Entrar = () => {
             </Button>
           </Form>
 
+          {/* Antes do "criar conta", e não depois: quem chega aqui travado
+              esqueceu a senha muito mais vezes do que nunca teve conta. */}
+          <p className="entrar-criar">
+            <Link href="/admin/esqueci-a-senha/" prefetch={false}>Esqueci a minha senha</Link>
+          </p>
+
           <p className="entrar-criar">
             Primeira vez? <Link href="/admin/criar-conta/" prefetch={false}>Criar a minha conta</Link>
           </p>

@@ -132,3 +132,63 @@ export const mensagemDoErro = (bruto: string): string => {
 
   return 'Não consegui entrar agora. Tente de novo em instantes, e me chame se continuar.'
 }
+
+/**
+ * O e-mail para onde mandar o link de nova senha.
+ *
+ * Só o e-mail: quem chegou aqui é porque não lembra a senha, e pedir
+ * qualquer outra coisa é obstáculo em cima de quem já está travado.
+ */
+export const conferirPedidoDeSenha = (email: string): Conferencia => {
+  const endereco = limpo(email)
+
+  if (!endereco) return { ok: false, campo: 'email', aviso: 'Escreva o seu e-mail.' }
+
+  if (!pareceEmail(endereco)) {
+    return {
+      ok: false,
+      campo: 'email',
+      aviso: 'Confira o e-mail: parece que falta o @ ou o final, como .com.',
+    }
+  }
+
+  return { ok: true }
+}
+
+/**
+ * A senha nova, digitada duas vezes.
+ *
+ * Duas vezes porque ela não vê o que digita e não terá como conferir
+ * depois: errar aqui a tranca fora da própria loja de novo, e o caminho
+ * de volta é o mesmo e-mail outra vez.
+ *
+ * Mínimo de tamanho e nada de exigir símbolo: maiúscula, número e
+ * caractere especial produzem senha anotada em papel.
+ */
+export const conferirNovaSenha = ({
+  senha,
+  repetida,
+}: {
+  senha: string
+  repetida: string
+}): Conferencia => {
+  if (!senha) return { ok: false, campo: 'senha', aviso: 'Escreva a sua senha nova.' }
+
+  if (senha.length < MINIMO_DA_SENHA) {
+    return {
+      ok: false,
+      campo: 'senha',
+      aviso: `A senha precisa ter pelo menos ${MINIMO_DA_SENHA} letras ou números.`,
+    }
+  }
+
+  if (senha !== repetida) {
+    return {
+      ok: false,
+      campo: 'senha',
+      aviso: 'As duas senhas não são iguais. Confira antes de salvar.',
+    }
+  }
+
+  return { ok: true }
+}

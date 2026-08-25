@@ -356,3 +356,23 @@
 @media (prefers-reduced-motion: reduce) {
   .girando { animation: none; }
 }
+
+/* ── Esqueci a minha senha ───────────────────────────────────────────── */
+
+.entrar-titulo {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #12305B;
+}
+
+.entrar-icone { color: #1F736F; margin-bottom: 12px; }
+
+/* O link "pedir outro" usa a classe do botão, e sem isto ele fica com
+   sublinhado e cor de link dentro de um botão preenchido. */
+a.entrar-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
