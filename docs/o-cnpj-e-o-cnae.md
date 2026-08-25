@@ -134,6 +134,67 @@ Perto de **R$ 5.000 por mês** o percentual começa a ficar aceitável.
    regularização, não de crime. O que não pode é ficar mais um ano sem
    olhar.
 
+## A terceira porta, levantada em 25/08
+
+A conversa até aqui tratava disto como escolha entre dois: continuar MEI
+errado, ou migrar para ME. Existe uma terceira, e no faturamento de hoje
+ela é provavelmente a certa.
+
+**Pessoa física, com recibo e carnê-leão.** Sem CNPJ, sem contador, sem
+DAS. Emite recibo, paga IRPF pela tabela progressiva.
+
+E vale desfazer uma confusão que apareceu na conversa: **MEI e PJ não são
+a mesma coisa.** Quando um programador diz "trabalho como PJ", ele quase
+sempre é **ME no Simples Nacional**, com CNAE 6201. Não é MEI. MEI é o
+degrau mais baixo, e é o único que não aceita desenvolvimento.
+
+### Por que ME funciona para eles e não para você hoje
+
+ME tem custo fixo que o MEI não tem: contador obrigatório, uns R$ 200 a
+R$ 300 por mês, mais o imposto sobre faturamento.
+
+| Faturamento | Custo fixo do ME | Peso |
+|---|---|---|
+| R$ 10.000/mês | ~R$ 430 | 4,3% |
+| R$ 3.000/mês | ~R$ 430 | **14%** |
+
+O Maycon confirmou em 25/08 que fatura **menos da metade de R$ 10 mil**.
+Nesse volume, o custo fixo do ME come o contrato da Vivian inteiro.
+
+### O que decide não é o imposto, é o INSS
+
+Essa é a parte que quase não se menciona.
+
+Como **PF autônomo**, o INSS é 20% sobre o que declara, ou 11% no plano
+simplificado, que corta a aposentadoria por tempo de contribuição.
+
+Como **ME**, o INSS incide só sobre o pró-labore. Com o pró-labore em 28%
+do faturamento, que é o que ativa o Fator R, o INSS efetivo fica em torno
+de 3% do faturamento.
+
+Então a comparação real é: PF não tem custo fixo mas tem INSS pesado; ME
+tem custo fixo alto mas INSS leve. **Existe um ponto de virada, e só um
+contador com os números dele acha.**
+
+### As três perguntas para levar ao contador
+
+Levar como três opções para ele escolher, e não como pergunta aberta:
+
+1. No meu volume, PF com carnê-leão ou ME com Fator R?
+2. A partir de que faturamento o ME passa a valer?
+3. Qual o risco do que já foi faturado no CNAE 9511-8?
+
+### O que não é problema de enquadramento
+
+R$ 200 por mês por cliente não paga a estrutura que o trabalho exige. O
+contrato da Vivian está fechado e vale honrar; a observação é sobre o
+próximo. Uma loja com catálogo, pagamento, chat, painel e e-mail é
+trabalho de vários milhares de reais.
+
+Nenhum enquadramento conserta preço.
+
+---
+
 ## O que isso muda no contrato da Vivian
 
 Nada no valor. Mas a cláusula 3.2 diz "mediante recibo ou nota fiscal", e

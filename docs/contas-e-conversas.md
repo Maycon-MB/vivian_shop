@@ -91,6 +91,8 @@ Plano gratuito: 3.000 e-mails por mês, 100 por dia. Para o volume dela é
 folgado, e cobre confirmação de cadastro, recuperação de senha,
 confirmação de pedido e entrega do material digital.
 
+**Ligado em 25/08.** Ver [ligar-o-resend.md](ligar-o-resend.md).
+
 **Depende de domínio verificado**, e o domínio já existe desde ontem:
 `feitoparavocepapelaria.com.br`. A verificação são três registros de DNS,
 no mesmo painel do registro.br onde a gente cadastrou os nove.
@@ -121,7 +123,8 @@ vê `[]`, inclusive quem comprou.
 - ~~criar conta, entrar, sair~~
 - ~~`/admin` trancado atrás da sessão **e** da `donas_da_loja`~~
 - ~~uma dona convida outra, por e-mail~~
-- **recuperar senha**: falta, e depende do Resend
+- ~~recuperar senha~~ feito em 25/08, com as telas de pedir o link e de
+  escolher a senha nova
 - **desligar o cadastro público**: assim que ela assumir a loja
 
 A confirmação de e-mail está desligada no Supabase até o Resend existir.

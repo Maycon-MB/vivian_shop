@@ -1,9 +1,23 @@
 # Ligar o Resend
 
-Decidido em 25/08: a loja passa a mandar e-mail.
+**Feito em 25/08. A loja manda e-mail.**
 
-Isto é o que **só o Maycon pode fazer**, porque envolve criar conta e
-mexer em DNS. O código do lado de cá já está pronto e esperando.
+O que está escrito abaixo é o caminho que foi percorrido, e serve para
+refazer numa máquina nova ou para outro cliente.
+
+| Passo | Estado |
+|---|---|
+| Conta no Resend | feito |
+| Domínio verificado | feito, os quatro registros no registro.br |
+| SMTP do Supabase | ligado |
+| Segredos no vault | 3, cifrados |
+| Função `avisar-a-dona` | publicada |
+| Migração 0009 | aplicada |
+| Testado de ponta a ponta | **sim, com cliente de mentira na loja de verdade** |
+
+O teste apontou o destinatário para um e-mail do Maycon, e não para o da
+Vivian: ela não recebeu mensagem de cliente inventada. O gatilho foi
+restaurado e conferido lendo `donas_da_loja`.
 
 Registro meu. Não vira PDF.
 
