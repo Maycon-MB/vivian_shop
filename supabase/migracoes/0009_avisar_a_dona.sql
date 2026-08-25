@@ -24,7 +24,8 @@
 --     select vault.create_secret('...',    'SEGREDO_DO_GATILHO');
 --     select vault.create_secret('https://<ref>.supabase.co/functions/v1/avisar-a-dona', 'URL_DO_AVISO');
 
-create extension if not exists pg_net with schema extensions;
+-- No Supabase o pg_net já vem instalado, no schema `net`.
+create extension if not exists pg_net;
 
 create or replace function avisar_a_dona()
 returns trigger
@@ -77,22 +78,35 @@ begin
   end if;
 
   /* Assíncrono de propósito. Se o envio fosse esperado aqui, a cliente
-     ficaria olhando o botão girar enquanto o Resend responde, e um
-     problema lá deixaria a mensagem dela sem gravar. O aviso é
-     importante; a mensagem é mais. */
-  perform extensions.net.http_post(
-    url := endereco,
-    headers := jsonb_build_object(
-      'Content-Type', 'application/json',
-      'x-segredo-do-gatilho', chave_do_gatilho
-    ),
-    body := jsonb_build_object(
-      'nome', new.nome,
-      'email', new.email,
-      'pergunta', coalesce(pergunta, '(sem texto)'),
-      'para', destinatarias
-    )
-  );
+     ficaria olhando o botão girar enquanto o Resend responde.
+
+     O `begin ... exception` não é zelo: sem ele, qualquer problema aqui
+     derruba a transação inteira e a cliente recebe "não consegui enviar"
+     por causa de um aviso que era só nosso. Aconteceu no primeiro teste
+     de ponta a ponta, com um nome de schema errado, e a mensagem dela se
+     perdeu junto. O aviso é importante; a mensagem é mais.
+
+     `net.http_post`, e não `extensions.net.http_post`: no Supabase o
+     pg_net já vem instalado no schema `net`, e o nome com três partes é
+     lido como banco.schema.função. */
+  begin
+    perform net.http_post(
+      url := endereco,
+      headers := jsonb_build_object(
+        'Content-Type', 'application/json',
+        'x-segredo-do-gatilho', chave_do_gatilho
+      ),
+      body := jsonb_build_object(
+        'nome', new.nome,
+        'email', new.email,
+        'pergunta', coalesce(pergunta, '(sem texto)'),
+        'para', destinatarias
+      )
+    );
+  exception when others then
+    -- Fica no log do Postgres, e a mensagem da cliente segue gravada.
+    raise warning 'não consegui avisar a dona: %', sqlerrm;
+  end;
 
   return new;
 end;
