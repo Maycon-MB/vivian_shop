@@ -33,8 +33,14 @@ const gravar = (produtos, temas) => {
 }
 
 if (!url || !chave) {
-  console.log('sem banco configurado: a loja fica com o catálogo de exemplo')
-  gravar([], [])
+  /* Sem credencial o arquivo NÃO é reescrito.
+     Ele é versionado de propósito, com os 342 produtos dela, para quem
+     clonar sem chave nenhuma construir uma loja de demonstração em vez de
+     uma loja vazia. Gravar `[]` aqui apagava esses 342 do repositório em
+     qualquer build local sem `.env.local` — e o estrago só apareceria
+     depois, num commit feito sem olhar o diff. Descoberto assim, em
+     25/08. */
+  console.log('sem banco configurado: o catálogo do repositório fica como está')
   process.exit(0)
 }
 
