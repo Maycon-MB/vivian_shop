@@ -15,8 +15,6 @@ const enviarMensagem = vi.fn()
 const falarComALoja = vi.fn()
 const lerConversa = vi.fn()
 
-vi.mock('next/navigation', () => ({ usePathname: () => '/' }))
-
 vi.mock('@/dados/conversaDaLoja', () => ({
   chaveDaConversa: () => chaveDaConversa(),
   enviarMensagem: (...args: unknown[]) => enviarMensagem(...args),
@@ -33,9 +31,11 @@ beforeEach(() => {
   lerConversa.mockReset().mockResolvedValue([])
 })
 
-const abrir = async (usuario: ReturnType<typeof userEvent.setup>) => {
-  render(<Conversa />)
-  await usuario.click(screen.getByRole('button', { name: /tirar uma dúvida/i }))
+/* A bolha fechada mora no `ConversaDaLoja`, que decide em que telas ela
+   aparece e só baixa este arquivo quando alguém abre. Aqui a conversa já
+   entra aberta, que é o único estado que este componente tem. */
+const abrir = async (_usuario: ReturnType<typeof userEvent.setup>) => {
+  render(<Conversa aoFechar={() => {}} />)
 }
 
 describe('as perguntas prontas', () => {

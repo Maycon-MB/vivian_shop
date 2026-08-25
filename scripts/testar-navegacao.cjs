@@ -94,6 +94,12 @@ const conferir = async (nome, fn) => {
   })
   pagina.on('pageerror', (e) => errosConsole.push(e.message))
 
+  /* "Failed to load resource: 404" sozinho não diz qual endereço faltou, e
+     quem cai nisso perde meia hora procurando. Aqui o endereço vai junto. */
+  pagina.on('response', (r) => {
+    if (r.status() >= 400) errosConsole.push(`${r.status()} em ${r.url()}`)
+  })
+
   await conferir('a loja abre e mostra o nome certo', async () => {
     await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
     const titulo = await pagina.locator('h1').first().textContent()
@@ -211,13 +217,6 @@ const conferir = async (nome, fn) => {
     }
   })
 
-  await conferir('o produto digital não fala de frete nem de produção', async () => {
-    await pagina.goto(`${BASE}/produto/primeiras-descobertas-cores/`, { waitUntil: 'networkidle' })
-    const corpo = await pagina.locator('body').textContent()
-    if (corpo.includes('dias úteis')) throw new Error('material digital não tem prazo de produção')
-    if (corpo.includes('Mínimo de 10')) throw new Error('material digital não tem mínimo')
-  })
-
   /* Daqui para baixo, o que precisa das duas linhas de venda.
 
      O catálogo dela veio da Elojinha, que recebeu só a papelaria
@@ -238,6 +237,25 @@ const conferir = async (nome, fn) => {
   if (linhasNaLoja <= 1) {
     console.log('  (pulando o que precisa das duas linhas: a loja só tem a personalizada)')
   }
+
+  /* Este estava acima, com `conferir`, e pedia um produto do catálogo de
+     exemplo pelo nome. Passava porque o build local ficava sem catálogo e
+     caía no exemplo; quando o catálogo dela passou a entrar de verdade, a
+     página virou 404 e o console sujou sem ninguém entender por quê.
+
+     Ele é do mesmo grupo dos daqui de baixo: precisa da linha digital,
+     que ainda não existe na loja. */
+  await conferirDuasLinhas('o produto digital não fala de frete nem de produção', async () => {
+    await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })
+    await pagina.getByRole('button', { name: 'Papelaria pedagógica', exact: true }).first().click()
+    await pagina.waitForTimeout(600)
+    await pagina.locator('a[href*="/produto/"]').first().click()
+    await pagina.waitForURL('**/produto/**')
+
+    const corpo = await pagina.locator('body').textContent()
+    if (corpo.includes('dias úteis')) throw new Error('material digital não tem prazo de produção')
+    if (corpo.includes('Mínimo de 10')) throw new Error('material digital não tem mínimo')
+  })
 
   await conferirDuasLinhas('o carrinho impede misturar as duas linhas', async () => {
     await pagina.goto(`${BASE}/`, { waitUntil: 'networkidle' })

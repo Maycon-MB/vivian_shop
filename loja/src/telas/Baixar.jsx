@@ -101,9 +101,9 @@ const Baixar = () => {
             {/* Ia para o WhatsApp com um número de exemplo, que não
                 existe. A conversa da loja mora na página inicial, e o
                 endereço abre com ela já aberta. */}
-            <a className="acao-conversa-grande" href="/?conversa=1">
+            <Link className="acao-conversa-grande" href="/?conversa=1" prefetch={false}>
               <MessageCircle size={17} /> Falar com a loja
-            </a>
+            </Link>
 
             <Link href="/" className="acao-voltar">
               Ver outros materiais

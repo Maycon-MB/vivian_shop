@@ -173,9 +173,9 @@ const PedidoConfirmado = () => {
           <div className="confirmado-acoes">
             {/* A conversa da loja no lugar do WhatsApp, que levava a
                 cliente para fora e caía num número de exemplo. */}
-            <a className="acao-conversa-grande" href="/?conversa=1">
+            <Link className="acao-conversa-grande" href="/?conversa=1" prefetch={false}>
               <MessageCircle size={17} /> Falar com a loja
-            </a>
+            </Link>
 
             <Link href="/" className="acao-voltar">
               Voltar para a loja
