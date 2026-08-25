@@ -1,0 +1,92 @@
+/**
+ * O que as clientes dela escreveram.
+ *
+ * Cartões em grade, e não carrossel: são 13, e todas cabem. Carrossel
+ * esconde onze delas atrás de uma seta que quase ninguém toca.
+ */
+
+.avaliacoes {
+  padding: 72px 20px;
+  background: #F7FAFC;
+}
+
+.avaliacoes-topo {
+  max-width: 720px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.avaliacoes-topo h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: #12305B;
+}
+
+.avaliacoes-topo p {
+  margin: 0;
+  color: #55617A;
+  font-size: 1rem;
+}
+
+.avaliacoes-lista {
+  display: grid;
+  gap: 20px;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: 1fr;
+}
+
+.avaliacao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid #E4E8EF;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+.avaliacao blockquote {
+  margin: 0;
+  color: #12305B;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  /* O que a cliente escreveu vem primeiro e maior: é o que quem chega
+     está procurando. */
+  font-weight: 600;
+}
+
+.avaliacao-quem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.avaliacao-quem strong { color: #1F736F; font-size: .95rem; }
+.avaliacao-quem span { color: #55617A; font-size: .88rem; }
+/* #8A93A5 sobre branco dá 3,1:1, e o teste de acessibilidade recusou:
+   quem lê isto está no celular, na rua, com sol na tela. */
+.avaliacao-quem small { color: #6B7688; font-size: .78rem; }
+
+.avaliacao-resposta {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid #EEF1F6;
+  color: #55617A;
+  font-size: .86rem;
+  line-height: 1.5;
+}
+
+.avaliacao-resposta strong { color: #12305B; }
+
+@media (min-width: 700px) {
+  .avaliacoes-lista { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1040px) {
+  .avaliacoes-lista { grid-template-columns: repeat(3, 1fr); }
+}

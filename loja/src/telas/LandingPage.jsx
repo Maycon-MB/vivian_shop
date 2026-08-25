@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { ShoppingCart, Heart, Search, ArrowRight, Star, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
+import { ShoppingCart, Heart, Search, ArrowRight, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
@@ -18,6 +18,10 @@ import {
 import { Instagram, Facebook } from './icones-marca';
 import { PUBLICADOS, temasComProdutos } from './catalogo';
 import RodapeConfianca from './RodapeConfianca';
+import Avaliacoes from './landing/Avaliacoes';
+import { paraAVitrine } from '@/dominio/avaliacoes';
+import avaliacoesCruas from '@/dados/avaliacoes.json';
+import './landing/avaliacoes.css';
 import { useCarrinho } from './CarrinhoContexto';
 import { BASE } from '../base'
 
@@ -39,6 +43,11 @@ const products = PUBLICADOS;
 const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA].filter(
   (linha) => linha === 'Todas' || products.some((p) => p.category === linha),
 );
+
+/* A mais recente com uma frase inteira, e não só a mais recente: a de
+   26/02 diz "Adorai", que é sincera e curta demais para carregar o
+   primeiro cartão que a pessoa lê. */
+const DEPOIMENTO = paraAVitrine(avaliacoesCruas).find((a) => a.texto.length > 40) ?? null;
 
 const LandingPage = () => {
   const [showCart, setShowCart] = useState(false);
@@ -194,18 +203,24 @@ const LandingPage = () => {
                     style={{ maxWidth: '520px' }}
                   />
                 </div>
-                {/* Espaço reservado para um depoimento real. Inventar a fala
-                    de uma mãe atípica para vender material de inclusão é o
-                    tipo de coisa que destrói a confiança que a loja depende
-                    de construir. */}
-                <div className="mt-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '320px' }}>
-                  <div className="d-flex gap-1 mb-2" style={{ color: '#A8C6E8' }}>
-                    {[1,2,3,4,5].map(s => <Star key={s} size={12} />)}
+                {/* O cartão ficou vazio de propósito por quatro meses, dizendo
+                    "aqui entra um depoimento de verdade". Agora tem um: as 13
+                    avaliações reais dela foram recuperadas da Elojinha em
+                    25/08, e esta é a mais recente com uma frase inteira.
+
+                    Sem estrela: o marketplace guardava "Positiva" ou
+                    "Negativa", e não nota. Cinco estrelas onde o dado não
+                    existe seria número inventado. */}
+                {DEPOIMENTO && (
+                  <div className="mt-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '320px' }}>
+                    <p className="small fw-bold mb-2" style={{ color: '#12305B' }}>
+                      &ldquo;{DEPOIMENTO.texto}&rdquo;
+                    </p>
+                    <span className="small text-muted">
+                      {DEPOIMENTO.nome}, sobre {DEPOIMENTO.produto}
+                    </span>
                   </div>
-                  {/* PENDENTE-LANCAMENTO: trocar por depoimento real, com autorização. Ver docs/antes-de-abrir-a-loja.md */}
-                  <p className="small fw-bold mb-1" style={{ color: '#12305B' }}>Aqui entra um depoimento de verdade de uma cliente sua.</p>
-                  <span className="small text-muted">Me manda um print e eu coloco</span>
-                </div>
+                )}
               </motion.div>
             </Col>
           </Row>
@@ -313,6 +328,12 @@ const LandingPage = () => {
           </div>
         </Container>
       </section>
+
+      {/* As 13 avaliações reais, recuperadas da Elojinha em 25/08. Ficam
+          depois do catálogo e antes do rodapé: quem rolou até aqui já viu
+          o que ela vende, e a pergunta que sobra é se chega e se chega
+          bom. Quem responde isso é quem já comprou. */}
+      <Avaliacoes />
 
       {/* Modals & Cart */}
       <CartModal 
