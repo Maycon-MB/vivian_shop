@@ -13,15 +13,15 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar, com **342 produtos dela**, 140 temas e as 13 avaliações |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 8 migrações; a 8ª, da conversa, **falta aplicar** |
+| Banco de dados | 10 migrações aplicadas e conferidas |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Painel: publicar produto | funciona, um a um ou o tipo inteiro |
-| Painel: criar e editar produto | funciona; falta subir foto |
+| Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
-| Pagamento | simulado; conta Mercado Pago dela já existe |
+| Pagamento | **simulado**; aplicação criada, faltam as credenciais dela |
 | Medição de visita | **não existe**, e trava anúncio pago |
 | Frete | simulado |
-| E-mail | código pronto; falta ligar o Resend |
+| E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
 dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
