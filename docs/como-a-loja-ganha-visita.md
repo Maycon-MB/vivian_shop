@@ -32,7 +32,8 @@ A conta fecha — desde que as pessoas cheguem.
 confia, e é a fonte mais barata e mais rápida que existe. Link na bio e
 falar da loja nos stories.
 
-**2. As clientes antigas.** São 13 avaliações positivas no Elo7 e uma
+**2. As clientes antigas.** São 13 avaliações positivas, hoje publicadas
+na loja ([as-avaliacoes-voltaram.md](as-avaliacoes-voltaram.md)), e uma
 estimativa de 5 a 20 pedidos por mês durante um ano
 ([o-que-sobrou-do-elo7.md](o-que-sobrou-do-elo7.md)). Quem comprou e
 gostou compra de novo se souber que a loja existe.

@@ -127,9 +127,12 @@ e-mail que nunca chega.
 
 - ~~lista em tabela com busca, como ela usava no Elo7~~
 - ~~publicar e despublicar, um a um ou o tipo inteiro~~
-- **criar e editar**: falta, e é o que ela vai sentir primeiro
+- ~~criar e editar~~ feito em 25/08, ver
+  [ela-mexe-no-catalogo.md](ela-mexe-no-catalogo.md). Falta provar contra o
+  banco de verdade, com uma conta de dona logada
 - **subir foto**: falta a tela; as regras estão prontas em
-  [fotoDoProduto.ts](../loja/src/dominio/fotoDoProduto.ts), com 14 testes
+  [fotoDoProduto.ts](../loja/src/dominio/fotoDoProduto.ts), com 14 testes.
+  É o que ela vai sentir primeiro agora
 - reordenar a vitrine
 
 Publicar em lote existe por causa dos números dela: são 58 Lousas Mágicas
