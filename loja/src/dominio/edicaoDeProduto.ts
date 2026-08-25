@@ -39,6 +39,9 @@ export interface Formulario {
   pasta_drive: string
   imagem: string
   imagem_mini: string
+  /* As outras fotos: ângulo, embalagem, detalhe. Ela mandava três ou
+     quatro por anúncio no Elo7. */
+  galeria: string[]
   ativo: boolean
 }
 
@@ -61,6 +64,7 @@ export const FORMULARIO_VAZIO: Formulario = {
   pasta_drive: '',
   imagem: '',
   imagem_mini: '',
+  galeria: [],
   ativo: false,
 }
 
@@ -154,6 +158,7 @@ export interface LinhaParaSalvar {
   pasta_drive: string | null
   imagem: string | null
   imagem_mini: string | null
+  galeria: string[]
   ativo: boolean
 }
 
@@ -177,6 +182,7 @@ export const paraOBanco = (f: Formulario, slugAtual?: string): LinhaParaSalvar =
   pasta_drive: f.pasta_drive.trim() || null,
   imagem: f.imagem.trim() || null,
   imagem_mini: f.imagem_mini.trim() || null,
+  galeria: f.galeria,
   ativo: f.ativo,
 })
 
@@ -200,6 +206,7 @@ export const doBanco = (linha: Record<string, unknown>): Formulario => {
     pasta_drive: texto(linha.pasta_drive),
     imagem: texto(linha.imagem),
     imagem_mini: texto(linha.imagem_mini),
+    galeria: Array.isArray(linha.galeria) ? (linha.galeria as string[]) : [],
     ativo: Boolean(linha.ativo),
   }
 }

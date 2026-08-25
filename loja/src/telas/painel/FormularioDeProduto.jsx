@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Loader2, ImagePlus } from 'lucide-react';
+import { ArrowLeft, Loader2, ImagePlus, X } from 'lucide-react';
 
 import {
   FORMULARIO_VAZIO,
@@ -124,12 +124,23 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
       return;
     }
 
+    /* A capa é a de ordem 0, e as outras seguem. A ordem também é o nome
+       do arquivo no balde: sem ela, a segunda foto sobrescreveria a
+       primeira e ela ficaria vendo a mesma imagem duas vezes. */
+    const capa = evento.target.dataset.capa === 'sim';
+    const ordem = capa ? 0 : form.galeria.length + 1;
+
     setErro('');
     setEnviandoFoto(true);
 
     try {
-      const { cheia, mini } = await enviarFoto(arquivo, pasta);
-      setForm((atual) => ({ ...atual, imagem: cheia, imagem_mini: mini }));
+      const { cheia, mini } = await enviarFoto(arquivo, pasta, ordem);
+
+      setForm((atual) =>
+        capa
+          ? { ...atual, imagem: cheia, imagem_mini: mini }
+          : { ...atual, galeria: [...atual.galeria, cheia] },
+      );
     } catch (e) {
       setErro(e?.message ?? 'Não consegui enviar a foto agora. Tente de novo.');
     } finally {
@@ -138,6 +149,15 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
       evento.target.value = '';
     }
   };
+
+  /* Tira da lista, e não do balde. O arquivo fica lá, ocupando pouco, e
+     some da loja na hora. Apagar de verdade é irreversível, e um toque
+     errado no celular dela não pode custar a foto. */
+  const tirarDaGaleria = (endereco) =>
+    setForm((atual) => ({
+      ...atual,
+      galeria: atual.galeria.filter((f) => f !== endereco),
+    }));
 
   const enviar = async (evento) => {
     evento.preventDefault();
@@ -217,12 +237,51 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
               accept="image/jpeg,image/png,image/webp"
               onChange={escolherFoto}
               disabled={enviandoFoto}
+              data-capa="sim"
             />
           </label>
 
           <small className="produto-campo-ajuda">
-            Pode mandar a foto do celular do jeito que ela sai. Ela é reduzida aqui mesmo
-            antes de subir, para a loja abrir rápido no 4G.
+            É a foto que aparece na vitrine. Pode mandar do celular do jeito que ela sai:
+            ela é reduzida aqui mesmo antes de subir, para a loja abrir rápido no 4G.
+          </small>
+        </div>
+
+        <div className="produto-foto-campo">
+          <span className="produto-campo-rotulo">Outras fotos</span>
+
+          {form.galeria.length > 0 && (
+            <ul className="produto-galeria">
+              {form.galeria.map((endereco) => (
+                <li key={endereco}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={endereco} alt="" />
+                  <button
+                    type="button"
+                    onClick={() => tirarDaGaleria(endereco)}
+                    aria-label="Tirar esta foto do produto"
+                  >
+                    <X size={14} aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <label className="produto-foto-botao">
+            <ImagePlus size={16} aria-hidden="true" />
+            {enviandoFoto ? 'Enviando…' : 'Adicionar outra foto'}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={escolherFoto}
+              disabled={enviandoFoto}
+            />
+          </label>
+
+          <small className="produto-campo-ajuda">
+            O ângulo, a embalagem, o detalhe. É o que você mandava no Elo7, e é o que
+            responde a dúvida da cliente antes de ela precisar perguntar.
           </small>
         </div>
 

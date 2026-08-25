@@ -75,7 +75,7 @@ export const mudarPublicacao = async (ids: string[], ativo: boolean): Promise<vo
 const COLUNAS_DE_EDICAO =
   'id, slug, nome, descricao, preco_reais, preco_promocional_reais, linha, tema_id, ' +
   'minimo, prazo_producao, peso_g, alt_cm, larg_cm, comp_cm, pasta_drive, ' +
-  'imagem, imagem_mini, ativo'
+  'imagem, imagem_mini, galeria, ativo'
 
 /** Um produto inteiro, para ela editar. */
 export const buscarParaEditar = async (id: string): Promise<Record<string, unknown>> => {

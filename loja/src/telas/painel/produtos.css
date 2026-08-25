@@ -643,3 +643,43 @@
 
 .produto-foto-botao:hover { border-color: #1F736F; }
 .produto-foto-botao input { display: none; }
+
+.produto-galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.produto-galeria li { position: relative; }
+
+.produto-galeria img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 1px solid #E4E8EF;
+  border-radius: 10px;
+  background: #F8FAFC;
+}
+
+/* Área de toque de 32px, e não do tamanho do X: no celular dela um alvo
+   menor do que isso erra, e o erro aqui é tirar a foto errada. */
+.produto-galeria button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #E4E8EF;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #8A2020;
+  cursor: pointer;
+}
+
+.produto-galeria button:hover { border-color: #8A2020; }
