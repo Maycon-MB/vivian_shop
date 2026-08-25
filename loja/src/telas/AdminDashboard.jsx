@@ -31,6 +31,7 @@ import MeusProdutos from './painel/MeusProdutos';
 import './painel/produtos.css';
 import { temBanco } from '@/servicos/autenticacao';
 import AbaMensagens from './painel/AbaMensagens';
+import MinhasConversas from './painel/MinhasConversas';
 import AbaMarketing from './painel/AbaMarketing';
 import AbaConfiguracoes from './painel/AbaConfiguracoes';
 import AbaRelatorios from './painel/AbaRelatorios';
@@ -394,7 +395,11 @@ const AdminDashboard = () => {
           <AbaPedidos onAbrirEtiqueta={() => setShowLabelPreview(true)} />
         )}
 
-        {activeTab === 'mensagens' && <AbaMensagens />}
+        {/* Com banco, são as conversas de verdade, escaladas pela cliente
+            dentro da loja. Sem banco, fica a caixa de exemplo, que é o
+            que roda na demonstração. */}
+        {activeTab === 'mensagens' &&
+          (temBanco() ? <MinhasConversas /> : <AbaMensagens />)}
 
         {activeTab === 'marketing' && <AbaMarketing />}
 

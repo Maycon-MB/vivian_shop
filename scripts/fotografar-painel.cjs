@@ -61,6 +61,42 @@ const PRODUTOS = [
   },
 ]
 
+const CONVERSAS = [
+  {
+    id: 'c-1',
+    nome: 'Ana',
+    email: 'ana@exemplo.com',
+    respondida_em: null,
+    atualizado_em: '2026-08-25T12:40:00Z',
+    mensagens: [
+      {
+        quem: 'cliente',
+        texto: 'Oi! Preciso de 20 lousas da Peppa para o dia 6 de setembro. Dá tempo?',
+        criado_em: '2026-08-25T12:40:00Z',
+      },
+    ],
+  },
+  {
+    id: 'c-2',
+    nome: 'Beatriz',
+    email: 'beatriz@exemplo.com',
+    respondida_em: '2026-08-24T18:10:00Z',
+    atualizado_em: '2026-08-24T18:10:00Z',
+    mensagens: [
+      {
+        quem: 'cliente',
+        texto: 'Dá para trocar a cor da capa para azul?',
+        criado_em: '2026-08-24T17:02:00Z',
+      },
+      {
+        quem: 'loja',
+        texto: 'Dá sim! Me diz o tom e eu mando a prévia antes de produzir.',
+        criado_em: '2026-08-24T18:10:00Z',
+      },
+    ],
+  },
+]
+
 const json = (corpo) => ({
   status: 200,
   contentType: 'application/json',
@@ -79,6 +115,7 @@ const main = async () => {
 
     if (url.includes('/donas_da_loja')) return rota.fulfill(json([DONA]))
     if (url.includes('/temas')) return rota.fulfill(json(TEMAS))
+    if (url.includes('/conversas')) return rota.fulfill(json(CONVERSAS))
 
     if (url.includes('/produtos')) {
       // `single()` pede um objeto, e não uma lista.
@@ -182,6 +219,11 @@ const main = async () => {
   await pagina.waitForTimeout(900)
   await tirar('editar-computador', 1280)
   await tirar('editar-celular', 390)
+
+  await pagina.goto(`${base}/admin/?aba=mensagens`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('mensagens-computador', 1280)
+  await tirar('mensagens-celular', 390)
 
   await navegador.close()
 

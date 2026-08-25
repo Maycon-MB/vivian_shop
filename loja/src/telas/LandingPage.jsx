@@ -152,13 +152,14 @@ const LandingPage = () => {
                   </Button>
                   <Button
                     as="a"
-                    href="https://wa.me/5521900000000?text=Oi!%20Vi%20a%20sua%20loja%20e%20queria%20tirar%20uma%20d%C3%BAvida."
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="?conversa=1"
                     variant="outline-dark"
                     className="rounded-pill px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2"
                   >
-                    <MessageSquare size={18}/> Mensagem
+                    {/* Ia para o WhatsApp, com um número de exemplo que não
+                        existe: quem clicava caía numa conversa com ninguém.
+                        Agora abre a conversa da própria loja. */}
+                    <MessageSquare size={18}/> Tirar uma dúvida
                   </Button>
                 </div>
                 

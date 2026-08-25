@@ -195,7 +195,7 @@
 
 .sobre-botao:hover { color: #FFFFFF; }
 
-.sobre-whats {
+.sobre-conversa {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -308,7 +308,7 @@
 /* Estes dois botões nasceram no checkout e são usados aqui também. Ficam
    repetidos de propósito: cada página carrega só o seu CSS, e importar a
    folha inteira do checkout traria junto tudo que não é usado. */
-.baixar-pagina .acao-whats-grande,
+.baixar-pagina .acao-conversa-grande,
 .baixar-pagina .acao-voltar {
   display: inline-flex;
   align-items: center;
@@ -321,8 +321,8 @@
   white-space: nowrap;
 }
 
-.baixar-pagina .acao-whats-grande { background: #1F736F; color: #FFFFFF; border: 0; }
-.baixar-pagina .acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
+.baixar-pagina .acao-conversa-grande { background: #1F736F; color: #FFFFFF; border: 0; }
+.baixar-pagina .acao-conversa-grande:hover { color: #FFFFFF; opacity: .92; }
 .baixar-pagina .acao-voltar { border: 1px solid #A8C6E8; color: #12305B; }
 
 /* O aviso do que a conta vai poder fazer, na tela de criar conta.

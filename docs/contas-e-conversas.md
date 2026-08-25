@@ -138,11 +138,16 @@ e-mail que nunca chega.
 Publicar em lote existe por causa dos números dela: são 58 Lousas Mágicas
 iguais, variando só a arte. Uma a uma seriam 58 toques no celular.
 
-### 4. O chat dentro da loja
+### 4. ~~O chat dentro da loja~~ feito em 25/08
 
-Nada disso está construído ainda. O desenho abaixo foi combinado com o
-Maycon em 24/08, proposta dele pra Vivian avaliar, ainda sem resposta
-dela.
+A Vivian aprovou o desenho, e ele está construído. Ver
+[a-conversa-dentro-da-loja.md](a-conversa-dentro-da-loja.md).
+
+**Falta aplicar a migração `0008` no Supabase**: sem ela, "falar com a
+loja" falha, e só as perguntas de botão funcionam.
+
+Falta também o aviso por e-mail, que depende do Resend, e ligar a conversa
+ao pedido, que depende do item 1. O desenho combinado era este:
 
 - **sem WhatsApp no meio.** A cliente conversa dentro do site, do início
   ao fim; a Vivian pediu isso explicitamente em 24/08.

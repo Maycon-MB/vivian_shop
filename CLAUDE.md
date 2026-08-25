@@ -13,10 +13,11 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar, com **342 produtos dela**, 140 temas e as 13 avaliações |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 7 migrações aplicadas, catálogo importado da Elojinha |
+| Banco de dados | 8 migrações; a 8ª, da conversa, **falta aplicar** |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Painel: publicar produto | funciona, um a um ou o tipo inteiro |
 | Painel: criar e editar produto | funciona; falta subir foto |
+| Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | simulado; conta Mercado Pago dela já existe |
 | Medição de visita | **não existe**, e trava anúncio pago |
 | Frete e e-mail | simulados |

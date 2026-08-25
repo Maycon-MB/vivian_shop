@@ -98,13 +98,11 @@ const Baixar = () => {
           <p>Deu algum problema para baixar, ou o arquivo abriu errado?</p>
 
           <div className="baixar-acoes-rodape">
-            <a
-              className="acao-whats-grande"
-              href="https://wa.me/5521900000000"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MessageCircle size={17} /> Me chamar no WhatsApp
+            {/* Ia para o WhatsApp com um número de exemplo, que não
+                existe. A conversa da loja mora na página inicial, e o
+                endereço abre com ela já aberta. */}
+            <a className="acao-conversa-grande" href="/?conversa=1">
+              <MessageCircle size={17} /> Falar com a loja
             </a>
 
             <Link href="/" className="acao-voltar">

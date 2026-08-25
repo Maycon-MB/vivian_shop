@@ -95,13 +95,9 @@ const Sobre = () => (
               Ver os produtos
             </Link>
 
-            <a
-              className="sobre-whats"
-              href="https://wa.me/5521900000000"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MessageCircle size={17} /> Falar comigo
+            {/* Ia para o WhatsApp, num número de exemplo. */}
+            <a className="sobre-conversa" href="/?conversa=1">
+              <MessageCircle size={17} /> Falar com a loja
             </a>
           </div>
         </Col>
