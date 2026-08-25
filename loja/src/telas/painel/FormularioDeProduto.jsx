@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, ImagePlus } from 'lucide-react';
 
 import {
   FORMULARIO_VAZIO,
@@ -10,6 +10,8 @@ import {
   problemas,
 } from '@/dominio/edicaoDeProduto';
 import { buscarParaEditar, listarTemas, salvarProduto } from '@/dados/produtosDaDona';
+import { enviarFoto } from '@/dados/fotosDaDona';
+import { enderecoDoNome } from '@/dominio/edicaoDeProduto';
 
 /**
  * Onde ela cadastra um produto e muda o preço dos que já tem.
@@ -75,6 +77,7 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
   const [erro, setErro] = useState('');
   const [avisos, setAvisos] = useState([]);
   const [salvando, setSalvando] = useState(false);
+  const [enviandoFoto, setEnviandoFoto] = useState(false);
 
   useEffect(() => {
     let valendo = true;
@@ -99,6 +102,41 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
   const mudar = (campo) => (evento) => {
     const valor = evento.target.type === 'checkbox' ? evento.target.checked : evento.target.value;
     setForm((atual) => ({ ...atual, [campo]: valor }));
+  };
+
+  /* A foto sobe na hora de escolher, e não junto com o resto.
+     Se esperasse o "salvar", ela ficaria olhando a tela parada sem saber
+     se a foto foi ou não, e um erro de rede levaria junto tudo o que ela
+     já tinha digitado.
+
+     O endereço do produto precisa existir antes: é a pasta onde a foto
+     mora. Em produto novo ele vem do nome, e por isso o nome é cobrado
+     aqui antes da foto. */
+  const escolherFoto = async (evento) => {
+    const arquivo = evento.target.files?.[0];
+    if (!arquivo) return;
+
+    const pasta = slugAtual || enderecoDoNome(form.nome);
+
+    if (!pasta) {
+      setErro('Dê um nome ao produto antes de mandar a foto: é o nome que diz onde ela fica guardada.');
+      evento.target.value = '';
+      return;
+    }
+
+    setErro('');
+    setEnviandoFoto(true);
+
+    try {
+      const { cheia, mini } = await enviarFoto(arquivo, pasta);
+      setForm((atual) => ({ ...atual, imagem: cheia, imagem_mini: mini }));
+    } catch (e) {
+      setErro(e?.message ?? 'Não consegui enviar a foto agora. Tente de novo.');
+    } finally {
+      setEnviandoFoto(false);
+      // Sem isto, escolher a mesma foto de novo não dispara nada.
+      evento.target.value = '';
+    }
   };
 
   const enviar = async (evento) => {
@@ -156,6 +194,37 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
         >
           <input type="text" value={form.nome} onChange={mudar('nome')} required />
         </Campo>
+
+        <div className="produto-foto-campo">
+          <span className="produto-campo-rotulo">Foto do produto</span>
+
+          {form.imagem_mini ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={form.imagem_mini} alt="" className="produto-foto-previa" />
+          ) : (
+            <p className="produto-foto-vazia">Nenhuma foto ainda</p>
+          )}
+
+          <label className="produto-foto-botao">
+            <ImagePlus size={16} aria-hidden="true" />
+            {enviandoFoto
+              ? 'Enviando…'
+              : form.imagem_mini
+                ? 'Trocar a foto'
+                : 'Escolher a foto'}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={escolherFoto}
+              disabled={enviandoFoto}
+            />
+          </label>
+
+          <small className="produto-campo-ajuda">
+            Pode mandar a foto do celular do jeito que ela sai. Ela é reduzida aqui mesmo
+            antes de subir, para a loja abrir rápido no 4G.
+          </small>
+        </div>
 
         <Campo rotulo="Descrição" ajuda="O que vem junto, o tamanho, como você personaliza.">
           <textarea rows={5} value={form.descricao} onChange={mudar('descricao')} />
