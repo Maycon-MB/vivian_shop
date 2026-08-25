@@ -97,6 +97,44 @@ para fazer.
 
 ---
 
+## O que foi prometido a ela, e onde estamos
+
+O Maycon escreveu à Vivian em 24/08, e ela respondeu "Ótimo":
+
+> Dúvida rápida (prazo, pagamento, frete) a cliente clica num botão e já vê
+> a resposta na hora, sem te incomodar.
+>
+> Se for algo mais específico e ela quiser falar com você direto, aí eu peço
+> nome e e-mail dela antes de mandar a mensagem pra você. Assim, se você não
+> estiver online no momento, ainda dá pra responder depois por e-mail, em vez
+> de perder a cliente.
+>
+> Pra comprar continua sem precisar criar conta, do jeito que já é.
+
+| O que foi prometido | Estado |
+|---|---|
+| Botão responde prazo, pagamento e frete na hora | feito |
+| Nome e e-mail pedidos antes de escalar | feito |
+| Ela responde depois por e-mail | feito, pelo programa de e-mail dela |
+| Comprar sem criar conta | intacto |
+| **Ela ser avisada da mensagem** | **falta** |
+
+A terceira linha é a razão de o e-mail ser pedido à cliente, e por isso
+"Responder por e-mail" é o botão principal do painel, e não responder pela
+loja. O `mailto:` abre o Gmail dela com a pergunta da cliente já citada, e
+não depende de serviço de envio nenhum: quem manda é o programa de e-mail
+dela.
+
+**A última linha é a que ainda não cumpre o combinado.** "Mandar a mensagem
+pra você" hoje significa deixá-la no painel. Se ela não abrir o painel, não
+fica sabendo. Para a loja avisar por e-mail é preciso o Resend, que está na
+fila em [contas-e-conversas.md](contas-e-conversas.md).
+
+Enquanto isso, vale ela combinar de abrir o painel uma vez por dia, e vale
+dizer isso a ela em vez de deixar descobrir sozinha.
+
+---
+
 ## O lado dela
 
 Só as conversas escaladas aparecem no painel. As que os botões resolveram
@@ -110,10 +148,12 @@ compra tem validade curta: a cliente está montando a festa hoje.
 
 ## O que falta
 
-**O aviso por e-mail.** Hoje a resposta dela aparece na loja quando a
-cliente voltar, e a tela do painel diz isso com todas as letras para ela
-não achar que a cliente foi avisada. O e-mail entra com o Resend, que já
-está na fila em [contas-e-conversas.md](contas-e-conversas.md).
+**O aviso para ela de que chegou mensagem.** É a única parte do que foi
+prometido em 24/08 que não está de pé. Depende do Resend.
+
+**A resposta pela loja não avisa a cliente.** A tela do painel diz isso com
+todas as letras, para ela não achar que avisou. Por isso o e-mail é o
+caminho principal ali.
 
 **Ligar a conversa ao pedido.** Era metade do que ela reclamou do
 WhatsApp. Depende do item "dono do pedido", que continua pendente.

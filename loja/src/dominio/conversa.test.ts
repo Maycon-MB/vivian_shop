@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 import {
   ABERTURA,
+  emailDeResposta,
   OPCOES,
   PRIMEIRAS,
   acharOpcao,
@@ -140,5 +141,33 @@ describe('quando ela quer falar com a loja', () => {
     // o erro do Postgres.
     const enorme = 'a'.repeat(2001)
     expect(problemasDoRecado(bom[0], bom[1], enorme).join(' ')).toContain('longa demais')
+  })
+})
+
+describe('o e-mail que ela manda para a cliente', () => {
+  /* O Maycon prometeu isto à Vivian em 24/08, e é a razão de o e-mail ser
+     pedido à cliente: "se você não estiver online no momento, ainda dá
+     pra responder depois por e-mail, em vez de perder a cliente". */
+
+  const link = emailDeResposta('Ana Souza', 'ana@exemplo.com', 'Chega antes do dia 20?')
+
+  it('abre o programa de e-mail dela no endereço da cliente', () => {
+    expect(link.startsWith('mailto:ana@exemplo.com')).toBe(true)
+  })
+
+  it('leva a pergunta junto', () => {
+    // Sem ela, a resposta chega solta e a cliente não lembra do que é:
+    // o mesmo problema do WhatsApp que ela queria resolver.
+    expect(decodeURIComponent(link)).toContain('Chega antes do dia 20?')
+  })
+
+  it('chama a cliente pelo primeiro nome', () => {
+    expect(decodeURIComponent(link)).toContain('Oi, Ana!')
+  })
+
+  it('não depende de serviço de envio nenhum', () => {
+    /* Quem manda é o programa de e-mail dela. É o que faz isto funcionar
+       hoje, antes de o Resend existir. */
+    expect(link).not.toMatch(/https?:\/\/(?!feitoparavoce)/)
   })
 })
