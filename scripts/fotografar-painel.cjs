@@ -225,6 +225,10 @@ const main = async () => {
   await tirar('mensagens-computador', 1280)
   await tirar('mensagens-celular', 390)
 
+  await pagina.goto(`${base}/admin/?aba=recebo`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('recebo-computador', 1280)
+
   await navegador.close()
 
   if (problemas.length) {

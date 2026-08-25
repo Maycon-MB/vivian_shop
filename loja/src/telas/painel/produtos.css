@@ -683,3 +683,77 @@
 }
 
 .produto-galeria button:hover { border-color: #8A2020; }
+
+/* ── Como eu recebo ──────────────────────────────────────────────────── */
+
+.recebo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 620px;
+}
+
+.recebo-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  background: #FFFFFF;
+}
+
+.recebo-bloco legend {
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: .92rem;
+  color: #12305B;
+}
+
+.recebo-opcao {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.recebo-opcao input { margin-top: 3px; width: 18px; height: 18px; flex-shrink: 0; }
+.recebo-opcao span { display: flex; flex-direction: column; gap: 3px; }
+.recebo-opcao strong { color: #12305B; font-size: .93rem; }
+.recebo-opcao small { color: #6B7688; font-size: .82rem; line-height: 1.45; }
+
+/* O efeito no pedido dela, e não uma porcentagem solta: uma porcentagem
+   não diz nada, "R$ 130,15 no Pix" diz. */
+.recebo-exemplo {
+  padding: 18px;
+  border: 1px solid #CFE3E1;
+  border-radius: 14px;
+  background: #F2F9F8;
+}
+
+.recebo-exemplo h3 {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #12305B;
+}
+
+.recebo-exemplo-nota { margin: 0 0 10px; color: #55617A; font-size: .82rem; }
+
+.recebo-exemplo ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #12305B;
+  font-size: .93rem;
+  line-height: 1.7;
+}
+
+.recebo-salvo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #1F736F;
+  font-size: .88rem;
+  font-weight: 600;
+}
