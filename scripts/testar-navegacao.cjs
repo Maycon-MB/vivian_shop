@@ -295,21 +295,21 @@ const conferir = async (nome, fn) => {
     if (!url.includes('aba=pedidos')) throw new Error(`endereço não acompanhou: ${url}`)
   })
 
-  await conferir('o filtro de pedidos muda a lista', async () => {
+  await conferirDaDona('o filtro de pedidos muda a lista', async () => {
     await pagina.getByRole('button', { name: /^Todos/ }).click()
     await pagina.waitForTimeout(500)
     const itens = await pagina.locator('.pedido').count()
     if (itens !== 7) throw new Error(`esperava 7 pedidos em Todos, achei ${itens}`)
   })
 
-  await conferir('a busca de pedidos filtra', async () => {
+  await conferirDaDona('a busca de pedidos filtra', async () => {
     await pagina.getByLabel('Buscar pedido').fill('caneca')
     await pagina.waitForTimeout(500)
     const itens = await pagina.locator('.pedido').count()
     if (itens !== 1) throw new Error(`busca por "caneca" devia achar 1, achou ${itens}`)
   })
 
-  await conferir('a barra lateral recolhe', async () => {
+  await conferirDaDona('a barra lateral recolhe', async () => {
     await pagina.getByRole('button', { name: 'Recolher menu' }).click()
     await pagina.waitForTimeout(500)
     const recolhida = await pagina.locator('.sidebar-nav.recolhida').count()
