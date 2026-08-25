@@ -43,7 +43,7 @@ Atualizado em 17/08/2026, depois das 83 mensagens dela de 16/08.
 - [ ] **Peso e medidas do pacote fechado de 10.** Ela mandou o tamanho da peça, que é outra coisa. Sem isso o frete sai errado e a diferença sai do bolso dela em cada pedido.
 - [ ] **Arquivos** da linha pedagógica, em PDF
 - [ ] **História dela**, para a página Quem faz
-- [ ] **Autorização dos depoimentos.** Os 15 prints chegaram, e todos trazem o nome de clientes dela. Publicar nome de terceiro sem essa pessoa saber é problema, mesmo sendo elogio.
+- [ ] **Autorização dos depoimentos.** Os 15 prints chegaram (14 avaliações + 1 lista de produtos, ver [o-que-sobrou-do-elo7.md](o-que-sobrou-do-elo7.md)), e todos trazem o nome completo de clientes dela. Publicar nome de terceiro sem essa pessoa saber é problema, mesmo sendo elogio. Perguntado a ela em 24/08: nome completo com autorização, ou só primeiro nome + inicial (ex.: "Ana R.")? Sem resposta ainda.
 - [ ] **Número de WhatsApp verdadeiro**: hoje está `5521900000000` em toda a loja
 
 ## O que a conferência automática cobre hoje
