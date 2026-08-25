@@ -143,3 +143,40 @@ export const criarConta = async (nome: string, email: string, senha: string) => 
 export const sair = async () => {
   await bancoDoNavegador().auth.signOut()
 }
+
+/**
+ * Manda o e-mail de recuperar senha.
+ *
+ * Existe porque a escolha de ter senha obriga: com senha, "esqueci a
+ * minha" deixa de ser conveniência e vira o caminho principal de quem
+ * volta depois de meses. Sem isto, a Vivian esquecer a senha significa
+ * perder o acesso à própria loja e depender de mim para voltar.
+ *
+ * **Nunca diz se a conta existe.** Quem digita um e-mail que não está
+ * cadastrado recebe a mesma resposta de quem digita o certo. Dizer "esse
+ * e-mail não existe aqui" entrega a lista de clientes dela para quem
+ * quiser descobrir quem compra o quê.
+ */
+export const pedirNovaSenha = async (email: string) => {
+  const { error } = await bancoDoNavegador().auth.resetPasswordForEmail(email.trim(), {
+    // Para onde o link do e-mail leva. Precisa estar na lista de
+    // endereços permitidos do Supabase, senão ele recusa e o e-mail
+    // chega com um link que não abre.
+    redirectTo: `${window.location.origin}/admin/nova-senha/`,
+  })
+
+  return error?.message ?? null
+}
+
+/**
+ * Troca a senha de quem chegou pelo link do e-mail.
+ *
+ * O link do Supabase já deixa a pessoa com uma sessão de recuperação
+ * quando a página abre; por isso aqui é só atualizar o usuário, sem pedir
+ * a senha antiga, que é justamente a que ela não lembra.
+ */
+export const trocarSenha = async (senha: string) => {
+  const { error } = await bancoDoNavegador().auth.updateUser({ password: senha })
+
+  return error?.message ?? null
+}

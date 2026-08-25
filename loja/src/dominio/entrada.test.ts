@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest'
 
 import {
+  MINIMO_DA_SENHA,
   conferirCadastro,
   conferirEntrada,
+  conferirNovaSenha,
+  conferirPedidoDeSenha,
   mensagemDoErro,
-  MINIMO_DA_SENHA,
 } from './entrada'
 
 /**
@@ -128,5 +130,51 @@ describe('o que o erro do servidor vira na tela', () => {
 
     expect(texto).not.toMatch(/AuthApiError|exploded/)
     expect(texto.length).toBeGreaterThan(10)
+  })
+})
+
+describe('esqueci a minha senha', () => {
+  /* Com senha, "esqueci a minha" deixa de ser conveniência e vira o
+     caminho principal de quem volta depois de meses. Sem ele, a Vivian
+     esquecer a senha significa perder o acesso à própria loja. */
+
+  it('pede só o e-mail', () => {
+    expect(conferirPedidoDeSenha('vivian@exemplo.com')).toEqual({ ok: true })
+  })
+
+  it('cobra o e-mail', () => {
+    const r = conferirPedidoDeSenha('')
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.aviso).toContain('e-mail')
+  })
+
+  it('avisa quando o e-mail está pela metade', () => {
+    const r = conferirPedidoDeSenha('vivian@')
+    expect(r.ok).toBe(false)
+  })
+})
+
+describe('a senha nova', () => {
+  it('aceita quando as duas batem', () => {
+    expect(conferirNovaSenha({ senha: 'chocolate1', repetida: 'chocolate1' })).toEqual({ ok: true })
+  })
+
+  it('recusa quando as duas não batem', () => {
+    /* Ela não vê o que digita e não terá como conferir depois: errar aqui
+       a tranca fora da loja de novo. */
+    const r = conferirNovaSenha({ senha: 'chocolate1', repetida: 'chocolate2' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.aviso).toContain('não são iguais')
+  })
+
+  it('cobra o tamanho mínimo', () => {
+    const r = conferirNovaSenha({ senha: 'abc', repetida: 'abc' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.aviso).toContain(String(MINIMO_DA_SENHA))
+  })
+
+  it('não exige símbolo nem maiúscula', () => {
+    // Regra de símbolo produz senha anotada em papel.
+    expect(conferirNovaSenha({ senha: 'lembrancinha', repetida: 'lembrancinha' })).toEqual({ ok: true })
   })
 })
