@@ -40,9 +40,17 @@ clientes dela.
 | Decisão | Por quê | Custo de mudar |
 |---|---|---|
 | Tirei "Satisfação 100% garantida" | Junto com a promessa de devolução em 7 dias, virava uma obrigação larga demais sobre peça feita com o nome de outra criança, que não pode ser revendida. **Correção de uma versão anterior deste documento:** eu havia escrito que produto personalizado "por lei não tem direito de arrependimento", e isso é impreciso, o art. 49 do CDC não abre exceção escrita para isso. Por isso a loja informa o direito e pede contato antes, em vez de prometer ou negar. | - |
-| A loja fala "eu", como a Vivian | Quem compra de artesã espera falar com gente. "Nossa equipe" seria mentira: a equipe é ela. | - |
+| ~~A loja fala "eu", como a Vivian~~ **revertido em 24/08** | Era a decisão original: quem compra de artesã espera falar com gente, "nossa equipe" seria mentira porque a equipe é ela. A Vivian pediu o oposto em 24/08: quer que o site fale da loja, não dela como pessoa. A voz virou plural ("a gente", "a loja"), sem nome próprio nem "eu". Exceção: a página `/sobre` continua pessoal de propósito, é a página sobre quem faz. | - |
 | Toda mensagem de erro diz o que fazer, não só o que houve | "E-mail inválido" não ajuda ninguém. "Confira o e-mail: é para lá que a confirmação vai" ajuda. | - |
 | Nenhum texto legal definitivo foi escrito | Política de troca, devolução e privacidade precisam de advogado. Eu não sou advogado e não vou fingir que sou. Estão marcados no código como `PENDENTE-LANCAMENTO`. | - |
+
+**Achado ao reverter a decisão acima:** `avisosSimulados.ts` (as mensagens
+de confirmação de pagamento, material digital e postagem) assinava "Um
+beijo, Vivian" com nome completo, e isso nunca foi pego pelo
+`nomeDaDona.test.ts` porque esse teste só varre as pastas `telas` e
+`componentes`, não `servicos`. Corrigido para "Um abraço", sem nome. Fica
+registrado como pendência: o teste deveria cobrir `servicos` também, para
+essa brecha não voltar da próxima vez que alguém escrever um texto novo lá.
 
 ## Painel dela
 

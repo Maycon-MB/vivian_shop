@@ -118,7 +118,7 @@ export function useCompra() {
       setErro({
         titulo: 'Não conseguimos concluir a compra agora.',
         saida:
-          'Nada foi cobrado. Tente de novo em alguns instantes, ou me chame no WhatsApp que eu resolvo por lá.',
+          'Nada foi cobrado. Tente de novo em alguns instantes, ou chame a loja no WhatsApp que a gente resolve por lá.',
       })
       console.error('falha ao finalizar a compra:', falha)
       return null
