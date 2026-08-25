@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 
 import {
   ABERTURA,
@@ -36,21 +35,15 @@ import {
  *   3. **A saída para um humano está sempre visível.** A hora em que ela
  *      cansa dos botões é imprevisível, e esconder a saída é como se
  *      perde a venda.
+ *
+ * Quem decide se isto aparece é o `ConversaDaLoja`, que também guarda a
+ * bolha fechada. Este arquivo só é baixado quando alguém abre a conversa:
+ * ele levava 8 KB para dentro de toda página da loja, e o checkout passou
+ * do limite de peso por causa disso. Quem está pagando não precisa das
+ * regras do chat carregadas.
  */
 
-const SEM_CONVERSA = ['/admin'];
-
-const Conversa = () => {
-  const caminho = usePathname();
-
-  /* A página de endereço não encontrado manda para cá com ?conversa=1: de
-     lá, "falar com a loja" é o caminho principal, e chegar na home com a
-     bolha fechada faria a pessoa procurar de novo o que ela já tinha
-     clicado. Lido uma vez, na montagem, para não depender de hidratação. */
-  const [aberta, setAberta] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return new URLSearchParams(window.location.search).get('conversa') === '1';
-  });
+const Conversa = ({ aoFechar = () => {} }) => {
   const [falas, setFalas] = useState([ABERTURA]);
   const [botoes, setBotoes] = useState(PRIMEIRAS);
   const [pedindoHumano, setPedindoHumano] = useState(false);
@@ -68,14 +61,13 @@ const Conversa = () => {
   /* Rola até a última fala. Sem isso, a resposta aparece abaixo da dobra
      e a cliente acha que o botão não fez nada. */
   useEffect(() => {
-    if (aberta) fim.current?.scrollIntoView({ block: 'nearest' });
-  }, [falas, aberta, pedindoHumano]);
+    fim.current?.scrollIntoView({ block: 'nearest' });
+  }, [falas, pedindoHumano]);
 
   /* Se ela já falou com a loja antes e a Vivian respondeu, a resposta
      aparece ao reabrir a conversa. É o que faz isto ser conversa, e não
      formulário. */
   useEffect(() => {
-    if (!aberta) return;
     let valendo = true;
 
     chaveDaConversa()
@@ -88,9 +80,7 @@ const Conversa = () => {
       .catch(() => { /* Sem banco, a conversa funciona só com os botões. */ });
 
     return () => { valendo = false; };
-  }, [aberta]);
-
-  if (SEM_CONVERSA.some((tela) => caminho?.startsWith(tela))) return null;
+  }, []);
 
   const tocar = (id) => {
     setFalas((atuais) => responder(atuais, id));
@@ -138,25 +128,11 @@ const Conversa = () => {
     }
   };
 
-  if (!aberta) {
-    return (
-      <button
-        type="button"
-        className="conversa-bolha"
-        onClick={() => setAberta(true)}
-        aria-label="Tirar uma dúvida com a loja"
-      >
-        <MessageCircle size={22} aria-hidden="true" />
-        <span className="conversa-bolha-rotulo">Tirar uma dúvida</span>
-      </button>
-    );
-  }
-
   return (
     <section className="conversa" aria-label="Conversa com a loja">
       <header className="conversa-topo">
         <h2>Tire sua dúvida</h2>
-        <button type="button" onClick={() => setAberta(false)} aria-label="Fechar a conversa">
+        <button type="button" onClick={aoFechar} aria-label="Fechar a conversa">
           <X size={18} aria-hidden="true" />
         </button>
       </header>

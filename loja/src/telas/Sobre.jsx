@@ -96,9 +96,9 @@ const Sobre = () => (
             </Link>
 
             {/* Ia para o WhatsApp, num número de exemplo. */}
-            <a className="sobre-conversa" href="/?conversa=1">
+            <Link className="sobre-conversa" href="/?conversa=1" prefetch={false}>
               <MessageCircle size={17} /> Falar com a loja
-            </a>
+            </Link>
           </div>
         </Col>
       </Row>
