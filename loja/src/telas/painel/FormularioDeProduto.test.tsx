@@ -258,3 +258,65 @@ describe('a foto do produto', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(/não é uma foto/i)
   })
 })
+
+describe('as outras fotos do produto', () => {
+  const foto = () =>
+    new File([new Uint8Array([1, 2, 3])], 'lado.jpg', { type: 'image/jpeg' })
+
+  it('a segunda foto não sobrescreve a capa', async () => {
+    /* A ordem é o nome do arquivo no balde. Sem ela, a foto do ângulo
+       ficaria por cima da capa e ela veria a mesma imagem duas vezes. */
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.upload(screen.getByLabelText(/adicionar outra foto/i), foto())
+
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalled())
+    expect(enviarFoto.mock.calls[0][2]).toBe(1)
+  })
+
+  it('guarda as outras fotos separadas da capa', async () => {
+    enviarFoto
+      .mockResolvedValueOnce({ cheia: 'capa-cheia', mini: 'capa-mini' })
+      .mockResolvedValueOnce({ cheia: 'lado-cheia', mini: 'lado-mini' })
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.type(screen.getByLabelText(/preço de cada peça/i), '13,70')
+
+    await usuario.upload(screen.getByLabelText(/escolher a foto/i), foto())
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalledTimes(1))
+
+    await usuario.upload(screen.getByLabelText(/adicionar outra foto/i), foto())
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalledTimes(2))
+
+    await usuario.click(screen.getByRole('button', { name: /salvar produto/i }))
+
+    await waitFor(() => expect(salvarProduto).toHaveBeenCalled())
+    expect(salvarProduto.mock.calls[0][0]).toMatchObject({
+      imagem: 'capa-cheia',
+      galeria: ['lado-cheia'],
+    })
+  })
+
+  it('tirar uma foto não apaga o arquivo, só some da loja', async () => {
+    /* Um toque errado no celular dela não pode custar a foto: o arquivo
+       fica no balde, e volta se for preciso. */
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica')
+    await usuario.type(screen.getByLabelText(/preço de cada peça/i), '13,70')
+    await usuario.upload(screen.getByLabelText(/adicionar outra foto/i), foto())
+    await waitFor(() => expect(enviarFoto).toHaveBeenCalled())
+
+    await usuario.click(screen.getByRole('button', { name: /tirar esta foto/i }))
+    await usuario.click(screen.getByRole('button', { name: /salvar produto/i }))
+
+    await waitFor(() => expect(salvarProduto).toHaveBeenCalled())
+    expect(salvarProduto.mock.calls[0][0].galeria).toEqual([])
+  })
+})

@@ -57,7 +57,7 @@ const buscar = async (caminho) => {
 }
 
 const linhas = await buscar(
-  'produtos?select=id,slug,nome,descricao,preco_reais,preco_promocional_reais,linha,minimo,prazo_producao,peso_g,alt_cm,larg_cm,comp_cm,imagem,imagem_mini,temas(slug,nome,descricao)&order=nome',
+  'produtos?select=id,slug,nome,descricao,preco_reais,preco_promocional_reais,linha,minimo,prazo_producao,peso_g,alt_cm,larg_cm,comp_cm,imagem,imagem_mini,galeria,temas(slug,nome,descricao)&order=nome',
 )
 
 const produtos = linhas.map((p) => ({
@@ -81,6 +81,10 @@ const produtos = linhas.map((p) => ({
   compCm: p.comp_cm === null ? undefined : Number(p.comp_cm),
   image: p.imagem ?? '',
   mini: p.imagem_mini ?? '',
+  /* As outras fotos do produto: ângulo, embalagem, detalhe. Ela mandava
+     três ou quatro por anúncio no Elo7, e a página do produto já sabe
+     mostrar todas. */
+  galeria: p.galeria ?? [],
   tag: 'Sob encomenda',
   detalhes: [],
 }))
