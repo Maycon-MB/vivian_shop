@@ -43,6 +43,9 @@ const ITENS = [
   { id: 'relatorios', icone: <FileBarChart size={18} />, rotulo: 'Relatórios' },
   { id: 'mensagens', icone: <MessageSquare size={18} />, rotulo: 'Mensagens' },
   { id: 'marketing', icone: <Mail size={18} />, rotulo: 'Marketing' },
+  /* "Como eu recebo", e não "Pagamentos": o rótulo é a pergunta dela, e a
+     resposta muda o quanto entra no bolso dela. */
+  { id: 'recebo', icone: <Wallet size={18} />, rotulo: 'Como eu recebo' },
   { id: 'config', icone: <Settings size={18} />, rotulo: 'Configurações' },
 ];
 

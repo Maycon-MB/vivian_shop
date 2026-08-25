@@ -32,6 +32,7 @@ import './painel/produtos.css';
 import { temBanco } from '@/servicos/autenticacao';
 import AbaMensagens from './painel/AbaMensagens';
 import MinhasConversas from './painel/MinhasConversas';
+import ComoEuRecebo from './painel/ComoEuRecebo';
 import AbaMarketing from './painel/AbaMarketing';
 import AbaConfiguracoes from './painel/AbaConfiguracoes';
 import AbaRelatorios from './painel/AbaRelatorios';
@@ -41,7 +42,7 @@ import './painel.css';
 import './painel-abas.css';
 import { BASE } from '../base'
 
-const ABAS = ['dashboard', 'pedidos', 'catalogo', 'relatorios', 'mensagens', 'marketing', 'config'];
+const ABAS = ['dashboard', 'pedidos', 'catalogo', 'relatorios', 'mensagens', 'marketing', 'recebo', 'config'];
 
 /**
  * A aba aberta vem do endereço (?aba=pedidos) e volta para ele a cada
@@ -414,6 +415,11 @@ const AdminDashboard = () => {
           ))}
 
         {activeTab === 'relatorios' && <AbaRelatorios />}
+
+        {/* Só com banco: sem ele não há o que ler nem onde salvar, e uma
+            tela de configuração que não guarda nada ensina que o painel
+            não funciona. */}
+        {activeTab === 'recebo' && temBanco() && <ComoEuRecebo />}
 
         {activeTab === 'config' && <AbaConfiguracoes />}
 
