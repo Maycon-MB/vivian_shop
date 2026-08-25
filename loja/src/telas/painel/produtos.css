@@ -221,3 +221,185 @@
 
   .produtos-lote { margin-left: 0; width: 100%; }
 }
+
+/* ── Cadastrar e editar ──────────────────────────────────────────────── */
+
+.produtos-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.produtos-cadastrar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: #12305B;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: .92rem;
+  cursor: pointer;
+}
+
+.produtos-editar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid #D8DEE7;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #12305B;
+  font-weight: 600;
+  font-size: .86rem;
+  cursor: pointer;
+}
+
+.produtos-editar:hover { border-color: #12305B; }
+
+.produto-formulario { max-width: 720px; }
+
+/* Empilhado, e não lado a lado: o cabeçalho da lista usa space-between por
+   causa do botão de cadastrar, e aqui isso jogava o título contra a borda
+   direita — no celular ele saía cortado. */
+.produto-formulario-topo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.produto-formulario-topo h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #12305B;
+}
+
+.produto-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #55617A;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.produto-voltar:hover { color: #12305B; }
+
+.produto-formulario form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.produto-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  /* Sem isto, um campo dentro do grid estica a coluna inteira pelo tamanho
+     do texto de ajuda. */
+  min-width: 0;
+}
+
+.produto-campo-rotulo {
+  font-weight: 700;
+  font-size: .9rem;
+  color: #12305B;
+}
+
+.produto-campo-ajuda {
+  color: #6B7688;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.produto-campo input,
+.produto-campo select,
+.produto-campo textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #D8DEE7;
+  border-radius: 10px;
+  font: inherit;
+  /* 16px é o mínimo que o iPhone aceita sem dar zoom no campo ao tocar,
+     e o zoom desalinha a tela inteira no meio do preenchimento. */
+  font-size: 16px;
+  background: #FFFFFF;
+  color: #12305B;
+}
+
+.produto-campo textarea { resize: vertical; }
+
+.produto-campo input:focus-visible,
+.produto-campo select:focus-visible,
+.produto-campo textarea:focus-visible {
+  outline: 2px solid #1F736F;
+  outline-offset: 1px;
+}
+
+.produto-linha-dupla,
+.produto-linha-quadrupla {
+  display: grid;
+  gap: 16px;
+}
+
+.produto-caixa {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  background: #F8FAFC;
+}
+
+.produto-caixa legend {
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: .92rem;
+  color: #12305B;
+}
+
+.produto-no-ar {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.produto-no-ar input { margin-top: 3px; width: 18px; height: 18px; }
+.produto-no-ar span { display: flex; flex-direction: column; gap: 4px; }
+.produto-no-ar strong { color: #12305B; font-size: .95rem; }
+.produto-no-ar small { color: #6B7688; font-size: .82rem; line-height: 1.45; }
+
+.produto-acoes-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.produto-formulario .produtos-erro ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+/* Duas colunas só quando cabem. No celular dela tudo fica um embaixo do
+   outro, que é o único jeito de o campo caber com o teclado aberto. */
+@media (min-width: 620px) {
+  .produto-linha-dupla { grid-template-columns: 1fr 1fr; }
+  .produto-linha-quadrupla { grid-template-columns: repeat(4, 1fr); }
+}
