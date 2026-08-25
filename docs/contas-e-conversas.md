@@ -137,13 +137,31 @@ iguais, variando só a arte. Uma a uma seriam 58 toques no celular.
 
 ### 4. O chat dentro da loja
 
-- conversa por cliente, mensagem por conversa
-- ela responde pelo painel; a cliente responde na loja
-- resposta parcial por IA, e é aqui que mora o risco: **uma IA que
-  responde prazo, preço ou política cria obrigação para ela**. Se o robô
-  disser "chega em 3 dias" e chegar em 8, quem responde é a Vivian. Então
-  a IA só responde a partir do catálogo e das políticas dela, e o que sair
-  disso vira "vou chamar a dona da loja".
+Nada disso está construído ainda. O desenho abaixo foi combinado com o
+Maycon em 24/08, proposta dele pra Vivian avaliar, ainda sem resposta
+dela.
+
+- **sem WhatsApp no meio.** A cliente conversa dentro do site, do início
+  ao fim; a Vivian pediu isso explicitamente em 24/08.
+- **botões prontos, não texto livre de IA.** A cliente clica em opções
+  fixas (prazo de entrega, forma de pagamento, frete, "falar com a
+  loja"), e a resposta de cada botão é escrita à mão, vinda do catálogo e
+  das políticas dela. Zero geração de texto: elimina o risco que já
+  estava registrado aqui, de um robô prometer prazo ou condição que ela
+  não vai cumprir.
+- **conversa por convidado, sem exigir conta.** Continua sem forçar
+  cadastro pra comprar. O chat funciona por um identificador salvo no
+  navegador (cookie), sem login.
+- **nome e e-mail só pedidos na hora de escalar para humano.** Enquanto a
+  dúvida é resolvida pelos botões, ninguém precisa se identificar. Só
+  quando a cliente clica em "falar com a loja" é que o sistema pede nome
+  e e-mail, antes de mandar a mensagem pro painel dela — assim, se ela
+  não estiver online na hora, ainda dá pra responder depois por e-mail,
+  em vez da conversa se perder.
+- ela responde pelo painel; a cliente responde na loja.
+- **não depende do item 1** ("dono do pedido"): como o chat de convidado
+  não exige conta, essas duas pendências deixaram de estar amarradas uma
+  à outra.
 
 ### 5. Medir visita e venda
 
