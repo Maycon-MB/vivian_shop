@@ -34,7 +34,9 @@ const cores = {
   borda: '#DCE9F6',
 };
 
-const WHATSAPP = 'https://wa.me/5521900000000';
+/* A conversa acontece dentro da loja desde 25/08. Antes daqui saía um
+   link de WhatsApp, com um número de exemplo que não existia. */
+const CONVERSA = '/?conversa=1';
 const anoAtual = new Date().getFullYear();
 
 const estiloTituloColuna = {
@@ -177,8 +179,8 @@ const RodapeConfianca = () => (
 
           <div style={estiloItem}>
             <MessageCircle size={18} color={cores.aguaLinhaPersonalizada} style={{ flexShrink: 0, marginTop: 2 }} />
-            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={estiloLink}>
-              Falar com a loja no WhatsApp
+            <a href={CONVERSA} style={estiloLink}>
+              Falar com a loja
             </a>
           </div>
 

@@ -14,9 +14,14 @@ import { MessageCircle, ArrowLeft, Search } from 'lucide-react'
    falaria atendendo: assume a bagunça do nosso lado ("esse endereço mudou de
    lugar"), não culpa quem clicou, e em uma frase já diz o que fazer agora.
 
-   O WHATSAPP É O CAMINHO PRINCIPAL, não a última opção: quem cai aqui vindo de
-   um link de produto que saiu do ar geralmente quer justamente aquele produto,
-   e como tudo é feito sob encomenda, a conversa resolve, a Vivian refaz.
+   FALAR COM A LOJA É O CAMINHO PRINCIPAL, não a última opção: quem cai aqui
+   vindo de um link de produto que saiu do ar geralmente quer justamente aquele
+   produto, e como tudo é feito sob encomenda, a conversa resolve, a Vivian
+   refaz.
+
+   Até 25/08 esse caminho era um botão de WhatsApp, com um número de exemplo
+   que não existia: quem clicava caía numa conversa com ninguém. Agora leva
+   para a conversa da própria loja.
 
    A ordem do texto é a ordem em que um leitor de tela vai ler: o que aconteceu,
    o que fazer, e só então os caminhos. Tudo com estilo inline de propósito,
@@ -103,14 +108,15 @@ export default function NaoEncontrada() {
                 marginBottom: '2rem',
               }}
             >
-              Se você veio atrás de um produto específico, me chama no WhatsApp com
-              o link que você clicou. Tudo aqui é feito sob encomenda, então quase
+              Se você veio atrás de um produto específico, fale com a loja e diga o
+              que estava procurando. Tudo aqui é feito sob encomenda, então quase
               sempre dá para refazer.
             </p>
 
             <div style={{ display: 'grid', gap: '0.75rem', marginBottom: '2rem' }}>
-              <a
-                href="https://wa.me/5521900000000"
+              <Link
+                href="/?conversa=1"
+                prefetch={false}
                 style={{
                   ...baseAcao,
                   backgroundColor: VERDE_ESCURO,
@@ -118,8 +124,8 @@ export default function NaoEncontrada() {
                 }}
               >
                 <MessageCircle size={20} strokeWidth={2.25} aria-hidden="true" />
-                Falar no WhatsApp
-              </a>
+                Falar com a loja
+              </Link>
 
               <Link
                 href="/"

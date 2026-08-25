@@ -343,7 +343,7 @@
 
 .confirmado-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
 
-.acao-whats-grande {
+.acao-conversa-grande {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -356,7 +356,7 @@
   text-decoration: none;
 }
 
-.acao-whats-grande:hover { color: #FFFFFF; opacity: .92; }
+.acao-conversa-grande:hover { color: #FFFFFF; opacity: .92; }
 
 .acao-voltar {
   display: inline-flex;

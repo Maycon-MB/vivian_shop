@@ -1,0 +1,254 @@
+/**
+ * A conversa dentro da loja.
+ *
+ * Entrou no lugar do botão de WhatsApp e herdou a posição dele, que já
+ * estava resolvida: acima da faixa de baixo, no canto direito, com área de
+ * toque de 48px. O botão antigo tinha um comentário inteiro explicando por
+ * que sobe, e o motivo continua valendo.
+ */
+
+.conversa-bolha {
+  position: fixed;
+  right: 16px;
+  bottom: 24px;
+  z-index: 1040;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0 14px;
+  border: 1px solid #DCE9F6;
+  border-radius: 999px;
+  background: #1F736F;
+  color: #FBFAF7;
+  font-weight: 600;
+  font-size: .95rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(18, 48, 91, .18);
+}
+
+.conversa-bolha:hover,
+.conversa-bolha:focus-visible { filter: brightness(1.06); }
+.conversa-bolha:focus-visible { outline: 3px solid #12305B; outline-offset: 2px; }
+
+/* No celular fica só o ícone: o rótulo cobriria produto. */
+.conversa-bolha-rotulo { display: none; }
+
+.conversa {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  /* Teto, e não altura: conversa curta ocupa pouco. O limite existe para
+     o teclado do celular não empurrar o campo para fora da tela. */
+  max-height: 82vh;
+  border-top: 1px solid #DCE9F6;
+  border-radius: 18px 18px 0 0;
+  background: #FBFAF7;
+  box-shadow: 0 -8px 30px rgba(18, 48, 91, .16);
+}
+
+.conversa-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #EEF1F6;
+}
+
+.conversa-topo h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #12305B;
+}
+
+.conversa-topo button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #55617A;
+  cursor: pointer;
+}
+
+.conversa-topo button:hover { background: #EEF1F6; }
+
+.conversa-falas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  overflow-y: auto;
+}
+
+.conversa-fala {
+  max-width: 85%;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: .92rem;
+  line-height: 1.5;
+}
+
+.conversa-fala.loja {
+  align-self: flex-start;
+  background: #FFFFFF;
+  border: 1px solid #E4E8EF;
+  color: #12305B;
+}
+
+.conversa-fala.cliente {
+  align-self: flex-end;
+  background: #12305B;
+  color: #FBFAF7;
+}
+
+.conversa-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid #EEF1F6;
+}
+
+.conversa-botoes button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #DCE9F6;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #12305B;
+  font-size: .9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conversa-botoes button:hover { border-color: #1F736F; }
+.conversa-botoes button:focus-visible { outline: 3px solid #12305B; outline-offset: 1px; }
+
+.conversa-humano {
+  background: #1F736F !important;
+  border-color: #1F736F !important;
+  color: #FBFAF7 !important;
+  text-align: center !important;
+}
+
+.conversa-recado {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid #EEF1F6;
+}
+
+.conversa-recado-motivo {
+  margin: 0;
+  color: #55617A;
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
+.conversa-recado label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.conversa-recado label span {
+  font-size: .85rem;
+  font-weight: 700;
+  color: #12305B;
+}
+
+.conversa-recado input,
+.conversa-recado textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #D8DEE7;
+  border-radius: 10px;
+  font: inherit;
+  /* 16px é o mínimo que o iPhone aceita sem dar zoom no campo ao tocar. */
+  font-size: 16px;
+  color: #12305B;
+  background: #FFFFFF;
+}
+
+.conversa-recado textarea { resize: vertical; }
+
+.conversa-recado input:focus-visible,
+.conversa-recado textarea:focus-visible {
+  outline: 2px solid #1F736F;
+  outline-offset: 1px;
+}
+
+.conversa-avisos {
+  margin: 0;
+  padding: 10px 12px 10px 28px;
+  border-radius: 10px;
+  background: #FDECEC;
+  color: #8A2020;
+  font-size: .84rem;
+  line-height: 1.45;
+}
+
+.conversa-recado-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.conversa-enviar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #12305B;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.conversa-voltar {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #D8DEE7;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #55617A;
+  font-size: .88rem;
+  cursor: pointer;
+}
+
+.conversa-enviar:disabled,
+.conversa-voltar:disabled { opacity: .55; }
+
+/* No computador a conversa é um painel no canto, e não uma faixa que
+   atravessa a tela inteira. */
+@media (min-width: 768px) {
+  .conversa-bolha { right: 24px; padding: 0 18px; }
+  .conversa-bolha-rotulo { display: inline; }
+
+  .conversa {
+    right: 24px;
+    bottom: 24px;
+    left: auto;
+    width: 380px;
+    max-height: 620px;
+    border: 1px solid #DCE9F6;
+    border-radius: 18px;
+  }
+}

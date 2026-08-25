@@ -171,13 +171,10 @@ const PedidoConfirmado = () => {
           </p>
 
           <div className="confirmado-acoes">
-            <a
-              className="acao-whats-grande"
-              href="https://wa.me/5521900000000"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MessageCircle size={17} /> Falar no WhatsApp
+            {/* A conversa da loja no lugar do WhatsApp, que levava a
+                cliente para fora e caía num número de exemplo. */}
+            <a className="acao-conversa-grande" href="/?conversa=1">
+              <MessageCircle size={17} /> Falar com a loja
             </a>
 
             <Link href="/" className="acao-voltar">
