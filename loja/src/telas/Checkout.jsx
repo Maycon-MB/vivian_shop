@@ -153,7 +153,7 @@ const Checkout = () => {
         if (cancelado) return;
         setErroFrete(
           falha?.message ??
-            'Não conseguimos calcular o frete agora. Tente de novo, ou me chame no WhatsApp que eu faço o cálculo na mão.',
+            'Não conseguimos calcular o frete agora. Tente de novo, ou chame a loja no WhatsApp que a gente faz o cálculo na mão.',
         );
       })
       .finally(() => {

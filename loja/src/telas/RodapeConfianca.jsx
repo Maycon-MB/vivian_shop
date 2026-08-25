@@ -136,7 +136,7 @@ const RodapeConfianca = () => (
             <ShieldCheck size={18} color={cores.aguaLinhaPersonalizada} style={{ flexShrink: 0, marginTop: 2 }} />
             <span>
               O pagamento é feito pelo <strong style={{ color: cores.azulTinta }}>Mercado Pago</strong>.
-              Seus dados de cartão ficam com eles, não comigo.
+              Seus dados de cartão ficam com eles, não com a loja.
             </span>
           </div>
 
@@ -165,8 +165,8 @@ const RodapeConfianca = () => (
               Comprou pela internet e se arrependeu? O Código de Defesa do Consumidor te dá{' '}
               <strong style={{ color: cores.azulTinta }}>7 dias</strong> a partir do recebimento
               (art. 49). Nos materiais digitais é só avisar. Nos produtos personalizados, que
-              são feitos com o nome de alguém, me chame antes: a gente resolve conversando, do
-              jeito que for melhor para você.
+              são feitos com o nome de alguém, fale com a loja antes: a gente resolve conversando,
+              do jeito que for melhor para você.
             </span>
           </div>
         </Col>
@@ -178,7 +178,7 @@ const RodapeConfianca = () => (
           <div style={estiloItem}>
             <MessageCircle size={18} color={cores.aguaLinhaPersonalizada} style={{ flexShrink: 0, marginTop: 2 }} />
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={estiloLink}>
-              Falar comigo no WhatsApp
+              Falar com a loja no WhatsApp
             </a>
           </div>
 

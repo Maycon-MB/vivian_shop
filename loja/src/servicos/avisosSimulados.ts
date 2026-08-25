@@ -87,19 +87,21 @@ const emReais = (valor: number): string =>
  * Cada um diz duas coisas, nessa ordem: o que acabou de acontecer e o que a
  * pessoa faz agora. Quem compra de artesã espera falar com gente, não com
  * departamento — por isso nada de "prezado cliente" nem "sua solicitação foi
- * processada". Quem assina é a Vivian, no singular.
+ * processada". A assinatura fica no plural, em nome da loja, sem nome
+ * próprio — mesma regra de `nomeDaDona.test.ts`, que até 24/08 não cobria
+ * este arquivo por só varrer `telas` e `componentes`.
  */
 const textos: Record<TipoDeAviso, (aviso: Aviso) => string> = {
   'pedido-confirmado': ({ para, pedido }: Aviso): string =>
     [
       `Oi, ${primeiroNome(para.nome)}!`,
       '',
-      `Seu pagamento de ${emReais(pedido.total)} entrou certinho e o pedido ${pedido.numero} já está comigo.`,
-      'Agora eu começo a fazer. Assim que estiver pronto e postado, eu te aviso com o código de rastreio.',
+      `Seu pagamento de ${emReais(pedido.total)} entrou certinho e o pedido ${pedido.numero} já está com a gente.`,
+      'Agora a gente começa a fazer. Assim que estiver pronto e postado, a gente avisa com o código de rastreio.',
       '',
-      `Se precisar mudar alguma coisa, é só me chamar no WhatsApp e falar o número ${pedido.numero}.`,
+      `Se precisar mudar alguma coisa, é só chamar no WhatsApp e falar o número ${pedido.numero}.`,
       '',
-      'Um beijo, Vivian',
+      'Um abraço',
     ].join('\n'),
 
   'material-digital': ({ para, pedido }: Aviso): string =>
@@ -111,11 +113,11 @@ const textos: Record<TipoDeAviso, (aviso: Aviso) => string> = {
       // chegam no WhatsApp: "o link parou de funcionar" e "por que meu nome
       // está no arquivo".
       'O link fica valendo por 7 dias, então baixa e guarda no seu computador ou celular.',
-      'O seu nome sai impresso no arquivo — é assim que eu protejo o trabalho de ser repassado adiante.',
+      'O seu nome sai impresso no arquivo — é assim que a loja protege o trabalho de ser repassado adiante.',
       '',
-      'Se der qualquer problema para abrir, me chama que eu resolvo.',
+      'Se der qualquer problema para abrir, chama que a gente resolve.',
       '',
-      'Um beijo, Vivian',
+      'Um abraço',
     ].join('\n'),
 
   'pedido-postado': ({ para, pedido }: Aviso): string => {
@@ -135,15 +137,15 @@ const textos: Record<TipoDeAviso, (aviso: Aviso) => string> = {
       )
     } else {
       linhas.push(
-        'O código de rastreio ainda não saiu; assim que eu tiver, te mando aqui mesmo.',
+        'O código de rastreio ainda não saiu; assim que sair, a gente manda aqui mesmo.',
       )
     }
 
     linhas.push(
       '',
-      'Quando chegar, me conta o que achou? Fico feliz de ver a foto.',
+      'Quando chegar, conta pra gente o que achou? Ficamos felizes de ver a foto.',
       '',
-      'Um beijo, Vivian',
+      'Um abraço',
     )
 
     return linhas.join('\n')

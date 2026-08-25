@@ -294,8 +294,8 @@ const LandingPage = () => {
             <Col md={4}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#1F736F" /></div>
-                <h4 className="fw-black fs-5 mb-3">Falo com você</h4>
-                <p className="small text-muted mb-0">Quem responde no WhatsApp sou eu mesma, a mesma pessoa que faz as peças. Pode perguntar qualquer coisa antes de comprar.</p>
+                <h4 className="fw-black fs-5 mb-3">Atendimento de verdade</h4>
+                <p className="small text-muted mb-0">Quem responde no WhatsApp é a própria loja, não um robô. Pode perguntar qualquer coisa antes de comprar.</p>
               </div>
             </Col>
             <Col md={4}>
