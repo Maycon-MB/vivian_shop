@@ -248,7 +248,12 @@ const AdminDashboard = () => {
               </div>
 
               <div className="d-flex flex-wrap gap-2">
-                <Button onClick={() => setShowNewProduct(true)} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
+                {/* Com banco, este botão leva ao catálogo de verdade, onde o
+                    cadastro grava. O formulário do modal abaixo é da tela de
+                    demonstração e não salva nada: deixá-lo aqui faria ela
+                    preencher um produto inteiro e ver "cadastrado" sem
+                    produto nenhum ter sido criado. */}
+                <Button onClick={() => (temBanco() ? setActiveTab('catalogo') : setShowNewProduct(true))} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
                   <Plus size={16} /> <span className="d-none d-sm-inline">Novo produto</span>
                 </Button>
                 <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#1F736F', borderColor: '#1F736F' }}>

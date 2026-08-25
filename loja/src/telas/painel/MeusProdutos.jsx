@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Loader2, Search } from 'lucide-react';
+import { Loader2, Pencil, Plus, Search } from 'lucide-react';
 
 import { agruparPorTipo, buscar, resumo } from '@/dominio/listaDeProdutos';
 import { listarTodos, mudarPublicacao } from '@/dados/produtosDaDona';
+import FormularioDeProduto from './FormularioDeProduto';
 
 /**
  * Onde ela decide o que a loja vende.
@@ -18,7 +19,10 @@ import { listarTodos, mudarPublicacao } from '@/dados/produtosDaDona';
  *      Publicar uma a uma são 58 toques no celular, e ninguém repete isso.
  *
  * Nada aqui apaga produto. O que ela quer ao "excluir" é parar de vender,
- * e isso é tirar do ar — apagar levaria junto o histórico de quem comprou.
+ * e isso é tirar do ar: apagar levaria junto o histórico de quem comprou.
+ *
+ * Cadastrar e editar abrem no lugar da lista, e não num modal. Ela mexe
+ * nisso pelo celular, e em tela pequena o modal fica atrás do teclado.
  */
 
 const emReais = (valor) =>
@@ -48,6 +52,9 @@ const MeusProdutos = () => {
   const [termo, setTermo] = useState('');
   const [erro, setErro] = useState('');
   const [salvando, setSalvando] = useState(null);
+  /* null = mostrando a lista. '' = cadastrando um novo. Um id = editando
+     aquele produto. */
+  const [editando, setEditando] = useState(null);
 
   useEffect(() => {
     let valendo = true;
@@ -58,6 +65,16 @@ const MeusProdutos = () => {
 
     return () => { valendo = false; };
   }, []);
+
+  /* Depois de salvar, a lista é buscada de novo em vez de remendada na
+     memória: o produto novo precisa aparecer no grupo certo, e o banco é
+     quem sabe o tipo e o tema depois de gravar. */
+  const recarregar = () => {
+    setEditando(null);
+    listarTodos()
+      .then(setProdutos)
+      .catch((e) => setErro(recadoDoErro(e)));
+  };
 
   const encontrados = useMemo(() => buscar(produtos ?? [], termo), [produtos, termo]);
   const grupos = useMemo(() => agruparPorTipo(encontrados), [encontrados]);
@@ -79,6 +96,16 @@ const MeusProdutos = () => {
     }
   };
 
+  if (editando !== null) {
+    return (
+      <FormularioDeProduto
+        id={editando || undefined}
+        aoSair={() => setEditando(null)}
+        aoSalvar={recarregar}
+      />
+    );
+  }
+
   if (!produtos) {
     return (
       <p className="produtos-carregando">
@@ -90,10 +117,16 @@ const MeusProdutos = () => {
   return (
     <section className="meus-produtos">
       <header className="produtos-topo" role="banner">
-        <h2>Meus produtos</h2>
-        <p className="produtos-conta">
-          <strong>{contagem.publicados} no ar</strong>, {contagem.rascunhos} esperando você
-        </p>
+        <div>
+          <h2>Meus produtos</h2>
+          <p className="produtos-conta">
+            <strong>{contagem.publicados} no ar</strong>, {contagem.rascunhos} esperando você
+          </p>
+        </div>
+
+        <button type="button" className="produtos-cadastrar" onClick={() => setEditando('')}>
+          <Plus size={16} aria-hidden="true" /> Cadastrar produto
+        </button>
       </header>
 
       <label className="produtos-busca">
@@ -144,6 +177,7 @@ const MeusProdutos = () => {
                   <th scope="col">Produto</th>
                   <th scope="col">Preço</th>
                   <th scope="col">No ar</th>
+                  <th scope="col"><span className="visualmente-oculto">Editar</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -159,6 +193,15 @@ const MeusProdutos = () => {
                         disabled={Boolean(salvando)}
                       >
                         {produto.ativo ? 'Tirar do ar' : 'Publicar'}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="produtos-editar"
+                        onClick={() => setEditando(produto.id)}
+                      >
+                        <Pencil size={15} aria-hidden="true" /> Editar
                       </button>
                     </td>
                   </tr>

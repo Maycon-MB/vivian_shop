@@ -69,3 +69,56 @@ export const mudarPublicacao = async (ids: string[], ativo: boolean): Promise<vo
 
   if (error) throw new Error(error.message)
 }
+
+/* ── Cadastrar e editar ──────────────────────────────────────────────── */
+
+const COLUNAS_DE_EDICAO =
+  'id, slug, nome, descricao, preco_reais, preco_promocional_reais, linha, tema_id, ' +
+  'minimo, prazo_producao, peso_g, alt_cm, larg_cm, comp_cm, pasta_drive, ativo'
+
+/** Um produto inteiro, para ela editar. */
+export const buscarParaEditar = async (id: string): Promise<Record<string, unknown>> => {
+  const { data, error } = await bancoDoNavegador()
+    .from('produtos')
+    .select(COLUNAS_DE_EDICAO)
+    .eq('id', id)
+    .single()
+
+  if (error) throw new Error(error.message)
+
+  return data as unknown as Record<string, unknown>
+}
+
+/** Os temas dela, para escolher no formulário. */
+export const listarTemas = async (): Promise<{ id: string; nome: string }[]> => {
+  const { data, error } = await bancoDoNavegador()
+    .from('temas')
+    .select('id, nome')
+    .order('nome')
+
+  if (error) throw new Error(error.message)
+
+  return (data ?? []) as { id: string; nome: string }[]
+}
+
+/**
+ * Grava o produto: cria quando não tem id, atualiza quando tem.
+ *
+ * O `slug` não é atualizado ao editar — quem monta a linha já reaproveita
+ * o antigo. Mudar o endereço de um produto no ar quebraria o link que a
+ * cliente salvou e a página que o Google já indexou.
+ */
+export const salvarProduto = async (
+  linha: Record<string, unknown>,
+  id?: string,
+): Promise<string> => {
+  const banco = bancoDoNavegador()
+
+  const { data, error } = id
+    ? await banco.from('produtos').update(linha).eq('id', id).select('id').single()
+    : await banco.from('produtos').insert(linha).select('id').single()
+
+  if (error) throw new Error(error.message)
+
+  return (data as { id: string }).id
+}
