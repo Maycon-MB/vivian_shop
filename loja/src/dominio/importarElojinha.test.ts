@@ -173,3 +173,31 @@ describe('virar um produto da nossa loja', () => {
     expect(() => paraProduto({ ...bruto, preco: '' })).toThrow(/preço/i)
   })
 })
+
+describe('os nomes que iam ao ar ofuscados', () => {
+  /* Vinte e oito produtos foram publicados como "P.e.p.p.a P.i.g", com o
+     endereço /produto/album-de-figurinhas-p-e-p-p-a/. Só o tipo e o tema
+     eram desofuscados, e por isso o defeito passou. */
+
+  const linha = {
+    slug: 'bloquinho-personalizado-p-e-p-p-a-p-i-g',
+    nome: 'Bloquinho Personalizado - P.e.p.p.a P.i.g',
+    preco: '13,70',
+  }
+
+  it('desofusca o nome do produto', () => {
+    expect(paraProduto(linha).nome).toBe('Bloquinho Personalizado - Peppa Pig')
+  })
+
+  it('desofusca o endereço, que é o que o Google lê', () => {
+    // Ninguém digita "p-e-p-p-a", e o Google não ranqueia aquilo para
+    // "peppa pig", que é o tema campeão de vendas dela.
+    expect(paraProduto(linha).slug).toBe('bloquinho-personalizado-peppa-pig')
+  })
+
+  it('não mexe no nome que já está limpo', () => {
+    const limpo = { ...linha, slug: 'caneca-frozen', nome: 'Caneca - Frozen' }
+    expect(paraProduto(limpo).nome).toBe('Caneca - Frozen')
+    expect(paraProduto(limpo).slug).toBe('caneca-frozen')
+  })
+})

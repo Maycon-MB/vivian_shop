@@ -153,6 +153,20 @@ for (const rota of REDIRECIONAR) {
   )
 }
 
+/* Os 28 produtos que iam ao ar com o nome ofuscado, corrigidos em 25/08.
+   O endereço mudou de /produto/album-de-figurinhas-p-e-p-p-a/ para
+   .../album-de-figurinhas-peppa/, e o antigo continua respondendo: a loja
+   está no ar desde 21/08 e esses links podem ter sido mandados ou
+   indexados. Link que um dia funcionou e depois responde 404 é pior do
+   que link que nunca existiu. */
+const PRODUTOS_QUE_MUDARAM = JSON.parse(
+  readFileSync(path.join(raiz, 'loja', 'src', 'dados', 'enderecos-que-mudaram.json'), 'utf8'),
+)
+
+for (const [antigo, novo] of Object.entries(PRODUTOS_QUE_MUDARAM)) {
+  MUDARAM[`produto/${antigo}`] = `/produto/${novo}/`
+}
+
 for (const [de, para] of Object.entries(MUDARAM)) {
   const pasta = path.join(dist, de)
   const destino = `${prefixo}${para}`

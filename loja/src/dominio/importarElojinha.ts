@@ -43,6 +43,20 @@ export const desofuscar = (texto: string): string =>
  * cai em "sem tema definido", e ela ajeita depois; tema inventado por mim
  * espalha erro por 343 produtos.
  */
+/**
+ * O endereço do produto na loja, tirado do nome já desofuscado.
+ *
+ * Vive aqui, e não em `edicaoDeProduto`, para a importação não depender de
+ * uma tela: quem chama isto é um script que roda fora do navegador.
+ */
+export const enderecoDoNome = (nome: string): string =>
+  desofuscar(String(nome ?? ''))
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
 export const tipoETema = (nome: string): { tipo: string; tema: string } => {
   const partes = nome.split(' - ').map((p) => p.trim())
 
@@ -116,9 +130,17 @@ export const paraProduto = (bruto: LinhaDaElojinha): ProdutoImportado => {
   const medida = (valor: string | undefined): number | undefined =>
     lerNumero(valor ?? '') ?? undefined
 
+  /* O nome e o endereço também passam pelo desofuscar, e isso faltava.
+     Vinte e oito produtos foram ao ar como "P.e.p.p.a P.i.g", com o
+     endereço `/produto/album-de-figurinhas-p-e-p-p-a/`: ninguém digita
+     assim, e o Google não ranqueia aquilo para "peppa pig", que é o tema
+     campeão de vendas dela. Só o tipo e o tema eram desofuscados, e por
+     isso o defeito passou. */
+  const nome = desofuscar(bruto.nome)
+
   return {
-    slug: bruto.slug,
-    nome: bruto.nome,
+    slug: enderecoDoNome(nome) || bruto.slug,
+    nome,
     descricao: (bruto.descricao ?? '').trim(),
     preco,
     // Promoção que não é promoção confunde quem compra: se o "de" não for

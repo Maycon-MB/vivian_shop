@@ -626,3 +626,20 @@ body {
 }
 
 .temas-ver-todos:hover { border-color: #1F736F; }
+
+/* O caminho para o catálogo inteiro. Sem ele, a seleção da página inicial
+   seria tudo o que a loja parece ter. */
+.ver-catalogo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 13px 32px;
+  border-radius: 999px;
+  background: #12305B;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.ver-catalogo:hover { color: #FFFFFF; filter: brightness(1.1); }
