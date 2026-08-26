@@ -1,0 +1,172 @@
+/**
+ * O catálogo inteiro, com filtro.
+ *
+ * Nasceu em 25/08, quando a página inicial ainda renderizava os 342
+ * produtos de uma vez e a loja não tinha busca nenhuma.
+ */
+
+.catalogo {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 20px 72px;
+}
+
+.catalogo-topo { margin-bottom: 26px; }
+
+.catalogo-topo h1 {
+  margin: 0 0 6px;
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 800;
+  color: #12305B;
+}
+
+.catalogo-topo p { margin: 0 0 18px; color: #55617A; }
+
+.catalogo-busca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 560px;
+  padding: 12px 16px;
+  border: 1px solid #DCE9F6;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #55617A;
+}
+
+.catalogo-busca input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: #12305B;
+  /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
+  font-size: 16px;
+}
+
+.catalogo-busca input:focus { outline: none; }
+.catalogo-busca:focus-within { border-color: #1F736F; }
+
+.catalogo-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.catalogo-grupo h2 {
+  margin: 0 0 8px;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #6B7688;
+}
+
+.catalogo-fichas { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.catalogo-ficha {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 15px;
+  border: 1px solid #E4E8EF;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #12305B;
+  font-size: .87rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.catalogo-ficha span {
+  color: #8A93A5;
+  font-size: .78rem;
+  font-weight: 500;
+}
+
+.catalogo-ficha:hover { border-color: #1F736F; }
+
+.catalogo-ficha.escolhida {
+  background: #12305B;
+  border-color: #12305B;
+  color: #FFFFFF;
+}
+
+.catalogo-ficha.escolhida span { color: #A8C6E8; }
+
+.catalogo-mais {
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #1F736F;
+  font-size: .87rem;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.catalogo-conta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #EEF1F6;
+  margin-bottom: 18px;
+}
+
+.catalogo-conta p { margin: 0; color: #55617A; font-size: .9rem; }
+
+.catalogo-limpar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 8px 15px;
+  border: 1px solid #E4E8EF;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #55617A;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+.catalogo-limpar:hover { border-color: #8A2020; color: #8A2020; }
+
+.catalogo-grade {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: 1fr;
+}
+
+/* Beco sem saída é onde a pessoa fecha a aba. */
+.catalogo-vazio {
+  padding: 40px 20px;
+  border: 1px dashed #DCE9F6;
+  border-radius: 18px;
+  text-align: center;
+  color: #55617A;
+}
+
+.catalogo-vazio p { margin: 0 0 8px; }
+.catalogo-vazio p:last-child { margin: 0; }
+.catalogo-vazio a { color: #1F736F; font-weight: 700; }
+
+@media (min-width: 600px) {
+  .catalogo-grade { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 940px) {
+  .catalogo-grade { grid-template-columns: repeat(3, 1fr); }
+  .catalogo-filtros { flex-direction: row; gap: 32px; }
+  .catalogo-grupo { flex: 1; min-width: 0; }
+}

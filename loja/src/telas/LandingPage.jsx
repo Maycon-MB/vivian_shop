@@ -18,6 +18,7 @@ import {
 import { Instagram, Facebook } from './icones-marca';
 import { PUBLICADOS, temasDaVitrine } from './catalogo';
 import { QUANTOS_DE_CARA, quantosProdutos } from '@/dominio/vitrineDeTemas';
+import { paraAHome } from '@/dominio/vitrineDeProdutos';
 import RodapeConfianca from './RodapeConfianca';
 import Avaliacoes from './landing/Avaliacoes';
 import { paraAVitrine } from '@/dominio/avaliacoes';
@@ -50,6 +51,11 @@ const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA].filter(
    primeiro cartão que a pessoa lê. */
 const TEMAS_DA_VITRINE = temasDaVitrine();
 
+/* A home mostrava os 342 produtos de uma vez. Ninguém rola 342 cartões, e
+   loja nenhuma faz isso: aqui fica uma seleção variada por tipo, e o
+   catálogo inteiro com filtro mora em /produtos/. */
+const DESTAQUES = paraAHome(PUBLICADOS);
+
 const DEPOIMENTO = paraAVitrine(avaliacoesCruas).find((a) => a.texto.length > 40) ?? null;
 
 const LandingPage = () => {
@@ -72,9 +78,11 @@ const LandingPage = () => {
 
   const addToCart = (product) => adicionar(product);
 
-  const filteredProducts = activeCategory === 'Todas' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+  /* A seleção variada por tipo, e não o catálogo inteiro. O filtro por
+     linha continua valendo dentro dela. */
+  const filteredProducts = activeCategory === 'Todas'
+    ? DESTAQUES
+    : DESTAQUES.filter((p) => p.category === activeCategory);
 
   return (
     <div className="landing-page" style={{ backgroundColor: '#FBFAF7', minHeight: '100vh' }}>
@@ -308,6 +316,14 @@ const LandingPage = () => {
               ))}
             </AnimatePresence>
           </Row>
+
+          {/* O caminho para o catálogo inteiro. Sem ele, a seleção da home
+              seria tudo o que a loja parece ter. */}
+          <div className="text-center mt-5">
+            <Link href="/produtos/" prefetch={false} className="ver-catalogo">
+              Ver os {PUBLICADOS.length} produtos
+            </Link>
+          </div>
         </Container>
       </section>
 
