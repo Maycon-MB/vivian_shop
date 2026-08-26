@@ -9,7 +9,6 @@ import { pagamentoSimulado } from './pagamentoSimulado'
 import { freteSimulado } from './freteSimulado'
 import { avisosSimulados } from './avisosSimulados'
 import { pedidosLocais } from './pedidosLocais'
-import { pedidosSupabase } from './pedidosSupabase'
 
 /**
  * Onde a loja decide com quem está falando.
@@ -37,13 +36,30 @@ const temBanco = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL)
 export const pagamento: ServicoDePagamento = pagamentoSimulado
 export const frete: ServicoDeFrete = freteSimulado
 export const avisos: ServicoDeAvisos = avisosSimulados
-/* Com banco, o pedido nasce lá. Sem banco, continua no navegador, que é o
-   que faz a demonstração rodar sem conta em lugar nenhum.
+/**
+ * Onde o pedido é guardado.
+ *
+ * Com banco nasce lá; sem banco, no navegador, que é o que faz a
+ * demonstração rodar sem conta em lugar nenhum. Até 25/08 isto apontava
+ * sempre para o navegador, enquanto `situacaoDosServicos` já dizia "banco
+ * de dados": a tela informava uma coisa e o código fazia outra.
+ *
+ * O módulo do banco é buscado **na hora de usar**, e não no topo. Ele traz
+ * junto o cliente do Supabase, uns 60 KB, e importado de cima ele entrava
+ * no pacote do checkout: a tela ficou 331 KB, acima do limite de 320. Quem
+ * está preenchendo o cartão é justamente quem menos pode esperar
+ * carregamento, e ninguém precisa desses 60 KB antes de apertar "pagar".
+ */
+const doBanco = async () => (await import('./pedidosSupabase')).pedidosSupabase
 
-   Até 25/08 isto apontava sempre para o navegador, enquanto
-   `situacaoDosServicos` já dizia "banco de dados" quando havia banco. A
-   tela informava uma coisa e o código fazia outra. */
-export const pedidos: RepositorioDePedidos = temBanco ? pedidosSupabase : pedidosLocais
+export const pedidos: RepositorioDePedidos = temBanco
+  ? {
+      salvar: async (pedido) => (await doBanco()).salvar(pedido),
+      listar: async () => (await doBanco()).listar(),
+      buscar: async (id) => (await doBanco()).buscar(id),
+      atualizarEstado: async (id, estado) => (await doBanco()).atualizarEstado(id, estado),
+    }
+  : pedidosLocais
 
 /**
  * O que ainda é simulação.

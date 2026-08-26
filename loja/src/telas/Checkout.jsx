@@ -68,11 +68,24 @@ const validar = ({ dados, precisaEndereco, frete }) => {
     }
     if (!dados.logradouro.trim()) erros.logradouro = 'Falta a rua.';
     if (!dados.numero.trim()) erros.numero = 'Falta o número.';
+    /* Bairro e estado faltavam na tela, e são obrigatórios para os
+       Correios entregarem. Ficavam vazios sem ninguém perceber enquanto o
+       pedido era guardado no navegador. */
+    if (!dados.bairro.trim()) erros.bairro = 'Falta o bairro.';
+    if (!dados.cidade.trim()) erros.cidade = 'Falta a cidade.';
+    if (!dados.uf.trim()) erros.uf = 'Escolha o estado.';
     if (!frete) erros.frete = 'Escolha como quer receber.';
   }
 
   return erros;
 };
+
+/* As 27 unidades da federação. Lista, e não campo livre: a coluna guarda
+   duas letras, e quem digita escreve "Rio de janeiro". */
+const ESTADOS = [
+  'AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT',
+  'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO',
+]
 
 const VAZIO = {
   nome: '',
@@ -351,15 +364,51 @@ const Checkout = () => {
 
                   {cepCompleto && (
                     <>
+                      {/* Cidade e estado eram um campo só, "Rio de Janeiro / RJ",
+                          e o estado nunca era separado dali: ia vazio para o
+                          pedido. Enquanto a compra ficava no navegador ninguém
+                          percebia; com o pedido no banco, nenhuma entrega
+                          física passaria. O estado virou lista porque a coluna
+                          guarda duas letras, e campo livre aceita "Rio de
+                          janeiro". */}
                       <Form.Group>
-                        <Form.Label htmlFor="campo-cidade">Cidade e estado</Form.Label>
+                        <Form.Label htmlFor="campo-cidade">Cidade</Form.Label>
                         <Form.Control
                           id="campo-cidade"
                           value={dados.cidade}
                           onChange={preencher('cidade')}
                           autoComplete="address-level2"
-                          placeholder="Rio de Janeiro / RJ"
+                          placeholder="Rio de Janeiro"
                         />
+                        {campoErro('cidade')}
+                      </Form.Group>
+
+                      <Form.Group>
+                        <Form.Label htmlFor="campo-uf">Estado</Form.Label>
+                        <Form.Select
+                          id="campo-uf"
+                          value={dados.uf}
+                          onChange={preencher('uf')}
+                          autoComplete="address-level1"
+                        >
+                          <option value="">Escolha</option>
+                          {ESTADOS.map((sigla) => (
+                            <option key={sigla} value={sigla}>{sigla}</option>
+                          ))}
+                        </Form.Select>
+                        {campoErro('uf')}
+                      </Form.Group>
+
+                      <Form.Group className="largo">
+                        <Form.Label htmlFor="campo-bairro">Bairro</Form.Label>
+                        <Form.Control
+                          id="campo-bairro"
+                          value={dados.bairro}
+                          onChange={preencher('bairro')}
+                          autoComplete="address-level3"
+                          placeholder="Centro"
+                        />
+                        {campoErro('bairro')}
                       </Form.Group>
 
                       <Form.Group className="largo">
