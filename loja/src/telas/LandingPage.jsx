@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { ShoppingCart, Heart, Search, ArrowRight, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
+import { ShoppingCart, Heart, Search, User, ArrowRight, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
@@ -115,7 +115,15 @@ const LandingPage = () => {
               ))}
             </Nav>
             <div className="d-flex align-items-center justify-content-center justify-content-lg-end gap-4 pb-4 pb-lg-0">
-              <Search size={20} className="text-muted cursor-pointer" />
+              {/* A lupa não fazia nada: era ícone de enfeite numa loja
+                  sem busca. Agora leva ao catálogo, que tem. */}
+              <Link href="/produtos/" prefetch={false} aria-label="Procurar produtos" className="text-muted">
+                <Search size={20} />
+              </Link>
+
+              <Link href="/minha-conta/" prefetch={false} aria-label="Meus pedidos" className="text-muted">
+                <User size={20} />
+              </Link>
               <div className="position-relative cursor-pointer" onClick={() => setShowCart(true)}>
                 <ShoppingCart size={22} className="text-dark" />
                 <AnimatePresence>
