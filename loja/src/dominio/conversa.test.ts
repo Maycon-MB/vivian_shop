@@ -2,10 +2,11 @@ import { describe, it, expect } from 'vitest'
 
 import {
   ABERTURA,
-  emailDeResposta,
   OPCOES,
   PRIMEIRAS,
   acharOpcao,
+  acharPelaEscrita,
+  emailDeResposta,
   problemasDoRecado,
   responder,
   seguintesDe,
@@ -169,5 +170,57 @@ describe('o e-mail que ela manda para a cliente', () => {
     /* Quem manda é o programa de e-mail dela. É o que faz isto funcionar
        hoje, antes de o Resend existir. */
     expect(link).not.toMatch(/https?:\/\/(?!feitoparavoce)/)
+  })
+})
+
+describe('quando a cliente escreve em vez de tocar', () => {
+  /* É o que faz a conversa parecer atendimento em vez de menu. Continua
+     sem gerar texto: o que muda é como se chega até a resposta escrita à
+     mão, e não a resposta. */
+
+  it('acha a resposta do prazo', () => {
+    expect(acharPelaEscrita('quanto tempo demora para chegar?')?.id).toBe('prazo')
+  })
+
+  it('acha a resposta do frete', () => {
+    expect(acharPelaEscrita('quanto fica o frete pro meu cep')?.id).toBe('frete')
+  })
+
+  it('acha a resposta do pagamento', () => {
+    expect(acharPelaEscrita('vcs aceitam pix?')?.id).toBe('pagamento')
+  })
+
+  it('acha sem acento, que é como se digita no celular', () => {
+    expect(acharPelaEscrita('da pra por o nome da minha filha?')?.id).toBe('personalizar')
+  })
+
+  it('acha a pergunta da data apertada', () => {
+    expect(acharPelaEscrita('preciso para o aniversario dia 6, chega?')?.id).toBe('atrasar')
+  })
+
+  it('devolve nada quando não tem certeza', () => {
+    /* Responder a coisa errada com confiança é pior do que dizer "essa eu
+       não sei": a cliente vai embora achando que foi respondida. */
+    expect(acharPelaEscrita('vocês fazem bolo de casamento?')).toBeUndefined()
+  })
+
+  it('devolve nada para texto curto demais', () => {
+    // "oi" não é pergunta.
+    expect(acharPelaEscrita('oi')).toBeUndefined()
+  })
+
+  it('toda pergunta tem palavra que a alcança', () => {
+    /* Sem isto, alguém acrescenta uma pergunta e ela só existe no botão:
+       quem digitar a dúvida correspondente cai em "não sei". */
+    for (const opcao of OPCOES) {
+      expect(opcao.palavras.length, opcao.id).toBeGreaterThan(2)
+    }
+  })
+
+  it('cada pergunta é alcançada pela própria palavra', () => {
+    for (const opcao of OPCOES) {
+      const achada = acharPelaEscrita(`queria saber sobre ${opcao.palavras[0]}`)
+      expect(achada?.id, `${opcao.id} pela palavra "${opcao.palavras[0]}"`).toBe(opcao.id)
+    }
   })
 })

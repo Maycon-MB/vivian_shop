@@ -32,6 +32,14 @@ export interface Opcao {
   resposta: string
   /** Para onde a conversa vai depois de responder. */
   seguintes?: string[]
+  /**
+   * As palavras que levam a esta resposta quando a cliente digita.
+   *
+   * Escritas à mão, como tudo aqui. É o que faz a conversa parecer
+   * atendimento em vez de menu: a pessoa escreve "chega antes do dia 20?"
+   * e recebe a resposta certa, sem caçar botão.
+   */
+  palavras: string[]
 }
 
 /**
@@ -49,6 +57,7 @@ export const OPCOES: Opcao[] = [
       'Sábado, domingo e feriado não contam. Depois disso ainda entra o prazo dos Correios, ' +
       'que aparece no carrinho junto com o preço do frete.',
     seguintes: ['frete', 'atrasar'],
+    palavras: ['prazo', 'demora', 'tempo', 'dias', 'pronto', 'producao', 'demoram', 'rapido'],
   },
   {
     id: 'minimo',
@@ -58,6 +67,7 @@ export const OPCOES: Opcao[] = [
       'para lembrancinha de festa. O mínimo de cada produto aparece na página dele, antes do ' +
       'carrinho. Alguns poucos podem ser comprados em quantidade menor.',
     seguintes: ['personalizar', 'prazo'],
+    palavras: ['minimo', 'quantidade', 'quantas', 'unidade', 'unidades', 'pecas', 'so uma', 'apenas uma', 'avulso'],
   },
   {
     id: 'personalizar',
@@ -66,6 +76,7 @@ export const OPCOES: Opcao[] = [
       'Dá sim, e é o normal aqui: o nome e a idade entram na arte. O produto sai igual à foto ' +
       'do anúncio, mudando só o nome e a idade. Você escreve isso na hora de fechar o pedido.',
     seguintes: ['prazo', 'humano'],
+    palavras: ['nome', 'personalizar', 'personalizado', 'idade', 'escrever', 'arte', 'foto', 'customizar'],
   },
   {
     id: 'frete',
@@ -74,6 +85,7 @@ export const OPCOES: Opcao[] = [
       'O frete é calculado pelo seu CEP e aparece no carrinho antes de você pagar, com o prazo ' +
       'de cada transportadora lado a lado. O envio sai do Rio de Janeiro.',
     seguintes: ['prazo', 'pagamento'],
+    palavras: ['frete', 'entrega', 'correios', 'envio', 'enviar', 'cep', 'sedex', 'transportadora', 'chega em'],
   },
   {
     id: 'pagamento',
@@ -82,6 +94,7 @@ export const OPCOES: Opcao[] = [
       'Pix ou cartão, pelo Mercado Pago. No Pix o pagamento cai na hora e a produção já começa; ' +
       'no cartão a aprovação costuma levar alguns minutos.',
     seguintes: ['prazo', 'acompanhar'],
+    palavras: ['pagar', 'pagamento', 'pix', 'cartao', 'credito', 'debito', 'parcela', 'parcelar', 'boleto'],
   },
   {
     id: 'acompanhar',
@@ -90,6 +103,7 @@ export const OPCOES: Opcao[] = [
       'Você recebe o número do pedido por e-mail assim que o pagamento é aprovado, e acompanha ' +
       'por ele na página de andamento, aqui mesmo no site.',
     seguintes: ['prazo', 'humano'],
+    palavras: ['acompanhar', 'rastrear', 'rastreio', 'codigo', 'andamento', 'onde esta', 'status'],
   },
   {
     id: 'atrasar',
@@ -99,6 +113,7 @@ export const OPCOES: Opcao[] = [
       'carrinho: essa é a data. Se estiver apertado para a sua festa, fale com a loja antes de ' +
       'comprar, porque prometer data que não dá para cumprir não ajuda ninguém.',
     seguintes: ['humano'],
+    palavras: ['data', 'aniversario', 'festa', 'chega a tempo', 'urgente', 'preciso para', 'dia'],
   },
   {
     id: 'trocar',
@@ -107,11 +122,19 @@ export const OPCOES: Opcao[] = [
       'Se o produto vier diferente do que foi pedido, a loja refaz. Fale com a loja com o número ' +
       'do pedido e uma foto, que é resolvido.',
     seguintes: ['humano'],
+    palavras: ['errado', 'defeito', 'trocar', 'troca', 'devolver', 'quebrado', 'problema', 'reclamacao'],
   },
 ]
 
-/** As perguntas com que a conversa começa. */
-export const PRIMEIRAS = ['prazo', 'minimo', 'personalizar', 'frete', 'pagamento']
+/**
+ * As perguntas com que a conversa começa.
+ *
+ * Três, e não cinco. Abrir com uma lista de tudo o que a loja sabe
+ * responder é despejo de menu, e quem chega com uma dúvida na cabeça
+ * ainda tem que ler as outras quatro antes de achar a dela. Estas três
+ * são as que mais aparecem, e quem quiser outra coisa escreve.
+ */
+export const PRIMEIRAS = ['prazo', 'frete', 'pagamento']
 
 export const acharOpcao = (id: string): Opcao | undefined =>
   OPCOES.find((o) => o.id === id)
@@ -142,10 +165,22 @@ export interface Fala {
 /** A primeira coisa que a cliente lê ao abrir a conversa. */
 export const ABERTURA: Fala = {
   quem: 'loja',
-  texto:
-    'Oi! Escolha uma pergunta abaixo e eu respondo na hora. Se você precisar de outra coisa, ' +
-    'dá para falar direto com a loja.',
+  /* Curto, e convidando a escrever. A versão anterior explicava o
+     funcionamento do chat antes de a pessoa ter uma dúvida, e quem chega
+     com pressa não lê instrução. */
+  texto: 'Oi! Pode perguntar. Se preferir, escreva com as suas palavras.',
 }
+
+/** O que a loja diz quando não tem a resposta pronta. */
+export const NAO_SEI = (escrito: string): Fala => ({
+  quem: 'loja',
+  /* Dizer que não sabe, e não chutar. A cliente que recebe a resposta
+     errada com confiança vai embora achando que perguntou e foi
+     respondida. */
+  texto:
+    `Essa eu não sei responder na hora. Mas ${escrito.trim().length > 40 ? 'a sua pergunta' : 'ela'} ` +
+    'chega direto na loja se você clicar abaixo, e a resposta vai para o seu e-mail.',
+})
 
 /**
  * A conversa depois de a cliente tocar num botão.
@@ -223,4 +258,45 @@ export const emailDeResposta = (
   ].join(String.fromCharCode(10))
 
   return `mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`
+}
+
+/** Sem acento e em minúscula: ninguém digita "mágica" com acento no celular. */
+const comparavel = (texto: string): string =>
+  String(texto ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+
+/**
+ * A resposta pronta que combina com o que a cliente escreveu.
+ *
+ * É o que faz a conversa parecer atendimento em vez de menu: a pessoa
+ * escreve "chega antes do dia 20?" e recebe a resposta certa, sem caçar
+ * botão. **Continua sem gerar texto**: o que muda é como se chega até a
+ * resposta escrita à mão, e não a resposta.
+ *
+ * **Devolve nada quando está em dúvida, e isso é de propósito.** Responder
+ * a coisa errada com confiança é pior do que dizer "essa eu não sei": a
+ * cliente vai embora achando que perguntou e foi respondida. Quando não
+ * há certeza, o caminho é falar com a loja.
+ */
+export const acharPelaEscrita = (texto: string): Opcao | undefined => {
+  const escrito = comparavel(texto)
+  if (escrito.trim().length < 3) return undefined
+
+  let melhor: { opcao: Opcao; pontos: number } | undefined
+
+  for (const opcao of OPCOES) {
+    /* Uma palavra da lista dentro do que ela escreveu. Peso pelo tamanho
+       da palavra: "pix" achar dentro de "pixel" é acidente, e palavra
+       longa que bate é sinal mais forte do que palavra curta. */
+    const pontos = opcao.palavras
+      .filter((palavra) => escrito.includes(comparavel(palavra)))
+      .reduce((soma, palavra) => soma + palavra.length, 0)
+
+    if (pontos === 0) continue
+    if (!melhor || pontos > melhor.pontos) melhor = { opcao, pontos }
+  }
+
+  return melhor?.opcao
 }
