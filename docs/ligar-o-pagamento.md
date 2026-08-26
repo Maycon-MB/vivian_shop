@@ -56,7 +56,44 @@ sem passar por mim. Ver
 
 ---
 
+## O que já funciona, com as credenciais de teste
+
+Em 25/08 a Vivian gerou as credenciais **de teste** e o ciclo inteiro foi
+provado contra o Mercado Pago de verdade, no ambiente deles:
+
+| Teste | Resultado |
+|---|---|
+| Criar pedido e cobrar no Pix | QR com R$ 135,00, o valor do banco |
+| Aviso com id de pagamento inventado | **502**, recusado |
+| Aviso de verdade | pedido marcado como aguardando |
+| Reenvio do mesmo aviso | aceito, sem duplicar |
+
+A segunda linha é a que importa. **O aviso do Mercado Pago não é a
+verdade**: ele diz "vá perguntar sobre o pagamento tal", e qualquer um
+pode mandar um POST para aquele endereço dizendo que o pedido foi pago.
+Quem responde é a API deles, consultada com a chave dela, e por isso o id
+inventado morre ali.
+
+Duas funções estão publicadas:
+
+| Função | O que faz |
+|---|---|
+| `cobrar` | recebe o id do pedido, lê o total no banco e cria o pagamento |
+| `aviso-do-pagamento` | pergunta ao Mercado Pago e confere antes de marcar |
+
+**O valor nunca vem do navegador.** A `cobrar` recebe o id do pedido, e
+não quanto cobrar: aceitar o valor de fora seria deixar escolher quanto
+pagar, e isso não melhora por estar num servidor.
+
+O `aviso-do-pagamento` também compara o valor pago com o do pedido. Pagar
+menos e a loja aprovar é o erro que custa dinheiro dela, e o único jeito
+de pegar é com os dois números na mão.
+
+---
+
 ## O que falta
+
+**A tela**, com o Checkout Bricks desenhando os campos dentro da loja.
 
 **As credenciais de produção**, que só saem de dentro da conta dela:
 
