@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap');
+/* Sem `@import` do Google Fonts aqui.
+
+   O `next/font` em layout.tsx já baixa e hospeda as duas famílias, e este
+   import as baixava de novo, do Google: as mesmas fontes, duas vezes, em
+   toda página. Descoberto medindo o peso depois da troca da fonte em
+   26/08, quando quatro telas passaram do limite de uma vez.
+   
+   As famílias vêm pelas variáveis que o next/font expõe, e não pelo nome:
+   ele gera um nome próprio para o arquivo que hospeda. */
 
 :root {
   /* Paleta da loja — ver docs/superpowers/specs/2026-08-10-identidade-visual-design.md
@@ -24,8 +32,8 @@
   --glass-border: rgba(255, 255, 255, 0.2);
 
   /* Fontes */
-  --font-main: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
-  --font-serif: 'Fraunces', Georgia, serif;
+  --font-main: var(--font-inter), 'Segoe UI', system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
 
   /* Spacing */
   --section-padding: 160px;
@@ -75,7 +83,7 @@
   --bs-link-color: #1F736F;
   --bs-link-hover-color: #12305B;
 
-  --bs-body-font-family: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+  --bs-body-font-family: var(--font-inter), 'Segoe UI', system-ui, sans-serif;
 
   /* Escala única de canto, no lugar de rounded-3/4/5 sem critério. */
   --bs-border-radius-sm: 8px;
@@ -643,3 +651,43 @@ body {
 }
 
 .ver-catalogo:hover { color: #FFFFFF; filter: brightness(1.1); }
+
+/* Os selos de pagamento e envio, escritos.
+
+   Eram três imagens puxadas da Wikipédia e de um site de logos, e uma já
+   não carregava. Depender de servidor de terceiro para o selo que diz
+   "pode confiar" é o pior lugar possível para uma imagem quebrada. */
+.selos-de-confianca {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  justify-content: center;
+  margin: 44px 0 0;
+  padding: 26px 0 0;
+  border-top: 1px solid #EDE7DD;
+  list-style: none;
+}
+
+.selos-de-confianca li {
+  color: #5F6F80;
+  font-size: .92rem;
+}
+
+.selos-de-confianca strong { color: #12305B; }
+
+/* A bolha do chat fica fixa no canto e cobria o fim do conteúdo. É o
+   mesmo defeito que já derrubou este projeto duas vezes: elemento fixo
+   por cima de coisa clicável. */
+.landing-page,
+.catalogo,
+.conta {
+  padding-bottom: 88px;
+}
+
+@media (min-width: 768px) {
+  .landing-page,
+  .catalogo,
+  .conta {
+    padding-bottom: 96px;
+  }
+}

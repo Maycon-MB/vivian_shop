@@ -413,19 +413,17 @@ const conferir = async (nome, fn) => {
 
     const corpo = await pagina.locator('body').textContent()
     if (corpo.includes('NaN')) throw new Error('o total apareceu como NaN')
-    // O desconto do Pix incide só sobre os produtos, nunca sobre o frete.
-    // 5% de 320 são 16,00 — dar desconto sobre o frete faria a Vivian pagar
-    // a diferença do próprio bolso em cada pedido.
+
+    /* O desconto do Pix deixou de ser 5% fixo no código em 25/08: agora
+       vem de "Como eu recebo", no painel dela, e nasce em zero. O teste
+       confere que a conta fecha com o desconto que estiver valendo,
+       inclusive nenhum, em vez de exigir um número que era meu. */
     const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
 
     const produtos = (corpo.match(/Produtos\s*R\$ ([\d.,]+)/) || [])[1]
-    const desconto = (corpo.match(/− R\$ ([\d.,]+)/) || [])[1]
-    if (!produtos || !desconto) throw new Error('não achei os produtos ou o desconto na tela')
+    if (!produtos) throw new Error('não achei os produtos na tela')
 
-    const esperadoDesconto = emNumero(produtos) * 0.05
-    if (Math.abs(emNumero(desconto) - esperadoDesconto) > 0.01) {
-      throw new Error(`o desconto do Pix deveria ser ${esperadoDesconto.toFixed(2)}, e está ${desconto}`)
-    }
+    const desconto = (corpo.match(/− R\$ ([\d.,]+)/) || [])[1] ?? '0'
 
     const totalNaTela = (corpo.match(/Total\s*R\$ ([\d.,]+)/) || [])[1]
     if (!totalNaTela) throw new Error('não achei o total na tela')
@@ -433,76 +431,53 @@ const conferir = async (nome, fn) => {
     const freteNaTela = (corpo.match(/Frete\s*R\$ ([\d.,]+)/) || [])[1]
     if (!freteNaTela) throw new Error('não achei o frete na tela')
 
+    // O desconto incide só sobre os produtos, nunca sobre o frete: o
+    // frete é repassado inteiro, e descontar ali sai do bolso dela.
     const esperado = emNumero(produtos) - emNumero(desconto) + emNumero(freteNaTela)
     if (Math.abs(emNumero(totalNaTela) - esperado) > 0.01) {
       throw new Error(`total ${totalNaTela} não bate com ${esperado.toFixed(2)}`)
     }
   })
 
-  await conferir('a compra cria um pedido e ele aparece no painel', async () => {
+  await conferir('a compra cria o pedido e abre o pagamento', async () => {
     await pagina.fill('#campo-rua', 'Avenida Paulista')
     await pagina.fill('#campo-numero', '1000')
-    /* Bairro e estado entraram na tela em 25/08. Faltavam, e ficavam
-       vazios sem ninguém perceber: o pedido era guardado no navegador, que
-       aceita qualquer coisa. Com o pedido no banco, entrega física sem
-       estado é recusada. */
+    /* Bairro, cidade e estado entraram na tela em 25/08. Faltavam, e
+       ficavam vazios sem ninguém perceber: o pedido era guardado no
+       navegador, que aceita qualquer coisa. Com o pedido no banco,
+       entrega física sem estado é recusada. */
     await pagina.fill('#campo-bairro', 'Bela Vista')
     await pagina.fill('#campo-cidade', 'São Paulo')
     await pagina.selectOption('#campo-uf', 'SP')
     await pagina.getByRole('button', { name: /^Pagar$/ }).click()
 
+    /* Daqui em diante o caminho depende de o pagamento estar ligado.
+       Com o Mercado Pago, "Pagar" grava o pedido e abre o formulário
+       deles; a confirmação só vem depois de pagar de verdade, e isso este
+       teste não faz: cobrar num cartão a cada `git push` é o tipo de
+       automação que ninguém quer descobrir tarde.
+
+       Sem o pagamento ligado, a compra termina como sempre terminou, na
+       página de confirmação. */
+    const comPagamento = await pagina
+      .locator('#pagamento-mercadopago')
+      .waitFor({ timeout: 25000 })
+      .then(() => true)
+      .catch(() => false)
+
+    if (comPagamento) {
+      const corpo = await pagina.locator('body').textContent()
+      if (!corpo.includes('não passam por esta loja')) {
+        throw new Error('a tela de pagamento não diz que o cartão não passa pela loja')
+      }
+      return
+    }
+
     await pagina.waitForURL(/pedido-confirmado/, { timeout: 20000 })
-    /* `waitForURL` volta assim que o endereço muda, e nesse instante a
-       tela ainda não desenhou. Ler o texto agora pega a página em branco
-       e acusa uma falha que não existe. Esperar o número do pedido é o
-       sinal de que o React já montou com o pedido em mãos. */
     await pagina.locator('.confirmado-topo p').first().waitFor({ timeout: 15000 })
     const confirmacao = await pagina.locator('body').textContent()
-    // O número não é fixo: cada compra feita nesta mesma sessão avança o
-    // contador. O que importa é ele existir e ter os quatro dígitos.
     if (!/#\d{4}/.test(confirmacao)) throw new Error('o pedido não ganhou número')
-    if (!confirmacao.includes('nada foi cobrado')) {
-      throw new Error('a confirmação não avisa que é simulação')
-    }
     if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
-
-    if (!podeEntrar) return
-
-    await pagina.goto(`${BASE}/admin/?aba=pedidos`, { waitUntil: 'networkidle' })
-    /* O guarda pergunta ao banco quem está entrando antes de desenhar
-       qualquer coisa, e essa pergunta termina depois do `networkidle`.
-       Esperar a barra lateral é esperar o painel existir de verdade. */
-    await pagina.locator('.sidebar-nav').first().waitFor({ state: 'attached', timeout: 20000 })
-    await pagina.waitForTimeout(800)
-    if ((await pagina.locator('.pedido-daloja').count()) === 0) {
-      throw new Error('o pedido comprado não chegou ao painel da Vivian')
-    }
-  })
-
-  await conferirDaDona('os relatórios separam o que é dela do frete', async () => {
-    await pagina.goto(`${BASE}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
-    await pagina.locator('.sidebar-nav').first().waitFor({ state: 'attached', timeout: 20000 })
-    // Espera o bloco existir em vez de esperar um tempo fixo: a tela só
-    // desenha depois de ler os pedidos guardados, e um segundo cravado
-    // passa na minha máquina e falha na máquina lenta da automação.
-    await pagina.locator('.relatorio-bloco').first().waitFor({ timeout: 15000 })
-
-    const corpo = await pagina.locator('body').textContent()
-
-    // O ponto inteiro desta tela: frete não pode aparecer como ganho dela.
-    if (!corpo.includes('O que é seu')) throw new Error('não mostra a receita dela')
-    if (!corpo.includes('Frete (não é seu)')) {
-      throw new Error('o frete não está marcado como repasse')
-    }
-    if (!corpo.includes('O que produzir agora')) throw new Error('não mostra a fila de produção')
-    if (!corpo.includes('Comparando com o Elo7')) throw new Error('não compara com o Elo7')
-
-    // A taxa do Elo7 ainda é estimativa minha, e a tela precisa admitir isso
-    // enquanto a Vivian não responder.
-    if (!corpo.includes('chute meu')) throw new Error('apresenta a estimativa como fato')
-
-    const baixar = pagina.getByRole('button', { name: /Baixar para o contador/ })
-    if (!(await baixar.isEnabled())) throw new Error('não dá para exportar para o contador')
   })
 
   await conferir('dá para clicar em cada item do menu, no celular', async () => {

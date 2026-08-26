@@ -257,7 +257,7 @@ const IdentityPage = () => {
             </div>
 
             <div className="spec-row">
-              <span className="spec-label">Texto<br />Atkinson&nbsp;Hyperlegible</span>
+              <span className="spec-label">Texto<br />Inter</span>
               <div>
                 <p className="spec-body">
                   Todo o texto da loja, do nome do produto ao botão de finalizar compra. Esta

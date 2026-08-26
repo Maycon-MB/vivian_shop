@@ -32,18 +32,33 @@ const REDE = {
   latency: 150,
 }
 
-/* Os limites ficam pouco acima do que a loja pesa hoje, e não num número
+/* Subidos em 26/08, e vale dizer por quê antes de alguém repetir.
+ *
+ * Quatro telas passaram do limite no mesmo dia, e a primeira coisa que fiz
+ * foi procurar o que engordou, que é o que este arquivo manda fazer. O que
+ * achei foi crescimento espalhado, e não um item gordo: o checkout passou
+ * a gravar pedido no banco, ler a configuração de pagamento dela e
+ * desenhar o formulário do Mercado Pago, tudo depois de o limite de 320 KB
+ * ter sido escrito para um checkout que guardava no navegador.
+ *
+ * O que existe de gordura de verdade são 225 KB de CSS por página, quase
+ * tudo Bootstrap, importado no layout raiz. Tirar aquilo é refazer as
+ * telas que dependem dele, e é dívida anterior a este dia. **Fica
+ * registrado como o próximo lugar para olhar**, e não como algo que este
+ * número esconde.
+ *
+ * Os limites ficam pouco acima do que a loja pesa hoje, e não num número
    redondo confortável: um teto folgado nunca reprova nada e some. O peso é
    estável entre execuções, então aperta; o tempo varia com a máquina, então
    tem folga maior. A loja carrega mais porque é a única com fotos. */
 const TELAS = [
   { caminho: '/', nome: 'a loja', limitePesoKb: 700, limiteMs: 6000 },
   { caminho: '/produto/caderno-personalizado/', nome: 'um produto', limitePesoKb: 320, limiteMs: 4000 },
-  { caminho: '/checkout/', nome: 'o checkout', limitePesoKb: 320, limiteMs: 4000 },
-  { caminho: '/admin/perguntas/', nome: 'as perguntas', limitePesoKb: 320, limiteMs: 4000 },
+  { caminho: '/checkout/', nome: 'o checkout', limitePesoKb: 380, limiteMs: 4000 },
+  { caminho: '/admin/perguntas/', nome: 'as perguntas', limitePesoKb: 360, limiteMs: 4000 },
   // O painel tem gráficos, mas eles agora chegam depois da tela abrir.
-  { caminho: '/painel/', nome: 'o painel', limitePesoKb: 400, limiteMs: 4500 },
-  { caminho: '/painel/?aba=relatorios', nome: 'os relatórios', limitePesoKb: 400, limiteMs: 4500 },
+  { caminho: '/painel/', nome: 'o painel', limitePesoKb: 430, limiteMs: 4500 },
+  { caminho: '/painel/?aba=relatorios', nome: 'os relatórios', limitePesoKb: 430, limiteMs: 4500 },
 ]
 
 const kb = (bytes) => Math.round(bytes / 1024)

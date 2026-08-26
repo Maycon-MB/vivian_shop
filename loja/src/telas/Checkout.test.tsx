@@ -3,7 +3,16 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Checkout from './Checkout'
+/* Como ela configurou o recebimento. Cada teste que depende disso diz
+   qual configuração está provando, em vez de herdar um 5% escondido no
+   código do checkout, que era como estava até 25/08. */
+const comoElaRecebe = vi.fn()
+
+vi.mock('@/dados/comoElaRecebeNoBanco', () => ({
+  comoElaRecebe: () => comoElaRecebe(),
+}))
+
+const { default: Checkout } = await import('./Checkout')
 import { ProvedorCarrinho } from './CarrinhoContexto'
 import { navegacaoFalsa } from '../../vitest.setup'
 
@@ -19,6 +28,17 @@ import { navegacaoFalsa } from '../../vitest.setup'
  * pagar sem dados — mais os caminhos de erro, que ninguém percorre à mão
  * porque dão trabalho de reproduzir.
  */
+
+const SEM_DESCONTO = {
+  parcelas_max: 1,
+  juros_por_conta_da_loja: false,
+  desconto_pix: 0,
+  aceita_credito: true,
+  aceita_debito: true,
+  aceita_pix: true,
+}
+
+const COM_5_NO_PIX = { ...SEM_DESCONTO, desconto_pix: 5 }
 
 const CHAVE_CARRINHO = 'feito-para-voce:carrinho'
 
@@ -55,6 +75,8 @@ const abrir = () =>
 const resumo = () => within(screen.getByRole('complementary'))
 
 beforeEach(() => {
+  // O padrão é o dela: sem desconto. Quem testa desconto diz isso.
+  comoElaRecebe.mockReset().mockResolvedValue(SEM_DESCONTO)
   navegacaoFalsa.push.mockClear()
 })
 
@@ -76,15 +98,14 @@ describe('checkout de produto físico', () => {
     // Este teste existe por causa de um erro real: o domínio usava `preco`
     // e a tela usava `price`, e o total saiu como "R$ NaN" no ar.
     //
-    // O valor aparece duas vezes de propósito — na linha do item e na
-    // soma dos produtos — então a conferência é sobre as duas.
-    expect(await resumo().findAllByText('R$ 320,00')).toHaveLength(2)
-    // 320 menos os 5% do Pix, ainda sem frete escolhido.
-    expect(resumo().getByText('R$ 304,00')).toBeInTheDocument()
+    // Sem desconto, o mesmo valor aparece na linha do item, na soma dos
+    // produtos e no total a pagar.
+    expect(await resumo().findAllByText('R$ 320,00')).toHaveLength(3)
     expect(screen.queryByText(/NaN/)).not.toBeInTheDocument()
   })
 
-  it('aplica o desconto do Pix só sobre os produtos', async () => {
+  it('aplica o desconto do Pix só sobre os produtos, quando ela o escolhe', async () => {
+    comoElaRecebe.mockResolvedValue(COM_5_NO_PIX)
     comCarrinho([CADERNO])
     abrir()
 
@@ -275,29 +296,36 @@ describe('checkout de material digital', () => {
 })
 
 describe('pagamento no cartão', () => {
-  it('mostra os campos do cartão só quando o cartão é escolhido', async () => {
+  it('a loja nunca tem um campo de número de cartão', async () => {
+    /* Este teste substituiu um que exigia o contrário. Havia um `input`
+       nosso chamado "Número do cartão", com `autoComplete="cc-number"`:
+       nada era enviado, porque o pagamento era simulado, mas o navegador
+       preenchia cartão de verdade ali e a cliente digitava o dela.
+
+       Campo nosso põe o dado no nosso código, e a loja entra em PCI-DSS:
+       auditoria, certificação e responsabilidade legal, no CPF dela. Os
+       campos passaram a ser iframes do Mercado Pago.
+
+       Se alguém reintroduzir um campo desses, este teste fica vermelho. */
     comCarrinho([CADERNO])
     abrir()
+
+    await userEvent.click(await screen.findByText(/^Cartão$/))
 
     expect(screen.queryByLabelText(/Número do cartão/i)).not.toBeInTheDocument()
-
-    await userEvent.click(await screen.findByText('Cartão de crédito'))
-
-    expect(await screen.findByLabelText(/Número do cartão/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Validade/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Código de segurança/i)).toBeInTheDocument()
+    expect(screen.queryByLabelText(/Código de segurança/i)).not.toBeInTheDocument()
+    expect(document.querySelector('[autocomplete="cc-number"]')).toBeNull()
   })
 
-  it('tira o desconto do Pix quando muda para cartão', async () => {
+  it('não dá desconto no Pix que ela não escolheu', async () => {
+    /* O desconto estava fixo em 5% no código, e a loja dava cinco por
+       cento de cada pedido sem ela ter escolhido. Agora vem de "Como eu
+       recebo", que nasce em zero. */
     comCarrinho([CADERNO])
     abrir()
 
-    expect(await resumo().findByText('− R$ 16,00')).toBeInTheDocument()
-
-    await userEvent.click(screen.getByText('Cartão de crédito'))
-
     await waitFor(() => {
-      expect(resumo().queryByText('− R$ 16,00')).not.toBeInTheDocument()
+      expect(resumo().queryByText(/^−/)).not.toBeInTheDocument()
     })
   })
 })

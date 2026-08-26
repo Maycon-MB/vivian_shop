@@ -21,6 +21,13 @@ import { PRAZO_PRODUCAO } from '../catalogo';
 import { useCompra } from './useCompra';
 import { situacaoDosServicos, estaTudoReal } from '@/servicos';
 import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao';
+import PagamentoMercadoPago from './PagamentoMercadoPago';
+
+import {
+  PADRAO as PADRAO_DE_PAGAMENTO,
+  frasePix,
+  frasePorParcelas,
+} from '@/dominio/comoElaRecebe';
 
 /**
  * Fechar a compra.
@@ -107,6 +114,10 @@ const Checkout = () => {
 
   const [dados, setDados] = useState(VAZIO);
   const [erros, setErros] = useState({});
+  /* O pedido criado, esperando pagamento. Enquanto for nulo, a tela está
+     coletando dados; com ele, o formulário do Mercado Pago aparece. */
+  const [aPagar, setAPagar] = useState(null);
+  const [comoRecebe, setComoRecebe] = useState(PADRAO_DE_PAGAMENTO);
   const [cotacao, setCotacao] = useState(null);
   const [cotando, setCotando] = useState(false);
   const [erroFrete, setErroFrete] = useState(null);
@@ -128,7 +139,14 @@ const Checkout = () => {
      O frete é repassado inteiro aos Correios ou à Jadlog: dar desconto
      sobre ele significa a Vivian pagar do próprio bolso a diferença de
      cada pedido. */
-  const desconto = pagamento === 'pix' ? total * 0.05 : 0;
+  /* Quanto de desconto, e se há desconto, é decisão dela em "Como eu
+     recebo". Estava fixo em 5% aqui, e a loja dava um desconto que ela
+     não tinha escolhido: cinco por cento de cada pedido saindo do bolso
+     dela por causa de um número no código. */
+  const desconto =
+    pagamento === 'pix' && comoRecebe.aceita_pix
+      ? Math.round(total * (comoRecebe.desconto_pix / 100) * 100) / 100
+      : 0;
   const totalGeral = total + valorFrete - desconto;
 
   /* A cotação sai sozinha quando o CEP fica completo. Pedir para a pessoa
@@ -190,6 +208,23 @@ const Checkout = () => {
     limparErro();
   };
 
+  /* O que a loja promete sobre pagamento vem da tela dela, e não do
+     código. Até 25/08 estava escrito "5% de desconto" e "em até 12
+     vezes" à mão, enquanto a configuração dela dizia sem desconto e à
+     vista: a loja prometia o que ela não tinha autorizado. */
+  useEffect(() => {
+    let valendo = true;
+    /* Buscado na hora, e não importado no topo: o módulo traz junto o
+       cliente do Supabase, uns 60 KB, e no pacote do checkout ele levava a
+       tela a 333 KB, acima do limite de 320. Quem está pagando é quem
+       menos pode esperar carregamento. */
+    import('@/dados/comoElaRecebeNoBanco')
+      .then(({ comoElaRecebe }) => comoElaRecebe())
+      .then((atual) => { if (valendo) setComoRecebe(atual); })
+      .catch(() => {});
+    return () => { valendo = false; };
+  }, []);
+
   const pagar = async () => {
     const encontrados = validar({ dados, precisaEndereco, frete });
     setErros(encontrados);
@@ -229,7 +264,18 @@ const Checkout = () => {
       desconto,
     });
 
-    if (pedido) router.push(`/pedido-confirmado/?pedido=${pedido.id}`);
+    if (!pedido) return;
+
+    /* Sem pagamento ligado, a compra termina aqui como sempre terminou: a
+       loja de demonstração precisa continuar percorrível de ponta a
+       ponta. Com pagamento, o pedido fica aguardando e o formulário do
+       Mercado Pago aparece com o valor que o banco calculou. */
+    if (!process.env.NEXT_PUBLIC_MERCADOPAGO_CHAVE) {
+      router.push(`/pedido-confirmado/?pedido=${pedido.id}`);
+      return;
+    }
+
+    setAPagar(pedido);
   };
 
   if (!pronto) return null;
@@ -510,7 +556,7 @@ const Checkout = () => {
                 <span className="numero">{precisaEndereco ? 3 : 2}</span> Pagamento
               </h2>
 
-              <div className="pagamentos">
+              {!aPagar && <div className="pagamentos">
                 <label className={`pagamento ${pagamento === 'pix' ? 'escolhido' : ''}`}>
                   <input
                     type="radio"
@@ -521,7 +567,11 @@ const Checkout = () => {
                   <QrCode size={20} />
                   <span>
                     <strong>Pix</strong>
-                    <span>5% de desconto, aprova na hora</span>
+                    <span>
+                      {comoRecebe.desconto_pix > 0
+                        ? `${comoRecebe.desconto_pix}% de desconto, aprova na hora`
+                        : 'Aprova na hora'}
+                    </span>
                   </span>
                 </label>
 
@@ -534,42 +584,33 @@ const Checkout = () => {
                   />
                   <CreditCard size={20} />
                   <span>
-                    <strong>Cartão de crédito</strong>
-                    <span>em até 12 vezes</span>
+                    <strong>Cartão</strong>
+                    <span>
+                      {comoRecebe.parcelas_max > 1
+                        ? `Em até ${comoRecebe.parcelas_max}x`
+                        : 'Crédito ou débito'}
+                    </span>
                   </span>
                 </label>
-              </div>
+              </div>}
 
-              {pagamento === 'cartao' && (
-                <div className="campos mt-3">
-                  <Form.Group className="largo">
-                    <Form.Label htmlFor="campo-cartao">Número do cartão</Form.Label>
-                    <Form.Control
-                      id="campo-cartao"
-                      placeholder="0000 0000 0000 0000"
-                      inputMode="numeric"
-                      autoComplete="cc-number"
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label htmlFor="campo-validade">Validade</Form.Label>
-                    <Form.Control
-                      id="campo-validade"
-                      placeholder="MM/AA"
-                      inputMode="numeric"
-                      autoComplete="cc-exp"
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label htmlFor="campo-cvv">Código de segurança</Form.Label>
-                    <Form.Control
-                      id="campo-cvv"
-                      placeholder="000"
-                      inputMode="numeric"
-                      autoComplete="cc-csc"
-                    />
-                  </Form.Group>
-                </div>
+              {/* Aqui havia um campo nosso chamado "Número do cartão", com
+                  `autoComplete="cc-number"`. Nada era enviado, porque o
+                  pagamento era simulado, mas o navegador preenchia cartão
+                  de verdade ali e a cliente digitava o dela.
+
+                  Campo nosso põe o dado no nosso código, e a loja entra em
+                  PCI-DSS: auditoria, certificação e responsabilidade legal,
+                  no CPF dela. Com o Brick, o número vai do navegador direto
+                  para o Mercado Pago e volta como um token. */}
+              {aPagar && (
+                <PagamentoMercadoPago
+                  pedidoId={aPagar.id}
+                  total={aPagar.total}
+                  email={dados.email.trim()}
+                  comoRecebe={comoRecebe}
+                  aoAprovar={() => router.push(`/pedido-confirmado/?pedido=${aPagar.id}`)}
+                />
               )}
             </section>
           </Col>
@@ -619,20 +660,29 @@ const Checkout = () => {
                 </div>
               )}
 
-              <button
-                type="button"
-                className={`finalizar ${processando ? 'travado' : ''}`}
-                onClick={pagar}
-                disabled={processando}
-              >
-                {processando ? (
-                  <>
-                    <Loader2 size={16} className="girando" /> Processando o pagamento…
-                  </>
-                ) : (
-                  'Pagar'
-                )}
-              </button>
+              {/* Com o pedido criado, quem paga é o botão do Mercado Pago,
+                  lá em cima. Dois botões "Pagar" na mesma tela fazem a
+                  pessoa apertar o errado e achar que travou. */}
+              {aPagar ? (
+                <p className="finalizar-acima">
+                  O pagamento está logo acima, com o valor deste pedido.
+                </p>
+              ) : (
+                <button
+                  type="button"
+                  className={`finalizar ${processando ? 'travado' : ''}`}
+                  onClick={pagar}
+                  disabled={processando}
+                >
+                  {processando ? (
+                    <>
+                      <Loader2 size={16} className="girando" /> Preparando o pagamento…
+                    </>
+                  ) : (
+                    'Pagar'
+                  )}
+                </button>
+              )}
 
               <p className="prazo-aviso">
                 {ehDigital ? (

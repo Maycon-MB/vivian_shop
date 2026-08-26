@@ -15,7 +15,7 @@
 
 .catalogo-topo h1 {
   margin: 0 0 6px;
-  font-family: Fraunces, Georgia, serif;
+  font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(1.9rem, 5vw, 2.6rem);
   font-weight: 800;
   color: #12305B;

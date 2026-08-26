@@ -464,3 +464,90 @@
 .dica { align-items: flex-start; line-height: 1.5; }
 .dica svg { margin-top: 2px; }
 .dica strong { color: #12305B; }
+
+/* ── O pagamento do Mercado Pago ─────────────────────────────────────── */
+
+/* `pagamento-mp`, e não `pagamento`: esta última já era a classe de cada
+   opção de rádio, estilizada como linha horizontal. O contêiner herdava
+   aquele `display: flex` e espremia o texto de segurança numa coluna de
+   53px, ilegível. Só apareceu no print. */
+.pagamento-mp { margin-top: 18px; display: block; }
+
+.pagamento-carregando {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #55617A;
+  font-size: .92rem;
+}
+
+.pagamento-erro {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #FDECEC;
+  color: #8A2020;
+  font-size: .9rem;
+}
+
+.pagamento-seguranca {
+  margin: 14px 0 0;
+  color: #6B7688;
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+/* O Pix na própria tela. Mandar a cliente para outro lugar no momento de
+   pagar é onde a compra se perde. */
+.pix { text-align: center; margin-top: 18px; }
+
+.pix h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #12305B;
+}
+
+.pix > p { color: #55617A; font-size: .92rem; }
+
+.pix img {
+  width: 220px;
+  max-width: 100%;
+  margin: 14px auto;
+  display: block;
+  border: 1px solid #E4E8EF;
+  border-radius: 12px;
+  background: #FFFFFF;
+}
+
+.pix-copiar {
+  min-height: 48px;
+  padding: 13px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #12305B;
+  color: #FFFFFF;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pix-aviso {
+  margin: 16px auto 0;
+  max-width: 380px;
+  color: #6B7688;
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.pagamento-mp,
+.pix { width: 100%; }
+
+.finalizar-acima {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px dashed #DCE9F6;
+  border-radius: 12px;
+  color: #55617A;
+  font-size: .88rem;
+  text-align: center;
+}

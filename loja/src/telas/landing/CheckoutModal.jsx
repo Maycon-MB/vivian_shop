@@ -34,7 +34,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
                 <div className="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex p-4 mb-4">
                     <ShieldCheck size={64} />
                 </div>
-                <h2 className="fw-black mb-3" style={{ fontFamily: 'Fraunces' }}>Pagamento Aprovado!</h2>
+                <h2 className="fw-black mb-3" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Pagamento Aprovado!</h2>
                 <p className="text-muted mb-5">Obrigado pela sua compra. Vivian, agora você pode ver este pedido em tempo real no seu Dashboard!</p>
                 <Button variant="dark" className="w-100 py-3 rounded-pill fw-bold" onClick={onComplete}>
                     Concluir Simulação
@@ -47,7 +47,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton className="border-0 p-4 pb-0">
-          <Modal.Title className="fw-black fs-3" style={{ fontFamily: 'Fraunces' }}>Finalizar Compra</Modal.Title>
+          <Modal.Title className="fw-black fs-3" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Finalizar Compra</Modal.Title>
       </Modal.Header>
       <Modal.Body className="p-4 p-md-5">
           <Row className="g-5">
