@@ -562,6 +562,8 @@ body {
   gap: 12px;
 }
 
+/* O cartão passou a ter foto em 25/08. Antes eram 140 caixas de texto, e
+   quem procura "peppa" reconhece a Peppa, não a palavra. */
 .temas-lista a {
   display: flex;
   flex-direction: column;
@@ -569,10 +571,25 @@ body {
   background: #FFFFFF;
   border: 1px solid #EDE7DD;
   border-radius: 14px;
-  padding: 15px 17px;
+  padding: 0 0 14px;
+  overflow: hidden;
   text-decoration: none;
   transition: border-color .15s ease, transform .15s ease;
 }
+
+.temas-lista img {
+  width: 100%;
+  /* Quadrado: as fotos dela vêm em proporções diferentes, e sem isto os
+     cartões ficam de alturas distintas e a grade parece quebrada. */
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 11px;
+  background: #F5F1EA;
+}
+
+.temas-lista strong,
+.temas-lista span { padding: 0 15px; }
 
 .temas-lista a:hover,
 .temas-lista a:focus-visible {
@@ -591,3 +608,21 @@ body {
   color: #5F6F80;
   font-size: 13px;
 }
+
+/* Doze de cara, o resto atrás de um toque: uma parede de 140 links não é
+   escolha, é desistência. */
+.temas-ver-todos {
+  display: block;
+  margin: 18px auto 0;
+  min-height: 44px;
+  padding: 11px 26px;
+  border: 1px solid #DCE9F6;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #12305B;
+  font-weight: 700;
+  font-size: .92rem;
+  cursor: pointer;
+}
+
+.temas-ver-todos:hover { border-color: #1F736F; }
