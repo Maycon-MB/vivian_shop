@@ -442,6 +442,13 @@ const conferir = async (nome, fn) => {
   await conferir('a compra cria um pedido e ele aparece no painel', async () => {
     await pagina.fill('#campo-rua', 'Avenida Paulista')
     await pagina.fill('#campo-numero', '1000')
+    /* Bairro e estado entraram na tela em 25/08. Faltavam, e ficavam
+       vazios sem ninguém perceber: o pedido era guardado no navegador, que
+       aceita qualquer coisa. Com o pedido no banco, entrega física sem
+       estado é recusada. */
+    await pagina.fill('#campo-bairro', 'Bela Vista')
+    await pagina.fill('#campo-cidade', 'São Paulo')
+    await pagina.selectOption('#campo-uf', 'SP')
     await pagina.getByRole('button', { name: /^Pagar$/ }).click()
 
     await pagina.waitForURL(/pedido-confirmado/, { timeout: 20000 })

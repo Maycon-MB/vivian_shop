@@ -179,6 +179,12 @@ describe('checkout de produto físico', () => {
     await screen.findByText(/Correios PAC/, {}, { timeout: 5000 })
     await userEvent.type(screen.getByLabelText('Rua'), 'Avenida Paulista')
     await userEvent.type(screen.getByLabelText('Número'), '1000')
+    /* Bairro, cidade e estado entraram na tela em 25/08. Faltavam, e
+       ficavam vazios sem ninguém perceber: o pedido era guardado no
+       navegador, que aceita qualquer coisa. Os Correios não. */
+    await userEvent.type(screen.getByLabelText('Bairro'), 'Bela Vista')
+    await userEvent.type(screen.getByLabelText('Cidade'), 'São Paulo')
+    await userEvent.selectOptions(screen.getByLabelText('Estado'), 'SP')
 
     await userEvent.click(screen.getByRole('button', { name: /^Pagar$/ }))
 
@@ -203,6 +209,12 @@ describe('checkout de produto físico', () => {
     await screen.findByText(/Correios PAC/, {}, { timeout: 5000 })
     await userEvent.type(screen.getByLabelText('Rua'), 'Avenida Paulista')
     await userEvent.type(screen.getByLabelText('Número'), '1000')
+    /* Bairro, cidade e estado entraram na tela em 25/08. Faltavam, e
+       ficavam vazios sem ninguém perceber: o pedido era guardado no
+       navegador, que aceita qualquer coisa. Os Correios não. */
+    await userEvent.type(screen.getByLabelText('Bairro'), 'Bela Vista')
+    await userEvent.type(screen.getByLabelText('Cidade'), 'São Paulo')
+    await userEvent.selectOptions(screen.getByLabelText('Estado'), 'SP')
 
     await userEvent.click(screen.getByRole('button', { name: /^Pagar$/ }))
 
