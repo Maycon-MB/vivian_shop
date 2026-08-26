@@ -1,3 +1,4 @@
+import { paraAVitrine } from '@/dominio/vitrineDeTemas'
 import { PERSONALIZADA, PEDAGOGICA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo'
 import { BASE } from '../base'
 import { escolherCatalogo } from '../dominio/catalogoDoBanco'
@@ -457,5 +458,13 @@ export const temasComProdutos = () =>
   TEMAS.map((tema) => ({ ...tema, quantos: produtosDoTema(tema.slug).length })).filter(
     (tema) => tema.quantos > 0,
   )
+
+/**
+ * Os temas prontos para a vitrine: com foto, e os maiores primeiro.
+ *
+ * As regras estão em `vitrineDeTemas.ts`, sem tocar no catálogo. Aqui é só
+ * a ligação entre os dois.
+ */
+export const temasDaVitrine = () => paraAVitrine(temasComProdutos(), PUBLICADOS)
 
 export { PERSONALIZADA, PEDAGOGICA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO, BASE }

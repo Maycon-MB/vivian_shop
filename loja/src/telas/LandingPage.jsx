@@ -16,7 +16,8 @@ import {
   totalCarrinho,
 } from '../catalogo';
 import { Instagram, Facebook } from './icones-marca';
-import { PUBLICADOS, temasComProdutos } from './catalogo';
+import { PUBLICADOS, temasDaVitrine } from './catalogo';
+import { QUANTOS_DE_CARA, quantosProdutos } from '@/dominio/vitrineDeTemas';
 import RodapeConfianca from './RodapeConfianca';
 import Avaliacoes from './landing/Avaliacoes';
 import { paraAVitrine } from '@/dominio/avaliacoes';
@@ -47,11 +48,14 @@ const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA].filter(
 /* A mais recente com uma frase inteira, e não só a mais recente: a de
    26/02 diz "Adorai", que é sincera e curta demais para carregar o
    primeiro cartão que a pessoa lê. */
+const TEMAS_DA_VITRINE = temasDaVitrine();
+
 const DEPOIMENTO = paraAVitrine(avaliacoesCruas).find((a) => a.texto.length > 40) ?? null;
 
 const LandingPage = () => {
   const [showCart, setShowCart] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Todas');
+  const [mostrarTodosOsTemas, setMostrarTodosOsTemas] = useState(false);
 
   /* O carrinho vem do contexto: precisa sobreviver à ida e volta da página
      de cada produto, e some se ficar dentro desta tela. */
@@ -242,16 +246,35 @@ const LandingPage = () => {
               <p>Tudo do mesmo tema junto, caneca, revista, álbum e lembrancinha.</p>
             </div>
 
+            {/* Com foto, e os maiores primeiro. O que estava aqui eram 140
+                caixas de texto em ordem alfabética quebrada, antes de a
+                pessoa ver a primeira foto de produto: 88 dos 140 temas têm
+                um produto só, e "Arca de Noé 1" vinha na frente da Peppa
+                Pig, que é o campeão de vendas dela. */}
             <ul className="temas-lista">
-              {temasComProdutos().map((tema) => (
+              {(mostrarTodosOsTemas ? TEMAS_DA_VITRINE : TEMAS_DA_VITRINE.slice(0, QUANTOS_DE_CARA)).map((tema) => (
                 <li key={tema.slug}>
                   <Link href={`/tema/${tema.slug}/`} prefetch={false}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={tema.foto} alt="" loading="lazy" />
                     <strong>{tema.nome}</strong>
-                    <span>{tema.quantos === 1 ? '1 produto' : `${tema.quantos} produtos`}</span>
+                    <span>{quantosProdutos(tema.quantos)}</span>
                   </Link>
                 </li>
               ))}
             </ul>
+
+            {TEMAS_DA_VITRINE.length > QUANTOS_DE_CARA && (
+              <button
+                type="button"
+                className="temas-ver-todos"
+                onClick={() => setMostrarTodosOsTemas((antes) => !antes)}
+              >
+                {mostrarTodosOsTemas
+                  ? 'Mostrar menos'
+                  : `Ver os ${TEMAS_DA_VITRINE.length} temas`}
+              </button>
+            )}
           </div>
 
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
