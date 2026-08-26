@@ -20,12 +20,18 @@
   padding: 0 14px;
   border: 1px solid #DCE9F6;
   border-radius: 999px;
-  background: #1F736F;
+  /* Azul da marca, e não o verde-água.
+
+     A bolha verde e redonda no canto inferior direito lê como WhatsApp
+     antes de ler como chat da loja, e a conversa aqui existe justamente
+     para a cliente não sair para o WhatsApp. O azul é o mesmo dos botões
+     principais: parece parte da loja. */
+  background: #12305B;
   color: #FBFAF7;
   font-weight: 600;
   font-size: .95rem;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(18, 48, 91, .18);
+  box-shadow: 0 6px 20px rgba(18, 48, 91, .22);
 }
 
 .conversa-bolha:hover,
@@ -137,8 +143,8 @@
 .conversa-botoes button:focus-visible { outline: 3px solid #12305B; outline-offset: 1px; }
 
 .conversa-humano {
-  background: #1F736F !important;
-  border-color: #1F736F !important;
+  background: #12305B !important;
+  border-color: #12305B !important;
   color: #FBFAF7 !important;
   text-align: center !important;
 }

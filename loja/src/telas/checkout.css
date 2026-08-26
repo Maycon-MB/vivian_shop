@@ -551,3 +551,35 @@
   font-size: .88rem;
   text-align: center;
 }
+
+/* Mexer no pedido dentro do checkout.
+
+   Dava para ver, e não para mexer: quem colocasse o dobro sem querer, ou
+   desistisse de um item, tinha que voltar à loja e procurar o produto de
+   novo. Some quando o pagamento abre, porque aí o valor já foi para o
+   Mercado Pago. */
+.resumo-mexer {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.resumo-mexer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 32px é o menor alvo que o dedo dela acerta sem errar o vizinho, e
+     errar aqui é tirar o produto errado do pedido. */
+  width: 32px;
+  height: 32px;
+  border: 1px solid #E4E8EF;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #12305B;
+  cursor: pointer;
+}
+
+.resumo-mexer button:hover:not(:disabled) { border-color: #1F736F; }
+.resumo-mexer button:disabled { opacity: .4; cursor: default; }
+.resumo-tirar { color: #8A2020 !important; }
+.resumo-tirar:hover { border-color: #8A2020 !important; }

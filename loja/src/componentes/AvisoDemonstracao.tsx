@@ -21,11 +21,22 @@ const TELAS_QUE_JA_AVISAM = ['/checkout', '/pedido-confirmado']
  * O aviso some sozinho quando os serviços de verdade forem ligados: ele
  * lê a mesma configuração que escolhe entre simulado e real, então não há
  * como esquecer de tirá-lo do ar.
+ *
+ * Em 26/08 entrou a segunda condição, e ela é a que vale hoje: **a chave
+ * do Mercado Pago começa com `TEST-`.** Com credencial de teste o cartão
+ * não é cobrado de verdade, e a loja pareceria estar vendendo sem estar.
+ * Trocando pela chave de produção, o aviso desaparece sozinho, sem
+ * ninguém precisar lembrar de vir aqui.
  */
+
+/** Credencial de teste do Mercado Pago não cobra ninguém. */
+const PAGAMENTO_DE_MENTIRA = String(
+  process.env.NEXT_PUBLIC_MERCADOPAGO_CHAVE ?? '',
+).startsWith('TEST-')
 export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout' }) {
   const caminho = usePathname()
 
-  if (estaTudoReal) return null
+  if (estaTudoReal && !PAGAMENTO_DE_MENTIRA) return null
 
   const forte = onde === 'checkout'
 

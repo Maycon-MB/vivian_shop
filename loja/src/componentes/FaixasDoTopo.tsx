@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 
 import { AvisoDemonstracao } from './AvisoDemonstracao'
 import { ChamadoDasPerguntas } from './ChamadoDasPerguntas'
-import { Navegacao } from './Navegacao'
 
 /**
  * As duas faixas que ficam acima de tudo: o aviso de que a loja é uma
@@ -62,7 +61,6 @@ export function FaixasDoTopo() {
     <div className="faixas-topo" ref={caixa}>
       <AvisoDemonstracao />
       <ChamadoDasPerguntas />
-      <Navegacao />
     </div>
   )
 }
