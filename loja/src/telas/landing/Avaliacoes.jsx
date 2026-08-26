@@ -2,8 +2,11 @@
 
 import React from 'react';
 
+import { useEffect, useState } from 'react';
+
 import { paraAVitrine } from '@/dominio/avaliacoes';
 import cruas from '@/dados/avaliacoes.json';
+import { avaliacoesPublicadas } from '@/dados/avaliacoesNoBanco';
 
 /**
  * O que as clientes dela escreveram.
@@ -34,26 +37,56 @@ import cruas from '@/dados/avaliacoes.json';
  * que ela cumpre o que promete.
  */
 
-const AVALIACOES = paraAVitrine(cruas);
+/* O arquivo é o que vai no build, para a loja abrir com prova social já
+   na primeira pintura. O banco entra depois e substitui: é lá que estão
+   as avaliações que as clientes escreveram desde 26/08.
+
+   Sem o arquivo, quem chega veria a seção vazia por um instante, e prova
+   social que pisca não convence ninguém. */
+const DO_BUILD = paraAVitrine(cruas);
 
 const quando = (data) =>
   data.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
 const Avaliacoes = () => {
-  if (!AVALIACOES.length) return null;
+  const [avaliacoes, setAvaliacoes] = useState(DO_BUILD);
+
+  useEffect(() => {
+    let valendo = true;
+
+    avaliacoesPublicadas()
+      .then((doBanco) => {
+        if (!valendo || !doBanco.length) return;
+        setAvaliacoes(
+          doBanco.map((a) => ({
+            nome: a.nome,
+            produto: a.produto?.nome ?? '',
+            texto: a.texto,
+            positiva: a.nota >= 4,
+            quando: new Date(a.quando),
+            ...(a.resposta ? { resposta: a.resposta } : {}),
+          })),
+        );
+      })
+      .catch(() => { /* Fica o que veio no build. */ });
+
+    return () => { valendo = false; };
+  }, []);
+
+  if (!avaliacoes.length) return null;
 
   return (
     <section className="avaliacoes" aria-labelledby="avaliacoes-titulo">
       <div className="avaliacoes-topo">
         <h2 id="avaliacoes-titulo">O que as clientes dizem</h2>
         <p>
-          {AVALIACOES.length} avaliações de quem já comprou, do primeiro pedido em março de
+          {avaliacoes.length} avaliações de quem já comprou, do primeiro pedido em março de
           2025 até hoje.
         </p>
       </div>
 
       <ul className="avaliacoes-lista">
-        {AVALIACOES.map((avaliacao) => (
+        {avaliacoes.map((avaliacao) => (
           <li key={`${avaliacao.nome}-${avaliacao.quando.getTime()}`} className="avaliacao">
             <blockquote>{avaliacao.texto}</blockquote>
 

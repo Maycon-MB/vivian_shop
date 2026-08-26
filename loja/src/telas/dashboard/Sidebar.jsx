@@ -19,6 +19,7 @@ import {
   Package,
   MessageSquare,
   FileBarChart,
+  Star,
   PanelLeftClose,
   PanelLeftOpen,
 } from 'lucide-react';
@@ -45,6 +46,7 @@ const ITENS = [
   { id: 'marketing', icone: <Mail size={18} />, rotulo: 'Marketing' },
   /* "Como eu recebo", e não "Pagamentos": o rótulo é a pergunta dela, e a
      resposta muda o quanto entra no bolso dela. */
+  { id: 'avaliacoes', icone: <Star size={18} />, rotulo: 'Avaliações' },
   { id: 'recebo', icone: <Wallet size={18} />, rotulo: 'Como eu recebo' },
   { id: 'config', icone: <Settings size={18} />, rotulo: 'Configurações' },
 ];

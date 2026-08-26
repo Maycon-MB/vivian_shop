@@ -1,0 +1,128 @@
+/**
+ * Onde a cliente conta o que achou.
+ *
+ * O link chega por e-mail alguns dias depois da entrega. Ela abre no
+ * celular, provavelmente parada numa fila, e o que decide se a avaliação
+ * existe é quantos toques ela precisa dar.
+ */
+
+.avaliar {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 44px 20px 88px;
+}
+
+.avaliar-caixa {
+  padding: 28px 24px;
+  border: 1px solid #E4E8EF;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+.avaliar h1 {
+  margin: 0 0 6px;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.6rem, 4.5vw, 2rem);
+  font-weight: 800;
+  color: #12305B;
+}
+
+.avaliar-sub { margin: 0 0 22px; color: #55617A; line-height: 1.5; }
+
+.avaliar-caixa form { display: flex; flex-direction: column; gap: 20px; }
+
+.avaliar-produtos,
+.avaliar-notas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.avaliar-produtos legend,
+.avaliar-notas legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-size: .88rem;
+  font-weight: 700;
+  color: #12305B;
+}
+
+.avaliar-produtos label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.avaliar-produtos label.escolhido { border-color: #1F736F; background: #F2F9F8; }
+.avaliar-produtos input { width: 18px; height: 18px; flex-shrink: 0; }
+
+.avaliar-produtos img,
+.avaliar-unico img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #F5F1EA;
+  flex-shrink: 0;
+}
+
+.avaliar-produtos span { display: flex; flex-direction: column; gap: 2px; color: #12305B; }
+.avaliar-produtos small { color: #8A93A5; font-size: .78rem; }
+
+.avaliar-unico {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #E4E8EF;
+  border-radius: 14px;
+  color: #12305B;
+}
+
+/* As estrelas são o único jeito de dar nota, e ela vai tocar com o dedo:
+   44px é o menor alvo que não erra a estrela vizinha. */
+.avaliar-estrelas { display: flex; gap: 4px; }
+
+.avaliar-estrelas button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: #D8DEE7;
+  cursor: pointer;
+}
+
+.avaliar-estrelas button.cheia { color: #F2B705; }
+.avaliar-estrelas button.cheia svg { fill: currentColor; }
+
+.avaliar-texto { display: flex; flex-direction: column; gap: 6px; }
+
+.avaliar-texto span { font-size: .88rem; font-weight: 700; color: #12305B; }
+
+.avaliar-texto textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #D8DEE7;
+  border-radius: 12px;
+  font: inherit;
+  /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
+  font-size: 16px;
+  color: #12305B;
+  resize: vertical;
+}
+
+.avaliar-texto textarea:focus-visible { outline: 2px solid #1F736F; outline-offset: 1px; }
+
+.avaliar-pronto { text-align: center; }
+.avaliar-pronto svg { color: #1F736F; margin-bottom: 10px; }
+.avaliar-pronto p { color: #55617A; line-height: 1.55; margin-bottom: 22px; }
