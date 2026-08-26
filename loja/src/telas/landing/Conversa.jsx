@@ -5,7 +5,9 @@ import { X, Send } from 'lucide-react';
 
 import {
   ABERTURA,
+  NAO_SEI,
   acharOpcao,
+  acharPelaEscrita,
   PRIMEIRAS,
   problemasDoRecado,
   responder,
@@ -55,6 +57,8 @@ const Conversa = ({ aoFechar = () => {} }) => {
   const [avisos, setAvisos] = useState([]);
   const [erro, setErro] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const [escrito, setEscrito] = useState('');
+  const [digitando, setDigitando] = useState(false);
 
   const fim = useRef(null);
 
@@ -82,9 +86,52 @@ const Conversa = ({ aoFechar = () => {} }) => {
     return () => { valendo = false; };
   }, []);
 
+  /* A loja "digita" antes de responder.
+     Resposta que aparece no mesmo instante em que a pessoa toca no botão
+     lê como máquina; meio segundo de espera lê como alguém do outro lado.
+     É pequeno e é o que mais muda a sensação. */
+  const responderDevagar = (aplicar, seguintes) => {
+    setDigitando(true);
+
+    window.setTimeout(() => {
+      setFalas(aplicar);
+      if (seguintes) setBotoes(seguintes);
+      setDigitando(false);
+    }, 550);
+  };
+
   const tocar = (id) => {
-    setFalas((atuais) => responder(atuais, id));
-    setBotoes(seguintesDe(id));
+    responderDevagar((atuais) => responder(atuais, id), seguintesDe(id));
+  };
+
+  /* Ela escreve, e a loja acha a resposta pronta que combina.
+     Continua sem gerar texto: o que muda é como se chega até a resposta
+     escrita à mão. Quando não acha, diz que não sabe em vez de chutar. */
+  const perguntar = (evento) => {
+    evento.preventDefault();
+
+    const texto = escrito.trim();
+    if (!texto || digitando) return;
+
+    const achada = acharPelaEscrita(texto);
+    setEscrito('');
+
+    responderDevagar(
+      (atuais) => [
+        ...atuais,
+        { quem: 'cliente', texto },
+        achada ? { quem: 'loja', texto: achada.resposta } : NAO_SEI(texto),
+      ],
+      achada ? seguintesDe(achada.id) : PRIMEIRAS,
+    );
+
+    /* Sem resposta pronta, o caminho é a loja. Abrir o formulário aqui
+       com o que ela escreveu evita fazer a pessoa digitar duas vezes a
+       mesma dúvida, que é onde ela desiste. */
+    if (!achada) {
+      setTexto(texto);
+      window.setTimeout(() => setPedindoHumano(true), 900);
+    }
   };
 
   const mandarRecado = async (evento) => {
@@ -143,6 +190,13 @@ const Conversa = ({ aoFechar = () => {} }) => {
             {fala.texto}
           </p>
         ))}
+        {digitando && (
+          <p className="conversa-fala loja digitando" aria-live="polite">
+            <span /><span /><span />
+            <span className="visualmente-oculto">Escrevendo a resposta</span>
+          </p>
+        )}
+
         <span ref={fim} />
       </div>
 
@@ -191,6 +245,26 @@ const Conversa = ({ aoFechar = () => {} }) => {
         </form>
       ) : (
         <div className="conversa-botoes">
+          {/* O campo de escrever vem antes dos botões: é o que a pessoa
+              faria naturalmente, e os botões viram atalho para quem
+              prefere tocar. */}
+          <form className="conversa-escrever" onSubmit={perguntar}>
+            <label className="visualmente-oculto" htmlFor="conversa-escrito">
+              Escreva a sua pergunta
+            </label>
+            <input
+              id="conversa-escrito"
+              type="text"
+              value={escrito}
+              onChange={(e) => setEscrito(e.target.value)}
+              placeholder="Escreva a sua pergunta"
+              disabled={digitando}
+            />
+            <button type="submit" aria-label="Perguntar" disabled={digitando || !escrito.trim()}>
+              <Send size={16} aria-hidden="true" />
+            </button>
+          </form>
+
           {botoes.map((id) => (
             <button key={id} type="button" onClick={() => tocar(id)}>
               {acharOpcao(id)?.pergunta}

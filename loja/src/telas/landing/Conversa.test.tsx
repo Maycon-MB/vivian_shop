@@ -174,3 +174,67 @@ describe('quando ela volta depois', () => {
     expect(await screen.findByText(/5 dias úteis de produção/i)).toBeInTheDocument()
   })
 })
+
+describe('quando a cliente escreve, em vez de tocar', () => {
+  const escrever = async (usuario: ReturnType<typeof userEvent.setup>, texto: string) => {
+    await usuario.type(screen.getByPlaceholderText(/escreva a sua pergunta/i), texto)
+    await usuario.click(screen.getByRole('button', { name: /^perguntar$/i }))
+  }
+
+  it('acha a resposta pronta que combina', async () => {
+    /* É o que faz a conversa parecer atendimento em vez de menu. Continua
+       sem gerar texto: muda como se chega até a resposta escrita à mão. */
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    await escrever(usuario, 'quanto tempo demora para chegar?')
+
+    expect(await screen.findByText(/5 dias úteis de produção/i)).toBeInTheDocument()
+  })
+
+  it('mostra o que ela escreveu, e não só a resposta', async () => {
+    // Sem isso a conversa não parece conversa: some o que ela disse.
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    await escrever(usuario, 'vcs aceitam pix?')
+
+    expect(await screen.findByText('vcs aceitam pix?')).toBeInTheDocument()
+  })
+
+  it('diz que não sabe, em vez de chutar', async () => {
+    /* Responder a coisa errada com confiança faz a cliente ir embora
+       achando que perguntou e foi respondida. */
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    await escrever(usuario, 'vocês fazem bolo de casamento?')
+
+    expect(await screen.findByText(/não sei responder na hora/i)).toBeInTheDocument()
+  })
+
+  it('abre a loja já com o que ela escreveu', async () => {
+    /* Sem isto, ela digita a dúvida, ouve "não sei", e tem que digitar
+       tudo de novo no formulário. É onde a pessoa desiste. */
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    await escrever(usuario, 'vocês fazem bolo de casamento?')
+
+    const campo = await screen.findByLabelText(/^sua dúvida$/i, {}, { timeout: 3000 })
+    expect(campo).toHaveValue('vocês fazem bolo de casamento?')
+  })
+
+  it('abre com três perguntas, e não com a lista inteira', async () => {
+    /* Abrir com tudo o que a loja sabe responder é despejo de menu: quem
+       chega com uma dúvida na cabeça lê as outras antes de achar a dela. */
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    const prontas = screen
+      .getAllByRole('button')
+      .filter((b) => /\?$/.test(b.textContent ?? ''))
+
+    expect(prontas.length).toBeLessThanOrEqual(3)
+  })
+})
