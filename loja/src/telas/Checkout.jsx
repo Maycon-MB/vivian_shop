@@ -15,9 +15,12 @@ import {
   Package,
   AlertCircle,
   Loader2,
+  Minus,
+  Plus,
+  Trash2,
 } from 'lucide-react';
 import { useCarrinho } from './CarrinhoContexto';
-import { PRAZO_PRODUCAO } from '../catalogo';
+import { PRAZO_PRODUCAO, quantidadeMinima } from '../catalogo';
 import { useCompra } from './useCompra';
 import { situacaoDosServicos, estaTudoReal } from '@/servicos';
 import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao';
@@ -109,7 +112,7 @@ const VAZIO = {
 
 const Checkout = () => {
   const router = useRouter();
-  const { itens, total, ehDigital, pronto } = useCarrinho();
+  const { itens, total, ehDigital, pronto, alterarQuantidade, remover } = useCarrinho();
   const { finalizar, cotarFrete, processando, erro, limparErro } = useCompra();
 
   const [dados, setDados] = useState(VAZIO);
@@ -620,11 +623,53 @@ const Checkout = () => {
               <h2>Seu pedido</h2>
 
               <ul className="resumo-itens">
+                {/* Dava para ver, e não para mexer. Quem colocasse o dobro
+                    sem querer, ou desistisse de um item, tinha que voltar
+                    à loja e procurar o produto de novo. Achado numa
+                    auditoria em 26/08.
+
+                    Com o pedido já criado o resumo trava: mudar item
+                    depois de o pagamento abrir daria um valor na tela e
+                    outro na cobrança. */}
                 {itens.map((item) => (
                   <li key={item.id}>
                     <span>
                       <strong>{item.quantidade}x</strong> {item.name}
                     </span>
+
+                    {!aPagar && (
+                      <span className="resumo-mexer">
+                        <button
+                          type="button"
+                          onClick={() => alterarQuantidade(item.id, item.quantidade - 1)}
+                          /* Trava no mínimo da linha, e não em 1: abaixo
+                             dele o carrinho tira o item da lista, e ela
+                             veria o produto sumir sem entender por quê. */
+                          disabled={item.quantidade <= quantidadeMinima(item.category)}
+                          aria-label={`Tirar uma unidade de ${item.name}`}
+                        >
+                          <Minus size={14} aria-hidden="true" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => alterarQuantidade(item.id, item.quantidade + 1)}
+                          aria-label={`Somar uma unidade de ${item.name}`}
+                        >
+                          <Plus size={14} aria-hidden="true" />
+                        </button>
+
+                        <button
+                          type="button"
+                          className="resumo-tirar"
+                          onClick={() => remover(item.id)}
+                          aria-label={`Tirar ${item.name} do pedido`}
+                        >
+                          <Trash2 size={14} aria-hidden="true" />
+                        </button>
+                      </span>
+                    )}
+
                     <span className="valor">{moeda(item.price * item.quantidade)}</span>
                   </li>
                 ))}

@@ -331,3 +331,39 @@ describe('pagamento no cartão', () => {
 })
 
 vi.setConfig({ testTimeout: 20000 })
+
+describe('mexer no pedido dentro do checkout', () => {
+  /* Achado numa auditoria em 26/08: dava para ver, e não para mexer. Quem
+     colocasse o dobro sem querer, ou desistisse de um item, tinha que
+     voltar à loja e procurar o produto de novo. */
+
+  it('soma uma unidade sem sair da tela', async () => {
+    comCarrinho([CADERNO])
+    abrir()
+
+    await userEvent.click(await screen.findByLabelText(/somar uma unidade/i))
+
+    expect(await resumo().findByText(/11x/)).toBeInTheDocument()
+  })
+
+  it('tira o item do pedido', async () => {
+    comCarrinho([CADERNO])
+    abrir()
+
+    await userEvent.click(await screen.findByLabelText(/tirar caderno personalizado do pedido/i))
+
+    await waitFor(() => {
+      expect(screen.queryByText('Caderno personalizado')).not.toBeInTheDocument()
+    })
+  })
+
+  it('trava o menos no mínimo, em vez de sumir com o produto', async () => {
+    /* Abaixo do mínimo o carrinho tira o item da lista, e ela veria o
+       produto sumir sem entender por quê. O mínimo da linha
+       personalizada é 10, que é quanto o carrinho já tem. */
+    comCarrinho([CADERNO])
+    abrir()
+
+    expect(await screen.findByLabelText(/tirar uma unidade/i)).toBeDisabled()
+  })
+})

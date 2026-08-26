@@ -100,6 +100,23 @@ const LandingPage = () => {
           >
             Feito para você!<span style={{ color: "#1F736F" }}> Personalizados</span>
           </Navbar.Brand>
+          {/* O carrinho ficava dentro do menu recolhido, e no celular
+              sumia atrás do hambúrguer: quem põe produto no carrinho não
+              acha onde fechar a compra. Achado numa auditoria em 26/08.
+
+              Aqui fora ele fica sempre visível no celular, ao lado do
+              botão do menu. No computador some, porque lá o de dentro do
+              menu aparece na barra. */}
+          <button
+            type="button"
+            className="carrinho-no-celular d-lg-none"
+            onClick={() => setShowCart(true)}
+            aria-label={cartCount > 0 ? `Ver o carrinho, ${cartCount} itens` : 'Ver o carrinho'}
+          >
+            <ShoppingCart size={22} />
+            {cart.length > 0 && <span className="carrinho-conta">{cartCount}</span>}
+          </button>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto gap-lg-4 text-uppercase fw-bold py-4 py-lg-0" style={{ fontSize: '11px', letterSpacing: '2px' }}>
@@ -124,7 +141,7 @@ const LandingPage = () => {
               <Link href="/minha-conta/" prefetch={false} aria-label="Meus pedidos" className="text-muted">
                 <User size={20} />
               </Link>
-              <div className="position-relative cursor-pointer" onClick={() => setShowCart(true)}>
+              <div className="position-relative cursor-pointer d-none d-lg-block" onClick={() => setShowCart(true)}>
                 <ShoppingCart size={22} className="text-dark" />
                 <AnimatePresence>
                   {cart.length > 0 && (

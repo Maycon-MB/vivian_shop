@@ -480,53 +480,48 @@ const conferir = async (nome, fn) => {
     if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
   })
 
-  await conferir('dá para clicar em cada item do menu, no celular', async () => {
-    /* Este teste existe por um defeito que durou dois dias: o cabeçalho da
-       loja passava por cima da barra de navegação no celular, e nenhum dos
-       sete itens funcionava. Todos apareciam na tela, o item ativo ficava
-       destacado, e o toque não fazia nada.
+  await conferir('no celular dá para achar o carrinho e abrir o menu', async () => {
+    /* Este teste existe por dois defeitos, e os dois eram de toque.
 
-       Nenhum teste pegou porque todos navegavam por endereço direto — o
-       jeito que ninguém usa. Este clica, que é o que a Vivian faz. */
+       O primeiro durou dois dias: o cabeçalho passava por cima da barra
+       de navegação no celular, e nenhum item funcionava. Apareciam todos
+       na tela, o ativo ficava destacado, e o toque não fazia nada.
+
+       O segundo veio de uma auditoria em 26/08: o carrinho ficava dentro
+       do menu recolhido, e quem punha produto não achava onde fechar a
+       compra. A barra de navegação saiu no mesmo dia, porque "A loja" e
+       "Como funciona" flutuando sobre o conteúdo eram cara de protótipo.
+
+       Nenhum teste pegou os dois porque todos navegavam por endereço
+       direto, que é o jeito que ninguém usa. Este toca, que é o que a
+       cliente faz. */
     const celular = await navegador.newContext({ viewport: { width: 375, height: 812 } })
     const tela = await celular.newPage()
 
     try {
       await tela.goto(`${BASE}/`, { waitUntil: 'networkidle' })
-      await tela.locator('.switcher-btn').first().waitFor({ timeout: 15000 })
 
-      const quantos = await tela.locator('.switcher-btn').count()
-      if (quantos === 0) throw new Error('não achei a barra de navegação')
+      // O carrinho tem que estar visível sem abrir menu nenhum.
+      const carrinho = tela.locator('.carrinho-no-celular')
+      await carrinho.waitFor({ timeout: 15000 })
 
-      for (let i = 0; i < quantos; i++) {
-        const item = tela.locator('.switcher-btn').nth(i)
-        const nome = (await item.innerText()).trim()
-        const destino = await item.getAttribute('href')
+      await carrinho.click()
+      await tela.waitForTimeout(700)
 
-        // `elementFromPoint` diz quem está por cima naquele ponto. Se não
-        // for o próprio item, alguma coisa o está cobrindo — e o toque da
-        // Vivian vai para essa outra coisa, não para o link.
-        const coberto = await item.evaluate((el) => {
-          const r = el.getBoundingClientRect()
-          const emCima = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
-          if (!emCima) return 'fora da tela'
-          return el === emCima || el.contains(emCima) ? null : (emCima.className || emCima.tagName)
-        })
-
-        if (coberto) {
-          throw new Error(`o item "${nome}" está ${coberto === 'fora da tela' ? 'fora da tela' : 'coberto por ' + coberto}`)
-        }
-
-        await item.click()
-        await tela.waitForTimeout(900)
-
-        if (destino && !tela.url().includes(destino.replace(/\/$/, ''))) {
-          throw new Error(`clicar em "${nome}" deveria levar a ${destino}, e foi para ${tela.url()}`)
-        }
-
-        await tela.goto(`${BASE}/`, { waitUntil: 'networkidle' })
-        await tela.locator('.switcher-btn').first().waitFor({ timeout: 15000 })
+      const comCarrinhoAberto = await tela.locator('body').textContent()
+      if (!/carrinho/i.test(comCarrinhoAberto)) {
+        throw new Error('tocar no carrinho não abriu o carrinho')
       }
+
+      await tela.keyboard.press('Escape')
+      await tela.waitForTimeout(400)
+
+      // E o menu tem que abrir, com o caminho para o catálogo dentro.
+      await tela.locator('.navbar-toggler').click()
+      await tela.waitForTimeout(600)
+
+      const menu = tela.locator('a[href*="/produtos"]').first()
+      if ((await menu.count()) === 0) throw new Error('o menu não leva ao catálogo')
     } finally {
       await celular.close()
     }

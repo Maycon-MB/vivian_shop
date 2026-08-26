@@ -691,3 +691,51 @@ body {
     padding-bottom: 96px;
   }
 }
+
+/* O carrinho no celular, fora do menu recolhido.
+
+   Ficava dentro do `Navbar.Collapse` e sumia atrás do hambúrguer: quem
+   punha produto no carrinho não achava onde fechar a compra. */
+.carrinho-no-celular {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  margin-right: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #12305B;
+  cursor: pointer;
+}
+
+.carrinho-conta {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #1F736F;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* A marca, o carrinho e o botão do menu somavam 357px numa tela de 358, e
+   o menu caía para a linha de baixo. Um pixel. */
+@media (max-width: 575.98px) {
+  /* nowrap força os três na mesma linha; min-width: 0 deixa a marca
+     encolher em vez de empurrar o menu para baixo. */
+  .navbar > .container { flex-wrap: nowrap; }
+  .marca-loja { font-size: 1rem; min-width: 0; }
+  .carrinho-no-celular { margin-right: 0; width: 40px; flex-shrink: 0; }
+  .navbar-toggler { flex-shrink: 0; }
+}
