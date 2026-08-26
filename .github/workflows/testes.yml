@@ -89,6 +89,11 @@ jobs:
           # forma. Quem protege os dados é a política do banco.
           NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          # A chave pública do Mercado Pago. Também não é segredo: ela vai
+          # dentro da página, e é o que o formulário de pagamento precisa
+          # para desenhar os campos deles. Quem cobra é o Access Token, que
+          # vive nos segredos da Edge Function e nunca sai do servidor.
+          NEXT_PUBLIC_MERCADOPAGO_CHAVE: ${{ vars.NEXT_PUBLIC_MERCADOPAGO_CHAVE }}
 
       # Onde a loja mora muda com a variável DOMINIO_PRONTO, e os testes
       # precisam bater no mesmo caminho que a publicação montou. Calcular

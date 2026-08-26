@@ -96,7 +96,7 @@ const LandingPage = () => {
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="marca-loja"
-            style={{ fontFamily: 'Fraunces', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer', textAlign: 'left' }}
+            style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer', textAlign: 'left' }}
           >
             Feito para você!<span style={{ color: "#1F736F" }}> Personalizados</span>
           </Navbar.Brand>
@@ -159,7 +159,7 @@ const LandingPage = () => {
                 <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#1F736F', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
                     PERSONALIZADOS SOB ENCOMENDA & MATERIAL PEDAGÓGICO DIGITAL
                 </div>
-                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'Fraunces', color: '#12305B', lineHeight: 1.1 }}>
+                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', color: '#12305B', lineHeight: 1.1 }}>
                   Detalhes que encantam, <br/>
                   <span style={{ color: '#1F736F' }}>personalizados</span> para você.
                 </h1>
@@ -299,7 +299,7 @@ const LandingPage = () => {
                 <div style={{ width: '40px', height: '1px', backgroundColor: '#1F736F' }}></div>
                 <span className="small fw-black text-uppercase ls-widest">Todos os produtos</span>
               </div>
-              <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'Fraunces' }}>Nosso Catálogo</h2>
+              <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Nosso Catálogo</h2>
             </div>
             <div className="d-flex flex-wrap justify-content-center gap-2">
               {LINHAS_COM_PRODUTO.map(cat => (
@@ -340,7 +340,7 @@ const LandingPage = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'Fraunces' }}>Dá para <span style={{ color: '#1F736F' }}>confiar</span></h2>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Dá para <span style={{ color: '#1F736F' }}>confiar</span></h2>
               <p className="text-muted fs-5">
                 Comprar de quem você não conhece dá receio, e eu entendo. Por isso o pagamento passa pelo Mercado Pago: eu não vejo nem guardo nenhum dado do seu cartão.
               </p>
@@ -369,11 +369,18 @@ const LandingPage = () => {
               </div>
             </Col>
           </Row>
-          <div className="mt-5 pt-4 d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Mercado_Pago.svg" style={{ height: '32px', maxWidth: '160px', objectFit: 'contain' }} alt="Mercado Pago" />
-              <img src="https://logodownload.org/wp-content/uploads/2014/05/correios-logo-1.png" style={{ height: '28px', maxWidth: '120px', objectFit: 'contain' }} alt="Correios" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Pix_%28Brazil%29_logo.svg" style={{ height: '32px', maxWidth: '80px', objectFit: 'contain' }} alt="Pix" />
-          </div>
+          {/* Eram três imagens puxadas da Wikipédia e de um site de logos.
+              Uma delas já não carregava, e as outras duas dependem de
+              servidores de terceiros que não devem nada a esta loja: no
+              dia em que saírem do ar, some o selo que diz à cliente que o
+              pagamento é confiável, justo na seção sobre confiança.
+
+              Escrito, não some, e diz a mesma coisa. */}
+          <ul className="selos-de-confianca">
+            <li>Pagamento pelo <strong>Mercado Pago</strong></li>
+            <li><strong>Pix</strong> e cartão</li>
+            <li>Envio pelos <strong>Correios</strong> e Jadlog</li>
+          </ul>
         </Container>
       </section>
 
