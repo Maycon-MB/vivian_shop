@@ -11,16 +11,16 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 
 | Peça | Estado |
 |---|---|
-| Loja pública | no ar, com **342 produtos dela**, 140 temas e as 13 avaliações |
+| Loja pública | no ar: **342 produtos**, 140 temas, busca, e as clientes avaliam |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 12 migrações aplicadas e conferidas |
+| Banco de dados | 13 migrações aplicadas e conferidas |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
 | Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
 | Painel: publicar produto | funciona, um a um ou o tipo inteiro |
 | Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
-| Pagamento | **simulado**; aplicação criada, faltam as credenciais dela |
+| Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
 | Medição de visita | **não existe**, e trava anúncio pago |
 | Frete | simulado |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
@@ -28,6 +28,8 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
 dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
 `athos-gg`.
+
+Onde tudo está, e quanto falta: [docs/onde-o-projeto-esta.md](docs/onde-o-projeto-esta.md).
 
 O que falta, em ordem: [docs/contas-e-conversas.md](docs/contas-e-conversas.md).
 
