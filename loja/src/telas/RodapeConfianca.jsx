@@ -186,6 +186,20 @@ const RodapeConfianca = () => (
 
           <div style={estiloItem}>
             <span style={{ width: 18, flexShrink: 0 }} />
+            <Link href="/minha-conta/" style={estiloLink}>
+              Meus pedidos
+            </Link>
+          </div>
+
+          <div style={estiloItem}>
+            <span style={{ width: 18, flexShrink: 0 }} />
+            <Link href="/produtos/" style={estiloLink}>
+              Todos os produtos
+            </Link>
+          </div>
+
+          <div style={estiloItem}>
+            <span style={{ width: 18, flexShrink: 0 }} />
             <Link href="/sobre/" style={estiloLink}>
               Quem faz
             </Link>

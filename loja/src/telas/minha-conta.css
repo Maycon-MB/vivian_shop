@@ -1,0 +1,183 @@
+/**
+ * A conta de quem compra.
+ *
+ * Ficou decidido em 21/08 que a conta tem e-mail e senha, e até 25/08
+ * existia metade: dava para criar conta, e quem comprava não conseguia ver
+ * o próprio pedido.
+ */
+
+.conta {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 44px 20px 72px;
+}
+
+.conta-carregando {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #55617A;
+}
+
+.conta-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.conta h1 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.2rem);
+  font-weight: 800;
+  color: #12305B;
+}
+
+.conta-sub { margin: 6px 0 20px; color: #55617A; }
+.conta-nota { margin: 16px 0 0; color: #6B7688; font-size: .84rem; line-height: 1.5; }
+
+.conta-caixa {
+  padding: 28px 24px;
+  border: 1px solid #E4E8EF;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+.conta-caixa form { display: flex; flex-direction: column; gap: 14px; }
+.conta-caixa label { display: flex; flex-direction: column; gap: 5px; }
+
+.conta-caixa label span {
+  font-size: .88rem;
+  font-weight: 700;
+  color: #12305B;
+}
+
+.conta-caixa input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #D8DEE7;
+  border-radius: 10px;
+  color: #12305B;
+  /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
+  font-size: 16px;
+}
+
+.conta-caixa input:focus-visible { outline: 2px solid #1F736F; outline-offset: 1px; }
+
+.conta-botao {
+  min-height: 48px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: #12305B;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.conta-botao:disabled { opacity: .55; }
+
+.conta-erro {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #FDECEC;
+  color: #8A2020;
+  font-size: .88rem;
+}
+
+.conta-trocar { margin: 14px 0 0; color: #55617A; font-size: .9rem; }
+
+.conta-trocar button,
+.conta-trocar a {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #1F736F;
+  font-size: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.conta-sair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 9px 16px;
+  border: 1px solid #E4E8EF;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #55617A;
+  font-size: .88rem;
+  cursor: pointer;
+}
+
+.conta-pedidos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conta-pedidos > li {
+  padding: 20px;
+  border: 1px solid #E4E8EF;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+
+.conta-pedido-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.conta-pedido-topo strong { color: #12305B; font-size: 1rem; }
+.conta-pedido-topo span { color: #8A93A5; font-size: .82rem; }
+
+/* O estado dito para a cliente, e não para o sistema. Verde só quando o
+   pagamento passou: a cor é o que ela lê primeiro. */
+.conta-estado {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 700;
+  background: #F1F4F8;
+  color: #55617A;
+}
+
+.conta-estado.aprovado { background: #E7F5F3; color: #1F736F; }
+.conta-estado.recusado { background: #FDECEC; color: #8A2020; }
+
+.conta-itens {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  color: #55617A;
+  font-size: .92rem;
+  line-height: 1.7;
+}
+
+.conta-total { margin: 0; font-weight: 800; color: #12305B; font-size: 1.05rem; }
+
+.conta-rastreio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  color: #1F736F;
+  font-size: .88rem;
+  font-weight: 600;
+}

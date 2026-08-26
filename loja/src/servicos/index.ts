@@ -9,6 +9,7 @@ import { pagamentoSimulado } from './pagamentoSimulado'
 import { freteSimulado } from './freteSimulado'
 import { avisosSimulados } from './avisosSimulados'
 import { pedidosLocais } from './pedidosLocais'
+import { pedidosSupabase } from './pedidosSupabase'
 
 /**
  * Onde a loja decide com quem está falando.
@@ -36,7 +37,13 @@ const temBanco = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL)
 export const pagamento: ServicoDePagamento = pagamentoSimulado
 export const frete: ServicoDeFrete = freteSimulado
 export const avisos: ServicoDeAvisos = avisosSimulados
-export const pedidos: RepositorioDePedidos = pedidosLocais
+/* Com banco, o pedido nasce lá. Sem banco, continua no navegador, que é o
+   que faz a demonstração rodar sem conta em lugar nenhum.
+
+   Até 25/08 isto apontava sempre para o navegador, enquanto
+   `situacaoDosServicos` já dizia "banco de dados" quando havia banco. A
+   tela informava uma coisa e o código fazia outra. */
+export const pedidos: RepositorioDePedidos = temBanco ? pedidosSupabase : pedidosLocais
 
 /**
  * O que ainda é simulação.

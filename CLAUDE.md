@@ -13,8 +13,10 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar, com **342 produtos dela**, 140 temas e as 13 avaliações |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 10 migrações aplicadas e conferidas |
+| Banco de dados | 12 migrações aplicadas e conferidas |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
+| Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
+| Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
 | Painel: publicar produto | funciona, um a um ou o tipo inteiro |
 | Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
