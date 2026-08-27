@@ -2,6 +2,7 @@
 
 import { bancoDoNavegador } from '@/servicos/autenticacao'
 import type { ProdutoDaLista } from '@/dominio/listaDeProdutos'
+import { estaFixado, posicaoPara } from '@/dominio/ordemDaVitrine'
 
 /**
  * O catálogo como a dona da loja o vê: tudo, inclusive o que não está no
@@ -13,7 +14,7 @@ import type { ProdutoDaLista } from '@/dominio/listaDeProdutos'
  * ele estaria no lugar errado, e seria contornável.
  */
 
-const COLUNAS = 'id, slug, nome, preco_reais, ativo, imagem_mini, temas(nome)'
+const COLUNAS = 'id, slug, nome, preco_reais, ativo, posicao, imagem_mini, temas(nome)'
 
 interface LinhaDoBanco {
   id: string
@@ -21,6 +22,7 @@ interface LinhaDoBanco {
   nome: string
   preco_reais: string | number
   ativo: boolean
+  posicao: number | null
   imagem_mini: string | null
   temas: { nome: string } | null
 }
@@ -33,6 +35,7 @@ const paraLista = (linha: LinhaDoBanco): ProdutoDaLista => ({
   // concatenando em vez de somar.
   preco: Number(linha.preco_reais),
   ativo: linha.ativo,
+  fixado: estaFixado(linha.posicao),
   tema: linha.temas?.nome ?? '',
   imagem_mini: linha.imagem_mini,
 })
@@ -65,6 +68,27 @@ export const mudarPublicacao = async (ids: string[], ativo: boolean): Promise<vo
   const { error } = await bancoDoNavegador()
     .from('produtos')
     .update({ ativo })
+    .in('id', ids)
+
+  if (error) throw new Error(error.message)
+}
+
+/**
+ * Fixa no topo da vitrine, ou solta.
+ *
+ * Em lote, pelo mesmo motivo da publicação: ela tem 58 Lousas Mágicas, e
+ * na época de volta às aulas o que ela quer é pôr o tipo inteiro na
+ * frente, não um produto por vez.
+ *
+ * Só muda o site na publicação seguinte, porque o catálogo entra no build
+ * e não no navegador. Quem chama avisa isso na tela.
+ */
+export const mudarDestaque = async (ids: string[], fixar: boolean): Promise<void> => {
+  if (!ids.length) return
+
+  const { error } = await bancoDoNavegador()
+    .from('produtos')
+    .update({ posicao: posicaoPara(fixar) })
     .in('id', ids)
 
   if (error) throw new Error(error.message)

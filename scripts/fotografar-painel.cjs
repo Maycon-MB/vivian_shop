@@ -43,21 +43,21 @@ const PRODUTOS = [
     preco_reais: '13.70', preco_promocional_reais: null, linha: 'personalizada',
     tema_id: 'tema-1', minimo: 10, prazo_producao: 5,
     peso_g: 900, alt_cm: '5.00', larg_cm: '22.00', comp_cm: '30.00',
-    pasta_drive: null, ativo: true, imagem_mini: null, temas: { nome: 'Peppa Pig' },
+    pasta_drive: null, ativo: true, posicao: -1, imagem_mini: null, temas: { nome: 'Peppa Pig' },
   },
   {
     id: 'p-2', slug: 'lousa-magica-chaves', nome: 'Lousa Mágica - Chaves',
     descricao: '', preco_reais: '13.70', preco_promocional_reais: null,
     linha: 'personalizada', tema_id: 'tema-3', minimo: 10, prazo_producao: 5,
     peso_g: null, alt_cm: null, larg_cm: null, comp_cm: null,
-    pasta_drive: null, ativo: false, imagem_mini: null, temas: { nome: 'Chaves' },
+    pasta_drive: null, ativo: false, posicao: 0, imagem_mini: null, temas: { nome: 'Chaves' },
   },
   {
     id: 'p-3', slug: 'album-de-figurinhas-lilo-e-stitch', nome: 'Álbum de Figurinhas - Lilo e Stitch',
     descricao: '', preco_reais: '15.90', preco_promocional_reais: '12.90',
     linha: 'personalizada', tema_id: 'tema-2', minimo: 10, prazo_producao: 5,
     peso_g: 1200, alt_cm: '3.00', larg_cm: '21.00', comp_cm: '30.00',
-    pasta_drive: null, ativo: true, imagem_mini: null, temas: { nome: 'Lilo e Stitch' },
+    pasta_drive: null, ativo: true, posicao: 0, imagem_mini: null, temas: { nome: 'Lilo e Stitch' },
   },
 ]
 

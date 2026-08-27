@@ -75,7 +75,12 @@ export const catalogoSupabase: RepositorioProdutos = {
 
     if (linha) consulta = consulta.eq('linha', linha)
 
-    const { data, error } = await consulta.order('criado_em', { ascending: false })
+    /* Fixados na frente, e dentro de cada grupo o mais recente antes. É
+       a ordem que o índice `produtos_por_posicao` atende, e a mesma que
+       `ordemDaVitrine` descreve para poder ser conferida sem banco. */
+    const { data, error } = await consulta
+      .order('posicao', { ascending: true })
+      .order('criado_em', { ascending: false })
 
     if (error) throw new Error(`Não foi possível ler o catálogo: ${error.message}`)
 
