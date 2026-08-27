@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Loader2, Pencil, Plus, Search } from 'lucide-react';
 
 import { agruparPorTipo, buscar, resumo } from '@/dominio/listaDeProdutos';
-import { listarTodos, mudarPublicacao } from '@/dados/produtosDaDona';
+import { listarTodos, mudarPublicacao, mudarDestaque } from '@/dados/produtosDaDona';
 import FormularioDeProduto from './FormularioDeProduto';
 
 /**
@@ -96,6 +96,28 @@ const MeusProdutos = () => {
     }
   };
 
+  /**
+   * Põe no topo da vitrine, ou solta.
+   *
+   * Em lote pelo mesmo motivo da publicação: na volta às aulas ela quer o
+   * tipo inteiro na frente, e não um produto por vez.
+   */
+  const destacar = async (ids, fixar) => {
+    setErro('');
+    setSalvando(ids.join('|'));
+
+    try {
+      await mudarDestaque(ids, fixar);
+      setProdutos((atual) =>
+        atual.map((p) => (ids.includes(p.id) ? { ...p, fixado: fixar } : p)),
+      );
+    } catch (e) {
+      setErro(recadoDoErro(e));
+    } finally {
+      setSalvando(null);
+    }
+  };
+
   if (editando !== null) {
     return (
       <FormularioDeProduto
@@ -121,6 +143,13 @@ const MeusProdutos = () => {
           <h2>Meus produtos</h2>
           <p className="produtos-conta">
             <strong>{contagem.publicados} no ar</strong>, {contagem.rascunhos} esperando você
+          </p>
+          {/* Sem esta linha ela publica, abre a loja, não vê mudança e me
+              manda mensagem achando que quebrou. O catálogo entra no site
+              na hora de montar, e não no navegador de quem visita: é o que
+              faz a loja abrir rápida no 4G e o Google ler as páginas. */}
+          <p className="produtos-aviso">
+            O que você mudar aqui aparece na loja na próxima publicação, e não na hora.
           </p>
         </div>
 
@@ -177,6 +206,7 @@ const MeusProdutos = () => {
                   <th scope="col">Produto</th>
                   <th scope="col">Preço</th>
                   <th scope="col">No ar</th>
+                  <th scope="col">No topo</th>
                   <th scope="col"><span className="visualmente-oculto">Editar</span></th>
                 </tr>
               </thead>
@@ -193,6 +223,21 @@ const MeusProdutos = () => {
                         disabled={Boolean(salvando)}
                       >
                         {produto.ativo ? 'Tirar do ar' : 'Publicar'}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className={produto.fixado ? 'produtos-fixado' : 'produtos-fixar'}
+                        onClick={() => destacar([produto.id], !produto.fixado)}
+                        disabled={Boolean(salvando)}
+                        title={
+                          produto.fixado
+                            ? 'Volta para a ordem normal da vitrine'
+                            : 'Aparece antes dos outros na loja'
+                        }
+                      >
+                        {produto.fixado ? 'Tirar do topo' : 'Pôr no topo'}
                       </button>
                     </td>
                     <td>

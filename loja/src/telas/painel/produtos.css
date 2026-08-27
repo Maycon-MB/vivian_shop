@@ -158,8 +158,32 @@
   border-color: #D8E0E9;
 }
 
+/* Pôr no topo é ação de arrumação, e não a principal da linha.
+   Com o mesmo azul cheio de "Publicar", as duas disputavam o olho na
+   mesma linha e a que decide se o produto existe na loja perdia. */
+.produtos-fixar, .produtos-fixado {
+  min-height: 44px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1.5px solid #D8E0E9;
+  background: transparent;
+  color: #5F6F80;
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+/* Fixado tem cor porque é um estado, e não um botão: ela precisa achar de
+   longe quais produtos estão na frente da vitrine. */
+.produtos-fixado {
+  background: #FFF6DF;
+  border-color: #E3C158;
+  color: #6B5200;
+}
+
 .produtos-lote:disabled,
 .produtos-publicar:disabled,
+.produtos-fixar:disabled,
+.produtos-fixado:disabled,
 .produtos-tirar:disabled { opacity: .55; }
 
 /* No celular a tabela vira lista.
@@ -219,10 +243,22 @@
   .produtos-tabela td:nth-child(2) { grid-column: 1; grid-row: 2; color: #5F6F80; font-size: 13.5px; }
   .produtos-tabela td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; text-align: right; }
 
+  /* "Pôr no topo" e "Editar" descem para uma faixa própria, lado a lado.
+     Empilhados na coluna da direita, eles espremiam o nome do produto até
+     ele quebrar em quatro linhas. */
+  .produtos-tabela td:nth-child(4) { grid-column: 1; grid-row: 3; margin-top: 8px; }
+  .produtos-tabela td:nth-child(5) { grid-column: 2; grid-row: 3; margin-top: 8px; text-align: right; }
+
   .produtos-lote { margin-left: 0; width: 100%; }
 }
 
 /* ── Cadastrar e editar ──────────────────────────────────────────────── */
+
+.produtos-aviso {
+  margin: 4px 0 0;
+  color: #5F6F80;
+  font-size: 13px;
+}
 
 .produtos-topo {
   display: flex;

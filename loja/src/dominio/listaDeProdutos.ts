@@ -16,6 +16,8 @@ export interface ProdutoDaLista {
   nome: string
   preco: number
   ativo: boolean
+  /** No topo da vitrine, por escolha dela. */
+  fixado?: boolean
   tema?: string
   imagem_mini?: string | null
 }
