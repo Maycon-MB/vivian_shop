@@ -7,15 +7,26 @@ Escrito em 27/08/2026, para ser conversado com ela.
 
 ---
 
-## A pergunta, antes de tudo
+## O que ela já respondeu
 
-**Quando você embala dez lousas mágicas para postar, quanto pesa o pacote
-fechado e qual o tamanho da caixa?**
+A Vivian pediu que o peso ficasse **um pouco acima da multiplicação exata
+do item por dez**. O pedido responde duas coisas de uma vez:
 
-É uma balança de cozinha e uma fita métrica. Cinco minutos.
+- **o peso registrado é de uma peça**, e a conta é peça vezes quantidade
+- **o pacote pesa mais que a soma das peças**, porque caixa, plástico
+  bolha e fita vão junto na balança
 
-Tudo o que vem abaixo depende dessa resposta, e nenhum de nós dois tem
-como saber sem ela.
+Isso estava só na conversa dela com o Maycon, e não em documento nenhum.
+Instrução que não se anota vira suposição minha duas semanas depois, e foi
+o que quase aconteceu aqui.
+
+## O que ainda falta perguntar
+
+**Quando você embala dez lousas, quanto pesa o pacote fechado e qual o
+tamanho da caixa?**
+
+Uma balança de cozinha e uma fita métrica. Cinco minutos, e substitui a
+estimativa por um número medido.
 
 ---
 
@@ -57,14 +68,21 @@ dela em todo pedido, e ela só descobriria no balcão dos Correios.
 
 ### O que foi corrigido
 
-O cálculo passou a somar peça por peça, e a caixa a crescer pela
-espessura. Dez lousas agora são calculadas como:
+O cálculo passou a somar peça por peça, com a embalagem e a folga que ela
+pediu, e a caixa a crescer conforme a quantidade:
 
-| | |
-|---|---|
-| Peso | 1.000 g |
-| Caixa | 15 × 19 × 30 cm |
-| Peso cubado | 1,43 kg |
+| Pedido mínimo de 10 | Peso cotado | Caixa | Cobra por |
+|---|---|---|---|
+| Lousa Mágica | 1.176 g | 17 × 19 × 30 cm | cubagem |
+| Caneca | 1.176 g | 24 × 24 × 24 cm | cubagem |
+| Revista para Colorir | 651 g | 12 × 15 × 25 cm | cubagem |
+| Bloquinho | 861 g | 12 × 11 × 16 cm | balança |
+| Saquinho Surpresa | 336 g | 12 × 10 × 15 cm | balança |
+
+A caixa da caneca merece explicação. Empilhar dez canecas pela mesma
+lógica das lousas dava **105 × 11 × 11 cm**, um tubo de um metro: ninguém
+embala assim, e os Correios recusam pacote com lado acima de um metro.
+Coisa cúbica vira caixa quase cúbica, que é o que sai da mesa dela.
 
 **A transportadora cobra pelo maior entre o peso da balança e o peso
 cubado.** No caso dela o cubado é maior, e é por isso que a medida da

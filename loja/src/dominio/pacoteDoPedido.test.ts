@@ -19,7 +19,28 @@ describe('o peso do pacote', () => {
     /* A conta antiga era `pesoG * quantidade / minimo`, e dez lousas de
        100 g viravam 100 g na cotação. A loja cotava cem gramas e postava
        um quilo. */
-    expect(pacoteDoPedido([{ ...LOUSA, quantidade: 10 }]).pesoG).toBe(1000)
+    expect(pacoteDoPedido([{ ...LOUSA, quantidade: 10 }]).pesoG).toBeGreaterThanOrEqual(1000)
+  })
+
+  it('fica acima da multiplicação exata, como a Vivian pediu', () => {
+    /* O que vai para a balança dos Correios não são as dez peças, é o
+       pacote: caixa, plástico bolha e fita pesam, e não estão no
+       catálogo. Ficar no valor exato é cotar a menos em toda venda. */
+    const pacote = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }])
+
+    expect(pacote.pesoG).toBeGreaterThan(1000)
+    // E não exagera: frete alto demais afasta a cliente antes de comprar.
+    expect(pacote.pesoG).toBeLessThan(1400)
+  })
+
+  it('conta a embalagem uma vez por pacote, e não por peça', () => {
+    /* É uma caixa só. Cobrando embalagem por peça, um pedido de dez
+       pagaria dez caixas, e o frete ficaria absurdo. */
+    const uma = pacoteDoPedido([{ ...LOUSA, quantidade: 1 }]).pesoG
+    const dez = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }]).pesoG
+
+    // Dez peças não pesam dez vezes o pacote de uma.
+    expect(dez).toBeLessThan(uma * 10)
   })
 
   it('soma produtos diferentes no mesmo pedido', () => {
@@ -28,7 +49,7 @@ describe('o peso do pacote', () => {
       { pesoG: 70, altCm: 1, largCm: 15, compCm: 25, quantidade: 10 },
     ])
 
-    expect(pacote.pesoG).toBe(1700)
+    expect(pacote.pesoG).toBeGreaterThanOrEqual(1700)
   })
 
   it('nunca cota abaixo do mínimo dos Correios', () => {
@@ -42,14 +63,37 @@ describe('o peso do pacote', () => {
 })
 
 describe('as medidas da caixa', () => {
-  it('empilha pela menor dimensão, que é a espessura', () => {
-    /* Dez lousas viram uma pilha de quinze centímetros, e não uma caixa
-       dez vezes mais larga. 1,5 cm é a espessura de uma. */
+  it('empilha coisa plana pela espessura', () => {
+    /* Dez lousas viram uma pilha, e não uma caixa dez vezes mais larga.
+       A base continua sendo o tamanho de uma lousa. */
     const pacote = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }])
 
-    expect(pacote.altCm).toBe(15)
     expect(pacote.largCm).toBe(19)
     expect(pacote.compCm).toBe(30)
+    expect(pacote.altCm).toBeGreaterThan(15)
+    expect(pacote.altCm).toBeLessThan(20)
+  })
+
+  it('coisa cúbica não vira tubo de um metro', () => {
+    /* Dez canecas de 10,5 x 11 x 11 empilhadas davam 105 x 11 x 11: um
+       tubo de um metro. Ninguém embala assim, e os Correios recusam
+       pacote com lado acima de um metro. Ela põe lado a lado. */
+    const CANECA = { pesoG: 100, altCm: 10.5, largCm: 11, compCm: 11 }
+    const pacote = pacoteDoPedido([{ ...CANECA, quantidade: 10 }])
+
+    const maiorLado = Math.max(pacote.altCm, pacote.largCm, pacote.compCm)
+    expect(maiorLado).toBeLessThan(100)
+    // E cabe: nenhum lado menor do que a peça.
+    expect(Math.min(pacote.altCm, pacote.largCm, pacote.compCm)).toBeGreaterThanOrEqual(11)
+  })
+
+  it('a caixa comporta o volume das peças', () => {
+    // Caixa menor do que o que vai dentro não existe.
+    const pacote = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }])
+    const daCaixa = pacote.altCm * pacote.largCm * pacote.compCm
+    const dasPecas = 1.5 * 19 * 30 * 10
+
+    expect(daCaixa).toBeGreaterThanOrEqual(dasPecas)
   })
 
   it('a caixa fica do tamanho do maior item', () => {
@@ -60,7 +104,6 @@ describe('as medidas da caixa', () => {
 
     expect(pacote.largCm).toBe(19)
     expect(pacote.compCm).toBe(30)
-    expect(pacote.altCm).toBe(2.5)
   })
 
   it('o peso cubado de dez lousas passa do peso real', () => {
