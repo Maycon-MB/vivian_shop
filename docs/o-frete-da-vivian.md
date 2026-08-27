@@ -20,13 +20,33 @@ Isso estava só na conversa dela com o Maycon, e não em documento nenhum.
 Instrução que não se anota vira suposição minha duas semanas depois, e foi
 o que quase aconteceu aqui.
 
-## O que ainda falta perguntar
+## Por que não vale pedir para ela pesar
 
-**Quando você embala dez lousas, quanto pesa o pacote fechado e qual o
-tamanho da caixa?**
+A primeira versão deste documento pedia que ela pesasse um pacote fechado.
+O Maycon apontou o óbvio: **ela também não sabe de cabeça**, e pedir uma
+medida que ela teria que ir buscar é gerar culpa sem gerar número.
 
-Uma balança de cozinha e uma fita métrica. Cinco minutos, e substitui a
-estimativa por um número medido.
+A proposta dele foi multiplicar por dez e somar uns vinte por cento. As
+duas contas chegam quase no mesmo lugar nos produtos que ela mais vende:
+
+| 10 peças | Exato | Caixa fixa + 5% | +20% puro |
+|---|---|---|---|
+| Lousa Mágica | 1.000 g | 1.176 g | 1.200 g |
+| Caneca | 1.000 g | 1.176 g | 1.200 g |
+| Bloquinho | 700 g | 861 g | 840 g |
+| Saquinho Surpresa | 200 g | 336 g | 240 g |
+
+A diferença aparece no pedido leve, e ali a caixa fixa é a certa por um
+motivo físico: **a caixa pesa o que pesa**. Papelão com plástico bolha dá
+uns 120 g, tanto para 200 g de produto quanto para um quilo. Em vinte por
+cento puros, um pedido de saquinhos não cobriria nem a própria embalagem.
+
+Por isso a conta é caixa fixa **mais** percentual, e não só percentual.
+
+**O número medido vem sozinho.** Na primeira postagem de verdade, o balcão
+dos Correios diz o peso do pacote, e ela compara com o que a loja cotou.
+Se estiver longe, ajusta-se ali, com o dado na mão e sem ninguém ter que
+adivinhar antes.
 
 ---
 
@@ -135,14 +155,11 @@ sozinho.
 
 ---
 
-## O que pedir a ela, em ordem
+## O que pedir a ela
 
-1. **Pesar e medir um pacote fechado de dez lousas.** É o que destrava
-   tudo, e é o único passo que ninguém pode fazer por ela.
-2. Se os pacotes de bloquinho, revista e caneca forem diferentes, pesar um
-   de cada. Se forem parecidos, a lousa basta por enquanto.
-3. **Criar a conta no Melhor Envio**, quando ela puder. É grátis, e é o
-   mesmo tipo de passo das credenciais do Mercado Pago.
+**Uma coisa só: criar a conta no Melhor Envio.** É grátis, não exige
+contrato, e é o mesmo tipo de passo das credenciais do Mercado Pago.
 
-Enquanto o 1 não vier, a loja continua cotando por dedução, e avisando na
-tela que é estimativa.
+Nada de pesar nem medir. A estimativa de hoje é boa o bastante para
+vender, a tela avisa que é estimativa, e o número de verdade aparece na
+primeira postagem sem ninguém precisar procurar.

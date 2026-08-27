@@ -39,6 +39,17 @@
  *
  * O pedido dela também confirma o que os números sugeriam: **o peso
  * registrado é de uma peça**, e a conta é peça vezes quantidade.
+ *
+ * ── Por que caixa fixa mais percentual, e não só percentual ────────────
+ *
+ * O caminho mais simples seria somar vinte por cento e pronto, e nos
+ * produtos que ela mais vende dá quase o mesmo: a lousa fecha em 1.176 g
+ * aqui contra 1.200 g lá.
+ *
+ * A diferença aparece no pedido leve. **A caixa pesa o que pesa**: um
+ * papelão com plástico bolha dá uns 120 g tanto para 200 g de produto
+ * quanto para um quilo. Em vinte por cento puros, um pedido de saquinhos
+ * sairia com 240 g e não cobriria nem a própria embalagem.
  */
 
 export interface ItemNoCarrinho {
