@@ -3,6 +3,7 @@ import { PERSONALIZADA, PEDAGOGICA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from 
 import { BASE } from '../base'
 import { escolherCatalogo } from '../dominio/catalogoDoBanco'
 import doBanco from '../dados/catalogo-publicado.json'
+import { limparDescricao } from '../dominio/limparDescricao'
 
 /**
  * O catálogo da loja.
@@ -412,7 +413,34 @@ const PRODUTOS_DE_EXEMPLO = [
  * legível para o Google. O site passa a mostrar depois da próxima
  * publicação.
  */
-export const PRODUTOS = escolherCatalogo(doBanco.produtos, PRODUTOS_DE_EXEMPLO)
+/**
+ * A descrição sai limpa, e o JSON continua cru.
+ *
+ * As 342 descrições vieram inteiras da Elojinha, e 262 delas mandavam a
+ * cliente conferir o prazo "no ELO7", que é a concorrente e está fechada.
+ * `limparDescricao` foi escrita e testada em 26/08 e nunca chegou a ser
+ * chamada por ninguém: o texto cru estava saindo na loja desde então.
+ *
+ * A limpeza acontece aqui, e não no arquivo baixado, para o original
+ * continuar versionado. Se a limpeza um dia estiver errada, o texto que
+ * ela escreveu ao longo de anos ainda está lá para consertar.
+ *
+ * O genérico não é enfeite: sem ele o tipo de `PRODUTOS` vira `any[]`, e
+ * os testes que percorrem o catálogo param de conferir qualquer coisa.
+ *
+ * @template {{ description?: string }} T
+ * @param {T[]} produtos
+ * @returns {T[]}
+ */
+const semPoeiraDoMarketplace = (produtos) =>
+  produtos.map((produto) => ({
+    ...produto,
+    description: limparDescricao(produto.description ?? ''),
+  }))
+
+export const PRODUTOS = semPoeiraDoMarketplace(
+  escolherCatalogo(doBanco.produtos, PRODUTOS_DE_EXEMPLO),
+)
 
 export const TEMAS = escolherCatalogo(doBanco.temas, TEMAS_DE_EXEMPLO)
 

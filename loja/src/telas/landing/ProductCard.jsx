@@ -94,7 +94,23 @@ const ProductCard = ({ product, addToCart }) => {
             </div>
           </div>
 
-          <p className="text-muted small mb-3">{product.description}</p>
+          {/* Três linhas, e o resto na página do produto.
+              As descrições vieram do Elo7 com o tamanho de anúncio de
+              marketplace: doze linhas de tabela de medidas, prazo e
+              observação. Inteiras, elas empurram o preço e o botão para
+              fora da tela, e a vitrine vira parede de texto onde nenhum
+              produto se distingue do vizinho. */}
+          <p
+            className="text-muted small mb-3"
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
+            {product.description}
+          </p>
 
           {/* A regra de venda vem antes do botão: ninguém deve descobrir o
               mínimo de 10 peças só no carrinho. */}

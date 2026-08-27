@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { RepositorioProdutos } from './repositorio'
 import type { Produto } from '@/dominio/produto'
 import type { Linha } from '@/dominio/linhas'
+import { limparDescricao } from '@/dominio/limparDescricao'
 
 /**
  * Catálogo lido do Supabase.
@@ -45,7 +46,12 @@ export const paraProduto = (linha: LinhaBanco): Produto => ({
   id: linha.id,
   slug: linha.slug,
   nome: linha.nome,
-  descricao: linha.descricao,
+  /* Limpa na leitura, e não na importação.
+     O texto cru fica no banco: se um dia a limpeza estiver errada, o
+     original ainda está lá para consertar. Apagando na importação, o que
+     ela escreveu no Elo7 ao longo de anos existiria só no que eu deixei
+     passar. */
+  descricao: limparDescricao(linha.descricao),
   preco: Number(linha.preco_reais),
   linha: linha.linha as Linha,
   minimo: linha.minimo,

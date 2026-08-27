@@ -161,6 +161,38 @@
 .catalogo-vazio p:last-child { margin: 0; }
 .catalogo-vazio a { color: #1F736F; font-weight: 700; }
 
+/* No celular os filtros correm de lado, em vez de empilhar.
+ *
+ * Empilhados, oito fichas de tipo e oito de tema ocupavam a tela inteira
+ * de 390px: quem abria a loja pelo Instagram via a busca, uma lista de
+ * categorias, e **nenhum produto** antes de rolar. Loja de vitrine que não
+ * mostra vitrine na primeira tela perde a visita antes de ela começar.
+ *
+ * Numa faixa que corre de lado, os dois grupos cabem em duas linhas e o
+ * primeiro produto sobe para a dobra. A ficha cortada na borda direita é o
+ * que avisa que há mais para o lado, e é por isso que a barra de rolagem
+ * fica escondida sem o corte ser escondido junto.
+ */
+@media (max-width: 939px) {
+  .catalogo-grupo { min-width: 0; }
+
+  .catalogo-fichas {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /* Espaço para a sombra do foco não ser cortada pelo próprio overflow:
+       sem isto, a ficha focada pelo teclado aparece com o contorno
+       comido. */
+    padding: 2px 0 6px;
+    scrollbar-width: none;
+  }
+
+  .catalogo-fichas::-webkit-scrollbar { display: none; }
+
+  /* Sem isto a ficha encolhe até o texto quebrar em duas linhas, em vez
+     de sair para o lado. */
+  .catalogo-ficha, .catalogo-mais { flex: 0 0 auto; }
+}
+
 @media (min-width: 600px) {
   .catalogo-grade { grid-template-columns: repeat(2, 1fr); }
 }
