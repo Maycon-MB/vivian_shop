@@ -23,7 +23,7 @@ const SUGESTOES = [
     tema: 'Caderno personalizado',
     porque: 'É o que mais vendeu no mês.',
     texto:
-      'Cada caderno sai com o nome de quem vai usar. Simples assim — e faz toda diferença na hora de achar o material na mochila.',
+      'Cada caderno sai com o nome de quem vai usar. Simples assim, e faz toda diferença na hora de achar o material na mochila.',
   },
   {
     id: 2,
@@ -140,7 +140,7 @@ const AbaMarketing = () => {
 
       <p className="aviso-exemplo">
         <strong>Sugestões de exemplo.</strong> Na loja pronta elas saem dos seus produtos e das
-        suas vendas — e continuam dependendo do seu sim.
+        suas vendas, e continuam dependendo do seu sim.
       </p>
     </div>
   );

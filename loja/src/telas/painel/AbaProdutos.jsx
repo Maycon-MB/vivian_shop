@@ -231,7 +231,7 @@ const AbaProdutos = ({ onNovoProduto }) => {
 
       <p className="aviso-exemplo">
         <strong>Estes produtos são de exemplo.</strong> Os seus entram no lugar deles quando
-        você mandar as fotos e os preços — pode ser aos poucos, não precisa ser tudo de uma vez.
+        você mandar as fotos e os preços. Pode ser aos poucos, não precisa ser tudo de uma vez.
       </p>
     </div>
   );
