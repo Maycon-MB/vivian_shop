@@ -29,7 +29,7 @@ Registro meu. Não vira PDF.
 | **Credenciais de produção** | só saem da conta dela |
 | Frete real | decisão dela: Correios ou Melhor Envio |
 | E-mail de convite de avaliação | uma função, sem depender de ninguém |
-| Medição de visita | decisão dela sobre dado das clientes |
+| Medição de visita | falta aplicar a migração 16 no Supabase |
 
 ---
 
@@ -68,10 +68,15 @@ Depois disso a loja vende.
 **O frete.** Correios direto exige contrato dela; Melhor Envio e Kangu dão
 preço melhor sem contrato. É o último item grande, e é decisão de negócio.
 
-**A medição de visita.** Google Analytics é grátis e padrão, e manda dado
-de quem visita para o Google, com aviso de cookies na primeira tela.
-Existe alternativa sem cookie que conta visita sem identificar ninguém.
-Para o volume dela, a alternativa basta. É dado das clientes dela.
+**A medição de visita** foi resolvida em 27/08, e sem ela precisar
+decidir nada: a loja conta sozinha, sem cookie e sem identificar ninguém,
+e por isso não há aviso de cookies na primeira tela. Google Analytics
+mandaria dado das clientes dela para o Google em troca de um detalhe que
+ela não vai usar. Ver [a-contagem-de-visita.md](a-contagem-de-visita.md).
+
+O que sobra dela aqui é uma linha só: **marcar o link do anúncio com
+`?origem=anuncio`**, senão o clique pago aparece misturado com o alcance
+do post.
 
 **Como ela recebe.** Parcelas, juros e desconto no Pix já estão na tela
 dela, em "Como eu recebo". Nasce à vista e sem desconto de propósito: um

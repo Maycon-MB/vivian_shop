@@ -1,5 +1,6 @@
 import { FaixasDoTopo } from '@/componentes/FaixasDoTopo'
 import { ConversaDaLoja } from '@/componentes/ConversaDaLoja'
+import { ContagemDeVisita } from '@/componentes/ContagemDeVisita'
 import '@/telas/landing/conversa.css'
 
 /**
@@ -26,6 +27,7 @@ export default function LayoutDaLoja({
       <FaixasDoTopo />
       <main>{children}</main>
       <ConversaDaLoja />
+      <ContagemDeVisita />
     </>
   )
 }

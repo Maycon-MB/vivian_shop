@@ -104,6 +104,28 @@ const json = (corpo) => ({
   body: JSON.stringify(corpo),
 })
 
+/* Números de mentira, no tamanho que os de verdade vão ter: é o que
+   revela texto espremido e coluna que quebra. */
+const VISITAS_POR_DIA = [
+  { dia: '2026-08-27', visitantes: 84, paginas: 213 },
+  { dia: '2026-08-26', visitantes: 121, paginas: 349 },
+  { dia: '2026-08-25', visitantes: 67, paginas: 158 },
+]
+
+const VISITAS_POR_ORIGEM = [
+  { origem: 'instagram', visitantes: 148, paginas: 402 },
+  { origem: 'direto', visitantes: 71, paginas: 190 },
+  { origem: 'anuncio', visitantes: 39, paginas: 96 },
+  { origem: 'google', visitantes: 14, paginas: 32 },
+]
+
+const PAGINAS_MAIS_VISTAS = [
+  { caminho: '/', paginas: 233 },
+  { caminho: '/produtos', paginas: 141 },
+  { caminho: '/produto/lousa-magica-lilo-e-stitch', paginas: 88 },
+  { caminho: '/produto/bloquinho-personalizado-peppa-pig', paginas: 54 },
+]
+
 const main = async () => {
   fs.mkdirSync(destino, { recursive: true })
 
@@ -114,6 +136,14 @@ const main = async () => {
     const url = rota.request().url()
 
     if (url.includes('/donas_da_loja')) return rota.fulfill(json([DONA]))
+
+    /* O bloco de visitas do relatório. Sem estas três respostas ele
+       aparece vazio no print, e um bloco vazio esconde exatamente o que
+       este script existe para conferir: se os números cabem na tela do
+       celular dela. */
+    if (url.includes('/rpc/resumo_de_visitas')) return rota.fulfill(json(VISITAS_POR_DIA))
+    if (url.includes('/rpc/visitas_por_origem')) return rota.fulfill(json(VISITAS_POR_ORIGEM))
+    if (url.includes('/rpc/paginas_mais_vistas')) return rota.fulfill(json(PAGINAS_MAIS_VISTAS))
     if (url.includes('/temas')) return rota.fulfill(json(TEMAS))
     if (url.includes('/conversas')) return rota.fulfill(json(CONVERSAS))
 
@@ -197,6 +227,10 @@ const main = async () => {
 
   await tirar('catalogo-computador', 1280)
   await tirar('catalogo-celular', 390)
+  await pagina.goto(`${base}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('relatorios-computador', 1280)
+  await tirar('relatorios-celular', 390)
 
   await pagina.setViewportSize({ width: 1280, height: 900 })
   await pagina.getByRole('button', { name: /cadastrar produto/i }).first().click()
@@ -228,6 +262,7 @@ const main = async () => {
   await pagina.goto(`${base}/admin/?aba=recebo`, { waitUntil: 'networkidle' })
   await pagina.waitForTimeout(1400)
   await tirar('recebo-computador', 1280)
+
 
   await navegador.close()
 

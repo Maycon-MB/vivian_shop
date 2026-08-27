@@ -13,7 +13,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar: **342 produtos**, 140 temas, busca, e as clientes avaliam |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 13 migrações aplicadas e conferidas |
+| Banco de dados | 15 migrações aplicadas; a 16 (visita) espera aplicação |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
 | Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
@@ -21,7 +21,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
-| Medição de visita | **não existe**, e trava anúncio pago |
+| Medição de visita | **construída, sem cookie**; falta aplicar a migração 16 |
 | Frete | simulado |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 
@@ -32,6 +32,9 @@ dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
 Onde tudo está, e quanto falta: [docs/onde-o-projeto-esta.md](docs/onde-o-projeto-esta.md).
 
 O que falta, em ordem: [docs/contas-e-conversas.md](docs/contas-e-conversas.md).
+
+Como a loja conta visita, e por que sem cookie:
+[docs/a-contagem-de-visita.md](docs/a-contagem-de-visita.md).
 
 ---
 
