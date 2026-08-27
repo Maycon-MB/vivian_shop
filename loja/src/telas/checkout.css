@@ -583,3 +583,18 @@
 .resumo-mexer button:disabled { opacity: .4; cursor: default; }
 .resumo-tirar { color: #8A2020 !important; }
 .resumo-tirar:hover { border-color: #8A2020 !important; }
+
+/* O aviso de que o frete é estimativa, junto das opções.
+
+   O valor do frete é onde o erro custa dinheiro da Vivian: cotar R$ 23
+   num envio de R$ 40 tira a diferença do bolso dela em todo pedido. Fica
+   aqui, e não só na faixa do topo, porque é aqui que a cliente escolhe. */
+.fretes-estimativa {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #FDF3C7;
+  color: #6B5A12;
+  font-size: .82rem;
+  line-height: 1.45;
+}

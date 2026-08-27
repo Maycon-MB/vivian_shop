@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-import { estaTudoReal } from '@/servicos'
+import { estaTudoReal, situacaoDosServicos } from '@/servicos'
 
 /* Onde a própria tela já explica que é demonstração, com mais detalhe do
    que a tarja do topo. Repetir o mesmo aviso duas vezes na mesma tela faz
@@ -27,12 +27,58 @@ const TELAS_QUE_JA_AVISAM = ['/checkout', '/pedido-confirmado']
  * não é cobrado de verdade, e a loja pareceria estar vendendo sem estar.
  * Trocando pela chave de produção, o aviso desaparece sozinho, sem
  * ninguém precisar lembrar de vir aqui.
+ *
+ * ── O texto diz o que está simulado, e não uma frase só ────────────────
+ *
+ * Em 27/08 o aviso passou a olhar cada serviço em separado, e o motivo é
+ * dinheiro dela. Havia uma combinação que ia acontecer em dias: pagamento
+ * de verdade ligado e frete ainda simulado. Nela, a loja **cobraria** a
+ * cliente enquanto a faixa amarela dizia "nada é cobrado de verdade".
+ *
+ * Uma frase falsa sobre cobrança é pior do que aviso nenhum: a cliente lê
+ * que não paga e paga, e o frete inventado sai do bolso da Vivian em todo
+ * pedido. O aviso agora nomeia o que está de mentira.
  */
 
 /** Credencial de teste do Mercado Pago não cobra ninguém. */
 const PAGAMENTO_DE_MENTIRA = String(
   process.env.NEXT_PUBLIC_MERCADOPAGO_CHAVE ?? '',
 ).startsWith('TEST-')
+/**
+ * O que está de mentira, dito com o nome.
+ *
+ * Nunca afirma que nada é cobrado quando o pagamento está ligado: essa
+ * frase, errada, faz a cliente pagar achando que não paga.
+ */
+function recado(forte: boolean) {
+  const cobrando = situacaoDosServicos.pagamento !== 'simulado' && !PAGAMENTO_DE_MENTIRA
+  const freteDeMentira = situacaoDosServicos.frete === 'simulado'
+
+  if (cobrando && freteDeMentira) {
+    return (
+      <>
+        O pagamento já é real, mas <strong>o valor do frete ainda é uma estimativa</strong>.
+        O valor final da entrega pode mudar.
+      </>
+    )
+  }
+
+  if (cobrando) {
+    return <>Alguns avisos por e-mail ainda não são enviados.</>
+  }
+
+  if (forte) {
+    return (
+      <>
+        Esta loja ainda está em construção: <strong>nenhuma cobrança é feita</strong> e
+        nenhum pedido chega de verdade. Dá para percorrer a compra inteira à vontade.
+      </>
+    )
+  }
+
+  return <>Loja em construção: os produtos e preços são exemplos, e nada é cobrado de verdade.</>
+}
+
 export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout' }) {
   const caminho = usePathname()
 
@@ -58,18 +104,7 @@ export function AvisoDemonstracao({ onde = 'loja' }: { onde?: 'loja' | 'checkout
         fontWeight: forte ? 700 : 400,
       }}
     >
-      <div className="container">
-        {forte ? (
-          <>
-            Esta loja ainda está em construção: <strong>nenhuma cobrança é feita</strong> e
-            nenhum pedido chega de verdade. Dá para percorrer a compra inteira à vontade.
-          </>
-        ) : (
-          <>
-            Loja em construção: os produtos e preços são exemplos, e nada é cobrado de verdade.
-          </>
-        )}
-      </div>
+      <div className="container">{recado(forte)}</div>
     </div>
   )
 }
