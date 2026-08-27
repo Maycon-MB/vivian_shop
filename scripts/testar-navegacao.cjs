@@ -556,6 +556,39 @@ const conferir = async (nome, fn) => {
     if (pagina.url().includes('/loja/')) throw new Error('não saiu do endereço antigo')
   })
 
+  /* O teste limpa o que ele mesmo criou.
+
+     A compra de ponta a ponta grava um pedido de verdade no banco desde
+     25/08, e em dois dias juntaram onze pedidos falsos no banco dela: eles
+     apareciam no painel, contavam nos relatórios, e em quatorze dias o
+     convite de avaliação sairia para um endereço que não existe.
+
+     A função só alcança endereços em domínios reservados para exemplo, e
+     por isso pode ser chamada daqui sem nenhuma chave especial: ela não
+     tem como apagar pedido de cliente. */
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const chave = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (url && chave) {
+    try {
+      const resposta = await fetch(`${url}/rest/v1/rpc/limpar_pedidos_de_teste`, {
+        method: 'POST',
+        headers: { apikey: chave, Authorization: `Bearer ${chave}`, 'Content-Type': 'application/json' },
+        body: '{}',
+      })
+
+      const quantos = await resposta.json()
+      if (quantos) console.log(`
+${quantos} pedido(s) de teste apagados do banco.`)
+    } catch (falha) {
+      /* Falhar aqui não reprova nada: o teste já provou o que tinha de
+         provar, e a limpeza é arrumação. Mas fica dito, senão a sujeira
+         se acumula em silêncio, que foi exatamente o que aconteceu. */
+      console.log(`
+não consegui limpar os pedidos de teste: ${falha.message}`)
+    }
+  }
+
   await navegador.close()
 
   // ── Resultado ──
