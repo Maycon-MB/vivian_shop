@@ -151,3 +151,29 @@ describe('o convite de avaliação', () => {
     expect(agendado).toContain('limit 30')
   })
 })
+
+describe('a limpeza do que o teste cria', () => {
+  const limpeza = readFileSync(
+    path.join(raiz, 'supabase', 'migracoes', '0015_limpar_o_que_o_teste_cria.sql'),
+    'utf8',
+  )
+
+  it('só alcança endereços de exemplo', () => {
+    /* É o que permite chamá-la com a chave pública sem risco: ela não tem
+       como apagar pedido de cliente. Se alguém tirar este `where`, a
+       função passa a apagar o banco inteiro para qualquer um. */
+    expect(limpeza).toContain('exemplo|example')
+    expect(limpeza).toContain('testuser')
+  })
+
+  it('não recebe parâmetro', () => {
+    // Sem parâmetro não há como apontá-la para outro pedido.
+    expect(limpeza).toContain('limpar_pedidos_de_teste()')
+  })
+
+  it('apaga os itens e eventos junto, e não só o pedido', () => {
+    // Item órfão de pedido apagado é lixo que ninguém encontra depois.
+    expect(limpeza).toContain('delete from public.itens_do_pedido')
+    expect(limpeza).toContain('delete from public.eventos_de_pagamento')
+  })
+})

@@ -131,6 +131,11 @@ jobs:
           # tem acesso ao banco.
           TESTE_DONA_EMAIL: ${{ secrets.TESTE_DONA_EMAIL }}
           TESTE_DONA_SENHA: ${{ secrets.TESTE_DONA_SENHA }}
+          # Para o teste apagar o pedido que ele mesmo cria. A função no
+          # banco só alcança endereços de exemplo, então a chave pública
+          # basta: ela não tem como apagar pedido de cliente.
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: acessibilidade
         run: node scripts/testar-acessibilidade.cjs
