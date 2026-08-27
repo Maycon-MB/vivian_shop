@@ -119,3 +119,30 @@ export const caminhoDaVisita = (endereco: string): string => {
 
   return semBarraFinal || '/'
 }
+
+/**
+ * Onde uma visita conta como visita.
+ *
+ * O teste de navegação percorre a loja inteira a cada push, contra o site
+ * montado em `127.0.0.1` e apontando para o banco de verdade dela. Sem
+ * esta regra, cada rodada do CI somaria dezenas de visitas e de páginas no
+ * relatório, e o número que decide se o anúncio continua seria a soma do
+ * que eu testei com o que as clientes fizeram.
+ *
+ * É o mesmo erro dos onze pedidos falsos de 25/08, e desta vez é pior:
+ * pedido inventado dá para achar e apagar um a um, contador inflado não
+ * tem como separar depois.
+ *
+ * Vale também para o `next dev`, e é de propósito: eu abro a loja dez
+ * vezes por dia enquanto trabalho.
+ */
+const NAO_E_VISITA = ['127.0.0.1', 'localhost', '0.0.0.0', '::1']
+
+export const contaComoVisita = (endereco: string): boolean => {
+  const onde = (endereco ?? '').trim().toLowerCase()
+  if (!onde) return false
+  if (NAO_E_VISITA.includes(onde)) return false
+  // `.local` é o que o macOS e algumas redes dão para máquina da casa.
+  if (onde.endsWith('.local')) return false
+  return true
+}

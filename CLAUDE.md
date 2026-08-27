@@ -13,7 +13,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar: **342 produtos**, 140 temas, busca, e as clientes avaliam |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 15 migrações aplicadas; a 16 (visita) espera aplicação |
+| Banco de dados | 16 migrações aplicadas e conferidas |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
 | Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
@@ -22,7 +22,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Painel: ordem da vitrine | ela fixa produto no topo, um a um ou o tipo inteiro |
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
-| Medição de visita | **construída, sem cookie**; falta aplicar a migração 16 |
+| Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
 | Frete | simulado |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 
@@ -101,6 +101,14 @@ o botão de enviar respostas coberto pela tarja amarela.
 ---
 
 ## Cuidados que não são opcionais
+
+**Máquina minha e CI não são cliente dela.** O teste de navegação
+percorre a loja inteira a cada push, contra o site montado em `127.0.0.1`
+e apontando para o banco de verdade. Já custou onze pedidos falsos no
+banco dela em 25/08; a contagem de visita nasceu com a guarda em
+[origemDaVisita.ts](loja/src/dominio/origemDaVisita.ts), porque contador
+inflado, ao contrário de pedido inventado, não tem como ser separado
+depois.
 
 **Chave secreta nunca entra no repositório.** Ele é público. As chaves
 vivem nas variáveis do GitHub e no painel do Supabase; o código só lê

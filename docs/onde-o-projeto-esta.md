@@ -27,9 +27,9 @@ Registro meu. Não vira PDF.
 | O quê | Trava |
 |---|---|
 | **Credenciais de produção** | só saem da conta dela |
-| Frete real | decisão dela: Correios ou Melhor Envio |
-| E-mail de convite de avaliação | uma função, sem depender de ninguém |
-| Medição de visita | falta aplicar a migração 16 no Supabase |
+| **Conta no Melhor Envio** | só sai da conta dela |
+| Compra de teste com cartão real | depende das credenciais |
+| Medição de visita | **no ar**, sem cookie e sem identificar ninguém |
 | Descrição no cartão | três linhas, e o resto na página do produto |
 | Filtro no celular | corre de lado, e o produto sobe para a primeira tela |
 
@@ -39,8 +39,9 @@ Registro meu. Não vira PDF.
 
 Um número só engana, porque as partes não valem igual. Duas contas:
 
-**Do que foi contratado**, a loja substituindo o Elo7: **93%.**
-O que falta é o frete real e a virada das credenciais.
+**Do que foi contratado**, a loja substituindo o Elo7: **95%.**
+Não sobrou nada que dependa só de mim. O que falta são duas contas que só
+ela pode abrir, e uma compra de teste que só faz sentido depois delas.
 
 **Do que faz dinheiro entrar**: **96% construído, 0% cobrando.**
 Enquanto a chave for `TEST-`, nenhum cartão é debitado. É uma troca de

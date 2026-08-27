@@ -1,7 +1,12 @@
 'use client'
 
 import { bancoDoNavegador, temBanco } from '@/servicos/autenticacao'
-import { caminhoDaVisita, origemDaVisita, type Origem } from '@/dominio/origemDaVisita'
+import {
+  caminhoDaVisita,
+  contaComoVisita,
+  origemDaVisita,
+  type Origem,
+} from '@/dominio/origemDaVisita'
 
 /**
  * A contagem de visita, do lado do navegador.
@@ -54,6 +59,11 @@ export const contarVisita = async (
   busca = '',
 ): Promise<void> => {
   if (!temBanco()) return
+
+  /* Antes de qualquer coisa: máquina minha e CI não são cliente dela.
+     A regra mora no domínio, com teste. */
+  if (typeof window === 'undefined') return
+  if (!contaComoVisita(window.location.hostname)) return
 
   const origem: Origem = origemDaVisita(
     referencia,

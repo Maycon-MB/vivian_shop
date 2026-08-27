@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { origemDaVisita, caminhoDaVisita, ORIGENS } from './origemDaVisita'
+import { origemDaVisita, caminhoDaVisita, contaComoVisita, ORIGENS } from './origemDaVisita'
 
 const NOSSO = 'feitoparavocepapelaria.com.br'
 
@@ -92,5 +92,28 @@ describe('qual página foi aberta', () => {
 
   it('descarta a âncora', () => {
     expect(caminhoDaVisita('/como-funciona#frete')).toBe('/como-funciona')
+  })
+})
+
+describe('onde uma visita conta', () => {
+  it('não conta a máquina de quem está construindo a loja', () => {
+    /* O teste de navegação percorre a loja inteira a cada push, contra
+       `127.0.0.1` e apontando para o banco de verdade dela. Sem isto, o
+       número que decide o anúncio vira a soma do que eu testei com o que
+       as clientes fizeram, e não há como separar depois. */
+    expect(contaComoVisita('127.0.0.1')).toBe(false)
+    expect(contaComoVisita('localhost')).toBe(false)
+    expect(contaComoVisita('0.0.0.0')).toBe(false)
+    expect(contaComoVisita('macbook-da-vivian.local')).toBe(false)
+  })
+
+  it('conta quem abriu a loja de verdade', () => {
+    expect(contaComoVisita('feitoparavocepapelaria.com.br')).toBe(true)
+    expect(contaComoVisita('www.feitoparavocepapelaria.com.br')).toBe(true)
+  })
+
+  it('não conta quando não sabe onde está', () => {
+    // Na dúvida, não somar: número inflado é pior que número faltando.
+    expect(contaComoVisita('')).toBe(false)
   })
 })
