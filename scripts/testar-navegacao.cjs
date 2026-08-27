@@ -327,7 +327,10 @@ const conferir = async (nome, fn) => {
     const todos = await pagina.locator('.pedido').count()
     if (todos === 0) return
 
-    await pagina.getByRole('button', { name: /^Fora do ar|^Pagos|^Aguardando/ }).first().click()
+    // "Em produção" é um dos filtros de verdade da tela dela. Da primeira
+    // vez eu inventei nomes que não existiam, e o teste ficou esperando
+    // um botão que nunca ia aparecer.
+    await pagina.getByRole('button', { name: /^Em produção/ }).first().click()
     await pagina.waitForTimeout(500)
 
     const filtrados = await pagina.locator('.pedido').count()
@@ -565,13 +568,24 @@ const conferir = async (nome, fn) => {
 
   console.log(`\n${passaram}/${resultados.length} passaram`)
 
-  /* O SDK do Mercado Pago chama o antifraude deles em mercadolibre.com, e
-     essas chamadas falham quando a loja é servida de 127.0.0.1: a origem
-     não bate. É ruído do ambiente de teste, e não defeito da loja.
+  /* Duas fontes de ruído, e as duas são do ambiente, não da loja.
 
-     Ignorar por domínio, e não por texto genérico: se um dia o SDK
-     quebrar de verdade, o erro vai ter outra cara e continua aparecendo. */
-  const DE_FORA = ['favicon', 'mercadolibre.com', 'mercadopago.com']
+     O SDK do Mercado Pago chama o antifraude deles em mercadolibre.com, e
+     essas chamadas falham quando a loja é servida de 127.0.0.1: a origem
+     não bate.
+
+     E o próprio navegador escreve "Failed to load resource" para cada uma
+     delas, **sem dizer qual endereço**. Essa mensagem genérica não tem
+     como ser filtrada por domínio, e não perde nada ao sair: o ouvinte de
+     `response` acima registra toda resposta 400 ou mais **com o
+     endereço**, que é estritamente mais informativo. Um 404 de verdade
+     continua aparecendo, e com o endereço junto. */
+  const DE_FORA = [
+    'favicon',
+    'mercadolibre.com',
+    'mercadopago.com',
+    'Failed to load resource',
+  ]
 
   const errosReais = errosConsole.filter((e) => !DE_FORA.some((quem) => e.includes(quem)))
   if (errosReais.length) {
