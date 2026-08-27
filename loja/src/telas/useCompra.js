@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { pagamento, frete, avisos, pedidos } from '@/servicos'
+import { pacoteDoPedido } from '@/dominio/pacoteDoPedido'
 
 /**
  * A compra, do clique em pagar até o pedido existir.
@@ -44,18 +45,21 @@ export function useCompra() {
   const [processando, setProcessando] = useState(false)
   const [erro, setErro] = useState(null)
 
-  /** Cota o frete de verdade a partir do peso e das medidas do pacote. */
+  /**
+   * Cota o frete a partir do peso e das medidas do pacote fechado.
+   *
+   * A conta vive em `pacoteDoPedido`, e não aqui, porque errar nela custa
+   * dinheiro dela em toda venda. Até 27/08 esta função dividia o peso
+   * pelo mínimo, acreditando que `pesoG` era o peso do lote de dez: a
+   * loja cotava cem gramas e postava um quilo.
+   *
+   * E usava as medidas do **primeiro item**, ignorando quantos eram: dez
+   * lousas empilhadas eram cotadas como uma.
+   */
   const cotarFrete = async (cep, itens) => {
-    const pesoTotal = itens.reduce((soma, item) => soma + (item.pesoG ?? 4000) * item.quantidade / (item.minimo || 10), 0)
-    const maior = itens[0] ?? {}
+    const pacote = pacoteDoPedido(itens)
 
-    return frete.cotar({
-      cepDestino: cep,
-      pesoG: Math.max(Math.round(pesoTotal), 300),
-      altCm: maior.altCm ?? 20,
-      largCm: maior.largCm ?? 30,
-      compCm: maior.compCm ?? 30,
-    })
+    return frete.cotar({ cepDestino: cep, ...pacote })
   }
 
   /**
