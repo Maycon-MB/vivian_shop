@@ -22,25 +22,19 @@ describe('o peso do pacote', () => {
     expect(pacoteDoPedido([{ ...LOUSA, quantidade: 10 }]).pesoG).toBeGreaterThanOrEqual(1000)
   })
 
-  it('fica acima da multiplicação exata, como a Vivian pediu', () => {
-    /* O que vai para a balança dos Correios não são as dez peças, é o
-       pacote: caixa, plástico bolha e fita pesam, e não estão no
-       catálogo. Ficar no valor exato é cotar a menos em toda venda. */
+  it('soma 15% sobre a conta exata', () => {
+    /* Decidido pelo Maycon em 27/08. Cobre caixa, plástico bolha e fita,
+       que vão junto na balança e não estão no catálogo. Ficar no valor
+       exato é cotar a menos em toda venda. */
     const pacote = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }])
 
-    expect(pacote.pesoG).toBeGreaterThan(1000)
-    // E não exagera: frete alto demais afasta a cliente antes de comprar.
-    expect(pacote.pesoG).toBeLessThan(1400)
+    expect(pacote.pesoG).toBe(1150)
   })
 
-  it('conta a embalagem uma vez por pacote, e não por peça', () => {
-    /* É uma caixa só. Cobrando embalagem por peça, um pedido de dez
-       pagaria dez caixas, e o frete ficaria absurdo. */
-    const uma = pacoteDoPedido([{ ...LOUSA, quantidade: 1 }]).pesoG
-    const dez = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }]).pesoG
-
-    // Dez peças não pesam dez vezes o pacote de uma.
-    expect(dez).toBeLessThan(uma * 10)
+  it('não exagera na folga', () => {
+    // Frete alto demais afasta a cliente antes de comprar.
+    const pacote = pacoteDoPedido([{ ...LOUSA, quantidade: 10 }])
+    expect(pacote.pesoG).toBeLessThan(1300)
   })
 
   it('soma produtos diferentes no mesmo pedido', () => {

@@ -26,22 +26,26 @@ A primeira versão deste documento pedia que ela pesasse um pacote fechado.
 O Maycon apontou o óbvio: **ela também não sabe de cabeça**, e pedir uma
 medida que ela teria que ir buscar é gerar culpa sem gerar número.
 
-A proposta dele foi multiplicar por dez e somar uns vinte por cento. As
-duas contas chegam quase no mesmo lugar nos produtos que ela mais vende:
+## A regra que ficou
 
-| 10 peças | Exato | Caixa fixa + 5% | +20% puro |
+**Peso da peça vezes a quantidade, mais 15%.** Decidida pelo Maycon em
+27/08, e é o que a loja faz hoje.
+
+Eu havia proposto uma caixa fixa de 120 g mais 5%, para o papelão pesar o
+mesmo independentemente do que tem dentro. Nos produtos que ela mais vende
+as duas contas dão quase igual, e no pedido leve o piso de 300 g dos
+Correios cobre a diferença:
+
+| 10 peças | Exato | **Regra: +15%** | Caixa fixa + 5% |
 |---|---|---|---|
-| Lousa Mágica | 1.000 g | 1.176 g | 1.200 g |
-| Caneca | 1.000 g | 1.176 g | 1.200 g |
-| Bloquinho | 700 g | 861 g | 840 g |
-| Saquinho Surpresa | 200 g | 336 g | 240 g |
+| Lousa Mágica | 1.000 g | **1.150 g** | 1.176 g |
+| Caneca | 1.000 g | **1.150 g** | 1.176 g |
+| Bloquinho | 700 g | **805 g** | 861 g |
+| Saquinho Surpresa | 200 g | **300 g** (piso) | 336 g |
 
-A diferença aparece no pedido leve, e ali a caixa fixa é a certa por um
-motivo físico: **a caixa pesa o que pesa**. Papelão com plástico bolha dá
-uns 120 g, tanto para 200 g de produto quanto para um quilo. Em vinte por
-cento puros, um pedido de saquinhos não cobriria nem a própria embalagem.
-
-Por isso a conta é caixa fixa **mais** percentual, e não só percentual.
+Um número só para explicar a ela, um número só para conferir no balcão, e
+um número só para mexer depois. É o que vale mais que a precisão de uma
+estimativa que ninguém mediu ainda.
 
 **O número medido vem sozinho.** Na primeira postagem de verdade, o balcão
 dos Correios diz o peso do pacote, e ela compara com o que a loja cotou.
@@ -88,16 +92,16 @@ dela em todo pedido, e ela só descobriria no balcão dos Correios.
 
 ### O que foi corrigido
 
-O cálculo passou a somar peça por peça, com a embalagem e a folga que ela
-pediu, e a caixa a crescer conforme a quantidade:
+O cálculo passou a somar peça por peça, com os 15% de folga, e a caixa a
+crescer conforme a quantidade:
 
 | Pedido mínimo de 10 | Peso cotado | Caixa | Cobra por |
 |---|---|---|---|
-| Lousa Mágica | 1.176 g | 17 × 19 × 30 cm | cubagem |
-| Caneca | 1.176 g | 24 × 24 × 24 cm | cubagem |
-| Revista para Colorir | 651 g | 12 × 15 × 25 cm | cubagem |
-| Bloquinho | 861 g | 12 × 11 × 16 cm | balança |
-| Saquinho Surpresa | 336 g | 12 × 10 × 15 cm | balança |
+| Lousa Mágica | 1.150 g | 17 × 19 × 30 cm | cubagem |
+| Caneca | 1.150 g | 24 × 24 × 24 cm | cubagem |
+| Revista para Colorir | 575 g | 12 × 15 × 25 cm | cubagem |
+| Bloquinho | 805 g | 12 × 11 × 16 cm | balança |
+| Saquinho Surpresa | 300 g | 12 × 10 × 15 cm | balança |
 
 A caixa da caneca merece explicação. Empilhar dez canecas pela mesma
 lógica das lousas dava **105 × 11 × 11 cm**, um tubo de um metro: ninguém

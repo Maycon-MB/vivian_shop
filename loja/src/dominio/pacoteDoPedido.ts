@@ -40,16 +40,17 @@
  * O pedido dela também confirma o que os números sugeriam: **o peso
  * registrado é de uma peça**, e a conta é peça vezes quantidade.
  *
- * ── Por que caixa fixa mais percentual, e não só percentual ────────────
+ * ── A regra: peça vezes quantidade, mais 15% ───────────────────────────
  *
- * O caminho mais simples seria somar vinte por cento e pronto, e nos
- * produtos que ela mais vende dá quase o mesmo: a lousa fecha em 1.176 g
- * aqui contra 1.200 g lá.
+ * Decidido pelo Maycon em 27/08. Simples de explicar a ela, simples de
+ * conferir no balcão dos Correios, e um número só para mexer quando a
+ * primeira postagem de verdade disser o peso real.
  *
- * A diferença aparece no pedido leve. **A caixa pesa o que pesa**: um
- * papelão com plástico bolha dá uns 120 g tanto para 200 g de produto
- * quanto para um quilo. Em vinte por cento puros, um pedido de saquinhos
- * sairia com 240 g e não cobriria nem a própria embalagem.
+ * Eu havia proposto caixa fixa de 120 g mais 5%, para o papelão pesar o
+ * mesmo independentemente do que tem dentro. Nos produtos que ela mais
+ * vende as duas contas dão quase igual, e no pedido leve o piso de 300 g
+ * dos Correios cobre a diferença: um pedido de dez saquinhos sai a 300 g
+ * pelos dois caminhos.
  */
 
 export interface ItemNoCarrinho {
@@ -74,26 +75,20 @@ const PADRAO = { pesoG: 100, altCm: 2, largCm: 20, compCm: 30 }
 const PESO_MINIMO_G = 300
 
 /**
- * O que a embalagem acrescenta, e que não está no catálogo.
+ * A folga sobre a soma das peças.
  *
- * A caixa, o plástico bolha e a fita de um pacote do tamanho dos dela
- * ficam nessa ordem de grandeza. É estimativa, e é de propósito uma
- * estimativa **para cima**: cotar a menos tira dinheiro dela em silêncio.
+ * A Vivian pediu que o peso ficasse acima da multiplicação exata, e o
+ * Maycon fechou em 15%. Cobre a caixa, o plástico bolha e a fita, que vão
+ * junto na balança e não estão no catálogo, mais a variação de uma peça
+ * sair um pouco mais pesada que a outra.
  *
- * Quando ela pesar um pacote fechado de verdade, este número sai e o
- * medido entra.
+ * É estimativa para cima de propósito: cotar a menos tira dinheiro dela
+ * em silêncio, e ela só descobre no balcão dos Correios.
+ *
+ * Um número só, e é este que muda quando a primeira postagem de verdade
+ * disser o peso do pacote fechado.
  */
-const EMBALAGEM_G = 120
-
-/**
- * Uma folga por cima do que a conta dá.
- *
- * Pedido dela, e o motivo é que a soma exata é um piso, não um retrato: a
- * peça pode sair um pouco mais pesada, o papel pode ser mais grosso, a
- * fita pode ser mais generosa num dia corrido. Cinco por cento não afasta
- * cliente e cobre a variação.
- */
-const FOLGA = 1.05
+const FOLGA = 1.15
 
 /**
  * O pacote fechado do pedido.
@@ -170,14 +165,12 @@ export const pacoteDoPedido = (itens: ItemNoCarrinho[]): Pacote => {
      e esse ar viaja no caminhão. Quinze por cento cobre a folga. */
   const caixa = caixaQueCabe(volume * 1.15, largura, comprimento)
 
-  /* A embalagem entra uma vez por pacote, e não por peça: é uma caixa só.
-     A folga vem depois, sobre o total. */
-  const comEmbalagem = (pesoG + EMBALAGEM_G) * FOLGA
+  const comFolga = pesoG * FOLGA
 
   const arredondar = (n: number) => Math.round(n * 10) / 10
 
   return {
-    pesoG: Math.max(Math.round(comEmbalagem), PESO_MINIMO_G),
+    pesoG: Math.max(Math.round(comFolga), PESO_MINIMO_G),
     altCm: arredondar(caixa.altCm),
     largCm: arredondar(caixa.largCm),
     compCm: arredondar(caixa.compCm),
