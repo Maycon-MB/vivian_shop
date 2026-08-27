@@ -7,6 +7,7 @@ import InfoBotao from './InfoBotao';
 import { emReais } from './graficos';
 import { PEDIDOS, criadoEmDe } from './dadosPedidos';
 import { carregarPedidosDaLoja } from './pedidosDaLoja';
+import MovimentoDaLoja from './MovimentoDaLoja';
 import {
   fecharOMes,
   oQueProduzir,
@@ -66,6 +67,16 @@ const AbaRelatorios = () => {
     [daLoja],
   );
 
+  /* Só os pedidos de verdade, e não os de demonstração.
+     A taxa de conversão compara com quem entrou na loja de verdade;
+     misturar pedido inventado ali faria a loja parecer converter bem
+     enquanto ninguém compra, que é o erro mais caro que este bloco pode
+     cometer: ela manteria um anúncio que não devolve nada. */
+  const pedidosReais = useMemo(
+    () => daLoja.map((pedido) => ({ criadoEm: pedido.criadoEmISO })),
+    [daLoja],
+  );
+
   const mes = useMemo(() => (hoje ? fecharOMes(pedidos, hoje) : null), [pedidos, hoje]);
   const fila = useMemo(() => oQueProduzir(pedidos), [pedidos]);
 
@@ -103,6 +114,10 @@ const AbaRelatorios = () => {
           <Download size={16} /> Baixar para o contador
         </button>
       </header>
+
+      {/* Antes do fechamento, e fora do `semVenda`: mês sem venda é
+          exatamente quando ela precisa saber se entrou gente. */}
+      <MovimentoDaLoja pedidos={pedidosReais} />
 
       {semVenda ? (
         <CartaoPainel titulo="Nenhuma venda este mês" subtitulo="Ainda.">
