@@ -141,7 +141,9 @@ e-mail que nunca chega.
 - **subir foto**: falta a tela; as regras estão prontas em
   [fotoDoProduto.ts](../loja/src/dominio/fotoDoProduto.ts), com 14 testes.
   É o que ela vai sentir primeiro agora
-- reordenar a vitrine
+- ~~reordenar a vitrine~~ feito em 27/08: ela fixa produto no topo,
+  um a um ou o tipo inteiro. Fixar, e não arrastar: com 342 produtos, pôr
+  um em primeiro seriam 341 arrastes no celular
 
 Publicar em lote existe por causa dos números dela: são 58 Lousas Mágicas
 iguais, variando só a arte. Uma a uma seriam 58 toques no celular.
