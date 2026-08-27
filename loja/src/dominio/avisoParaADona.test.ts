@@ -95,3 +95,59 @@ describe('o gatilho no banco', () => {
     expect(migracao).toContain('http_post')
   })
 })
+
+describe('o convite de avaliação', () => {
+  const convite = readFileSync(
+    path.join(raiz, 'supabase', 'funcoes', 'convite-de-avaliacao', 'index.ts'),
+    'utf8',
+  )
+  const agendado = readFileSync(
+    path.join(raiz, 'supabase', 'migracoes', '0014_convidar_para_avaliar.sql'),
+    'utf8',
+  )
+
+  it('leva o link com a chave daquele pedido', () => {
+    // Sem ele a tela de avaliar existe e ninguém chega nela.
+    expect(convite).toContain('/avaliar/?pedido=${chave}')
+  })
+
+  it('chama a cliente pelo primeiro nome', () => {
+    // Regex escrita como string escapa mal; procurar a intenção basta.
+    expect(convite).toContain('primeiro = nome.trim().split')
+  })
+
+  it('não usa travessão, como todo texto que ela lê', () => {
+    expect(convite.slice(convite.indexOf('corpoDoConvite'))).not.toContain('—')
+  })
+
+  it('recusa quem não sabe o segredo do gatilho', () => {
+    expect(convite).toContain('x-segredo-do-gatilho')
+    expect(convite).toContain('401')
+  })
+
+  it('nenhuma chave está escrita no arquivo', () => {
+    expect(convite).not.toMatch(/re_[A-Za-z0-9]{8,}/)
+  })
+
+  it('conta os dias de criado_em, e não de atualizado_em', () => {
+    /* Existe um gatilho que reescreve `atualizado_em` a cada toque no
+       pedido: contando dali, marcar o rastreio adiaria o convite, e quem
+       cuida bem do pedido nunca receberia. */
+    expect(agendado).toContain('pe.criado_em < now()')
+    expect(agendado).not.toContain("pe.atualizado_em < now()")
+  })
+
+  it('nunca convida endereço de exemplo', () => {
+    /* O teste de compra do CI cria um pedido de verdade a cada push, com
+       ana@exemplo.com.br. Convidar aquele endereço geraria devolução, e
+       devolução derruba a reputação do domínio: o e-mail dela para as
+       clientes de verdade passaria a cair em spam. */
+    expect(agendado).toContain('exemplo|example')
+  })
+
+  it('tem teto por rodada', () => {
+    // Centenas de e-mails de uma vez, de um domínio novo, é o que faz o
+    // provedor marcar tudo como spam.
+    expect(agendado).toContain('limit 30')
+  })
+})
