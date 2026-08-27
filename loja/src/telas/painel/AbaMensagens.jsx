@@ -19,7 +19,7 @@ import InfoBotao from './InfoBotao';
 const CONVERSAS = [
   {
     id: 1,
-    nome: 'Exemplo — Ana Souza',
+    nome: 'Exemplo: Ana Souza',
     pedido: '0007',
     resumo: 'Consegue mandar até sexta?',
     quando: '2 min',
@@ -32,7 +32,7 @@ const CONVERSAS = [
   },
   {
     id: 2,
-    nome: 'Exemplo — Beatriz Lima',
+    nome: 'Exemplo: Beatriz Lima',
     pedido: '0006',
     resumo: 'Dá para trocar a cor da capa?',
     quando: '1 h',
@@ -43,7 +43,7 @@ const CONVERSAS = [
   },
   {
     id: 3,
-    nome: 'Exemplo — Carla Menezes',
+    nome: 'Exemplo: Carla Menezes',
     pedido: null,
     resumo: 'Faz personalizado com o nome da turma?',
     quando: '3 h',
@@ -62,7 +62,7 @@ const AbaMensagens = () => {
       <header>
         <h1 className="painel-titulo">
           Mensagens
-          <InfoBotao texto="Aqui chegam as perguntas feitas pela loja. O WhatsApp continua sendo seu — esta tela só junta a conversa ao pedido, para você não precisar procurar de quem é." />
+          <InfoBotao texto="Aqui chegam as perguntas feitas pela loja. A conversa acontece dentro da loja, e chega aqui já junto do pedido, para você não precisar procurar de quem é." />
         </h1>
         <p className="painel-subtitulo">Perguntas de quem está comprando, junto do pedido.</p>
       </header>
@@ -104,7 +104,7 @@ const AbaMensagens = () => {
                   Pedido #{ativa.pedido} · em produção
                 </span>
               ) : (
-                <span>Sem pedido ainda — é uma dúvida antes de comprar</span>
+                <span>Sem pedido ainda: é uma dúvida antes de comprar</span>
               )}
             </div>
 

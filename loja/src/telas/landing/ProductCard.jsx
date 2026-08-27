@@ -103,7 +103,7 @@ const ProductCard = ({ product, addToCart }) => {
               <>
                 <Package size={15} style={{ flexShrink: 0 }} />
                 <span>
-                  Mínimo {MINIMO_PERSONALIZADO} un. — R$ {(precoAtual(product) * MINIMO_PERSONALIZADO).toFixed(2).replace('.', ',')} ·
+                  Mínimo {MINIMO_PERSONALIZADO} un. · R$ {(precoAtual(product) * MINIMO_PERSONALIZADO).toFixed(2).replace('.', ',')} ·
                   pronto em {PRAZO_PRODUCAO} dias úteis
                 </span>
               </>

@@ -63,7 +63,7 @@ const AbaConfiguracoes = () => (
       titulo="De onde você envia"
       subtitulo="Usado para calcular o frete de quem compra."
       cor="#FFD400"
-      info="Este endereço aparece como remetente em toda etiqueta. Quem compra consegue ver — se preferir usar outro, me avise."
+      info="Este endereço aparece como remetente em toda etiqueta. Quem compra consegue ver. Se preferir usar outro, me avise."
     >
       <div className="form-grade">
         <label className="campo">

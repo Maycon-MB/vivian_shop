@@ -238,7 +238,7 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
                 ? 'O pedido marcado como “feito agora na loja” veio de uma compra sua'
                 : `Os ${daLoja.length} pedidos marcados como “feito agora na loja” vieram de compras suas`}
             </strong>{' '}
-            nesta demonstração — nada foi cobrado, e eles ficam guardados só neste navegador. Os
+            nesta demonstração. Nada foi cobrado, e eles ficam guardados só neste navegador. Os
             outros são exemplos, com nomes que não são de pessoas reais.
           </>
         ) : (
