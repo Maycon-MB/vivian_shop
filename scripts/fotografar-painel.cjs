@@ -227,10 +227,6 @@ const main = async () => {
 
   await tirar('catalogo-computador', 1280)
   await tirar('catalogo-celular', 390)
-  await pagina.goto(`${base}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
-  await pagina.waitForTimeout(1400)
-  await tirar('relatorios-computador', 1280)
-  await tirar('relatorios-celular', 390)
 
   await pagina.setViewportSize({ width: 1280, height: 900 })
   await pagina.getByRole('button', { name: /cadastrar produto/i }).first().click()
@@ -262,6 +258,12 @@ const main = async () => {
   await pagina.goto(`${base}/admin/?aba=recebo`, { waitUntil: 'networkidle' })
   await pagina.waitForTimeout(1400)
   await tirar('recebo-computador', 1280)
+
+  await pagina.goto(`${base}/admin/?aba=relatorios`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('relatorios-computador', 1280)
+  await tirar('relatorios-celular', 390)
+
 
 
   await navegador.close()
