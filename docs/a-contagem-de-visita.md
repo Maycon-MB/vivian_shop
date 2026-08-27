@@ -154,17 +154,20 @@ inflado: o primeiro ela percebe, o segundo ela acredita.
 ## O estado
 
 A migração `0016_contar_visita.sql` **foi aplicada em 27/08**, e a loja
-está contando. As linhas que os meus testes gravaram antes da guarda
-continuam lá.
+está contando. Conferido contra o domínio de verdade: a chamada volta
+`204`, e de `127.0.0.1` não sai nada.
 
-Para começar limpo, no SQL Editor:
+As linhas que os meus testes gravaram antes da guarda **foram apagadas no
+mesmo dia**, com um `delete from visitas` no SQL Editor. A tabela começou
+zerada, e o que estiver nela daqui para frente é gente.
 
-```sql
-delete from visitas;
-```
-
-Vale rodar agora, enquanto o que existe é só ruído meu. Depois de a
-primeira cliente de verdade entrar, isso passa a apagar dado dela.
+> **Não rode aquele `delete` de novo.** Ele fazia sentido numa tabela que
+> só tinha ruído meu. Com visita de cliente dentro, ele apaga o histórico
+> dela sem confirmação e sem volta, e não há de onde reconstruir: a
+> contagem não guarda nada além do próprio contador.
+>
+> Se um dia for preciso limpar um período específico, o `where` é por dia:
+> `delete from visitas where dia = 'AAAA-MM-DD'`.
 
 > A contagem só vale daqui para frente. **O que passou não dá para
 > recuperar**, e a tela diz isso em vez de mostrar zero como se fosse
