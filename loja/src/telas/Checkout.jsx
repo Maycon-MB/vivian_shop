@@ -524,6 +524,21 @@ const Checkout = () => {
                   <div className="fretes">
                     <p className="fretes-titulo">Como você quer receber</p>
 
+                    {/* Enquanto o cálculo de frete for simulado, a cliente
+                        precisa saber disso aqui, e não só numa faixa no
+                        topo que ela já rolou para longe.
+
+                        O valor do frete é onde o erro custa dinheiro da
+                        Vivian: cotar R$ 23 num envio de R$ 40 tira a
+                        diferença do bolso dela em todo pedido, e ela só
+                        descobre no balcão dos Correios. */}
+                    {situacaoDosServicos.frete === 'simulado' && (
+                      <p className="fretes-estimativa">
+                        Estes valores são uma estimativa. O frete exato é confirmado antes do
+                        envio, e a loja avisa se mudar.
+                      </p>
+                    )}
+
                     {opcoesFrete.map((opcao) => (
                       <label
                         key={opcao.id}
