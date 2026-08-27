@@ -1,9 +1,9 @@
 # Quem entrou na loja
 
-Como a loja conta visita, por que sem cookie, e o que ainda falta para o
-número aparecer no painel dela.
+Como a loja conta visita, por que sem cookie, e por que a minha máquina
+não entra na conta.
 
-Escrito em 27/08/2026.
+Escrito em 27/08/2026, no dia em que a contagem entrou no ar.
 
 ---
 
@@ -128,17 +128,44 @@ Quem visita só escreve, e escreve por uma função que não devolve nada.
 
 ---
 
-## O que falta
+## Máquina minha e CI não contam
 
-**Aplicar a migração `0016_contar_visita.sql` no Supabase da loja.**
+O teste de navegação percorre a loja inteira a cada push, contra o site
+montado em `127.0.0.1` e apontando para o banco de verdade dela. Na
+primeira rodada depois de a migração entrar, ele gravou visitas que não
+existiram.
 
-Enquanto ela não for aplicada, a loja chama uma função que não existe, a
-chamada falha em silêncio, e o bloco aparece dizendo que não há visita.
-Nada quebra para quem compra: a contagem foi escrita para nunca derrubar a
-página de quem está comprando.
+É o mesmo erro dos onze pedidos falsos de 25/08, e **desta vez é pior**:
+pedido inventado dá para achar pelo endereço de e-mail e apagar um a um,
+contador inflado não tem como ser separado depois. O número que decide se
+o anúncio continua seria a soma do que eu testei com o que as clientes
+fizeram.
 
-Como aplicar: SQL Editor do projeto, colar o arquivo inteiro, rodar.
+A guarda está em `contaComoVisita`, no domínio, com teste: `127.0.0.1`,
+`localhost`, `0.0.0.0` e qualquer endereço terminado em `.local` não
+somam. Vale também para o `next dev`, de propósito, porque eu abro a loja
+dezenas de vezes por dia enquanto trabalho.
 
-> A contagem só vale daí para frente. **O que passou não dá para
+Na dúvida sobre onde está, não soma. Número faltando é melhor que número
+inflado: o primeiro ela percebe, o segundo ela acredita.
+
+---
+
+## O estado
+
+A migração `0016_contar_visita.sql` **foi aplicada em 27/08**, e a loja
+está contando. As linhas que os meus testes gravaram antes da guarda
+continuam lá.
+
+Para começar limpo, no SQL Editor:
+
+```sql
+delete from visitas;
+```
+
+Vale rodar agora, enquanto o que existe é só ruído meu. Depois de a
+primeira cliente de verdade entrar, isso passa a apagar dado dela.
+
+> A contagem só vale daqui para frente. **O que passou não dá para
 > recuperar**, e a tela diz isso em vez de mostrar zero como se fosse
 > resposta.
