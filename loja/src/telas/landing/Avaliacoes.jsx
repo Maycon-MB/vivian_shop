@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 import { paraAVitrine } from '@/dominio/avaliacoes';
 import cruas from '@/dados/avaliacoes.json';
-import { avaliacoesPublicadas } from '@/dados/avaliacoesNoBanco';
 
 /**
  * O que as clientes dela escreveram.
@@ -54,7 +53,18 @@ const Avaliacoes = () => {
   useEffect(() => {
     let valendo = true;
 
-    avaliacoesPublicadas()
+    /* O cliente do Supabase é baixado aqui dentro, e não no topo do
+       arquivo: são 80 KB comprimidos que entravam no pacote inicial da
+       home, que é onde cai o tráfego do Instagram e a tela mais lenta do
+       site no 4G.
+
+       Importar no topo seria pagar isso antes do primeiro pixel para
+       buscar o que já está na tela: as 13 avaliações do build são
+       desenhadas na primeira pintura, e o banco só acrescenta as que as
+       clientes escreveram depois. Elas continuam vindo no HTML, que é o
+       que o Google lê. */
+    import('@/dados/avaliacoesNoBanco')
+      .then(({ avaliacoesPublicadas }) => avaliacoesPublicadas())
       .then((doBanco) => {
         if (!valendo || !doBanco.length) return;
         setAvaliacoes(

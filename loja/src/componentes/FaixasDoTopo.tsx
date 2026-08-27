@@ -1,9 +1,24 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 
 import { AvisoDemonstracao } from './AvisoDemonstracao'
-import { ChamadoDasPerguntas } from './ChamadoDasPerguntas'
+/* Baixado só depois de a página estar na tela.
+ *
+ * Este recado é endereçado a uma pessoa, a Vivian, e some de vez quando os
+ * serviços de verdade entrarem. Para saber se quem está do outro lado é
+ * ela, ele precisa do cliente do Supabase: 80 KB comprimidos que, no topo
+ * do arquivo, entravam no pacote inicial de **toda** página de quem
+ * compra, para no fim não desenhar nada.
+ *
+ * A home é onde cai o tráfego do Instagram. No 4G esses 80 KB são meio
+ * segundo antes de aparecer qualquer coisa, pagos por cada cliente para
+ * mostrar um bilhete que não é dela. */
+const ChamadoDasPerguntas = dynamic(
+  () => import('./ChamadoDasPerguntas').then((m) => m.ChamadoDasPerguntas),
+  { ssr: false },
+)
 
 /**
  * As duas faixas que ficam acima de tudo: o aviso de que a loja é uma

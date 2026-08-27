@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { ShoppingCart, Heart, Search, User, ArrowRight, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
