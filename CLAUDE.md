@@ -13,7 +13,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar: **342 produtos**, 140 temas, busca, e as clientes avaliam |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 16 migrações aplicadas e conferidas |
+| Banco de dados | 16 aplicadas; a 17 (frete) espera aplicação |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
 | Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
@@ -23,7 +23,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
-| Frete | simulado |
+| Frete | **construído**, ligando no Melhor Envio; falta autorizar |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
@@ -36,6 +36,9 @@ O que falta, em ordem: [docs/contas-e-conversas.md](docs/contas-e-conversas.md).
 
 Como a loja conta visita, e por que sem cookie:
 [docs/a-contagem-de-visita.md](docs/a-contagem-de-visita.md).
+
+Como ligar o frete de verdade, passo a passo:
+[docs/ligar-o-melhor-envio.md](docs/ligar-o-melhor-envio.md).
 
 ---
 
