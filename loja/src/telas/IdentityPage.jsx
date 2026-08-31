@@ -23,7 +23,7 @@ const PALETTE = [
   },
   {
     name: 'Tinta',
-    hex: '#12305B',
+    hex: 'var(--color-ink)',
     use: 'Todo o texto e a marca. Azul de caneta, no lugar do preto.',
   },
   {
@@ -38,12 +38,12 @@ const PALETTE = [
   },
   {
     name: 'Marca-texto',
-    hex: '#FFD400',
+    hex: 'var(--color-marker)',
     use: 'Destaque da linha Projeto Educar. Sempre como fundo, com texto escuro por cima.',
   },
   {
     name: 'Rosa',
-    hex: '#C4436B',
+    hex: 'var(--color-heart)',
     use: 'Favoritos, promoções e avisos. Usada com parcimônia.',
   },
 ];

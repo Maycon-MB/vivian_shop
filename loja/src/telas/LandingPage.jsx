@@ -86,7 +86,7 @@ const LandingPage = () => {
     : DESTAQUES.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="landing-page" style={{ backgroundColor: '#FBFAF7', minHeight: '100vh' }}>
+    <div className="landing-page" style={{ backgroundColor: 'var(--color-surface)', minHeight: '100vh' }}>
       {/* Navbar Premium */}
       <Navbar expand="lg" fixed="top" className="bg-white bg-opacity-90 backdrop-blur border-bottom py-3 shadow-sm" style={{ zIndex: 1050 }}>
         <Container>
@@ -99,7 +99,7 @@ const LandingPage = () => {
             className="marca-loja"
             style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', fontWeight: 900, background: 'none', border: 0, padding: 0, cursor: 'pointer', textAlign: 'left' }}
           >
-            Feito para você!<span style={{ color: "#1F736F" }}> Personalizados</span>
+            Feito para você!<span style={{ color: "var(--color-chalk)" }}> Personalizados</span>
           </Navbar.Brand>
           {/* O carrinho ficava dentro do menu recolhido, e no celular
               sumia atrás do hambúrguer: quem põe produto no carrinho não
@@ -126,7 +126,7 @@ const LandingPage = () => {
                     key={cat} 
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-2 mb-2 mb-lg-0 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
-                    style={activeCategory === cat ? { backgroundColor: '#1F736F' } : {}}
+                    style={activeCategory === cat ? { backgroundColor: 'var(--color-chalk)' } : {}}
                 >
                     {cat}
                 </button>
@@ -152,7 +152,7 @@ const LandingPage = () => {
                         exit={{ scale: 0 }}
                         className="position-absolute top-0 start-100 translate-middle"
                     >
-                        <Badge pill bg="primary" style={{ backgroundColor: '#1F736F', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Badge pill bg="primary" style={{ backgroundColor: 'var(--color-chalk)', fontSize: '10px', minWidth: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {cartCount}
                         </Badge>
                     </motion.div>
@@ -165,7 +165,10 @@ const LandingPage = () => {
       </Navbar>
 
       {/* Hero Section */}
-      <section className="section-padding" style={{ paddingTop: '140px', background: 'radial-gradient(circle at top right, #F0EDF5, #FBFAF7)' }}>
+      <section className="section-padding" /* O azul-claro é o fundo do círculo da logo dela, e é a primeira
+           cor que a cliente vê. O gradiente antigo era um lilás
+           acinzentado que não existe na marca. */
+        style={{ paddingTop: '140px', background: 'linear-gradient(170deg, var(--color-ceu-veu) 0%, var(--color-surface) 60%)' }}>
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="mb-5 mb-lg-0 text-center text-lg-start">
@@ -174,18 +177,18 @@ const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'rgba(46, 155, 150, 0.1)', color: '#1F736F', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
+                <div className="d-inline-block px-3 py-1 mb-4 rounded-pill" style={{ backgroundColor: 'var(--color-agua-veu)', color: 'var(--color-chalk)', fontSize: '12px', fontWeight: 800, letterSpacing: '2px' }}>
                     PERSONALIZADOS SOB ENCOMENDA & MATERIAL PEDAGÓGICO DIGITAL
                 </div>
-                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', color: '#12305B', lineHeight: 1.1 }}>
+                <h1 className="display-2 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', color: 'var(--color-ink)', lineHeight: 1.1 }}>
                   Detalhes que encantam, <br/>
-                  <span style={{ color: '#1F736F' }}>personalizados</span> para você.
+                  <span style={{ color: 'var(--color-chalk)' }}>personalizados</span> para você.
                 </h1>
                 <p className="lead text-muted mb-5 pe-lg-5" style={{ fontSize: 'clamp(16px, 4vw, 20px)' }}>
                   Unimos a delicadeza da papelaria artesanal com a funcionalidade de materiais educativos adaptados para neurodiversidade.
                 </p>
                 <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
-                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: '#12305B' }} onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}>
+                  <Button className="rounded-pill px-5 py-3 fw-bold border-0 shadow-lg" style={{ backgroundColor: 'var(--color-ink)' }} onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}>
                     Ver Coleções
                   </Button>
                   <Button
@@ -206,10 +209,10 @@ const LandingPage = () => {
                     pedido falso numa loja de material inclusivo custa caro
                     se alguém confere. */}
                 <div className="mt-5 pt-4 border-top border-light d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-lg-start gap-3 small">
-                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
+                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: 'var(--color-ink)' }}>
                         <Truck size={18} /> Envio para todo o Brasil
                     </span>
-                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
+                    <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: 'var(--color-ink)' }}>
                         <MessageCircle size={18} /> Atendimento direto com a loja
                     </span>
                 </div>
@@ -252,7 +255,7 @@ const LandingPage = () => {
                     existe seria número inventado. */}
                 {DEPOIMENTO && (
                   <div className="mt-4 p-4 glass rounded-4 border border-white border-opacity-50 shadow-lg animate-fade-in" style={{ maxWidth: '320px' }}>
-                    <p className="small fw-bold mb-2" style={{ color: '#12305B' }}>
+                    <p className="small fw-bold mb-2" style={{ color: 'var(--color-ink)' }}>
                       &ldquo;{DEPOIMENTO.texto}&rdquo;
                     </p>
                     <span className="small text-muted">
@@ -313,8 +316,8 @@ const LandingPage = () => {
 
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-end mb-5 text-center text-md-start">
             <div className="mb-4 mb-md-0">
-              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: '#1F736F' }}>
-                <div style={{ width: '40px', height: '1px', backgroundColor: '#1F736F' }}></div>
+              <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2" style={{ color: 'var(--color-chalk)' }}>
+                <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-chalk)' }}></div>
                 <span className="small fw-black text-uppercase ls-widest">Todos os produtos</span>
               </div>
               <h2 className="display-4 fw-black mb-0" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Nosso Catálogo</h2>
@@ -354,11 +357,16 @@ const LandingPage = () => {
       </section>
 
       {/* Trust & Authority Section */}
-      <section className="section-padding" style={{ backgroundColor: '#FBFAF7' }}>
+      {/* Rosa véu, e não o mesmo creme do resto.
+          A Vivian disse em 30/08 que o site estava "mortinho, pálido". O
+          que faltava era ritmo: rolando a página, tudo tinha o mesmo
+          fundo, e seção sem troca de fundo não se separa da anterior.
+          O rosa é o anel de dentro da logo dela. */}
+      <section className="section-padding" style={{ backgroundColor: 'var(--color-rosa-veu)' }}>
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Compra <span style={{ color: '#1F736F' }}>segura</span></h2>
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Compra <span style={{ color: 'var(--color-chalk)' }}>segura</span></h2>
               <p className="text-muted fs-5 mb-3">
                 Comprar pela internet de uma loja que você ainda não conhece pode gerar algumas
                 dúvidas, e nós entendemos! Por isso, buscamos oferecer uma experiência de compra
@@ -379,7 +387,7 @@ const LandingPage = () => {
                 ocupam metade cada, senão fica um buraco à direita. */}
             <Col md={6}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#1F736F" /></div>
+                <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="var(--color-chalk)" /></div>
                 <h4 className="fw-black fs-5 mb-3">Atendimento de verdade</h4>
                 <p className="small text-muted mb-0">
                   Aqui, você fala diretamente com a nossa equipe, sem respostas automáticas ou
@@ -390,7 +398,7 @@ const LandingPage = () => {
             </Col>
             <Col md={6}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#C4436B" /></div>
+                <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="var(--color-heart)" /></div>
                 <h4 className="fw-black fs-5 mb-3">Antes de finalizar sua compra</h4>
                 {/* O texto que ela mandou tem seis parágrafos e não cabe num
                     cartão. Aqui fica o primeiro, palavra por palavra, e o
@@ -401,7 +409,11 @@ const LandingPage = () => {
                   pedimos que todas as dúvidas sejam esclarecidas antes da finalização da
                   compra.
                 </p>
-                <Link href="/politicas/" className="small fw-bold text-decoration-none" style={{ color: '#C4436B' }}>
+                {/* Tinta, e não coral: coral em texto pequeno sobre branco não
+                    alcança contraste, e o teste de acessibilidade pegou. A
+                    regra está escrita nos tokens e eu furei na linha
+                    seguinte. */}
+                <Link href="/politicas/" className="small fw-bold" style={{ color: 'var(--color-ink)' }}>
                   Ler antes de comprar
                 </Link>
               </div>
@@ -453,13 +465,13 @@ const LandingPage = () => {
           className="border-0 shadow-lg"
           style={{
             borderRadius: aviso?.tipo === 'bloqueio' ? '12px' : '999px',
-            backgroundColor: aviso?.tipo === 'bloqueio' ? '#FFD400' : '#12305B',
+            backgroundColor: aviso?.tipo === 'bloqueio' ? 'var(--color-marker)' : 'var(--color-ink)',
             maxWidth: '460px',
           }}
         >
           <Toast.Body
             className="py-3 px-4 d-flex align-items-center gap-3 fw-bold"
-            style={{ color: aviso?.tipo === 'bloqueio' ? '#12305B' : '#FFFFFF' }}
+            style={{ color: aviso?.tipo === 'bloqueio' ? 'var(--color-ink)' : '#FFFFFF' }}
           >
             {aviso?.tipo === 'bloqueio'
               ? <Package size={20} style={{ flexShrink: 0 }} />

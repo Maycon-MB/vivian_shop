@@ -33,9 +33,9 @@ const ProductCard = ({ product, addToCart }) => {
                 pedagógica. Ver spec de identidade visual. */}
             <span className="glass-pill" style={{
               backgroundColor: isPersonalizada
-                ? '#1F736F'
+                ? 'var(--color-chalk)'
                 : 'rgba(255, 212, 0, 0.9)',
-              color: isPersonalizada ? '#FFFFFF' : '#12305B'
+              color: isPersonalizada ? '#FFFFFF' : 'var(--color-ink)'
             }}>
               {product.category}
             </span>
@@ -63,7 +63,7 @@ const ProductCard = ({ product, addToCart }) => {
               style={{
                 height: '300px',
                 backgroundColor: isPersonalizada ? 'rgba(46, 155, 150, 0.08)' : 'rgba(255, 212, 0, 0.12)',
-                color: '#5F6F80',
+                color: 'var(--color-ink-soft)',
               }}
             >
               <Package size={28} />
@@ -78,7 +78,7 @@ const ProductCard = ({ product, addToCart }) => {
           <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
             <h3 className="fs-5 fw-black mb-0"><Link href={`/produto/${product.slug}`} prefetch={false} className="text-reset text-decoration-none link-produto">{product.name}</Link></h3>
             <div className="text-end">
-              <span className="fw-black fs-5 text-nowrap d-block" style={{ color: '#12305B' }}>
+              <span className="fw-black fs-5 text-nowrap d-block" style={{ color: 'var(--color-ink)' }}>
                 {/* O valor cheio riscado ao lado do promocional: é como
                     ela anuncia, e some quando não há desconto. */}
                 {temPromocao(product) && (
@@ -114,7 +114,7 @@ const ProductCard = ({ product, addToCart }) => {
 
           {/* A regra de venda vem antes do botão: ninguém deve descobrir o
               mínimo de 10 peças só no carrinho. */}
-          <div className="d-flex align-items-center gap-2 small fw-bold mb-4" style={{ color: '#12305B' }}>
+          <div className="d-flex align-items-center gap-2 small fw-bold mb-4" style={{ color: 'var(--color-ink)' }}>
             {isPersonalizada ? (
               <>
                 <Package size={15} style={{ flexShrink: 0 }} />

@@ -32,10 +32,10 @@ import { MessageCircle, ArrowLeft, Search } from 'lucide-react'
    já serve, e o Next marca a página como noindex sozinho. */
 
 const PAPEL = '#FBFAF7'
-const TINTA = '#12305B'
-const VERDE_ESCURO = '#1F736F'
-const AMARELO = '#FFD400'
-const CINZA = '#5F6F80'
+const TINTA = 'var(--color-ink)'
+const VERDE_ESCURO = 'var(--color-chalk)'
+const AMARELO = 'var(--color-marker)'
+const CINZA = 'var(--color-ink-soft)'
 const LINHA = '#DCE9F6'
 
 /* 44px de alvo de toque é o mínimo para quem clica com o polegar, de pé,

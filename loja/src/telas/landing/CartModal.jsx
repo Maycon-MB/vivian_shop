@@ -63,7 +63,7 @@ const CartModal = ({ show, onHide, cart, removeFromCart, onChangeQuantity, cartT
                     <button
                       onClick={() => removeFromCart(item.id)}
                       className="btn btn-sm btn-link p-0"
-                      style={{ color: '#C4436B' }}
+                      style={{ color: 'var(--color-heart)' }}
                       aria-label={`Tirar ${item.name} do carrinho`}
                     >
                       <X size={18} />
@@ -104,7 +104,7 @@ const CartModal = ({ show, onHide, cart, removeFromCart, onChangeQuantity, cartT
                       <span className="small text-muted">Arquivo digital</span>
                     )}
 
-                    <span className="fw-black" style={{ color: '#12305B', fontVariantNumeric: 'tabular-nums' }}>
+                    <span className="fw-black" style={{ color: 'var(--color-ink)', fontVariantNumeric: 'tabular-nums' }}>
                       {moeda(subtotalItem(item))}
                     </span>
                   </div>
@@ -135,7 +135,7 @@ const CartModal = ({ show, onHide, cart, removeFromCart, onChangeQuantity, cartT
               <Button
                 onClick={onCheckout}
                 className="w-100 py-3 rounded-pill fw-bold border-0"
-                style={{ backgroundColor: '#12305B' }}
+                style={{ backgroundColor: 'var(--color-ink)' }}
               >
                 Finalizar compra
               </Button>

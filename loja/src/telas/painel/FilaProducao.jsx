@@ -21,9 +21,9 @@ const FILA = [
 ];
 
 const cor = (restantes) => {
-  if (restantes <= 0) return '#C4436B';
-  if (restantes <= 1) return '#FFD400';
-  return '#1F736F';
+  if (restantes <= 0) return 'var(--color-heart)';
+  if (restantes <= 1) return 'var(--color-marker)';
+  return 'var(--color-chalk)';
 };
 
 const legenda = (restantes) => {

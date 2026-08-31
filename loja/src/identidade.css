@@ -11,7 +11,7 @@
 .identity {
   --paper:      #FBFAF7;
   --surface:    #FFFFFF;
-  --ink:        #12305B;
+  --ink:        var(--color-ink);
   --ink-soft:   #4A6183;
   --rule:       #A8C6E8;
   --rule-faint: #DCE9F6;
@@ -19,10 +19,10 @@
   /* O mesmo verde, escurecido até passar em contraste. O de cima continua
      sendo a cor da marca e é o que a paleta mostra; este é o que pode
      encostar em texto. Branco sobre #2E9B96 dá 3,36:1 e reprova. */
-  --chalk-texto: #1F736F;
-  --heart:      #C4436B;
-  --marker:     #FFD400;
-  --marker-ink: #12305B;
+  --chalk-texto: var(--color-chalk);
+  --heart:      var(--color-heart);
+  --marker:     var(--color-marker);
+  --marker-ink: var(--color-ink);
   --shadow:     0 1px 2px rgba(18, 48, 91, .06), 0 8px 24px rgba(18, 48, 91, .06);
 
   --display: var(--font-fraunces), Georgia, 'Iowan Old Style', serif;
@@ -839,7 +839,7 @@
   display: block;
   margin: 22px 0 0;
   padding: 16px 18px;
-  background: var(--ink, #12305B);
+  background: var(--ink, var(--color-ink));
   border-radius: 14px;
   color: #FFFFFF;
   text-decoration: none;
@@ -876,12 +876,12 @@
   background: #F2F7F6;
   border: 1px solid #D6E7E4;
   border-radius: 14px;
-  color: #1F736F;
+  color: var(--color-chalk);
   text-decoration: none;
 }
 
 .identity .ir-para-custos:hover,
-.identity .ir-para-custos:focus-visible { background: #E7F6F3; color: #1F736F; }
+.identity .ir-para-custos:focus-visible { background: #E7F6F3; color: var(--color-chalk); }
 
 .identity .ir-para-custos strong {
   display: block;
@@ -911,6 +911,6 @@
   vertical-align: middle;
 }
 
-.identity .etapa-quem.is-maycon { background: #E4EDF6; color: #12305B; }
+.identity .etapa-quem.is-maycon { background: #E4EDF6; color: var(--color-ink); }
 .identity .etapa-quem.is-vivian { background: #FFE9A3; color: #6B4E10; }
-.identity .etapa-quem.is-ambos { background: #E7F6F3; color: #1F736F; }
+.identity .etapa-quem.is-ambos { background: #E7F6F3; color: var(--color-chalk); }

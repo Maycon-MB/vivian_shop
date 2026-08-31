@@ -3,24 +3,64 @@
 /* Paleta e tipografia da loja.
    Ver docs/superpowers/specs/2026-08-10-identidade-visual-design.md
 
-   Cada cor saiu de uma das duas logos que a cliente já usava no Elo7: o
-   verde-água e o rosa do "Feito para você", o amarelo do "Projeto Educar",
-   e o azul que as duas tinham virou a cor do texto.
+   ── A paleta mudou em 31/08, e a razão é dela ─────────────────────────
 
-   Regra dura: o amarelo nunca é cor de texto. Sobre branco tem contraste
-   de 1.3:1, que é ilegível. Ele só entra como preenchimento, com a tinta
-   escrita por cima. */
+   A Vivian disse em 30/08: "o site tem como ficar mais colorido? Estou
+   achando tão mortinho... pálido". Mandou junto um site de referência
+   cheio de pastel.
+
+   Copiar aquele site seria pegar a identidade de outro negócio. O que ela
+   mandou uma hora depois resolveu melhor: a logo nova. **As cores daqui
+   saem de dentro dela**, medidas na imagem, e não escolhidas por mim:
+
+     - o vinho é a cor do "Feito para você!" escrito à mão
+     - o verde-água é o anel de fora
+     - o rosa é o anel de dentro
+     - o azul-claro é o fundo do círculo
+     - o coral são os corações
+     - o amarelo é o lápis
+
+   O azul-marinho que era a tinta desta loja saiu. Ele veio das duas logos
+   antigas do Elo7, e a logo nova não tem azul-marinho em lugar nenhum: o
+   site estava pálido porque estava usando a cor de uma marca que ela não
+   usa mais.
+
+   ── Regras duras ──────────────────────────────────────────────────────
+
+   O amarelo nunca é cor de texto: sobre branco tem 1.3:1, que é
+   ilegível. Ele só entra como preenchimento, com a tinta por cima.
+
+   O rosa e o azul-claro também não são cor de texto. São fundo de seção e
+   de etiqueta, e é assim que a loja ganha cor sem perder contraste.
+
+   O coral é o único saturado que aparece em texto, e só em preço e em
+   promoção. Cor forte usada em tudo para de significar alguma coisa. */
 
 @theme {
   --color-paper: #FBFAF7;
   --color-surface: #FFFFFF;
-  --color-ink: #12305B;
-  --color-ink-soft: #5F6F80;
-  --color-rule: #A8C6E8;
-  --color-rule-faint: #DCE9F6;
-  --color-chalk: #1F736F;
-  --color-marker: #FFD400;
-  --color-heart: #C4436B;
+
+  /* A tinta: o vinho do próprio nome dela, escrito na logo. */
+  --color-ink: #7B1E4B;
+  --color-ink-soft: #5F5560;
+
+  --color-rule: #E7B9C6;
+  --color-rule-faint: #F4E2E8;
+
+  /* O verde-água do anel. Escurecido do #3E9A99 medido na logo para
+     alcançar contraste de texto sobre branco. */
+  --color-chalk: #237C79;
+
+  --color-marker: #F2C14E;
+  --color-heart: #D93B54;
+
+  /* Fundos de seção. São eles que dão a cor que ela sentiu falta, e
+     nenhum deles carrega texto sozinho. */
+  --color-ceu: #BFE5F2;
+  --color-ceu-veu: #DDF1F8;
+  --color-rosa: #F8C1CC;
+  --color-rosa-veu: #FDF3F5;
+  --color-agua-veu: #EDF7F6;
 
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-corpo: var(--font-atkinson), "Segoe UI", system-ui, sans-serif;
@@ -35,21 +75,24 @@
    sobre fundo claro cai para 4,06:1. É o tipo de erro que ninguém enxerga
    revisando e que aparece na hora de ler no celular, no sol.
 
-   O nosso #5F6F80 dá no mínimo 4,74:1 em todos os fundos que usamos.
+   O nosso #5F5560 dá no mínimo 6,9:1 em todos os fundos que usamos. Ele
+   trocou o #5F6F80 antigo em 31/08: aquele era um cinza azulado, escolhido
+   para acompanhar o azul-marinho que saiu da marca. Ao lado do vinho ele
+   puxava para o frio.
 
    O `!important` é necessário porque as classes utilitárias do Bootstrap
    já vêm com ele; sem isso a regra não vale. */
 .text-muted,
 .text-secondary {
-  color: #5F6F80 !important;
+  color: var(--color-ink-soft) !important;
 }
 
 /* Mesmo motivo, para o contorno cinza dos botões secundários. */
 .btn-outline-secondary {
-  --bs-btn-color: #5F6F80;
-  --bs-btn-border-color: #5F6F80;
-  --bs-btn-hover-bg: #5F6F80;
-  --bs-btn-hover-border-color: #5F6F80;
+  --bs-btn-color: var(--color-ink-soft);
+  --bs-btn-border-color: var(--color-ink-soft);
+  --bs-btn-hover-bg: var(--color-ink-soft);
+  --bs-btn-hover-border-color: var(--color-ink-soft);
 }
 
 /* O verde do selo "sucesso" do Bootstrap dá 4,09:1 sobre o próprio fundo
@@ -89,7 +132,7 @@ body { padding-top: var(--faixas, 0); }
    Fica no topo, acima de tudo, porque quem abre uma loja no celular olha
    as fotos e rola — um convite no rodapé nunca seria visto. */
 .chamado-faixa {
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   padding: 11px 0;
 }
@@ -103,7 +146,7 @@ body { padding-top: var(--faixas, 0); }
 
 .chamado-detalhe {
   display: block;
-  color: #C9DAEC;
+  color: var(--color-rosa);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -113,8 +156,8 @@ body { padding-top: var(--faixas, 0); }
   align-items: center;
   justify-content: center;
   gap: 7px;
-  background: #FFD400;
-  color: #12305B;
+  background: var(--color-marker);
+  color: var(--color-ink);
   border-radius: 999px;
   padding: 10px 18px;
   font-size: 13.5px;
@@ -125,8 +168,8 @@ body { padding-top: var(--faixas, 0); }
 
 .chamado-botao:hover,
 .chamado-botao:focus-visible {
-  background: #FFE04D;
-  color: #12305B;
+  background: #F7D07A;
+  color: var(--color-ink);
 }
 
 /* No celular o botão ocupa a largura toda: alvo de toque grande é o que

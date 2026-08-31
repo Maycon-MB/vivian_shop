@@ -52,13 +52,13 @@ const CatalogSection = ({ onNewProduct }) => {
               <td className="border-0 fw-bold">R$ {product.price.toFixed(2)}</td>
               <td className="border-0 text-muted">{product.stock}</td>
               <td className="border-0">
-                <span className="fw-bold text-primary" style={{ color: '#1F736F' }}>{product.sales}</span> un.
+                <span className="fw-bold text-primary" style={{ color: 'var(--color-chalk)' }}>{product.sales}</span> un.
               </td>
               <td className="border-0 text-end">
                 <div className="d-flex justify-content-end gap-2">
                   <Button variant="link" className="p-0 text-muted hover:text-dark"><Edit size={18} /></Button>
                   <Button variant="link" className="p-0 text-muted hover:text-danger"><Trash2 size={18} /></Button>
-                  <Button variant="link" className="p-0 text-primary" style={{ color: '#1F736F' }}><ExternalLink size={18} /></Button>
+                  <Button variant="link" className="p-0 text-primary" style={{ color: 'var(--color-chalk)' }}><ExternalLink size={18} /></Button>
                 </div>
               </td>
             </tr>

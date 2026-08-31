@@ -33,7 +33,7 @@
   font-family: Fraunces, Georgia, serif;
   font-size: clamp(1.7rem, 4.5vw, 2.2rem);
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conta-sub { margin: 6px 0 20px; color: #55617A; }
@@ -52,7 +52,7 @@
 .conta-caixa label span {
   font-size: .88rem;
   font-weight: 700;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conta-caixa input {
@@ -60,19 +60,19 @@
   padding: 12px 14px;
   border: 1px solid #D8DEE7;
   border-radius: 10px;
-  color: #12305B;
+  color: var(--color-ink);
   /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
   font-size: 16px;
 }
 
-.conta-caixa input:focus-visible { outline: 2px solid #1F736F; outline-offset: 1px; }
+.conta-caixa input:focus-visible { outline: 2px solid var(--color-chalk); outline-offset: 1px; }
 
 .conta-botao {
   min-height: 48px;
   margin-top: 4px;
   border: 0;
   border-radius: 999px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 1rem;
@@ -97,7 +97,7 @@
   padding: 0;
   border: 0;
   background: none;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: inherit;
   font-weight: 700;
   text-decoration: underline;
@@ -143,7 +143,7 @@
   margin-bottom: 8px;
 }
 
-.conta-pedido-topo strong { color: #12305B; font-size: 1rem; }
+.conta-pedido-topo strong { color: var(--color-ink); font-size: 1rem; }
 .conta-pedido-topo span { color: #8A93A5; font-size: .82rem; }
 
 /* O estado dito para a cliente, e não para o sistema. Verde só quando o
@@ -159,7 +159,7 @@
   color: #55617A;
 }
 
-.conta-estado.aprovado { background: #E7F5F3; color: #1F736F; }
+.conta-estado.aprovado { background: #E7F5F3; color: var(--color-chalk); }
 .conta-estado.recusado { background: #FDECEC; color: #8A2020; }
 
 .conta-itens {
@@ -170,14 +170,14 @@
   line-height: 1.7;
 }
 
-.conta-total { margin: 0; font-weight: 800; color: #12305B; font-size: 1.05rem; }
+.conta-total { margin: 0; font-weight: 800; color: var(--color-ink); font-size: 1.05rem; }
 
 .conta-rastreio {
   display: flex;
   align-items: center;
   gap: 6px;
   margin: 10px 0 0;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: .88rem;
   font-weight: 600;
 }

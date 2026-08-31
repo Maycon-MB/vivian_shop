@@ -28,7 +28,7 @@ const AbaConfiguracoes = () => (
     <CartaoPainel
       titulo="Sua loja"
       subtitulo="Como sua loja aparece para quem chega."
-      cor="#1F736F"
+      cor="var(--color-chalk)"
     >
       <div className="form-grade">
         <label className="campo campo-largo">
@@ -62,7 +62,7 @@ const AbaConfiguracoes = () => (
     <CartaoPainel
       titulo="De onde você envia"
       subtitulo="Usado para calcular o frete de quem compra."
-      cor="#FFD400"
+      cor="var(--color-marker)"
       info="Este endereço aparece como remetente em toda etiqueta. Quem compra consegue ver. Se preferir usar outro, me avise."
     >
       <div className="form-grade">
@@ -86,7 +86,7 @@ const AbaConfiguracoes = () => (
     <CartaoPainel
       titulo="Como você trabalha"
       subtitulo="Vale para produto novo. Cada produto pode ter o seu."
-      cor="#12305B"
+      cor="var(--color-ink)"
     >
       <div className="form-grade">
         <label className="campo">
@@ -108,7 +108,7 @@ const AbaConfiguracoes = () => (
     <CartaoPainel
       titulo="Quando eu te aviso"
       subtitulo="Escolha o que vale interromper o seu dia."
-      cor="#C4436B"
+      cor="var(--color-heart)"
     >
       <div className="opcoes">
         <label className="opcao">

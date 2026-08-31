@@ -158,7 +158,10 @@ const Calendario = ({ dias }) => {
       min: 0,
       max: maximo,
       show: false,
-      inRange: { color: ['#EDF3F9', '#9AD5D1', '#1F736F', '#1B6B67'] },
+      /* Hex cru, e não `var()`: o gráfico desenha em canvas, e canvas não
+         resolve variável de CSS. São os mesmos verdes da marca, escritos
+         à mão só aqui. */
+      inRange: { color: ['#EDF7F6', '#9AD5D1', '#237C79', '#1B6B67'] },
     },
     calendar: {
       top: 30,

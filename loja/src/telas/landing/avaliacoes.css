@@ -20,7 +20,7 @@
   margin: 0 0 8px;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .avaliacoes-topo p {
@@ -51,7 +51,7 @@
 
 .avaliacao blockquote {
   margin: 0;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 1.05rem;
   line-height: 1.5;
   /* O que a cliente escreveu vem primeiro e maior: é o que quem chega
@@ -66,7 +66,7 @@
   margin: 0;
 }
 
-.avaliacao-quem strong { color: #1F736F; font-size: .95rem; }
+.avaliacao-quem strong { color: var(--color-chalk); font-size: .95rem; }
 .avaliacao-quem span { color: #55617A; font-size: .88rem; }
 /* #8A93A5 sobre branco dá 3,1:1, e o teste de acessibilidade recusou:
    quem lê isto está no celular, na rua, com sol na tela. */
@@ -81,7 +81,7 @@
   line-height: 1.5;
 }
 
-.avaliacao-resposta strong { color: #12305B; }
+.avaliacao-resposta strong { color: var(--color-ink); }
 
 @media (min-width: 700px) {
   .avaliacoes-lista { grid-template-columns: 1fr 1fr; }
