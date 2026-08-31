@@ -22,7 +22,7 @@ terceiros no nome dela.
 
 **CONTRATADO:** Maycon Bruno Montes Gomes Constancio, CNPJ 62.382.173/0001-79, com sede à [logradouro e número], Centro, Nilópolis/RJ, CEP 26510-790, doravante denominado **CONTRATADO**.
 
-**CONTRATANTE:** [nome completo], CPF ___.___.___-__, CNPJ ___.___.___/____-__ (se houver), residente à [dado pessoal removido], nº 189, apto 102, Vila Valqueire, Rio de Janeiro/RJ, CEP [dado pessoal removido], doravante denominada **CONTRATANTE**.
+**CONTRATANTE:** [nome completo], CPF ___.___.___-__, CNPJ ___.___.___/____-__ (se houver), residente à [logradouro, número, bairro, cidade e CEP], doravante denominada **CONTRATANTE**.
 
 As partes têm entre si justo e contratado o seguinte:
 

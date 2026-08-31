@@ -74,7 +74,10 @@ const validar = ({ dados, precisaEndereco, frete }) => {
 
   if (precisaEndereco) {
     if (soNumeros(dados.cep).length !== 8) {
-      erros.cep = 'O CEP tem 8 números, como em [dado pessoal removido].';
+      /* Exemplo inventado, e não o CEP dela.
+         Até 31/08 esta linha trazia o CEP da casa da Vivian, e toda
+         cliente que errasse o campo lia onde ela mora. */
+      erros.cep = 'O CEP tem 8 números, como em 20000-000.';
     }
     if (!dados.logradouro.trim()) erros.logradouro = 'Falta a rua.';
     if (!dados.numero.trim()) erros.numero = 'Falta o número.';
@@ -469,7 +472,10 @@ const Checkout = () => {
                           data-erro={erros.logradouro ? 'sim' : undefined}
                           isInvalid={Boolean(erros.logradouro)}
                           autoComplete="address-line1"
-                          placeholder="[dado pessoal removido]"
+                          {/* Rua inventada. Aqui estava o nome da rua onde
+                              a Vivian mora, à vista de toda cliente que
+                              abrisse o checkout. */}
+                          placeholder="Rua das Flores"
                         />
                         {campoErro('logradouro')}
                       </Form.Group>
