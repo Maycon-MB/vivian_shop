@@ -56,7 +56,10 @@
 
   /* Fundos de seção. São eles que dão a cor que ela sentiu falta, e
      nenhum deles carrega texto sozinho. */
-  --color-ceu: #BFE5F2;
+  /* Medido no canto da própria logo, e não estimado de olho: é o mesmo
+     azul do arquivo que ela mandou, e é o que faz o círculo encaixar no
+     cartão do herói sem aparecer a borda do quadrado. */
+  --color-ceu: #C1ECFD;
   --color-ceu-veu: #DDF1F8;
   --color-rosa: #F8C1CC;
   --color-rosa-veu: #FDF3F5;
