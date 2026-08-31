@@ -222,3 +222,14 @@ jobs:
           publish_branch: gh-pages
           enable_jekyll: false
           commit_message: 'publica ${{ github.sha }}'
+          # Um commit só na `gh-pages`, refeito a cada publicação.
+          #
+          # Ela guardava 134 commits de build, e os antigos traziam o CEP
+          # da casa da Vivian compilado dentro do JavaScript: o site atual
+          # já estava limpo e o histórico da branch continuava servindo o
+          # dado para quem soubesse procurar.
+          #
+          # Histórico de artefato de build não vale nada: o que reconstrói
+          # qualquer versão é o commit da `main` que a gerou, e ele está
+          # na mensagem acima. O que ele acumula é peso e risco.
+          force_orphan: true
