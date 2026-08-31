@@ -182,10 +182,32 @@ Deno.serve(async (req: Request) => {
 
   const resposta = await r.json()
 
+  const linhas = Array.isArray(resposta) ? resposta : []
+
+  /* O que foi descartado, e por quê.
+   *
+   * Eles respondem 200 com um `error` dentro do item quando a
+   * transportadora não atende. A primeira versão jogava isso fora em
+   * silêncio, e na primeira cotação de verdade só a Jadlog apareceu sem
+   * ninguém conseguir dizer o que houve com os Correios.
+   *
+   * Descartar continua certo: a cliente não pode ver "Correios: R$
+   * undefined" na hora de escolher. O que estava errado era descartar sem
+   * deixar rastro. */
+  const descartadas = linhas
+    .filter((linha: Record<string, unknown>) => linha?.error)
+    .map((linha: Record<string, unknown>) => ({
+      transportadora: (linha.company as { name?: string })?.name ?? '',
+      servico: String(linha.name ?? ''),
+      motivo: String(linha.error ?? ''),
+    }))
+
+  if (descartadas.length) console.log('descartadas', JSON.stringify(descartadas))
+
   /* A mesma regra que roda nos testes do domínio, repetida aqui porque
      esta função é Deno e não importa de `loja/src`. Se uma mudar, a outra
      tem que mudar junto: `freteDoMelhorEnvio.ts` é a que tem teste. */
-  const opcoes = (Array.isArray(resposta) ? resposta : [])
+  const opcoes = linhas
     .filter((linha: Record<string, unknown>) => !linha?.error)
     .map((linha: Record<string, unknown>) => ({
       id: String(linha.id ?? ''),
@@ -197,5 +219,8 @@ Deno.serve(async (req: Request) => {
     .filter((o) => Number.isFinite(o.valor) && o.valor > 0)
     .sort((a, b) => a.valor - b.valor)
 
-  return json({ opcoes })
+  /* `descartadas` sai na resposta de propósito. Não tem segredo dentro, e
+     é o que responde "por que os Correios não aparecem" sem eu precisar
+     subir versão de depuração toda vez. */
+  return json({ opcoes, descartadas })
 })
