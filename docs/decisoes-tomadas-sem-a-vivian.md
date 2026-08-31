@@ -143,6 +143,46 @@ contrato próprio.
 
 ---
 
+## 31/08: decisões tomadas com ela do outro lado do WhatsApp
+
+Foi o dia mais denso do projeto, e quase tudo veio dela em tempo real.
+
+**A paleta saiu da logo dela, e não do meu gosto.** Ela disse que o site
+estava "mortinho, pálido" e mandou um site de referência cheio de pastel.
+Copiar aquele site seria pegar a identidade de outro negócio. A logo nova
+que ela mandou uma hora depois resolveu melhor: as cores agora são
+medidas dentro do arquivo dela.
+
+**O texto de "Antes de finalizar sua compra" tem seis parágrafos.** Não
+cabe num cartão. Pus o primeiro, palavra por palavra, e o resto na página
+de políticas. Cortar seria eu reescrever o que ela decidiu dizer.
+
+**O mínimo e o prazo continuam vindo do produto**, e não escritos à mão.
+Ela escreveu "10 peças" e "5 dias" porque é o que vale em quase tudo, mas
+o dia em que um produto tiver mínimo diferente a página passaria a mentir.
+
+**Um travessão dela virou vírgula.** É a única alteração no texto que ela
+escreveu, e é por causa da regra do projeto de não usar travessão no que
+as clientes leem, que tem teste varrendo as telas.
+
+**O aplicativo do Melhor Envio ficou na conta do Maycon.** O cadastro pede
+URL de callback e e-mail técnico: campos de desenvolvedor. O passo dela
+virou um clique em "autorizar". O saldo, as etiquetas e os envios
+continuam na conta dela.
+
+**Uma senha provisória foi por WhatsApp**, e isso é o que a gente marcou
+como errado quando a senha da Elojinha veio assim. Aceitei porque o canal
+de e-mail estava quebrado e ela estava sem acesso ao painel havia
+quarenta minutos. A dívida disso é a tela de trocar senha dentro do
+painel, feita no mesmo dia.
+
+**O CPF e o endereço dela saíram do repositório e do histórico.** Estavam
+lá desde 17 e 21/08, e o pior pedaço estava no site: o nome da rua onde
+ela mora era o exemplo do campo de endereço no checkout. Ela não foi
+consultada porque não havia decisão a tomar.
+
+---
+
 ## O que ainda não dá para decidir sem ela
 
 Estas dependem de dinheiro, de conta bancária ou do que ela promete às
