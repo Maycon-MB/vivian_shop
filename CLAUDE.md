@@ -76,6 +76,16 @@ O CLI do Supabase procura em `supabase/functions/` e as nossas moram em
 ele, o deploy não reclama e não sobe: foi assim que a Vivian recebeu um
 404 no meio da autorização do frete, em 31/08.
 
+Para saber se alguma ficou para trás:
+
+```
+node scripts/conferir-funcoes.cjs
+```
+
+Ele roda no CI a cada push. Na primeira execução achou uma função morta,
+`aviso-de-pagamento`, que estava no repositório desde agosto com um nome a
+uma letra de distância da que funciona.
+
 **O catálogo entra no build, e não no navegador.** O `publicar.mjs` busca
 os produtos publicados antes de gerar as páginas. Isso é o que faz a loja
 abrir rápida no 4G e o Google ler as 342 páginas de produto — e significa

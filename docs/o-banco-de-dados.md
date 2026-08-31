@@ -18,7 +18,7 @@ Registro meu. Não vira PDF.
 | `supabase/migracoes/0002_pedidos.sql` | pedidos, itens e avisos de pagamento |
 | `supabase/migracoes/0003_cadastro_pela_dona.sql` | login dela, fotos no produto, balde de arquivos |
 | `supabase/migracoes/0004_primeira_dona.sql` | a primeira conta criada vira a dona |
-| `supabase/funcoes/aviso-de-pagamento/index.ts` | o endereço que o Mercado Pago chama |
+| `supabase/funcoes/aviso-do-pagamento/index.ts` | o endereço que o Mercado Pago chama |
 | [avisoDePagamento.ts](../loja/src/dominio/avisoDePagamento.ts) | as regras, com 30 testes |
 
 Nada disso depende de conta para ser escrito, revisado ou testado.
