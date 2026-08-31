@@ -94,6 +94,11 @@ jobs:
           # para desenhar os campos deles. Quem cobra é o Access Token, que
           # vive nos segredos da Edge Function e nunca sai do servidor.
           NEXT_PUBLIC_MERCADOPAGO_CHAVE: ${{ vars.NEXT_PUBLIC_MERCADOPAGO_CHAVE }}
+          # Liga o frete de verdade. Também não é segredo: só diz à loja
+          # para perguntar o preço à função `cotar-frete` em vez de estimar.
+          # O token do Melhor Envio vive dentro daquela função e nunca sai
+          # de lá, porque quem o tem compra etiqueta na conta dela.
+          NEXT_PUBLIC_MELHORENVIO_ATIVO: ${{ vars.NEXT_PUBLIC_MELHORENVIO_ATIVO }}
 
       # Onde a loja mora muda com a variável DOMINIO_PRONTO, e os testes
       # precisam bater no mesmo caminho que a publicação montou. Calcular
