@@ -27,7 +27,6 @@ Registro meu. Não vira PDF.
 | O quê | Trava |
 |---|---|
 | **Credenciais de produção** | só saem da conta dela |
-| **Conta no Melhor Envio** | só sai da conta dela |
 | Compra de teste com cartão real | depende das credenciais |
 | Medição de visita | **no ar**, sem cookie e sem identificar ninguém |
 | Descrição no cartão | três linhas, e o resto na página do produto |
@@ -39,7 +38,8 @@ Registro meu. Não vira PDF.
 
 Um número só engana, porque as partes não valem igual. Duas contas:
 
-**Do que foi contratado**, a loja substituindo o Elo7: **95%.**
+**Do que foi contratado**, a loja substituindo o Elo7: **97%.**
+O frete de verdade entrou em 31/08.
 Não sobrou nada que dependa só de mim. O que falta são duas contas que só
 ela pode abrir, e uma compra de teste que só faz sentido depois delas.
 
