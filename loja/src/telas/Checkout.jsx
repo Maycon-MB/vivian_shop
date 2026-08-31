@@ -472,9 +472,9 @@ const Checkout = () => {
                           data-erro={erros.logradouro ? 'sim' : undefined}
                           isInvalid={Boolean(erros.logradouro)}
                           autoComplete="address-line1"
-                          {/* Rua inventada. Aqui estava o nome da rua onde
-                              a Vivian mora, à vista de toda cliente que
-                              abrisse o checkout. */}
+                          /* Rua inventada. Aqui estava o nome da rua onde
+                             a Vivian mora, à vista de toda cliente que
+                             abrisse o checkout. */
                           placeholder="Rua das Flores"
                         />
                         {campoErro('logradouro')}
