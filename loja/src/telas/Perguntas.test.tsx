@@ -132,7 +132,7 @@ describe('formulário de perguntas', () => {
 
     expect(await screen.findByText('O que você já me contou')).toBeInTheDocument()
     expect(screen.getByText(/mínimo são 10 canecas/)).toBeInTheDocument()
-    expect(screen.getByText(/CEP [dado pessoal removido]/)).toBeInTheDocument()
+    expect(screen.getByText(/saem do Rio de Janeiro/)).toBeInTheDocument()
 
     // O que ela já disse não pode voltar como pergunta em branco.
     expect(screen.queryByLabelText(/prazo de 5 dias úteis vale para tudo/)).toBeNull()

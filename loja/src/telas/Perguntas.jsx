@@ -60,7 +60,10 @@ const JA_SEI = [
   {
     titulo: 'De onde sai e por onde vai',
     texto:
-      'Os envios saem do Rio de Janeiro, do CEP [dado pessoal removido], por Correios ou Jadlog, as duas que você já usava. O endereço vai impresso como remetente em toda etiqueta, e quem compra consegue ver.',
+      /* Sem o CEP: ele é o da casa dela, e a cidade responde a pergunta
+         igual. O endereço completo só aparece na etiqueta de quem
+         comprou, que é onde ele precisa mesmo estar. */
+      'Os envios saem do Rio de Janeiro, por Correios ou Jadlog, as duas que você já usava. O endereço vai impresso como remetente em toda etiqueta, e quem compra consegue ver.',
   },
   {
     titulo: 'A declaração de conteúdo continua',
