@@ -11,7 +11,7 @@
 
 .tema-topo h1 {
   margin: 0 0 8px;
-  color: #12305B;
+  color: var(--color-ink);
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(28px, 6vw, 40px);
   font-weight: 700;
@@ -20,7 +20,7 @@
 
 .tema-topo p {
   margin: 0 0 10px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 16px;
   line-height: 1.55;
 }
@@ -28,7 +28,7 @@
 .tema-conta {
   display: inline-block;
   background: #E7F6F3;
-  color: #1F736F;
+  color: var(--color-chalk);
   border-radius: 999px;
   padding: 5px 13px;
   font-size: 13px;
@@ -72,7 +72,7 @@
   justify-content: center;
   aspect-ratio: 4 / 3;
   background: #F2F7F6;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .06em;
@@ -86,7 +86,7 @@
   top: 10px;
   left: 10px;
   background: rgba(255, 255, 255, .94);
-  color: #12305B;
+  color: var(--color-ink);
   border-radius: 999px;
   padding: 4px 10px;
   font-size: 11px;
@@ -102,14 +102,14 @@
 }
 
 .tema-produto-corpo strong {
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 15.5px;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .tema-produto-desc {
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13.5px;
   line-height: 1.5;
 }
@@ -124,14 +124,14 @@
 /* O preço cheio riscado ao lado do promocional: é assim que ela anuncia
    no Elo7, e tirar o riscado apagaria o desconto que ela está dando. */
 .tema-produto-preco s { color: #8B98A6; font-size: 13px; }
-.tema-produto-preco b { color: #12305B; font-size: 19px; font-weight: 700; }
-.tema-produto-preco em { color: #5F6F80; font-size: 12.5px; font-style: normal; }
+.tema-produto-preco b { color: var(--color-ink); font-size: 19px; font-weight: 700; }
+.tema-produto-preco em { color: var(--color-ink-soft); font-size: 12.5px; font-style: normal; }
 
 .tema-produto-minimo {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: 12.5px;
   font-weight: 600;
 }

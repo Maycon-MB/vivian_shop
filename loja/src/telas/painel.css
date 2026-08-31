@@ -16,15 +16,15 @@
 
   --painel-fundo: #F2F5F9;
   --painel-superficie: #FFFFFF;
-  --painel-tinta: #12305B;
-  --painel-tinta-suave: #5F6F80;
+  --painel-tinta: var(--color-ink);
+  --painel-tinta-suave: var(--color-ink-soft);
   --painel-linha: #DCE9F6;
   --painel-linha-forte: #A8C6E8;
 
-  --painel-verde: #1F736F;
-  --painel-amarelo: #FFD400;
-  --painel-rosa: #C4436B;
-  --painel-azul: #12305B;
+  --painel-verde: var(--color-chalk);
+  --painel-amarelo: var(--color-marker);
+  --painel-rosa: var(--color-heart);
+  --painel-azul: var(--color-ink);
 
   --painel-raio: 16px;
   --painel-sombra: 0 1px 0 var(--painel-linha), 0 16px 36px -24px rgba(18, 48, 91, 0.28);
@@ -172,7 +172,7 @@
   height: 40px;
   border-radius: 11px;
   color: var(--kpi-cor, var(--painel-verde));
-  background: color-mix(in srgb, var(--kpi-cor, #1F736F) 12%, #FFFFFF);
+  background: color-mix(in srgb, var(--kpi-cor, var(--color-chalk)) 12%, #FFFFFF);
 }
 
 .kpi-rotulo {
@@ -395,7 +395,7 @@
 
 .painel-card {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--card-cor, #1F736F) 5%, transparent), transparent 120px),
+    linear-gradient(180deg, color-mix(in srgb, var(--card-cor, var(--color-chalk)) 5%, transparent), transparent 120px),
     var(--painel-superficie);
 }
 
@@ -403,8 +403,8 @@
 .kpi-faixa,
 .painel-card-faixa {
   background: linear-gradient(90deg,
-    var(--kpi-cor, var(--card-cor, #1F736F)),
-    color-mix(in srgb, var(--kpi-cor, var(--card-cor, #1F736F)) 35%, #FFFFFF));
+    var(--kpi-cor, var(--card-cor, var(--color-chalk))),
+    color-mix(in srgb, var(--kpi-cor, var(--card-cor, var(--color-chalk))) 35%, #FFFFFF));
 }
 
 /* ── Selo de conteúdo de exemplo ────────────────────────────────────────── */
@@ -474,7 +474,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: linear-gradient(140deg, #1F736F, #1F736F);
+  background: linear-gradient(140deg, var(--color-chalk), var(--color-chalk));
   box-shadow: 0 8px 18px -10px rgba(46, 155, 150, .9);
 }
 
@@ -821,7 +821,7 @@
    Sem esta marca, a Vivian não teria como saber qual dos dois é dela. */
 .pedido-daloja {
   background: #E7F6F3;
-  color: #1F736F;
+  color: var(--color-chalk);
   border-radius: 999px;
   padding: 3px 10px;
   font-size: 11.5px;
@@ -849,7 +849,7 @@
   align-items: center;
   gap: 9px;
   margin: 0 0 16px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 18px;
   font-weight: 700;
 }
@@ -882,7 +882,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 12.5px;
   font-weight: 600;
 }
@@ -890,16 +890,16 @@
 .relatorio-numero strong {
   display: block;
   margin: 6px 0 3px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 24px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.relatorio-numero.destaque strong { color: #1F736F; }
+.relatorio-numero.destaque strong { color: var(--color-chalk); }
 
 .relatorio-numero .detalhe {
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 12px;
   line-height: 1.4;
 }
@@ -917,7 +917,7 @@
   line-height: 1.6;
 }
 
-.relatorio-conta strong { color: #12305B; }
+.relatorio-conta strong { color: var(--color-ink); }
 
 .relatorio-linhas {
   display: flex;
@@ -937,12 +937,12 @@
   flex: 0 0 auto;
 }
 
-.relatorio-linhas .ponto.personalizada { background: #1F736F; }
+.relatorio-linhas .ponto.personalizada { background: var(--color-chalk); }
 .relatorio-linhas .ponto.pedagogica { background: #E0B200; }
 
 .relatorio-explica,
 .relatorio-aviso {
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13.5px;
   line-height: 1.6;
 }
@@ -968,7 +968,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 14.5px;
   font-weight: 600;
 }
@@ -978,7 +978,7 @@
   border: 1.5px solid #DCE6F1;
   border-radius: 10px;
   padding: 7px 10px;
-  color: #12305B;
+  color: var(--color-ink);
   font-family: inherit;
   font-size: 15px;
   font-weight: 700;
@@ -987,7 +987,7 @@
 
 .relatorio-taxa input:focus {
   outline: none;
-  border-color: #1F736F;
+  border-color: var(--color-chalk);
   box-shadow: 0 0 0 3px rgba(31, 115, 111, .14);
 }
 
@@ -1014,7 +1014,7 @@
    para a bancada. */
 .produzir-lista strong {
   min-width: 46px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: 24px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -1024,13 +1024,13 @@
 .produzir-lista span {
   display: flex;
   flex-direction: column;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 15px;
   font-weight: 600;
 }
 
 .produzir-lista em {
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 12.5px;
   font-style: normal;
   font-weight: 400;
@@ -1038,7 +1038,7 @@
 
 .acao-principal:disabled {
   background: #DCE9F6;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -1053,6 +1053,6 @@
   min-height: 210px;
   background: #F7FAFD;
   border-radius: 14px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13.5px;
 }

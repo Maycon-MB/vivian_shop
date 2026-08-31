@@ -13,16 +13,16 @@
 .produtos-topo h2 {
   margin: 0 0 4px;
   font-size: 22px;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produtos-conta {
   margin: 0;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 14.5px;
 }
 
-.produtos-conta strong { color: #1F736F; }
+.produtos-conta strong { color: var(--color-chalk); }
 
 .produtos-busca {
   display: flex;
@@ -32,7 +32,7 @@
   border: 1.5px solid #D8E0E9;
   border-radius: 12px;
   background: #FFFFFF;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
 .produtos-busca input {
@@ -42,7 +42,7 @@
   /* 16px, e nunca menos: abaixo disso o iPhone dá zoom sozinho ao focar
      o campo, e a pessoa perde o lugar na tela. */
   font-size: 16px;
-  color: #12305B;
+  color: var(--color-ink);
   background: transparent;
 }
 
@@ -68,7 +68,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 15px;
 }
 
@@ -91,12 +91,12 @@
 .produtos-grupo-topo h3 {
   margin: 0;
   font-size: 16px;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produtos-grupo-topo span {
   font-size: 13px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
 .produtos-lote {
@@ -105,7 +105,7 @@
   padding: 9px 16px;
   border: 0;
   border-radius: 999px;
-  background: #1F736F;
+  background: var(--color-chalk);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 14px;
@@ -129,14 +129,14 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .04em;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   background: #F7F8FA;
 }
 
 .produtos-tabela td {
   padding: 11px 15px;
   border-top: 1px solid #EEF2F6;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produtos-tabela td:last-child { text-align: right; }
@@ -150,11 +150,11 @@
   font-size: 13.5px;
 }
 
-.produtos-publicar { background: #12305B; color: #FFFFFF; }
+.produtos-publicar { background: var(--color-ink); color: #FFFFFF; }
 
 .produtos-tirar {
   background: transparent;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   border-color: #D8E0E9;
 }
 
@@ -167,7 +167,7 @@
   border-radius: 999px;
   border: 1.5px solid #D8E0E9;
   background: transparent;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-weight: 600;
   font-size: 13.5px;
 }
@@ -240,7 +240,7 @@
   /* Nome ocupa a primeira coluna; preço embaixo dele; botão à direita,
      ocupando as duas linhas. */
   .produtos-tabela td:nth-child(1) { grid-column: 1; grid-row: 1; font-weight: 600; }
-  .produtos-tabela td:nth-child(2) { grid-column: 1; grid-row: 2; color: #5F6F80; font-size: 13.5px; }
+  .produtos-tabela td:nth-child(2) { grid-column: 1; grid-row: 2; color: var(--color-ink-soft); font-size: 13.5px; }
   .produtos-tabela td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; text-align: right; }
 
   /* "Pôr no topo" e "Editar" descem para uma faixa própria, lado a lado.
@@ -256,7 +256,7 @@
 
 .produtos-aviso {
   margin: 4px 0 0;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13px;
 }
 
@@ -275,7 +275,7 @@
   padding: 10px 18px;
   border: 0;
   border-radius: 999px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   font-weight: 700;
   font-size: .92rem;
@@ -290,13 +290,13 @@
   border: 1px solid #D8DEE7;
   border-radius: 999px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   font-weight: 600;
   font-size: .86rem;
   cursor: pointer;
 }
 
-.produtos-editar:hover { border-color: #12305B; }
+.produtos-editar:hover { border-color: var(--color-ink); }
 
 .produto-formulario { max-width: 720px; }
 
@@ -314,7 +314,7 @@
   margin: 0;
   font-size: 1.35rem;
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produto-voltar {
@@ -329,7 +329,7 @@
   cursor: pointer;
 }
 
-.produto-voltar:hover { color: #12305B; }
+.produto-voltar:hover { color: var(--color-ink); }
 
 .produto-formulario form {
   display: flex;
@@ -350,7 +350,7 @@
 .produto-campo-rotulo {
   font-weight: 700;
   font-size: .9rem;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produto-campo-ajuda {
@@ -371,7 +371,7 @@
      e o zoom desalinha a tela inteira no meio do preenchimento. */
   font-size: 16px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produto-campo textarea { resize: vertical; }
@@ -379,7 +379,7 @@
 .produto-campo input:focus-visible,
 .produto-campo select:focus-visible,
 .produto-campo textarea:focus-visible {
-  outline: 2px solid #1F736F;
+  outline: 2px solid var(--color-chalk);
   outline-offset: 1px;
 }
 
@@ -404,7 +404,7 @@
   padding: 0 6px;
   font-weight: 700;
   font-size: .92rem;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .produto-no-ar {
@@ -419,7 +419,7 @@
 
 .produto-no-ar input { margin-top: 3px; width: 18px; height: 18px; }
 .produto-no-ar span { display: flex; flex-direction: column; gap: 4px; }
-.produto-no-ar strong { color: #12305B; font-size: .95rem; }
+.produto-no-ar strong { color: var(--color-ink); font-size: .95rem; }
 .produto-no-ar small { color: #6B7688; font-size: .82rem; line-height: 1.45; }
 
 .produto-acoes-formulario {
@@ -460,7 +460,7 @@
 
 /* A que ainda espera se distingue de longe. Ela abre isto no celular,
    entre uma encomenda e outra, e precisa achar em um olhar. */
-.conversa-item.esperando { border-left: 4px solid #1F736F; }
+.conversa-item.esperando { border-left: 4px solid var(--color-chalk); }
 .conversa-item.respondida { opacity: .8; }
 
 .conversa-item header {
@@ -475,7 +475,7 @@
   margin: 0 0 2px;
   font-size: 1rem;
   font-weight: 700;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conversa-item-email {
@@ -513,12 +513,12 @@
   border-radius: 10px;
   font: inherit;
   font-size: 16px;
-  color: #12305B;
+  color: var(--color-ink);
   resize: vertical;
 }
 
 .conversa-item-resposta textarea:focus-visible {
-  outline: 2px solid #1F736F;
+  outline: 2px solid var(--color-chalk);
   outline-offset: 1px;
 }
 
@@ -545,14 +545,14 @@
   align-self: flex-start;
   border: 1px solid #E4E8EF;
   background: #F7FAFC;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 /* Invertido em relação à loja, e de propósito: aqui quem lê é ela, e a
    fala dela é que fica do lado dela. */
 .conversas-painel .conversa-fala.loja {
   align-self: flex-end;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FBFAF7;
 }
 
@@ -564,7 +564,7 @@
   padding: 10px 20px;
   border: 0;
   border-radius: 999px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   font-weight: 700;
   font-size: .9rem;
@@ -590,7 +590,7 @@
   min-height: 44px;
   padding: 10px 20px;
   border-radius: 999px;
-  background: #1F736F;
+  background: var(--color-chalk);
   color: #FFFFFF;
   font-weight: 700;
   font-size: .9rem;
@@ -613,7 +613,7 @@
   cursor: pointer;
 }
 
-.conversa-marcar:hover { border-color: #1F736F; color: #12305B; }
+.conversa-marcar:hover { border-color: var(--color-chalk); color: var(--color-ink); }
 .conversa-marcar:disabled { opacity: .55; }
 
 .conversa-item-aqui summary {
@@ -622,7 +622,7 @@
   cursor: pointer;
 }
 
-.conversa-item-aqui summary:hover { color: #12305B; }
+.conversa-item-aqui summary:hover { color: var(--color-ink); }
 
 .conversa-item-aqui .conversa-item-resposta { margin-top: 10px; }
 
@@ -671,13 +671,13 @@
   border: 1px solid #D8DEE7;
   border-radius: 999px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   font-weight: 600;
   font-size: .9rem;
   cursor: pointer;
 }
 
-.produto-foto-botao:hover { border-color: #1F736F; }
+.produto-foto-botao:hover { border-color: var(--color-chalk); }
 .produto-foto-botao input { display: none; }
 
 .produto-galeria {
@@ -744,7 +744,7 @@
   padding: 0 6px;
   font-weight: 700;
   font-size: .92rem;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .recebo-opcao {
@@ -756,7 +756,7 @@
 
 .recebo-opcao input { margin-top: 3px; width: 18px; height: 18px; flex-shrink: 0; }
 .recebo-opcao span { display: flex; flex-direction: column; gap: 3px; }
-.recebo-opcao strong { color: #12305B; font-size: .93rem; }
+.recebo-opcao strong { color: var(--color-ink); font-size: .93rem; }
 .recebo-opcao small { color: #6B7688; font-size: .82rem; line-height: 1.45; }
 
 /* O efeito no pedido dela, e não uma porcentagem solta: uma porcentagem
@@ -772,7 +772,7 @@
   margin: 0 0 2px;
   font-size: 1rem;
   font-weight: 700;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .recebo-exemplo-nota { margin: 0 0 10px; color: #55617A; font-size: .82rem; }
@@ -780,7 +780,7 @@
 .recebo-exemplo ul {
   margin: 0;
   padding-left: 20px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: .93rem;
   line-height: 1.7;
 }
@@ -789,7 +789,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: .88rem;
   font-weight: 600;
 }
@@ -806,7 +806,7 @@
   padding: 12px 14px;
   border-radius: 12px;
   background: #F7FAFC;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: .95rem;
   line-height: 1.55;
 }

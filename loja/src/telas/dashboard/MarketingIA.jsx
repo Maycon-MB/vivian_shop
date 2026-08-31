@@ -37,7 +37,7 @@ const MarketingIA = ({ approving, onApprove }) => (
         onClick={onApprove}
         disabled={approving}
         className="w-100 py-3 rounded-pill fw-bold border-0"
-        style={{ backgroundColor: '#12305B' }}
+        style={{ backgroundColor: 'var(--color-ink)' }}
       >
         {approving ? 'Agendando...' : 'Aprovar e agendar'}
       </Button>

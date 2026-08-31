@@ -18,7 +18,7 @@
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(1.9rem, 5vw, 2.6rem);
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .catalogo-topo p { margin: 0 0 18px; color: #55617A; }
@@ -40,13 +40,13 @@
   min-width: 0;
   border: 0;
   background: none;
-  color: #12305B;
+  color: var(--color-ink);
   /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
   font-size: 16px;
 }
 
 .catalogo-busca input:focus { outline: none; }
-.catalogo-busca:focus-within { border-color: #1F736F; }
+.catalogo-busca:focus-within { border-color: var(--color-chalk); }
 
 .catalogo-filtros {
   display: flex;
@@ -75,7 +75,7 @@
   border: 1px solid #E4E8EF;
   border-radius: 999px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: .87rem;
   font-weight: 600;
   cursor: pointer;
@@ -87,11 +87,11 @@
   font-weight: 500;
 }
 
-.catalogo-ficha:hover { border-color: #1F736F; }
+.catalogo-ficha:hover { border-color: var(--color-chalk); }
 
 .catalogo-ficha.escolhida {
-  background: #12305B;
-  border-color: #12305B;
+  background: var(--color-ink);
+  border-color: var(--color-ink);
   color: #FFFFFF;
 }
 
@@ -103,7 +103,7 @@
   border: 0;
   border-radius: 999px;
   background: none;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: .87rem;
   font-weight: 700;
   text-decoration: underline;
@@ -159,7 +159,7 @@
 
 .catalogo-vazio p { margin: 0 0 8px; }
 .catalogo-vazio p:last-child { margin: 0; }
-.catalogo-vazio a { color: #1F736F; font-weight: 700; }
+.catalogo-vazio a { color: var(--color-chalk); font-weight: 700; }
 
 /* No celular os filtros correm de lado, em vez de empilhar.
  *

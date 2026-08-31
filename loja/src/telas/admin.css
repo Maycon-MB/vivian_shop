@@ -23,7 +23,7 @@
 }
 
 .admin-voltar-linha a {
-  color: #12305B;
+  color: var(--color-ink);
   font-weight: 700;
   font-size: 14.5px;
   text-decoration: none;
