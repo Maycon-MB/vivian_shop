@@ -148,6 +148,19 @@ jobs:
       - name: peso e tempo das telas
         run: node scripts/medir-desempenho.cjs
 
+      # As funções do Supabase não sobem com o push: vão por
+      # `scripts/subir-funcoes.mjs`. Nada no build reclama quando alguém
+      # esquece, porque o arquivo está no disco e o site publica normal.
+      #
+      # Em 31/08 a Vivian clicou no link de autorização do Melhor Envio e
+      # recebeu 404 de duas funções que nunca tinham sido publicadas. O
+      # código de autorização vale uma vez só, e o dela queimou.
+      #
+      # Só 404 reprova. Falha de rede vira aviso: derrubar a publicação
+      # porque a internet oscilou ensina a ignorar o vermelho.
+      - name: as funções estão publicadas
+        run: node scripts/conferir-funcoes.cjs
+
       # Quando a compra falha, a mensagem de erro raramente basta: o que
       # resolve é ver a tela no instante em que quebrou.
       - name: guardar as telas quando falhar
