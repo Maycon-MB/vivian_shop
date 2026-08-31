@@ -168,6 +168,32 @@
 .sobre-linha strong { display: block; font-size: 15px; margin-bottom: 4px; }
 .sobre-linha p { margin: 0; font-size: 13.5px; color: #5F6F80; line-height: 1.55; }
 
+/* Ela mandou o pedido mínimo e o prazo como itens soltos, e não no meio
+   do parágrafo. É o mesmo motivo do pedido dela sobre a descrição dos
+   produtos: informação que decide compra não pode estar embolada no
+   texto corrido. */
+.sobre-detalhes {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13.5px;
+  color: #5F6F80;
+  line-height: 1.55;
+}
+
+.sobre-detalhes li { padding-left: 14px; position: relative; }
+
+.sobre-detalhes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #1F736F;
+}
+
 .sobre-fechamento {
   display: flex;
   gap: 14px;
@@ -376,3 +402,79 @@ a.entrar-botao {
   justify-content: center;
   text-decoration: none;
 }
+
+
+/* ── A política da loja ───────────────────────────────────────────────
+ *
+ * Texto longo, escrito por ela, que a cliente só lê se der. Por isso a
+ * medida de linha curta, o respiro entre blocos e a lista com marcador:
+ * parede de texto jurídico ninguém termina, e política que ninguém lê não
+ * protege nem ela nem quem compra.
+ */
+.politica { background: #FBFAF8; }
+
+.politica-topo { margin-bottom: 34px; }
+
+.politica-topo h1 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #12305B;
+  margin: 0 0 16px;
+}
+
+.politica-topo p, .politica-bloco p {
+  color: #4A5A6B;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 14px;
+}
+
+.politica-bloco { margin-bottom: 34px; }
+
+.politica-bloco h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #12305B;
+  margin: 0 0 14px;
+}
+
+.politica-lista { margin: 0 0 26px; padding: 0; list-style: none; }
+
+.politica-lista li {
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 10px;
+  color: #4A5A6B;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Verde para o que pode, vinho para o que não pode. A cliente lê a cor
+   antes de ler a frase, e as duas listas são longas e parecidas. */
+.politica-lista.pode li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #1F736F;
+  font-weight: 700;
+}
+
+.politica-lista.nao-pode li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  color: #C4436B;
+  font-weight: 700;
+}
+
+/* O que ela quer que ninguém alegue não ter visto. */
+.politica-destaque {
+  background: #FDF3C7;
+  border-left: 4px solid #E3C158;
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+}
+
+.politica a { color: #C4436B; font-weight: 700; }
