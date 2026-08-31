@@ -17,6 +17,7 @@ import {
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo';
 import { precoAtual, temPromocao, REGRAS_DO_PERSONALIZADO, acharTema } from './catalogo';
 import { useCarrinho } from './CarrinhoContexto';
+import { descricaoEmLinhas } from '@/dominio/descricaoEmLinhas'
 
 /**
  * Página de um produto.
@@ -95,7 +96,24 @@ const PaginaProduto = ({ produto }) => {
 
           <Col lg={6}>
             <h1 className="produto-titulo">{produto.name}</h1>
-            <p className="produto-descricao">{produto.description}</p>
+            {/* Linha por linha, e não um bloco só.
+                A Vivian pediu em 30/08: "em todos os produtos as
+                informações estão emboladas, tudo junto". Tamanho, material
+                e prazo são o que a cliente veio conferir, e no meio de um
+                parágrafo de doze linhas ninguém acha. */}
+            <div className="produto-descricao">
+              {descricaoEmLinhas(produto.description).map((linha, i) => (
+                <p key={`${linha.texto}-${i}`}>
+                  {linha.rotulo ? (
+                    <>
+                      <strong>{linha.rotulo}:</strong> {linha.valor}
+                    </>
+                  ) : (
+                    linha.texto
+                  )}
+                </p>
+              ))}
+            </div>
 
             <div className="produto-preco-bloco">
               <span className="produto-valor">

@@ -55,7 +55,19 @@ describe('o que sai', () => {
 
   it('troca "anúncio" por "foto"', () => {
     // Aqui não há anúncio: há a página do produto dela.
-    expect(limparDescricao('a mesma arte da foto no anúncio')).toContain('na foto')
+    expect(limparDescricao('produzido com a arte no anúncio')).toContain('na foto')
+  })
+
+  it('não repete "foto" quando a frase já falava em foto', () => {
+    /* Este teste existe por causa de um defeito que ficou no ar de 26/08
+       a 31/08, em 262 produtos. A frase original era "a mesma arte da foto
+       no anúncio"; trocando só o pedaço, virou "da foto na foto", e nenhum
+       teste reclamou porque a versão antiga deste arquivo pedia
+       exatamente isso.
+
+       Trocar palavra em texto que eu não escrevi pede reler a frase
+       inteira depois. */
+    expect(limparDescricao('a mesma arte da foto no anúncio')).toBe('a mesma arte da foto')
   })
 })
 
