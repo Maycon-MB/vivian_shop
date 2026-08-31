@@ -120,6 +120,11 @@ const Entrar = () => {
               esqueceu a senha muito mais vezes do que nunca teve conta. */}
           <p className="entrar-criar">
             <Link href="/admin/esqueci-a-senha/" prefetch={false}>Esqueci a minha senha</Link>
+            {/* Para quem sabe a senha e quer trocar. Em 31/08 a única
+                troca possível era pelo link do e-mail, e no dia em que
+                ela precisou os e-mails foram parar no endereço errado. */}
+            {' · '}
+            <Link href="/admin/trocar-senha/" prefetch={false}>Trocar a minha senha</Link>
           </p>
 
           <p className="entrar-criar">
