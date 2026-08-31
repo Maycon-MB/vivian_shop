@@ -395,12 +395,23 @@
 .entrar-icone { color: var(--color-chalk); margin-bottom: 12px; }
 
 /* O link "pedir outro" usa a classe do botão, e sem isto ele fica com
-   sublinhado e cor de link dentro de um botão preenchido. */
+   sublinhado e cor de link dentro de um botão preenchido.
+
+   A cor branca é `!important` porque o azul de link do Bootstrap tem
+   especificidade maior que a classe. Sem isso, o texto sai azul sobre o
+   vinho do botão: foi assim que a tela de "frete ligado" apareceu no
+   primeiro print, ilegível justamente na única ação da página. */
 a.entrar-botao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  color: #FFFFFF !important;
+}
+
+a.entrar-botao:hover,
+a.entrar-botao:focus-visible {
+  color: #FFFFFF !important;
 }
 
 

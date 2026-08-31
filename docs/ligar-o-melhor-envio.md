@@ -1,7 +1,27 @@
-# Ligar o Melhor Envio
+# O Melhor Envio, ligado
 
-O que falta para o frete deixar de ser estimativa. O código está pronto e
-no ar desde 31/08; o que resta é criar o aplicativo e a Vivian autorizar.
+**Feito em 31/08/2026.** A loja cota frete de verdade, com Correios e
+Jadlog lado a lado, e a cliente escolhe.
+
+Este documento virou registro do que foi feito e do que quebrou no
+caminho. Os passos ficam porque o dia em que alguém precisar refazer isso
+é o dia em que ninguém vai lembrar.
+
+## O que a loja cota hoje
+
+Pedido de 10 lousas, de Vila Valqueire até a Av. Paulista:
+
+| Transportadora | Serviço | Preço | Prazo |
+|---|---|---|---|
+| Jadlog | .Package | R$ 21,82 | 6 dias |
+| Jadlog | .Com | R$ 24,90 | 5 dias |
+| Correios | PAC | R$ 28,88 | 5 dias |
+| Correios | SEDEX | R$ 45,23 | 2 dias |
+
+O Mini Envios nunca aparece, e o motivo vem da própria API: *"Dimensões do
+objeto ultrapassam o limite da transportadora"*. O mínimo de dez peças faz
+o pacote crescer além do que aquele serviço aceita, mesmo no saquinho, que
+é leve. Não é defeito, é o serviço não servir para o que ela vende.
 
 ---
 
@@ -34,6 +54,35 @@ em casa.
 > por isso que ele não fica no repositório, não fica numa tabela com
 > leitura pública, e não passa pelo navegador. Ver
 > [0017_credencial_do_frete.sql](../supabase/migracoes/0017_credencial_do_frete.sql).
+
+---
+
+## O que deu errado, e vale não repetir
+
+**O CLI não achava as funções.** Ele procura em `supabase/functions/` e as
+nossas moram em `supabase/funcoes/`, porque aqui tudo é escrito em
+português. O deploy não reclamava; simplesmente não subia nada.
+
+O preço disso foi a Vivian clicar no link de autorização e receber um
+`404` do Supabase. **O código de autorização vale uma vez só**, então o
+dela queimou e ela teve que repetir, no fim de uma tarde em que já tinha
+ficado sem acesso ao painel. Hoje existe `scripts/subir-funcoes.mjs`, que
+copia, publica e limpa.
+
+**A variável não chegava ao build.** `NEXT_PUBLIC_MELHORENVIO_ATIVO`
+existia no código e neste documento, e o workflow não a passava para o
+`publicar.mjs`. Criar a variável no GitHub não teria feito efeito nenhum.
+
+**A função não podia devolver HTML.** O Supabase força
+`content-type: text/plain` em resposta de Edge Function, para ninguém
+hospedar página falsa no domínio dele. A Vivian viu o código-fonte cru na
+tela, com acento quebrado, logo depois de autorizar: funcionou e pareceu
+quebrado. Agora a função redireciona para `/admin/frete-ligado/`, que é
+página da loja.
+
+**O escopo que eu tinha escrito não existia.** Era `shipping-services`,
+inventado de memória. O certo é `shipping-calculate` e
+`shipping-companies`. Trocar escopo depois exige nova autorização dela.
 
 ---
 
@@ -100,11 +149,21 @@ conta do sandbox não é a mesma, e as credenciais não valem entre eles.
 
 ## Passo 3: aplicar a migração e subir as funções
 
+A migração vai no SQL Editor:
+
 ```
-supabase/migracoes/0017_credencial_do_frete.sql   no SQL Editor
-supabase/funcoes/frete-retorno                    deploy
-supabase/funcoes/cotar-frete                      deploy
+supabase/migracoes/0017_credencial_do_frete.sql
 ```
+
+As funções vão pelo script, e não pelo `supabase functions deploy` direto:
+
+```
+node scripts/subir-funcoes.mjs
+```
+
+Ele existe porque o CLI procura em `supabase/functions/` e as nossas ficam
+em `supabase/funcoes/`. O script copia para o nome que o CLI espera,
+publica, e apaga a cópia no fim, mesmo se der erro no meio.
 
 ---
 

@@ -13,7 +13,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 |---|---|
 | Loja pública | no ar: **342 produtos**, 140 temas, busca, e as clientes avaliam |
 | Domínio | registrado no CPF dela, vence 21/08/2027 |
-| Banco de dados | 16 aplicadas; a 17 (frete) espera aplicação |
+| Banco de dados | 17 migrações aplicadas e conferidas |
 | Login | funciona; `/admin` só abre para quem está em `donas_da_loja` |
 | Conta de quem compra | funciona; ela vê os próprios pedidos em `/minha-conta` |
 | Pedido | **nasce no banco**, com o preço lido de lá e não do navegador |
@@ -23,7 +23,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
 | Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
-| Frete | **construído**, ligando no Melhor Envio; falta autorizar |
+| Frete | **de verdade**: Correios e Jadlog, e a cliente escolhe |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
@@ -64,6 +64,17 @@ DOMINIO_PRONTO=true BASE_DA_LOJA=http://127.0.0.1:4173 node scripts/verificar-li
 ```
 
 Publicar é `git push` na `main`. O workflow testa e publica sozinho.
+
+**As funções do Supabase não sobem com o push.** Elas vão por:
+
+```
+node scripts/subir-funcoes.mjs [nome]
+```
+
+O CLI do Supabase procura em `supabase/functions/` e as nossas moram em
+`supabase/funcoes/`, em português como o resto. O script faz a ponte. Sem
+ele, o deploy não reclama e não sobe: foi assim que a Vivian recebeu um
+404 no meio da autorização do frete, em 31/08.
 
 **O catálogo entra no build, e não no navegador.** O `publicar.mjs` busca
 os produtos publicados antes de gerar as páginas. Isso é o que faz a loja

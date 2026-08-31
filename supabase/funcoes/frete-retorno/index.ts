@@ -25,21 +25,26 @@
  * passaria a comprar etiqueta na conta de um estranho.
  */
 
-const cabecalhos = {
-  'Content-Type': 'text/html; charset=utf-8',
-}
+/**
+ * Para onde a Vivian é mandada depois de autorizar.
+ *
+ * ── Por que redirecionar, e não desenhar a página aqui ─────────────────
+ *
+ * A primeira versão devolvia HTML. **O Supabase não deixa:** ele força
+ * `content-type: text/plain` com `nosniff` em resposta de função, para
+ * ninguém hospedar página falsa num domínio dele.
+ *
+ * O resultado é que ela viu o código-fonte cru na tela, com os acentos
+ * quebrados, logo depois de autorizar. Funcionou e pareceu quebrado, que
+ * é o pior dos dois mundos numa tela de confirmação.
+ *
+ * Redirecionando, a página é da loja: tem a cara do site, o acento certo,
+ * e é onde ela já sabe estar.
+ */
+const LOJA = 'https://feitoparavocepapelaria.com.br'
 
-const pagina = (titulo: string, recado: string, cor: string) =>
-  `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>${titulo}</title></head>
-   <body style="font-family: system-ui, sans-serif; background:#FBFAF7; margin:0;
-                display:flex; align-items:center; justify-content:center; min-height:100vh;">
-     <div style="max-width:420px; padding:32px; text-align:center;">
-       <h1 style="color:${cor}; font-size:22px; margin:0 0 12px;">${titulo}</h1>
-       <p style="color:#5F5560; line-height:1.6; margin:0;">${recado}</p>
-     </div>
-   </body></html>`
+const paraALoja = (situacao: string) =>
+  Response.redirect(`${LOJA}/admin/frete-ligado/?situacao=${situacao}`, 303)
 
 Deno.serve(async (req: Request) => {
   const url = new URL(req.url)
@@ -52,14 +57,7 @@ Deno.serve(async (req: Request) => {
      casos de recusa: dizer "state errado" para quem tentou é ensinar o
      que falta acertar. */
   if (!code || !esperado || state !== esperado) {
-    return new Response(
-      pagina(
-        'Não consegui concluir',
-        'O link expirou ou foi aberto fora de ordem. Me chama que eu te mando outro.',
-        '#D93B54',
-      ),
-      { status: 400, headers: cabecalhos },
-    )
+    return paraALoja('link-invalido')
   }
 
   const base = Deno.env.get('MELHORENVIO_BASE') ?? 'https://melhorenvio.com.br'
@@ -88,14 +86,7 @@ Deno.serve(async (req: Request) => {
        a Vivian, e não tem o que ela fazer com isso. */
     console.error('troca de token recusada', resposta.status, await resposta.text())
 
-    return new Response(
-      pagina(
-        'Não consegui concluir',
-        'O Melhor Envio recusou a autorização. Já estou vendo o que aconteceu.',
-        '#D93B54',
-      ),
-      { status: 502, headers: cabecalhos },
-    )
+    return paraALoja('recusado')
   }
 
   const { access_token, refresh_token, expires_in } = await resposta.json()
@@ -125,22 +116,8 @@ Deno.serve(async (req: Request) => {
   if (!gravou.ok) {
     console.error('não consegui guardar o token', gravou.status, await gravou.text())
 
-    return new Response(
-      pagina(
-        'Autorizou, mas não guardei',
-        'A autorização deu certo e eu não consegui salvar aqui. Me chama, é comigo.',
-        '#D93B54',
-      ),
-      { status: 500, headers: cabecalhos },
-    )
+    return paraALoja('nao-guardei')
   }
 
-  return new Response(
-    pagina(
-      'Pronto, obrigado!',
-      'A sua conta do Melhor Envio está ligada à loja. O frete que aparece para as clientes passa a ser o de verdade.',
-      '#237C79',
-    ),
-    { status: 200, headers: cabecalhos },
-  )
+  return paraALoja('pronto')
 })

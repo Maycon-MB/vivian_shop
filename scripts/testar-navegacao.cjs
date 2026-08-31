@@ -169,6 +169,11 @@ const conferir = async (nome, fn) => {
     await pagina.waitForURL('**/produto/**')
   })
 
+  /* A frase é dela e muda quando ela quiser.
+     Em 31/08 "Mínimo de 10 unidades" virou "Pedido mínimo de 10 unidades",
+     e três testes quebraram de uma vez: eles casavam a frase inteira com
+     maiúscula, e passaram a ler `NaN` no lugar do número. O teste é sobre
+     a conta estar certa, não sobre a redação dela. */
   await conferir('a página do produto mostra o mínimo e o total certos', async () => {
     /* O produto vem da vitrine, e não de um endereço escrito à mão.
 
@@ -187,7 +192,7 @@ const conferir = async (nome, fn) => {
 
     const corpo = await pagina.locator('body').textContent()
 
-    const minimo = Number((corpo.match(/Mínimo de (\d+) unidades/) || [])[1])
+    const minimo = Number((corpo.match(/m[íi]nimo de (\d+) unidades/i) || [])[1])
     if (!minimo) throw new Error('a página não avisa o mínimo')
 
     const emNumero = (texto) => Number(texto.replace(/\./g, '').replace(',', '.'))
@@ -207,7 +212,7 @@ const conferir = async (nome, fn) => {
 
   await conferir('aumentar a quantidade recalcula o total', async () => {
     const antes = await pagina.locator('body').textContent()
-    const minimo = Number((antes.match(/Mínimo de (\d+) unidades/) || [])[1])
+    const minimo = Number((antes.match(/m[íi]nimo de (\d+) unidades/i) || [])[1])
     const emNumero = (texto) => Number(texto.replace(/\./g, '').replace(',', '.'))
     const unitario = emNumero((antes.match(/R\$ ([\d.,]+)\s*cada/) || [])[1] || '0')
 
@@ -259,7 +264,7 @@ const conferir = async (nome, fn) => {
 
     const corpo = await pagina.locator('body').textContent()
     if (corpo.includes('dias úteis')) throw new Error('material digital não tem prazo de produção')
-    if (corpo.includes('Mínimo de 10')) throw new Error('material digital não tem mínimo')
+    if (/m[íi]nimo de 10 unidades/i.test(corpo)) throw new Error('material digital não tem mínimo')
   })
 
   await conferirDuasLinhas('o carrinho impede misturar as duas linhas', async () => {
@@ -392,7 +397,12 @@ const conferir = async (nome, fn) => {
 
     const naPagina = await pagina.locator('body').textContent()
     const nome = (await pagina.locator('h1').first().textContent()).trim()
-    const minimo = Number((naPagina.match(/Mínimo de (\d+) unidades/) || [])[1] || 1)
+    /* Sem caixa alta e sem casar a frase inteira: a redação é dela.
+       O `|| 1` deixou esta quebrar em silêncio quando "Mínimo de 10
+       unidades" virou "Pedido mínimo de 10 unidades" em 31/08 — em vez de
+       falhar dizendo que não achou, o teste passou a conferir o total de
+       uma peça e acusou o carrinho de perder o valor. */
+    const minimo = Number((naPagina.match(/m[íi]nimo de (\d+) unidades/i) || [])[1] || 1)
     const emNumero = (t) => Number(t.replace(/\./g, '').replace(',', '.'))
     const unitario = emNumero((naPagina.match(/R\$ ([\d.,]+)\s*cada/) || [])[1] || '0')
 
