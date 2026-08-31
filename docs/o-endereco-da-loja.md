@@ -4,6 +4,12 @@
 
 Registro meu. Não vira PDF.
 
+
+> **Nada de dado pessoal dela aqui.** Este arquivo trouxe o CPF e o nome
+> completo da Vivian de 21/08 a 31/08, num repositório público. Quem
+> precisa desses números é o registro.br, que já os tem, e o contrato, que
+> não mora no Git.
+
 ---
 
 ## O que está feito
@@ -11,7 +17,7 @@ Registro meu. Não vira PDF.
 | | |
 |---|---|
 | Domínio | `feitoparavocepapelaria.com.br` |
-| Titular | [dado pessoal removido], CPF [dado pessoal removido] |
+| Titular | a Vivian, no CPF dela |
 | Contato técnico | Maycon, ID `MBMGC2` |
 | Registrado em | 21/08/2026 |
 | **Vence em** | **21/08/2027** |
