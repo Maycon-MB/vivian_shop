@@ -53,6 +53,13 @@ export const limparDescricao = (bruta: string): string => {
          página do produto dela. */
       .replace(/\bno anúncio\b/gi, 'na foto')
       .replace(/\bdo anúncio\b/gi, 'da foto')
+      /* A troca acima criou "a mesma arte da foto na foto" em 262
+         produtos, porque a frase original já dizia "da foto". Ficou no ar
+         de 26/08 a 31/08, e ninguém leu até ali.
+
+         Trocar palavra em texto que eu não escrevi pede reler a frase
+         inteira depois, e não só o pedaço trocado. */
+      .replace(/\bda foto na foto\b/gi, 'da foto')
       // O que sobrar do nome da concorrente, em qualquer grafia.
       .replace(/\bELO\s?7\b/gi, '')
       // Espaço solto no fim da linha, que o editor deles deixava.
