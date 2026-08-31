@@ -236,13 +236,18 @@ const LandingPage = () => {
                     a faixa não parecer recortada dentro do cartão. */}
                 <div
                   className="rounded-5 overflow-hidden shadow-2xl d-flex align-items-center justify-content-center p-4 p-lg-5"
-                  style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)', backgroundColor: '#C1EBFD' }}
+                  style={{ boxShadow: '0 50px 100px -20px rgba(0,0,0,0.15)', backgroundColor: 'var(--color-ceu)' }}
                 >
+                  {/* A logo nova, que ela mandou em 30/08 às 16:31.
+                      Nome de arquivo novo de propósito: reaproveitando o
+                      antigo, quem já visitou a loja continuaria vendo a
+                      marca velha por causa do cache do navegador, e ela
+                      abriria o site achando que eu não troquei. */}
                   <img
-                    src={`${BASE}logo-feito-para-voce.webp`}
-                    alt="Feito Para Você! Papelaria Personalizada"
+                    src={`${BASE}marca-feito-para-voce.webp`}
+                    alt="Feito para você! Papelaria personalizada e atividades pedagógicas"
                     className="w-100"
-                    style={{ maxWidth: '520px' }}
+                    style={{ maxWidth: '420px' }}
                   />
                 </div>
                 {/* O cartão ficou vazio de propósito por quatro meses, dizendo
