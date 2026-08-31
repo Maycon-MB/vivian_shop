@@ -26,7 +26,7 @@
      antes de ler como chat da loja, e a conversa aqui existe justamente
      para a cliente não sair para o WhatsApp. O azul é o mesmo dos botões
      principais: parece parte da loja. */
-  background: #12305B;
+  background: var(--color-ink);
   color: #FBFAF7;
   font-weight: 600;
   font-size: .95rem;
@@ -36,7 +36,7 @@
 
 .conversa-bolha:hover,
 .conversa-bolha:focus-visible { filter: brightness(1.06); }
-.conversa-bolha:focus-visible { outline: 3px solid #12305B; outline-offset: 2px; }
+.conversa-bolha:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px; }
 
 /* No celular fica só o ícone: o rótulo cobriria produto. */
 .conversa-bolha-rotulo { display: none; }
@@ -70,7 +70,7 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conversa-topo button {
@@ -109,12 +109,12 @@
   align-self: flex-start;
   background: #FFFFFF;
   border: 1px solid #E4E8EF;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conversa-fala.cliente {
   align-self: flex-end;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FBFAF7;
 }
 
@@ -132,19 +132,19 @@
   border: 1px solid #DCE9F6;
   border-radius: 999px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: .9rem;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
 }
 
-.conversa-botoes button:hover { border-color: #1F736F; }
-.conversa-botoes button:focus-visible { outline: 3px solid #12305B; outline-offset: 1px; }
+.conversa-botoes button:hover { border-color: var(--color-chalk); }
+.conversa-botoes button:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 1px; }
 
 .conversa-humano {
-  background: #12305B !important;
-  border-color: #12305B !important;
+  background: var(--color-ink) !important;
+  border-color: var(--color-ink) !important;
   color: #FBFAF7 !important;
   text-align: center !important;
 }
@@ -173,7 +173,7 @@
 .conversa-recado label span {
   font-size: .85rem;
   font-weight: 700;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .conversa-recado input,
@@ -185,7 +185,7 @@
   font: inherit;
   /* 16px é o mínimo que o iPhone aceita sem dar zoom no campo ao tocar. */
   font-size: 16px;
-  color: #12305B;
+  color: var(--color-ink);
   background: #FFFFFF;
 }
 
@@ -193,7 +193,7 @@
 
 .conversa-recado input:focus-visible,
 .conversa-recado textarea:focus-visible {
-  outline: 2px solid #1F736F;
+  outline: 2px solid var(--color-chalk);
   outline-offset: 1px;
 }
 
@@ -221,7 +221,7 @@
   padding: 10px 20px;
   border: 0;
   border-radius: 999px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   font-weight: 700;
   font-size: .9rem;
@@ -322,13 +322,13 @@
   border: 1px solid #D8DEE7;
   border-radius: 999px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
   font-size: 16px;
 }
 
 .conversa-escrever input:focus-visible {
-  outline: 2px solid #1F736F;
+  outline: 2px solid var(--color-chalk);
   outline-offset: 1px;
 }
 
@@ -341,7 +341,7 @@
   flex-shrink: 0;
   border: 0;
   border-radius: 50%;
-  background: #1F736F;
+  background: var(--color-chalk);
   color: #FBFAF7;
   cursor: pointer;
 }

@@ -19,7 +19,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
       return (
         <Modal show={show} onHide={onHide} centered>
             <Modal.Body className="p-5 text-center">
-                <div className="spinner-border text-primary mb-4" role="status" style={{ color: '#1F736F' }}></div>
+                <div className="spinner-border text-primary mb-4" role="status" style={{ color: 'var(--color-chalk)' }}></div>
                 <h4 className="fw-black mb-2">Processando Pagamento...</h4>
                 <p className="text-muted">Estamos validando os dados com segurança.</p>
             </Modal.Body>
@@ -54,7 +54,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
               <Col lg={7}>
                   <div className="checkout-section mb-5">
                       <h5 className="fw-bold mb-4 d-flex align-items-center gap-2">
-                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: '#1F736F', color: 'white' }}>1</div>
+                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: 'var(--color-chalk)', color: 'white' }}>1</div>
                           Entrega e Contato
                       </h5>
                       <Form className="d-flex flex-column gap-3">
@@ -69,7 +69,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
 
                   <div className="checkout-section mb-5">
                       <h5 className="fw-bold mb-4 d-flex align-items-center gap-2">
-                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: '#1F736F', color: 'white' }}>2</div>
+                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: 'var(--color-chalk)', color: 'white' }}>2</div>
                           Escolha o Frete
                       </h5>
                       <div className="d-flex flex-column gap-3">
@@ -92,7 +92,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
 
                   <div className="checkout-section">
                       <h5 className="fw-bold mb-4 d-flex align-items-center gap-2">
-                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: '#1F736F', color: 'white' }}>3</div>
+                          <div className="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px', fontSize: '14px', backgroundColor: 'var(--color-chalk)', color: 'white' }}>3</div>
                           Pagamento
                       </h5>
                       <div className="p-4 border rounded-4 mb-3">
@@ -124,7 +124,7 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
                                       {item.quantidade > 1 && <strong>{item.quantidade}x </strong>}
                                       {item.name}
                                   </span>
-                                  <span className="fw-bold text-nowrap" style={{ color: '#12305B', fontVariantNumeric: 'tabular-nums' }}>
+                                  <span className="fw-bold text-nowrap" style={{ color: 'var(--color-ink)', fontVariantNumeric: 'tabular-nums' }}>
                                       R$ {subtotalItem(item).toFixed(2).replace('.', ',')}
                                   </span>
                               </div>
@@ -142,11 +142,11 @@ const CheckoutModal = ({ show, onHide, cart, cartTotal, onComplete }) => {
                       </div>
                       <div className="d-flex justify-content-between fs-4 fw-black mb-5">
                           <span>Total</span>
-                          <span className="text-primary" style={{ color: '#1F736F' }}>R$ {(cartTotal + 18.90).toFixed(2)}</span>
+                          <span className="text-primary" style={{ color: 'var(--color-chalk)' }}>R$ {(cartTotal + 18.90).toFixed(2)}</span>
                       </div>
                       <Button 
                           className="w-100 py-3 rounded-pill fw-bold border-0 shadow-lg mb-3" 
-                          style={{ backgroundColor: '#1F736F' }}
+                          style={{ backgroundColor: 'var(--color-chalk)' }}
                           onClick={handleComplete}
                       >
                           Finalizar Pedido

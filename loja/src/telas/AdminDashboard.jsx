@@ -152,7 +152,7 @@ const AdminDashboard = () => {
         data: [5200, 6320, 5010, 7340, 8900, 9300],
         type: 'line',
         smooth: true,
-        color: '#1F736F',
+        color: 'var(--color-chalk)',
         lineStyle: { width: 3 },
         areaStyle: { color: 'rgba(46, 155, 150, 0.1)' }
       },
@@ -161,7 +161,7 @@ const AdminDashboard = () => {
         data: [3000, 3000, 4000, 4000, 4000, 4000],
         type: 'line',
         smooth: true,
-        color: '#FFD400',
+        color: 'var(--color-marker)',
         lineStyle: { width: 3 },
         areaStyle: { color: 'rgba(255, 212, 0, 0.1)' }
       }
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
       rotulo: 'Esperando você',
       valor: 3,
       icone: <Package size={20} />,
-      cor: '#FFD400',
+      cor: 'var(--color-marker)',
       nota: '2 em produção, 1 pronto para postar',
       info: 'Pedidos já pagos que dependem de você produzir ou postar. É por onde começar o dia.',
     },
@@ -194,7 +194,7 @@ const AdminDashboard = () => {
       prefixo: 'R$ ',
       casas: 2,
       icone: <ShoppingBag size={20} />,
-      cor: '#1F736F',
+      cor: 'var(--color-chalk)',
       nota: 'sem contar o frete',
       info: 'Soma dos pedidos pagos neste mês, sem contar o frete, o frete é dos Correios, não seu.',
     },
@@ -202,7 +202,7 @@ const AdminDashboard = () => {
       rotulo: 'Clientes',
       valor: 47,
       icone: <Users size={20} />,
-      cor: '#12305B',
+      cor: 'var(--color-ink)',
       nota: '12 compraram mais de uma vez',
       info: 'Quantas pessoas diferentes já compraram. Cliente que volta conta uma vez só.',
     },
@@ -212,7 +212,7 @@ const AdminDashboard = () => {
       prefixo: 'R$ ',
       casas: 2,
       icone: <TrendingUp size={20} />,
-      cor: '#C4436B',
+      cor: 'var(--color-heart)',
       nota: 'comissão que você não pagou',
       info: 'Quanto você teria pago de comissão se estas vendas tivessem passado pelo Elo7. É o que a loja própria te devolve.',
     },
@@ -259,10 +259,10 @@ const AdminDashboard = () => {
                 <Button onClick={() => (temBanco() ? setActiveTab('catalogo') : setShowNewProduct(true))} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
                   <Plus size={16} /> <span className="d-none d-sm-inline">Novo produto</span>
                 </Button>
-                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: '#1F736F', borderColor: '#1F736F' }}>
+                <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: 'var(--color-chalk)', borderColor: 'var(--color-chalk)' }}>
                   <CheckCircle size={16} /> <span className="d-none d-sm-inline">Lançar venda</span>
                 </Button>
-                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: '#1F736F', borderColor: '#1F736F' }}>
+                <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: 'var(--color-chalk)', borderColor: 'var(--color-chalk)' }}>
                   <Eye size={16} /> <span className="d-none d-sm-inline">Ver a loja</span>
                 </Button>
               </div>
@@ -283,17 +283,17 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Quanto entrou por dia"
                   subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
-                  cor="#1F736F"
+                  cor="var(--color-chalk)"
                   info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais, dá para postar no Instagram justamente nesse dia."
                   acao={
                     <span className="d-flex align-items-center gap-3">
-                      <span className="d-flex gap-3 small fw-bold" style={{ color: '#5F6F80' }}>
+                      <span className="d-flex gap-3 small fw-bold" style={{ color: 'var(--color-ink-soft)' }}>
                         <span className="d-flex align-items-center gap-1">
-                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#1F736F' }} />
+                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-chalk)' }} />
                           Personalizada
                         </span>
                         <span className="d-flex align-items-center gap-1">
-                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFD400' }} />
+                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-marker)' }} />
                           Pedagógica
                         </span>
                       </span>
@@ -309,7 +309,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="De onde vem o dinheiro"
                   subtitulo="Peso de cada linha no mês."
-                  cor="#FFD400"
+                  cor="var(--color-marker)"
                   info="A linha pedagógica é digital: não tem frete nem produção, então quase tudo que entra ali é lucro. Se ela crescer, você trabalha menos para ganhar o mesmo."
                   acao={<span className="selo-exemplo">exemplo</span>}
                 >
@@ -323,7 +323,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Na sua bancada"
                   subtitulo="O que produzir primeiro."
-                  cor="#C4436B"
+                  cor="var(--color-heart)"
                   info="A barra mostra quanto do prazo combinado já passou, não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
                   acao={<span className="selo-exemplo">exemplo</span>}
                 >
@@ -335,7 +335,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="O que mais sai"
                   subtitulo="Unidades vendidas no mês."
-                  cor="#12305B"
+                  cor="var(--color-ink)"
                   info="Use para decidir o que vale ter pronto e o que fotografar melhor. Produto que quase não aparece aqui talvez precise de foto nova, não de desconto."
                   acao={<span className="selo-exemplo">exemplo</span>}
                 >
@@ -347,7 +347,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Marketing"
                   subtitulo="Post sugerido para esta semana."
-                  cor="#1F736F"
+                  cor="var(--color-chalk)"
                   info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda, nada vai para o seu Instagram sem você aprovar."
                   semPadding
                 >
@@ -361,7 +361,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Para despachar"
                   subtitulo="Etiqueta e declaração de conteúdo saem juntas, prontas para imprimir."
-                  cor="#FFD400"
+                  cor="var(--color-marker)"
                   info="A declaração vale para Correios e Jadlog: como você é MEI, ela substitui a nota fiscal no transporte."
                   semPadding
                 >
@@ -375,7 +375,7 @@ const AdminDashboard = () => {
                 <CartaoPainel
                   titulo="Últimos pedidos"
                   subtitulo="O que precisa de você aparece primeiro."
-                  cor="#1F736F"
+                  cor="var(--color-chalk)"
                   info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho, sem você fazer nada."
                   acao={
                     <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
@@ -485,7 +485,7 @@ const AdminDashboard = () => {
                         <option>Indicação</option>
                     </Form.Select>
                 </Form.Group>
-                <Button type="submit" className="w-100 py-3 rounded-pill fw-bold mt-2" variant="primary" style={{ backgroundColor: '#1F736F', borderColor: '#1F736F' }}>
+                <Button type="submit" className="w-100 py-3 rounded-pill fw-bold mt-2" variant="primary" style={{ backgroundColor: 'var(--color-chalk)', borderColor: 'var(--color-chalk)' }}>
                     Registrar e Atualizar Dashboard
                 </Button>
             </Form>
@@ -544,7 +544,7 @@ const AdminDashboard = () => {
             <div className="d-flex justify-content-between align-items-center border-top pt-3">
                 <div>
                     <p className="text-muted small mb-0">Total:</p>
-                    <p className="fw-black fs-4 mb-0 text-primary" style={{ color: '#1F736F' }}>R$ {selectedOrder?.total.toFixed(2)}</p>
+                    <p className="fw-black fs-4 mb-0 text-primary" style={{ color: 'var(--color-chalk)' }}>R$ {selectedOrder?.total.toFixed(2)}</p>
                 </div>
                 <Button variant="success" className="rounded-pill px-4 fw-bold">Enviar WhatsApp</Button>
             </div>

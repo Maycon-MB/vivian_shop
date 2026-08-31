@@ -17,7 +17,7 @@
 
 .perguntas-etiqueta {
   margin: 0 0 6px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: .09em;
@@ -26,7 +26,7 @@
 
 .perguntas-topo h1 {
   margin: 0 0 12px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: clamp(28px, 6vw, 38px);
   font-weight: 700;
   line-height: 1.15;
@@ -57,13 +57,13 @@
 .perguntas-barra span {
   display: block;
   height: 100%;
-  background: #1F736F;
+  background: var(--color-chalk);
   border-radius: 999px;
   transition: width .3s ease;
 }
 
 .perguntas-progresso > span {
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
@@ -74,7 +74,7 @@
   align-items: center;
   gap: 7px;
   margin: 0;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 13px;
 }
 
@@ -88,14 +88,14 @@
 
 .perguntas-bloco h2 {
   margin: 0 0 4px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 20px;
   font-weight: 700;
 }
 
 .perguntas-bloco-resumo {
   margin: 0 0 20px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -110,7 +110,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 16px;
   font-weight: 700;
   line-height: 1.4;
@@ -118,12 +118,12 @@
 
 /* Marca a pergunta já respondida sem apagá-la: ela ainda precisa poder
    reler e mudar de ideia. */
-.pergunta.respondida label { color: #1F736F; }
+.pergunta.respondida label { color: var(--color-chalk); }
 .pergunta label svg { flex: 0 0 auto; margin-top: 3px; }
 
 .pergunta-porque {
   margin: 7px 0 12px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   font-size: 14px;
   line-height: 1.58;
 }
@@ -134,7 +134,7 @@
   border-radius: 14px;
   background: #FDFDFB;
   padding: 13px 15px;
-  color: #12305B;
+  color: var(--color-ink);
   font-family: inherit;
   /* 16px impede o iPhone de dar zoom sozinho ao focar o campo. */
   font-size: 16px;
@@ -146,12 +146,12 @@
 
 .pergunta textarea:focus {
   outline: none;
-  border-color: #1F736F;
+  border-color: var(--color-chalk);
   box-shadow: 0 0 0 3px rgba(31, 115, 111, .14);
 }
 
 .perguntas-fim {
-  background: #12305B;
+  background: var(--color-ink);
   border-radius: 22px;
   padding: 28px 24px;
   margin-top: 26px;
@@ -254,10 +254,10 @@
   flex-direction: column;
   gap: 3px;
   padding: 13px 17px;
-  background: #FFD400;
+  background: var(--color-marker);
   border-radius: 14px;
   box-shadow: 0 14px 34px -12px rgba(18, 48, 91, .5);
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 /* Espaço no fim da página para a tarja não cobrir o botão verde. */
@@ -355,7 +355,7 @@
 
 .perguntas-jasei h2 {
   margin: 0 0 4px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: 20px;
   font-weight: 700;
 }
@@ -385,12 +385,12 @@
 .perguntas-jasei li svg {
   flex: 0 0 auto;
   margin-top: 3px;
-  color: #1F736F;
+  color: var(--color-chalk);
 }
 
 .perguntas-jasei li strong {
   display: block;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
@@ -421,7 +421,7 @@
 .pergunta-leia-mais {
   display: inline-block;
   margin: -6px 0 12px;
-  color: #1F736F;
+  color: var(--color-chalk);
   font-size: 14px;
   font-weight: 600;
   text-decoration: underline;

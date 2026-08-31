@@ -24,7 +24,7 @@
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: clamp(1.6rem, 4.5vw, 2rem);
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .avaliar-sub { margin: 0 0 22px; color: #55617A; line-height: 1.5; }
@@ -47,7 +47,7 @@
   margin-bottom: 4px;
   font-size: .88rem;
   font-weight: 700;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .avaliar-produtos label {
@@ -60,7 +60,7 @@
   cursor: pointer;
 }
 
-.avaliar-produtos label.escolhido { border-color: #1F736F; background: #F2F9F8; }
+.avaliar-produtos label.escolhido { border-color: var(--color-chalk); background: #F2F9F8; }
 .avaliar-produtos input { width: 18px; height: 18px; flex-shrink: 0; }
 
 .avaliar-produtos img,
@@ -73,7 +73,7 @@
   flex-shrink: 0;
 }
 
-.avaliar-produtos span { display: flex; flex-direction: column; gap: 2px; color: #12305B; }
+.avaliar-produtos span { display: flex; flex-direction: column; gap: 2px; color: var(--color-ink); }
 .avaliar-produtos small { color: #8A93A5; font-size: .78rem; }
 
 .avaliar-unico {
@@ -83,7 +83,7 @@
   padding: 12px;
   border: 1px solid #E4E8EF;
   border-radius: 14px;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 /* As estrelas são o único jeito de dar nota, e ela vai tocar com o dedo:
@@ -107,7 +107,7 @@
 
 .avaliar-texto { display: flex; flex-direction: column; gap: 6px; }
 
-.avaliar-texto span { font-size: .88rem; font-weight: 700; color: #12305B; }
+.avaliar-texto span { font-size: .88rem; font-weight: 700; color: var(--color-ink); }
 
 .avaliar-texto textarea {
   width: 100%;
@@ -117,12 +117,12 @@
   font: inherit;
   /* 16px é o mínimo que o iPhone aceita sem dar zoom ao tocar no campo. */
   font-size: 16px;
-  color: #12305B;
+  color: var(--color-ink);
   resize: vertical;
 }
 
-.avaliar-texto textarea:focus-visible { outline: 2px solid #1F736F; outline-offset: 1px; }
+.avaliar-texto textarea:focus-visible { outline: 2px solid var(--color-chalk); outline-offset: 1px; }
 
 .avaliar-pronto { text-align: center; }
-.avaliar-pronto svg { color: #1F736F; margin-bottom: 10px; }
+.avaliar-pronto svg { color: var(--color-chalk); margin-bottom: 10px; }
 .avaliar-pronto p { color: #55617A; line-height: 1.55; margin-bottom: 22px; }

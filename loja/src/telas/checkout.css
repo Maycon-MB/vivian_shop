@@ -40,7 +40,7 @@
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   display: grid;
   place-items: center;
@@ -65,7 +65,7 @@
 }
 
 .campos .form-control:focus {
-  border-color: #1F736F;
+  border-color: var(--color-chalk);
   box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
 }
 
@@ -75,10 +75,10 @@
   gap: 8px;
   margin: 14px 0 0;
   font-size: 13px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
-.dica svg { color: #1F736F; flex-shrink: 0; }
+.dica svg { color: var(--color-chalk); flex-shrink: 0; }
 
 /* ── Frete ──────────────────────────────────────────────────────────────── */
 .fretes { margin-top: 20px; display: grid; gap: 10px; }
@@ -99,16 +99,16 @@
 .frete:hover { border-color: #A8C6E8; }
 
 .frete.escolhido {
-  border-color: #1F736F;
+  border-color: var(--color-chalk);
   background: rgba(46, 155, 150, .06);
-  box-shadow: 0 0 0 1px #1F736F;
+  box-shadow: 0 0 0 1px var(--color-chalk);
 }
 
-.frete input { accent-color: #1F736F; width: 17px; height: 17px; flex-shrink: 0; }
+.frete input { accent-color: var(--color-chalk); width: 17px; height: 17px; flex-shrink: 0; }
 
 .frete-nome { display: grid; flex: 1; min-width: 0; }
 .frete-nome strong { font-size: 14px; }
-.frete-nome span { font-size: 12px; color: #5F6F80; }
+.frete-nome span { font-size: 12px; color: var(--color-ink-soft); }
 
 .frete-valor { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
@@ -129,16 +129,16 @@
 }
 
 .pagamento.escolhido {
-  border-color: #1F736F;
+  border-color: var(--color-chalk);
   background: rgba(46, 155, 150, .06);
-  box-shadow: 0 0 0 1px #1F736F;
+  box-shadow: 0 0 0 1px var(--color-chalk);
 }
 
-.pagamento input { accent-color: #1F736F; width: 17px; height: 17px; flex-shrink: 0; }
-.pagamento svg { color: #1F736F; flex-shrink: 0; }
+.pagamento input { accent-color: var(--color-chalk); width: 17px; height: 17px; flex-shrink: 0; }
+.pagamento svg { color: var(--color-chalk); flex-shrink: 0; }
 .pagamento > span { display: grid; }
 .pagamento strong { font-size: 14px; }
-.pagamento > span > span { font-size: 12px; color: #5F6F80; }
+.pagamento > span > span { font-size: 12px; color: var(--color-ink-soft); }
 
 /* ── Resumo ─────────────────────────────────────────────────────────────── */
 .resumo {
@@ -160,11 +160,11 @@
   justify-content: space-between;
   gap: 12px;
   font-size: 13.5px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
-.resumo-itens strong { color: #12305B; }
-.resumo-itens .valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: #12305B; }
+.resumo-itens strong { color: var(--color-ink); }
+.resumo-itens .valor { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--color-ink); }
 
 .resumo-contas {
   margin: 0 0 18px;
@@ -175,11 +175,11 @@
 }
 
 .resumo-contas > div { display: flex; justify-content: space-between; gap: 12px; }
-.resumo-contas dt { font-size: 13.5px; color: #5F6F80; font-weight: 400; }
+.resumo-contas dt { font-size: 13.5px; color: var(--color-ink-soft); font-weight: 400; }
 .resumo-contas dd { margin: 0; font-size: 13.5px; font-variant-numeric: tabular-nums; }
 
 .resumo-contas .desconto dt,
-.resumo-contas .desconto dd { color: #1F736F; font-weight: 700; }
+.resumo-contas .desconto dd { color: var(--color-chalk); font-weight: 700; }
 
 .resumo-contas .total {
   border-top: 1px solid #DCE9F6;
@@ -187,14 +187,14 @@
   margin-top: 3px;
 }
 
-.resumo-contas .total dt { font-size: 15px; font-weight: 700; color: #12305B; }
+.resumo-contas .total dt { font-size: 15px; font-weight: 700; color: var(--color-ink); }
 .resumo-contas .total dd { font-size: 24px; font-weight: 700; }
 
 .finalizar {
   display: block;
   width: 100%;
   text-align: center;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   border-radius: 999px;
   padding: 15px 22px;
@@ -210,13 +210,13 @@
 /* Botão travado precisa dizer o que falta, não só ficar apagado. */
 .finalizar.travado {
   background: #DCE9F6;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   box-shadow: none;
   cursor: not-allowed;
   font-size: 13.5px;
 }
 
-.finalizar.travado:hover { transform: none; color: #5F6F80; }
+.finalizar.travado:hover { transform: none; color: var(--color-ink-soft); }
 
 .prazo-aviso {
   display: flex;
@@ -224,10 +224,10 @@
   gap: 8px;
   margin: 14px 0 0;
   font-size: 12.5px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
-.prazo-aviso svg { color: #1F736F; flex-shrink: 0; }
+.prazo-aviso svg { color: var(--color-chalk); flex-shrink: 0; }
 
 .resumo-garantias {
   list-style: none;
@@ -243,10 +243,10 @@
   align-items: center;
   gap: 9px;
   font-size: 12px;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
 }
 
-.resumo-garantias svg { color: #1F736F; flex-shrink: 0; }
+.resumo-garantias svg { color: var(--color-chalk); flex-shrink: 0; }
 
 /* ── Pedido confirmado ──────────────────────────────────────────────────── */
 .confirmado-topo { text-align: center; max-width: 44ch; margin: 0 auto 40px; }
@@ -257,7 +257,7 @@
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: linear-gradient(140deg, #1F736F, #1F736F);
+  background: linear-gradient(140deg, var(--color-chalk), var(--color-chalk));
   color: #FFFFFF;
   margin-bottom: 18px;
   box-shadow: 0 18px 34px -18px rgba(46, 155, 150, 1);
@@ -270,7 +270,7 @@
   margin: 0 0 8px;
 }
 
-.confirmado-topo p { color: #5F6F80; margin: 0; }
+.confirmado-topo p { color: var(--color-ink-soft); margin: 0; }
 
 .passos-pedido,
 .confirmado-ajuda {
@@ -298,15 +298,15 @@
   place-items: center;
   flex-shrink: 0;
   border: 1px solid #DCE9F6;
-  color: #5F6F80;
+  color: var(--color-ink-soft);
   background: #FFFFFF;
 }
 
-.passos-pedido .feito .marca { background: #1F736F; border-color: #1F736F; color: #FFFFFF; }
-.passos-pedido .agora .marca { background: #FFD400; border-color: #FFD400; color: #12305B; }
+.passos-pedido .feito .marca { background: var(--color-chalk); border-color: var(--color-chalk); color: #FFFFFF; }
+.passos-pedido .agora .marca { background: var(--color-marker); border-color: var(--color-marker); color: var(--color-ink); }
 
 .passos-pedido strong { font-size: 14.5px; display: block; }
-.passos-pedido p { margin: 3px 0 0; font-size: 13.5px; color: #5F6F80; }
+.passos-pedido p { margin: 3px 0 0; font-size: 13.5px; color: var(--color-ink-soft); }
 
 .baixar {
   max-width: 620px;
@@ -317,19 +317,19 @@
   align-items: center;
   justify-content: space-between;
   background: linear-gradient(140deg, rgba(255, 212, 0, .18), rgba(255, 212, 0, .06));
-  border: 1px solid #FFD400;
+  border: 1px solid var(--color-marker);
   border-radius: 18px;
   padding: 20px 22px;
 }
 
 .baixar strong { display: block; font-size: 15px; }
-.baixar span { font-size: 12.5px; color: #5F6F80; }
+.baixar span { font-size: 12.5px; color: var(--color-ink-soft); }
 
 .baixar-botao {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   border: 0;
   border-radius: 999px;
@@ -339,7 +339,7 @@
   cursor: pointer;
 }
 
-.confirmado-ajuda p { font-size: 14px; color: #5F6F80; margin: 0 0 18px; }
+.confirmado-ajuda p { font-size: 14px; color: var(--color-ink-soft); margin: 0 0 18px; }
 
 .confirmado-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -347,7 +347,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: #1F736F;
+  background: var(--color-chalk);
   color: #FFFFFF;
   border-radius: 999px;
   padding: 13px 24px;
@@ -366,7 +366,7 @@
   padding: 13px 24px;
   font-weight: 700;
   font-size: 14px;
-  color: #12305B;
+  color: var(--color-ink);
   text-decoration: none;
 }
 
@@ -453,7 +453,7 @@
   padding: 11px 15px;
   background: rgba(255, 212, 0, .22);
   border-radius: 12px;
-  color: #12305B;
+  color: var(--color-ink);
   font-size: 13.5px;
   line-height: 1.5;
 }
@@ -463,7 +463,7 @@
    parágrafo em vez de junto da primeira palavra. */
 .dica { align-items: flex-start; line-height: 1.5; }
 .dica svg { margin-top: 2px; }
-.dica strong { color: #12305B; }
+.dica strong { color: var(--color-ink); }
 
 /* ── O pagamento do Mercado Pago ─────────────────────────────────────── */
 
@@ -505,7 +505,7 @@
   margin: 0 0 6px;
   font-size: 1.1rem;
   font-weight: 800;
-  color: #12305B;
+  color: var(--color-ink);
 }
 
 .pix > p { color: #55617A; font-size: .92rem; }
@@ -525,7 +525,7 @@
   padding: 13px 28px;
   border: 0;
   border-radius: 999px;
-  background: #12305B;
+  background: var(--color-ink);
   color: #FFFFFF;
   font-weight: 700;
   cursor: pointer;
@@ -575,11 +575,11 @@
   border: 1px solid #E4E8EF;
   border-radius: 8px;
   background: #FFFFFF;
-  color: #12305B;
+  color: var(--color-ink);
   cursor: pointer;
 }
 
-.resumo-mexer button:hover:not(:disabled) { border-color: #1F736F; }
+.resumo-mexer button:hover:not(:disabled) { border-color: var(--color-chalk); }
 .resumo-mexer button:disabled { opacity: .4; cursor: default; }
 .resumo-tirar { color: #8A2020 !important; }
 .resumo-tirar:hover { border-color: #8A2020 !important; }
