@@ -7,6 +7,7 @@ import type {
 
 import { pagamentoSimulado } from './pagamentoSimulado'
 import { freteSimulado } from './freteSimulado'
+import { freteMelhorEnvio } from './freteMelhorEnvio'
 import { avisosSimulados } from './avisosSimulados'
 import { pedidosLocais } from './pedidosLocais'
 
@@ -34,7 +35,11 @@ const temEnvioDeEmail = Boolean(process.env.NEXT_PUBLIC_EMAIL_ATIVO)
 const temBanco = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL)
 
 export const pagamento: ServicoDePagamento = pagamentoSimulado
-export const frete: ServicoDeFrete = freteSimulado
+/* O de verdade quando a autorização do Melhor Envio estiver feita.
+   A própria implementação cai para a estimativa se a cotação falhar, então
+   ligar a bandeira não arrisca o checkout: o pior caso continua sendo o
+   comportamento de hoje. */
+export const frete: ServicoDeFrete = temMelhorEnvio ? freteMelhorEnvio : freteSimulado
 export const avisos: ServicoDeAvisos = avisosSimulados
 /**
  * Onde o pedido é guardado.
