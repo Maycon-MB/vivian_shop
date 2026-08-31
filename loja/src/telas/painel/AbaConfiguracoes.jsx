@@ -2,6 +2,7 @@
 
 import React from 'react';
 import CartaoPainel from './CartaoPainel';
+import MinhaSenha from './MinhaSenha';
 import InfoBotao from './InfoBotao';
 
 /**
@@ -24,6 +25,11 @@ const AbaConfiguracoes = () => (
       <h1 className="painel-titulo">Configurações</h1>
       <p className="painel-subtitulo">O que você pode mudar sozinha, quando quiser.</p>
     </header>
+
+    {/* Primeiro cartão de propósito. Quem abre Configurações procurando
+        senha está com pressa, e normalmente porque desconfia que alguém
+        viu a dela. */}
+    <MinhaSenha />
 
     <CartaoPainel
       titulo="Sua loja"

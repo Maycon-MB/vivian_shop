@@ -128,14 +128,27 @@ const PaginaProduto = ({ produto }) => {
             </div>
 
             {personalizado ? (
+              /* Texto dela, mandado em 31/08. O número de peças e o de dias
+                 continuam vindo do produto, e não escritos na mão: ela
+                 escreveu "10" e "5" porque é o que vale hoje em quase tudo,
+                 mas o dia em que um produto tiver mínimo diferente a página
+                 passaria a mentir. */
               <div className="produto-regra-bloco">
                 <p>
-                  <strong>Mínimo de {minimo} unidades.</strong> É feito sob
-                  encomenda, uma a uma, por isso o pedido tem uma quantidade mínima.
+                  <strong>Pedido mínimo de {minimo} unidades.</strong>
+                </p>
+                <p>
+                  Os produtos são confeccionados sob encomenda, de forma individual e
+                  personalizada. Por esse motivo, trabalhamos com uma quantidade mínima
+                  de {minimo} unidades por pedido.
                 </p>
                 <p className="produto-prazo">
-                  Fica pronto em <strong>{PRAZO_PRODUCAO} dias úteis</strong> depois do
-                  pagamento. O frete é calculado pelo seu CEP na hora de fechar a compra.
+                  <strong>Prazo de produção:</strong> até {PRAZO_PRODUCAO} dias úteis após a
+                  confirmação do pagamento.
+                </p>
+                <p className="produto-prazo">
+                  <strong>Frete:</strong> calculado de acordo com o CEP informado no momento
+                  da finalização da compra.
                 </p>
               </div>
             ) : (
