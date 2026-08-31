@@ -20,7 +20,9 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Painel: publicar produto | funciona, um a um ou o tipo inteiro |
 | Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Painel: ordem da vitrine | ela fixa produto no topo, um a um ou o tipo inteiro |
-| Conversa com a cliente | dentro da loja, sem WhatsApp; falta o aviso por e-mail |
+| Painel: trocar a senha | dentro de Configurações, sem depender de e-mail |
+| Política da loja | página própria, com o texto que ela escreveu |
+| Conversa com a cliente | dentro da loja, sem WhatsApp, e ela é avisada por e-mail |
 | Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
 | Frete | **de verdade**: Correios e Jadlog, e a cliente escolhe |

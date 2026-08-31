@@ -118,52 +118,40 @@ tudo isso por um número medido.**
 
 ---
 
-## O preço, e por que não está aqui
+## O preço, e ele já é o de verdade
 
-Os valores que a loja mostra hoje são **estimativa**, e a tela diz isso
-com todas as letras, junto das opções de entrega.
+**Desde 31/08 a loja cota no Melhor Envio.** A Vivian autorizou a conta
+dela e ligou Correios e Jadlog; a cliente escolhe na hora de fechar.
 
-Não coloquei preços dos Correios neste documento porque **não tenho como
-conferir**: as tabelas públicas antigas saíram do ar e a consulta oficial
-exige contrato. Escrever um número que eu não posso verificar seria
-repetir, com mais confiança, o erro que este documento existe para
-corrigir.
+Um pedido de dez lousas, de Vila Valqueire até a Av. Paulista:
 
-O preço real vem de uma das duas portas abaixo.
+| Transportadora | Serviço | Preço | Prazo |
+|---|---|---|---|
+| Jadlog | .Package | R$ 21,82 | 6 dias |
+| Jadlog | .Com | R$ 24,90 | 5 dias |
+| Correios | PAC | R$ 28,88 | 5 dias |
+| Correios | SEDEX | R$ 45,23 | 2 dias |
 
----
+Quando escrevi este documento eu não tinha como conferir preço de
+Correios: as tabelas públicas saíram do ar e a consulta oficial exige
+contrato. Agora os números vêm da própria transportadora, e a estimativa
+só entra se a cotação falhar, para não derrubar o checkout.
 
-## As duas portas para o frete de verdade
+A Jadlog está saindo mais barata que os Correios em tudo o que ela vende.
+Como quem escolhe é a cliente, ela vai ver isso sozinha.
 
-| | Melhor Envio | Correios direto |
-|---|---|---|
-| Precisa de contrato | não | sim, com os Correios |
-| Preço | costuma ser menor que o balcão | tabela de balcão, ou a do contrato |
-| Transportadoras | Correios, Jadlog, Loggi e outras | só Correios |
-| Conta | dela, grátis | dela |
-| Etiqueta | imprime em casa | agência ou contrato |
+O Mini Envios nunca aparece, e o motivo vem da API deles: *"Dimensões do
+objeto ultrapassam o limite da transportadora"*. O mínimo de dez peças faz
+o pacote crescer além do que aquele serviço aceita, mesmo no saquinho, que
+é leve. Não é defeito: é o serviço não servir para o que ela vende.
 
-**Melhor Envio é o caminho.** Não exige contrato, dá preço melhor, e
-mostra as transportadoras lado a lado, que é o que a loja já desenha na
-tela.
-
-A conta precisa ser dela, porque é ela quem paga as etiquetas e recebe as
-entregas em nome dela.
-
-### O que muda no site depois disso
-
-Nada visualmente. As opções de entrega já aparecem com preço e prazo lado
-a lado; o que muda é a origem do número, que passa a vir das
-transportadoras. O aviso de "estes valores são uma estimativa" some
-sozinho.
+Como foi ligado, e o que quebrou no caminho:
+[ligar-o-melhor-envio.md](ligar-o-melhor-envio.md).
 
 ---
 
-## O que pedir a ela
+## O que ainda não sabemos
 
-**Uma coisa só: criar a conta no Melhor Envio.** É grátis, não exige
-contrato, e é o mesmo tipo de passo das credenciais do Mercado Pago.
-
-Nada de pesar nem medir. A estimativa de hoje é boa o bastante para
-vender, a tela avisa que é estimativa, e o número de verdade aparece na
-primeira postagem sem ninguém precisar procurar.
+O peso continua sendo **conta, e não medida**: peça vezes quantidade, mais
+15%. A primeira postagem de verdade vai dizer o peso do pacote fechado, e
+é ali que esse número se ajusta com dado na mão.

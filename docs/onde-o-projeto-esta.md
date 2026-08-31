@@ -47,7 +47,7 @@ ela pode abrir, e uma compra de teste que só faz sentido depois delas.
 Enquanto a chave for `TEST-`, nenhum cartão é debitado. É uma troca de
 duas linhas, e depende de três minutos dela.
 
-O segundo número é o que importa. Uma loja 90% pronta que não cobra
+O segundo número é o que importa. Uma loja 97% pronta que não cobra
 fatura o mesmo que uma loja 0% pronta.
 
 ---
