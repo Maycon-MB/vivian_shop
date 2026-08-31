@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { ShoppingCart, Heart, Search, User, ArrowRight, CreditCard, Truck, ShieldCheck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
+import { ShoppingCart, Heart, Search, User, ArrowRight, CreditCard, Truck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
@@ -210,7 +210,7 @@ const LandingPage = () => {
                         <Truck size={18} /> Envio para todo o Brasil
                     </span>
                     <span className="d-inline-flex align-items-center gap-2 fw-bold" style={{ color: '#12305B' }}>
-                        <MessageCircle size={18} /> Atendimento direto com quem faz
+                        <MessageCircle size={18} /> Atendimento direto com a loja
                     </span>
                 </div>
               </motion.div>
@@ -358,32 +358,52 @@ const LandingPage = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Dá para <span style={{ color: '#1F736F' }}>confiar</span></h2>
-              <p className="text-muted fs-5">
-                Comprar de quem você não conhece dá receio, e eu entendo. Por isso o pagamento passa pelo Mercado Pago: eu não vejo nem guardo nenhum dado do seu cartão.
+              <h2 className="display-5 fw-black mb-4" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>Compra <span style={{ color: '#1F736F' }}>segura</span></h2>
+              <p className="text-muted fs-5 mb-3">
+                Comprar pela internet de uma loja que você ainda não conhece pode gerar algumas
+                dúvidas, e nós entendemos! Por isso, buscamos oferecer uma experiência de compra
+                segura e tranquila.
+              </p>
+              <p className="text-muted fs-5 mb-0">
+                Os pagamentos são processados pelo Mercado Pago, uma plataforma especializada em
+                pagamentos online. Os dados do seu cartão são tratados diretamente pela
+                plataforma, e a Feito para Você Papelaria Personalizada não tem acesso nem
+                armazena os dados completos do seu cartão.
               </p>
             </Col>
           </Row>
           <Row className="g-4">
-            <Col md={4}>
-              <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
-                <div className="bg-success bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><ShieldCheck size={32} color="#198754" /></div>
-                <h4 className="fw-black fs-5 mb-3">Pagamento seguro</h4>
-                <p className="small text-muted mb-0">O Mercado Pago cuida do pagamento. Os dados do seu cartão não passam por mim em momento nenhum.</p>
-              </div>
-            </Col>
-            <Col md={4}>
+            {/* "Pagamento seguro" saiu a pedido dela em 30/08: a abertura
+                da seção passou a dizer a mesma coisa, com mais detalhe, e
+                repetir enfraquece as duas. Os dois cartões que sobraram
+                ocupam metade cada, senão fica um buraco à direita. */}
+            <Col md={6}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-primary bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><MessageCircle size={32} color="#1F736F" /></div>
                 <h4 className="fw-black fs-5 mb-3">Atendimento de verdade</h4>
-                <p className="small text-muted mb-0">Quem responde no WhatsApp é a própria loja, não um robô. Pode perguntar qualquer coisa antes de comprar.</p>
+                <p className="small text-muted mb-0">
+                  Aqui, você fala diretamente com a nossa equipe, sem respostas automáticas ou
+                  robôs. Estamos à disposição para esclarecer suas dúvidas, orientar sua escolha
+                  e ajudar no que for necessário antes e depois da sua compra.
+                </p>
               </div>
             </Col>
-            <Col md={4}>
+            <Col md={6}>
               <div className="p-5 bg-white rounded-5 shadow-sm h-100 border border-light transition-all hover-lift">
                 <div className="bg-warning bg-opacity-10 d-inline-flex p-3 rounded-4 mb-4"><CheckCircle size={32} color="#C4436B" /></div>
-                <h4 className="fw-black fs-5 mb-3">Se vier errado, eu refaço</h4>
-                <p className="small text-muted mb-0">Faço cada peça uma a uma. Se chegar com defeito ou diferente do que combinamos, eu refaço, sem discussão e sem custo para você.</p>
+                <h4 className="fw-black fs-5 mb-3">Antes de finalizar sua compra</h4>
+                {/* O texto que ela mandou tem seis parágrafos e não cabe num
+                    cartão. Aqui fica o primeiro, palavra por palavra, e o
+                    resto na página de políticas: cortar seria eu reescrever
+                    o que ela decidiu dizer. */}
+                <p className="small text-muted mb-3">
+                  Para garantir que seu pedido seja produzido exatamente como você deseja,
+                  pedimos que todas as dúvidas sejam esclarecidas antes da finalização da
+                  compra.
+                </p>
+                <Link href="/politicas/" className="small fw-bold text-decoration-none" style={{ color: '#C4436B' }}>
+                  Ler antes de comprar
+                </Link>
               </div>
             </Col>
           </Row>

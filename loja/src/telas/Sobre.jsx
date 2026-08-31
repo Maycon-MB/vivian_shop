@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Heart, Package, Download, MessageCircle } from 'lucide-react';
+import { SoParaADona } from '@/componentes/SoParaADona'
 
 /**
  * Sobre.
@@ -26,12 +27,19 @@ const Sobre = () => (
             Cada peça sai da minha mesa, uma a uma.
           </h1>
 
-          {/* PENDENTE-LANCAMENTO: este aviso e o texto abaixo saem quando a Vivian mandar a história dela. */}
-          <div className="sobre-rascunho">
-            <strong>Vivian, este texto é um esboço.</strong> Escrevi para a página não ficar
-            vazia, mas quem tem que contar essa história é você. Me manda do seu jeito, mesmo
-            desorganizado, que eu ajeito.
-          </div>
+          {/* PENDENTE-LANCAMENTO: este aviso e o texto abaixo saem quando a Vivian mandar a história dela.
+
+              Envolvido em `SoParaADona` desde 31/08. Antes disso o recado
+              aparecia para toda cliente que abrisse esta página, e dizer
+              "este texto é um esboço" para quem está decidindo comprar é
+              entregar que a loja não está pronta. */}
+          <SoParaADona>
+            <div className="sobre-rascunho">
+              <strong>Vivian, este texto é um esboço.</strong> Escrevi para a página não ficar
+              vazia, mas quem tem que contar essa história é você. Me manda do seu jeito, mesmo
+              desorganizado, que eu ajeito.
+            </div>
+          </SoParaADona>
 
           <div className="sobre-texto">
             <p>
@@ -60,11 +68,16 @@ const Sobre = () => (
                 <Package size={20} />
               </span>
               <div>
-                <strong>Papelaria personalizada</strong>
+                <strong>Papelaria Personalizada</strong>
                 <p>
-                  Feita sob encomenda, com o nome de quem vai usar. Mínimo de 10 peças, prontas
-                  em 5 dias úteis.
+                  Nossos produtos são confeccionados sob encomenda e personalizados
+                  especialmente para cada cliente, contendo o nome e a idade de sua
+                  preferência.
                 </p>
+                <ul className="sobre-detalhes">
+                  <li>Pedido mínimo: 10 peças</li>
+                  <li>Prazo de produção: até 5 dias úteis, após a confirmação do pedido</li>
+                </ul>
               </div>
             </div>
 
@@ -73,11 +86,15 @@ const Sobre = () => (
                 <Download size={20} />
               </span>
               <div>
-                <strong>Papelaria pedagógica</strong>
+                <strong>Papelaria Pedagógica</strong>
                 <p>
-                  Atividades adaptadas em arquivo digital. Chegam no seu e-mail na hora e você
-                  imprime quantas vezes precisar.
+                  Materiais e atividades pedagógicas adaptadas, desenvolvidos para tornar a
+                  aprendizagem mais dinâmica, significativa e acessível.
                 </p>
+                <ul className="sobre-detalhes">
+                  <li>Arquivo digital: receba diretamente no seu e-mail após a compra</li>
+                  <li>Prático e econômico: imprima quantas vezes precisar para uso próprio</li>
+                </ul>
               </div>
             </div>
           </div>

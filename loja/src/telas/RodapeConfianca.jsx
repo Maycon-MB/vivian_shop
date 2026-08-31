@@ -94,8 +94,9 @@ const RodapeConfianca = () => (
             <span style={{ color: cores.aguaLinhaPersonalizada }}>Personalizados</span>
           </div>
           <p style={{ color: cores.cinzaApoio, fontSize: '.94rem', lineHeight: 1.6, margin: 0 }}>
-            Papelaria personalizada feita à mão, sob encomenda, e material pedagógico em arquivo
-            digital para quem trabalha com crianças.
+            Papelaria personalizada feita sob encomenda, com cuidado em cada detalhe, e
+            materiais pedagógicos em formato digital, desenvolvidos para profissionais que
+            trabalham com crianças.
           </p>
           <div
             style={{
@@ -209,6 +210,17 @@ const RodapeConfianca = () => (
             <span style={{ width: 18, flexShrink: 0 }} />
             <Link href="/como-funciona/" style={estiloLink}>
               Como funciona a compra
+            </Link>
+          </div>
+
+          {/* A política precisa estar no rodapé, e não só no cartão da
+              página inicial. É onde a cliente procura quando já comprou e
+              quer conferir o que combinou, que é justamente a hora em que
+              o texto tem que ser fácil de achar. */}
+          <div style={estiloItem}>
+            <span style={{ width: 18, flexShrink: 0 }} />
+            <Link href="/politicas/" style={estiloLink}>
+              Política da loja
             </Link>
           </div>
         </Col>
