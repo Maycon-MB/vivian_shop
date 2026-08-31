@@ -109,9 +109,14 @@ const conferir = async (nome, fn) => {
       throw new Error(`título inesperado: ${titulo}`)
     }
 
-    // A logo dela precisa estar ali: foi o pedido de 21/08, e é a
-    // diferença entre a loja parecer dela ou parecer modelo pronto.
-    const logo = await pagina.locator('img[alt*="Feito Para Você"]').count()
+    /* A logo dela precisa estar ali: foi o pedido de 21/08, e é a
+       diferença entre a loja parecer dela ou parecer modelo pronto.
+
+       Sem caixa alta na comparação. A versão anterior procurava por
+       "Feito Para Você" exatamente assim, e quebrou em 31/08 quando a
+       logo nova entrou com o texto alternativo escrito em caixa normal,
+       que é como se escreve. O teste passou a reprovar a grafia certa. */
+    const logo = await pagina.locator('img[alt*="feito para você" i]').count()
     if (!logo) throw new Error('a logo da loja não está na primeira tela')
   })
 
