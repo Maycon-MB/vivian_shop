@@ -37,18 +37,48 @@ A pauta do caderno é a **grade real do layout** — 32px de baseline — não u
 
 ### Paleta
 
-| Token | Hex | Função | Origem |
+> **Refeita em 31/08/2026**, e a razão é dela: "o site tem como ficar mais
+> colorido? Estou achando tão mortinho... pálido."
+>
+> Não era falta de cor. Era a cor errada. A paleta abaixo saía das duas
+> logos antigas do Elo7, e o azul-marinho era "a raiz comum" delas. A logo
+> nova, que ela mandou no mesmo dia, **não tem azul-marinho em lugar
+> nenhum**: o site estava usando a cor de uma marca que ela não usa mais.
+>
+> Os valores agora são medidos dentro do arquivo da logo, e não escolhidos
+> por mim. Ver o cabeçalho de `loja/src/app/globals.css`.
+
+| Token | Hex | Função | Origem na logo nova |
 |---|---|---|---|
 | `paper` | `#FBFAF7` | Fundo | Sulfite, não papel envelhecido |
-| `ink` | `#12305B` | Todo o texto e a marca | Azul de caneta — a raiz comum dos azuis das duas logos |
-| `rule` | `#A8C6E8` | Pauta, bordas, divisórias | Azul-bebê do fundo da logo Feito para Você |
-| `chalk` | `#2E9B96` | Acento da linha Feito para Você | Anel da logo |
-| `heart` | `#C4436B` | Favoritos, promoções, avisos | Script magenta da logo |
-| `marker` | `#FFD400` | Acento da linha Projeto Educar | Lápis e respingos da logo |
+| `ink` | `#7B1E4B` | Todo o texto e a marca | O vinho do "Feito para você!" escrito à mão |
+| `chalk` | `#237C79` | Acento, links | O anel de fora, escurecido para alcançar contraste |
+| `ceu` | `#C1ECFD` | Fundo do herói | O fundo do círculo, medido no canto do arquivo |
+| `rosa` | `#F8C1CC` | Fundo de seção | O anel de dentro |
+| `heart` | `#D93B54` | Preço e promoção | Os corações |
+| `marker` | `#F2C14E` | Preenchimento, linha pedagógica | O lápis |
+
+**A cor entra nos fundos, não no texto.** Rosa e azul-claro não carregam
+letra; é assim que a loja ganha cor sem perder contraste. O coral é o
+único saturado que aparece escrito, e só em preço: cor forte usada em tudo
+para de significar alguma coisa.
+
+<details>
+<summary>A paleta antiga, de 10/08 a 31/08</summary>
+
+| Token | Hex | Origem |
+|---|---|---|
+| `ink` | `#12305B` | Azul de caneta, a raiz comum dos azuis das duas logos do Elo7 |
+| `rule` | `#A8C6E8` | Azul-bebê do fundo da logo antiga |
+| `chalk` | `#2E9B96` | Anel da logo antiga |
+| `heart` | `#C4436B` | Script magenta da logo antiga |
+| `marker` | `#FFD400` | Lápis e respingos da logo antiga |
+
+</details>
 
 Preto puro e branco puro não entram. `ink` faz o trabalho do preto e mantém a temperatura da página.
 
-**Regra dura do amarelo:** `#FFD400` sobre branco tem contraste 1.3:1 — reprova em qualquer critério de acessibilidade. Ele nunca é cor de texto. Entra só como preenchimento, com `ink` escrito por cima.
+**Regra dura do amarelo:** sobre branco ele tem contraste de 1.3:1 — reprova em qualquer critério de acessibilidade. Ele nunca é cor de texto. Entra só como preenchimento, com `ink` escrito por cima.
 
 ### Tema escuro
 
