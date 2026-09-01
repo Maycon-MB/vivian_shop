@@ -37,8 +37,21 @@ const rodar = (comando, cwd, env = {}) => {
 
 /* O catálogo dela entra antes do build: a loja é estática, e as páginas
    precisam do produto em mãos na hora de gerar. */
-console.log('1/3 · buscando o catálogo publicado')
-rodar('node scripts/baixar-catalogo.mjs', raiz)
+/* `PULAR_CATALOGO=true` reaproveita o `catalogo-publicado.json` que já
+   está no disco.
+ *
+ * Serve para quando se está mexendo em tela e o catálogo não mudou: baixar
+ * os 342 produtos do banco leva quase um minuto, e repetir isso a cada
+ * ajuste de CSS é um minuto jogado fora por vez.
+ *
+ * Nunca no CI, e nunca ao publicar de verdade: ali o catálogo precisa ser
+ * o do banco, senão a loja vai ao ar com o que estava no disco de alguém. */
+if (process.env.PULAR_CATALOGO === 'true') {
+  console.log('1/3 · catálogo: reaproveitando o que já está no disco')
+} else {
+  console.log('1/3 · buscando o catálogo publicado')
+  rodar('node scripts/baixar-catalogo.mjs', raiz)
+}
 
 console.log('\n2/3 · construindo a loja')
 rodar('npm run build', loja, { PUBLICAR_GITHUB_PAGES: 'true' })

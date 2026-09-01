@@ -3,6 +3,7 @@
 import { bancoDoNavegador } from '@/servicos/autenticacao'
 import type { ProdutoDaLista } from '@/dominio/listaDeProdutos'
 import { estaFixado, posicaoPara } from '@/dominio/ordemDaVitrine'
+import type { ProdutoComMedida } from '@/dominio/medidasDoTipo'
 
 /**
  * O catálogo como a dona da loja o vê: tudo, inclusive o que não está no
@@ -92,6 +93,27 @@ export const mudarDestaque = async (ids: string[], fixar: boolean): Promise<void
     .in('id', ids)
 
   if (error) throw new Error(error.message)
+}
+
+/**
+ * Nome e medidas de tudo que já tem caixa cadastrada.
+ *
+ * Serve para o formulário responder sozinho a pergunta que ela não sabe
+ * responder: quanto pesa a caixa fechada com dez peças. Ver
+ * `medidasDoTipo.ts`.
+ *
+ * Só o que interessa para essa conta, e não o produto inteiro: são 342
+ * linhas, e ela abre o painel pelo 4G.
+ */
+export const medidasJaCadastradas = async (): Promise<ProdutoComMedida[]> => {
+  const { data, error } = await bancoDoNavegador()
+    .from('produtos')
+    .select('nome, peso_g, alt_cm, larg_cm, comp_cm')
+    .not('peso_g', 'is', null)
+
+  if (error) throw new Error(error.message)
+
+  return (data ?? []) as ProdutoComMedida[]
 }
 
 /* ── Cadastrar e editar ──────────────────────────────────────────────── */

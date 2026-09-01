@@ -9,9 +9,10 @@ import {
   paraOBanco,
   problemas,
 } from '@/dominio/edicaoDeProduto';
-import { buscarParaEditar, listarTemas, salvarProduto } from '@/dados/produtosDaDona';
+import { buscarParaEditar, listarTemas, salvarProduto, medidasJaCadastradas } from '@/dados/produtosDaDona';
 import { enviarFoto } from '@/dados/fotosDaDona';
 import { enderecoDoNome } from '@/dominio/edicaoDeProduto';
+import { medidasParecidas } from '@/dominio/medidasDoTipo';
 
 /**
  * Onde ela cadastra um produto e muda o preço dos que já tem.
@@ -72,6 +73,12 @@ const Campo = ({ rotulo, ajuda, children }) => (
  */
 const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
   const [form, setForm] = useState(id ? null : FORMULARIO_VAZIO);
+
+  /* O que já está cadastrado, para responder o peso da caixa por ela.
+     Ver `medidasDoTipo.ts`: a pergunta é a mesma que a gente decidiu não
+     fazer a ela em 27/08, e a tela faz assim mesmo. */
+  const [jaCadastradas, setJaCadastradas] = useState([]);
+  const [medidasSugeridas, setMedidasSugeridas] = useState(null);
   const [slugAtual, setSlugAtual] = useState('');
   const [temas, setTemas] = useState([]);
   const [erro, setErro] = useState('');
@@ -98,6 +105,41 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
 
     return () => { valendo = false; };
   }, [id]);
+
+  useEffect(() => {
+    let valendo = true;
+    medidasJaCadastradas()
+      .then((linhas) => { if (valendo) setJaCadastradas(linhas); })
+      /* Falhar aqui não pode atrapalhar o cadastro: sem a sugestão ela
+         preenche à mão, que é o que acontecia antes. */
+      .catch(() => {});
+    return () => { valendo = false; };
+  }, []);
+
+  /**
+   * Preenche a caixa a partir dos produtos parecidos.
+   *
+   * Só quando os quatro campos estão vazios: mexer no que ela digitou
+   * seria pior que não ajudar.
+   */
+  const sugerirMedidas = (nome) => {
+    const achou = medidasParecidas(nome, jaCadastradas);
+    if (!achou) return;
+
+    setForm((atual) => {
+      const vazios = ['peso_g', 'alt_cm', 'larg_cm', 'comp_cm'].every((c) => !String(atual[c] ?? '').trim());
+      if (!vazios) return atual;
+
+      setMedidasSugeridas(achou);
+      return {
+        ...atual,
+        peso_g: String(achou.peso_g),
+        alt_cm: String(achou.alt_cm),
+        larg_cm: String(achou.larg_cm),
+        comp_cm: String(achou.comp_cm),
+      };
+    });
+  };
 
   const mudar = (campo) => (evento) => {
     const valor = evento.target.type === 'checkbox' ? evento.target.checked : evento.target.value;
@@ -212,7 +254,16 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
           rotulo="Nome do produto"
           ajuda="É o que a cliente lê na loja e o que ela digita no Google. Vale escrever o tipo e o tema, como em Lousa Mágica - Peppa Pig."
         >
-          <input type="text" value={form.nome} onChange={mudar('nome')} required />
+          {/* A sugestão sai quando ela termina de escrever, e não a cada
+              letra: preencher no meio da digitação é a tela mexendo
+              sozinha enquanto a pessoa ainda está pensando. */}
+          <input
+            type="text"
+            value={form.nome}
+            onChange={mudar('nome')}
+            onBlur={(e) => sugerirMedidas(e.target.value)}
+            required
+          />
         </Campo>
 
         <div className="produto-foto-campo">
@@ -357,6 +408,18 @@ const FormularioDeProduto = ({ id = '', aoSair, aoSalvar }) => {
               É o pacote com as {form.minimo || 10} peças dentro, e não uma peça só. É com isso
               que os Correios calculam o frete.
             </p>
+
+            {/* De onde os números vieram, escrito na tela.
+                Preencher em silêncio é pior: ela não saberia se pode
+                confiar, e o campo é justamente o que ela não sabe
+                responder sozinha. */}
+            {medidasSugeridas && (
+              <p className="produto-campo-sugerido">
+                Peguei de {medidasSugeridas.quantos === 1 ? 'outro produto' : `outros ${medidasSugeridas.quantos}`}{' '}
+                do tipo <strong>{medidasSugeridas.familia}</strong>. Se esta caixa for diferente,
+                é só corrigir.
+              </p>
+            )}
 
             <div className="produto-linha-quadrupla">
               <Campo rotulo="Peso (g)">
