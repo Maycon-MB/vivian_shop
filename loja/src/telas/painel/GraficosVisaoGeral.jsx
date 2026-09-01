@@ -36,8 +36,6 @@ import {
  * como tal na tela, para ela não confundir com venda real.
  */
 
-const DIAS = Array.from({ length: 30 }, (_, i) => `${String(i + 1).padStart(2, '0')}/07`);
-
 const VENDAS_PERSONALIZADA = [
   0, 320, 0, 0, 480, 320, 640, 0, 320, 960, 640, 0, 320, 480, 800, 320, 0, 640,
   960, 480, 320, 0, 640, 800, 1120, 640, 320, 480, 960, 800,
