@@ -23,9 +23,22 @@ curl -s https://kbvgdnrymwfavgkxqvjh.supabase.co/functions/v1/conferir-pagamento
 ```
 
 Isso prova que o Access Token é de produção e é da conta dela. Não prova
-que uma compra passa. Em produção entram três coisas que em teste não
-existem: cartão de verdade, antifraude de verdade, e o aviso do Mercado
-Pago chegando de fora pela internet. Nenhuma das três rodou uma vez.
+que uma compra passa.
+
+**O que já rodou, e é mais do que eu tinha registrado aqui.** Em 25/08,
+com as credenciais de teste, o ciclo inteiro foi provado contra o Mercado
+Pago de verdade, no ambiente deles: cobrança criada com o valor lido do
+banco, aviso verdadeiro chegando de fora e marcando o pedido, reenvio do
+mesmo aviso aceito sem duplicar, e aviso com id inventado recusado. Está
+registrado em [ligar-o-pagamento.md](ligar-o-pagamento.md).
+
+Então a corrente não é desconhecida. O código dela é o mesmo em teste e em
+produção, e funcionou.
+
+O que muda de teste para produção são três coisas, e só três: **cartão de
+verdade**, **antifraude de verdade**, e **a configuração do painel do
+Mercado Pago, que é separada por ambiente**. As duas primeiras não têm
+como ser exercitadas sem uma compra. A terceira dá para conferir olhando.
 
 ---
 
@@ -73,19 +86,40 @@ de volta, e não o cabeçalho.
 |---|---|---|
 | A chave pública e o token são do mesmo par | `conferir-pagamento` valida só o token | O cartão é tokenizado e a cobrança falha com "token inválido" na cara da cliente |
 | O antifraude do Mercado Pago | Só existe com cartão real | Conta nova costuma ter a primeira compra barrada ou posta em análise |
-| **O endereço do aviso está cadastrado no painel do Mercado Pago** | Só dá para ver no painel dela | **Este é o pior.** O pagamento aprova, o dinheiro entra, e o pedido fica "esperando o pagamento" para sempre |
+| **O endereço do aviso está preenchido no campo de produção do painel** | O painel do Mercado Pago tem campos separados para teste e para produção. O de teste funcionou em 25/08; o de produção só nasceu em 01/09 | O pagamento aprova, o dinheiro entra, e o pedido fica "esperando o pagamento" para sempre |
 | O e-mail sai no fluxo real | O Resend está ligado e testado, mas nunca disparou por uma compra de verdade | Ela não fica sabendo do pedido |
 | O dinheiro cai na conta dela | Nenhuma consulta mostra isso | Só o extrato dela responde |
 
-A linha do meio é a que eu mais temo. É uma falha **silenciosa**: nada dá
-erro, nada fica vermelho, o CI continua verde. Se o endereço não estiver
-cadastrado, o sintoma é um pedido pago aparecendo como não pago.
+### Por que a linha do meio existe, se o aviso já funcionou em teste
 
-O endereço que precisa estar lá:
+Porque **o endereço do aviso não está no nosso código**.
+
+A função `cobrar` cria o pagamento sem mandar `notification_url`. Quem
+decide para onde o Mercado Pago avisa é o painel dele, e lá o campo é
+separado por ambiente: um endereço para teste, outro para produção.
+
+O de teste foi preenchido e funcionou em 25/08. O de produção não existia
+naquele dia, porque as credenciais de produção só nasceram em 01/09.
+Então não é que a corrente seja duvidosa: é que ela tem um elo que mora
+fora do repositório e que ninguém conferiu depois da virada.
+
+É uma falha **silenciosa**: nada dá erro, nada fica vermelho, o CI
+continua verde, e o sintoma é um pedido pago aparecendo como não pago.
+
+O endereço que precisa estar no campo de produção:
 
 ```
 https://kbvgdnrymwfavgkxqvjh.supabase.co/functions/v1/aviso-do-pagamento
 ```
+
+Isso se resolve olhando o painel, em um minuto, e sem depender da compra.
+A compra continua valendo pelas outras duas linhas, que só ela responde.
+
+**Vale considerar mandar o `notification_url` na própria cobrança.** O
+Mercado Pago aceita, e isso tiraria o elo do painel: o endereço passaria a
+viver no código, versionado, igual em teste e em produção. Não fiz junto
+porque mexe no caminho do dinheiro e merece commit próprio, com o teste
+antes. Fica anotado.
 
 ---
 
