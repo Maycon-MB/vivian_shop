@@ -15,6 +15,7 @@ const salvarProduto = vi.fn()
 const enviarFoto = vi.fn()
 const buscarParaEditar = vi.fn()
 const listarTemas = vi.fn()
+const medidasJaCadastradas = vi.fn()
 
 vi.mock('@/dados/fotosDaDona', () => ({
   enviarFoto: (...args: unknown[]) => enviarFoto(...args),
@@ -24,6 +25,7 @@ vi.mock('@/dados/produtosDaDona', () => ({
   salvarProduto: (...args: unknown[]) => salvarProduto(...args),
   buscarParaEditar: (...args: unknown[]) => buscarParaEditar(...args),
   listarTemas: (...args: unknown[]) => listarTemas(...args),
+  medidasJaCadastradas: () => medidasJaCadastradas(),
 }))
 
 const { default: FormularioDeProduto } = await import('./FormularioDeProduto')
@@ -32,6 +34,9 @@ beforeEach(() => {
   salvarProduto.mockReset().mockResolvedValue('id-novo')
   buscarParaEditar.mockReset()
   listarTemas.mockReset().mockResolvedValue([{ id: 'tema-1', nome: 'Peppa Pig' }])
+  /* Catálogo vazio por padrão: cada teste que quiser a sugestão de
+     medidas monta a própria lista. */
+  medidasJaCadastradas.mockReset().mockResolvedValue([])
   enviarFoto.mockReset().mockResolvedValue({
     cheia: 'https://balde/lousa/0-cheia.webp',
     mini: 'https://balde/lousa/0-mini.webp',
@@ -318,5 +323,80 @@ describe('as outras fotos do produto', () => {
 
     await waitFor(() => expect(salvarProduto).toHaveBeenCalled())
     expect(salvarProduto.mock.calls[0][0].galeria).toEqual([])
+  })
+})
+
+describe('a caixa que ela não sabe de cabeça', () => {
+  /* O formulário pede peso e medidas da caixa fechada, e o banco recusa
+     publicar produto personalizado sem isso. É a mesma pergunta que a
+     gente decidiu não fazer a ela quando discutiu frete, em 27/08: "ela
+     também não sabe de cabeça".
+
+     Sem esta ajuda, o primeiro produto que ela cadastrar sozinha leva uma
+     recusa que ela não sabe resolver, e a impressão que fica é de que o
+     painel não funciona. */
+
+  const LOUSAS = [
+    { nome: 'Lousa Mágica - Peppa Pig', peso_g: 100, alt_cm: 1.5, larg_cm: 19, comp_cm: 30 },
+    { nome: 'Lousa Mágica - Chaves', peso_g: 100, alt_cm: 1.5, larg_cm: 19, comp_cm: 30 },
+  ]
+
+  it('preenche a caixa a partir dos produtos do mesmo tipo', async () => {
+    medidasJaCadastradas.mockResolvedValue(LOUSAS)
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica - Homem Aranha')
+    await usuario.tab()
+
+    await waitFor(() => expect(screen.getByLabelText(/peso/i)).toHaveValue('100'))
+    expect(screen.getByLabelText(/altura/i)).toHaveValue('1.5')
+  })
+
+  it('diz de onde tirou os números', async () => {
+    /* Preencher em silêncio é pior que não preencher: ela não saberia se
+       pode confiar num campo que ela mesma não sabe responder. */
+    medidasJaCadastradas.mockResolvedValue(LOUSAS)
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica - Homem Aranha')
+    await usuario.tab()
+
+    /* O recado inteiro, e não só o nome do tipo: "Lousa Mágica" aparece
+       em mais de um lugar da tela, inclusive na ajuda do campo de nome. */
+    const recado = await screen.findByText(/é só corrigir/i)
+
+    expect(recado).toHaveTextContent('Lousa Mágica')
+    expect(recado).toHaveTextContent(/Peguei de outros 2/)
+  })
+
+  it('não mexe no que ela já digitou', async () => {
+    medidasJaCadastradas.mockResolvedValue(LOUSAS)
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/peso/i), '250')
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Lousa Mágica - Homem Aranha')
+    await usuario.tab()
+
+    expect(screen.getByLabelText(/peso/i)).toHaveValue('250')
+  })
+
+  it('fica quieto quando o produto é novo de verdade', async () => {
+    // Sugerir o peso de outra coisa sai do bolso dela em toda venda.
+    medidasJaCadastradas.mockResolvedValue(LOUSAS)
+
+    const usuario = userEvent.setup()
+    render(<FormularioDeProduto aoSair={() => {}} aoSalvar={() => {}} />)
+
+    await usuario.type(screen.getByLabelText(/nome do produto/i), 'Camiseta Estampada')
+    await usuario.tab()
+
+    expect(screen.getByLabelText(/peso/i)).toHaveValue('')
+    expect(screen.queryByText(/é só corrigir/i)).not.toBeInTheDocument()
   })
 })
