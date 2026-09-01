@@ -158,6 +158,11 @@ jobs:
       #
       # Só 404 reprova. Falha de rede vira aviso: derrubar a publicação
       # porque a internet oscilou ensina a ignorar o vermelho.
+      # Teste que não roda não reprova nada, e o vitest conta só os
+      # arquivos que reportaram: uma bateria interrompida imprime verde.
+      - name: todo teste está na bateria
+        run: node scripts/conferir-testes.cjs
+
       - name: as funções estão publicadas
         run: node scripts/conferir-funcoes.cjs
 

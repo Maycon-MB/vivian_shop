@@ -17,7 +17,7 @@ import { fileURLToPath } from 'node:url'
 export default defineConfig({
   plugins: [react()],
   test: {
-    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+    include: ['src/**/*.test.{ts,tsx,js,jsx,mts,cts}'],
     projects: [
       {
         plugins: [react()],
@@ -25,7 +25,12 @@ export default defineConfig({
         test: {
           name: 'regras',
           environment: 'node',
-          include: ['src/**/*.test.ts'],
+          /* `.js` junto do `.ts` de propósito.
+             As telas deste projeto são `.jsx`, e um teste chamado
+             `FormularioDeProduto.test.jsx` — o nome natural ao lado do
+             arquivo testado — não casava com padrão nenhum e sumia da
+             bateria sem erro. Teste que não roda não reprova nada. */
+          include: ['src/**/*.test.{ts,js,mts,cts}'],
         },
       },
       {
@@ -34,7 +39,7 @@ export default defineConfig({
         test: {
           name: 'telas',
           environment: 'jsdom',
-          include: ['src/**/*.test.tsx'],
+          include: ['src/**/*.test.{tsx,jsx}'],
           setupFiles: ['./vitest.setup.ts'],
         },
       },
