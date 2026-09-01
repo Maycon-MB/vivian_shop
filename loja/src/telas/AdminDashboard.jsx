@@ -134,9 +134,14 @@ const AdminDashboard = () => {
   /**
    * Números da visão geral.
    *
-   * Zerados de propósito: loja nova começa em zero, e número inventado no
-   * painel da própria dona não ajuda a decidir nada — só cria expectativa
-   * que a primeira semana real desmente.
+   * São de mostruário, e **cada um diz isso na tela**. O comentário que
+   * estava aqui prometia que eram zero; nunca foram, e o selo faltava só
+   * neles: os gráficos logo abaixo já avisavam. Ela abria o painel e lia
+   * "VENDAS DO MÊS R$ 16.768,00" como venda dela.
+   *
+   * Enquanto a loja não vender, mostrar zero seria pior de outro jeito
+   * (tela vazia não ensina onde as coisas ficam), mas número sem aviso é
+   * pior que os dois: ela decide o mês em cima disto.
    *
    * Cada um carrega a própria explicação, porque a cliente não é técnica e
    * painel sem explicação vira enfeite: ela olha, não entende, e volta a
@@ -147,6 +152,7 @@ const AdminDashboard = () => {
       rotulo: 'Esperando você',
       valor: 3,
       icone: <Package size={20} />,
+      exemplo: true,
       cor: 'var(--color-marker)',
       nota: '2 em produção, 1 pronto para postar',
       info: 'Pedidos já pagos que dependem de você produzir ou postar. É por onde começar o dia.',
@@ -157,6 +163,7 @@ const AdminDashboard = () => {
       prefixo: 'R$ ',
       casas: 2,
       icone: <ShoppingBag size={20} />,
+      exemplo: true,
       cor: 'var(--color-chalk)',
       nota: 'sem contar o frete',
       info: 'Soma dos pedidos pagos neste mês, sem contar o frete, o frete é dos Correios, não seu.',
@@ -165,6 +172,7 @@ const AdminDashboard = () => {
       rotulo: 'Clientes',
       valor: 47,
       icone: <Users size={20} />,
+      exemplo: true,
       cor: 'var(--color-ink)',
       nota: '12 compraram mais de uma vez',
       info: 'Quantas pessoas diferentes já compraram. Cliente que volta conta uma vez só.',
@@ -175,6 +183,7 @@ const AdminDashboard = () => {
       prefixo: 'R$ ',
       casas: 2,
       icone: <TrendingUp size={20} />,
+      exemplo: true,
       cor: 'var(--color-heart)',
       nota: 'comissão que você não pagou',
       info: 'Quanto você teria pago de comissão se estas vendas tivessem passado pelo Elo7. É o que a loja própria te devolve.',
