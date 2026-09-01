@@ -418,12 +418,30 @@ const conferir = async (nome, fn) => {
     if (!corpo.includes(esperado)) throw new Error(`o valor não chegou ao checkout: ${esperado}`)
   })
 
-  await conferir('a loja avisa que ainda é demonstração', async () => {
-    // Enquanto o pagamento não é real, este aviso é o que impede alguém de
-    // completar uma compra e ficar esperando um pacote que ninguém postou.
+  await conferir('a loja não mente sobre cobrança', async () => {
+    /* Este teste vale nos dois sentidos, e o segundo é o que importa.
+     *
+     * Enquanto o pagamento é simulado, o aviso precisa estar lá: sem ele
+     * alguém completa a compra, lê "aprovado" e fica esperando um pacote
+     * que ninguém vai postar.
+     *
+     * Depois que o pagamento é de verdade, o mesmo aviso vira mentira, e
+     * mentira pior: a cliente lê que não paga, e paga. Em 01/09, quando
+     * as credenciais de produção entraram, foi este teste que reprovou o
+     * build antes de a loja ir ao ar dizendo que nada era cobrado.
+     *
+     * O que define qual dos dois é o formulário do Mercado Pago estar na
+     * tela, e não uma variável: o que a cliente vê é o que vale. */
+    const cobraDeVerdade = await pagina.locator('#pagamento-mercadopago').count()
     const corpo = await pagina.locator('body').textContent()
-    if (!corpo.includes('nenhuma cobrança é feita')) {
-      throw new Error('o checkout não avisa que nada é cobrado')
+    const avisa = corpo.includes('nenhuma cobrança é feita')
+
+    if (cobraDeVerdade && avisa) {
+      throw new Error('a loja cobra de verdade e diz que nada é cobrado')
+    }
+
+    if (!cobraDeVerdade && !avisa) {
+      throw new Error('o pagamento é simulado e o checkout não avisa')
     }
   })
 
