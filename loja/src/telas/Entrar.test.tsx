@@ -93,12 +93,13 @@ describe('entrar na área da loja', () => {
     expect(entrou).toHaveBeenCalledTimes(1)
   })
 
-  it('oferece o caminho de criar conta', async () => {
+  it('não oferece criar conta, porque a loja já tem dona', async () => {
+    /* Quem se cadastrasse aqui saía com uma conta que não enxerga nada:
+       desde a 0004, só a primeira conta da loja vira dona. O link não
+       ajudava ninguém e enchia o Supabase de conta sobrando. */
     render(<Entrar />)
 
-    expect(await screen.findByRole('link', { name: /criar/i })).toHaveAttribute(
-      'href',
-      '/admin/criar-conta/',
-    )
+    expect(await screen.findByRole('link', { name: /esqueci/i })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /criar/i })).toBeNull()
   })
 })
