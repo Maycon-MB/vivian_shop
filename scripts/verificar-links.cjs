@@ -21,7 +21,15 @@ const BASE = (
     ? 'https://feitoparavocepapelaria.com.br'
     : 'https://maycon-mb.github.io/vivian_shop')
 ).replace(/\/$/, '')
-const INICIOS = ['/']
+/* O robots.txt e o sitemap.xml entram na lista porque nenhuma página
+   aponta para eles: o rastreador daqui nunca chegaria neles sozinho, e
+   sumiriam da publicação sem nada ficar vermelho. Foi assim que
+   /sitemap.xml passou meses devolvendo a página de erro. */
+const INICIOS = ['/', '/robots.txt', '/sitemap.xml']
+
+/* O pedaço de caminho que o BASE já carrega: vazio no domínio dela,
+   `/vivian_shop` enquanto a loja morar no GitHub. */
+const PREFIXO_DA_BASE = new URL(BASE).pathname.replace(/\/$/, '')
 
 const visitadas = new Set()
 const problemas = []
@@ -56,6 +64,28 @@ const absolutizar = (href, de) => {
     }
 
     const html = await resposta.text()
+
+    /* O sitemap não tem `href`: os endereços dele moram em `<loc>`, e sem
+       isto os 487 que ele promete ao Google nunca seriam abertos por
+       ninguém aqui. Sitemap que aponta para página que não existe é pior
+       do que sitemap nenhum: o Google acha o 404 antes de achar a loja. */
+    const doMapa = [...html.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) =>
+      m[1].replace(/&amp;/g, '&'),
+    )
+
+    for (const endereco of doMapa) {
+      /* O sitemap escreve endereço absoluto e completo, como o Google
+         exige. Aqui só interessa o caminho, e sem o pedaço que o próprio
+         BASE já carrega: senão, com a loja sob /vivian_shop, o prefixo
+         entraria duas vezes e as 487 páginas dariam 404 de mentira. */
+      const caminho = endereco.startsWith('http') ? new URL(endereco).pathname : endereco
+      const alvo = caminho.startsWith(PREFIXO_DA_BASE)
+        ? caminho.slice(PREFIXO_DA_BASE.length) || '/'
+        : caminho
+
+      if (!visitadas.has(alvo)) fila.push({ url: alvo, veioDe: url })
+    }
+
     const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1])
 
     for (const href of hrefs) {
