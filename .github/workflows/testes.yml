@@ -22,6 +22,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  # Republicação agendada: duas vezes ao dia (08:00 e 20:00 UTC = 05:00 e 17:00 BRT)
+  # para que alterações de catálogo, fotos e produtos feitas pela Vivian
+  # cheguem ao site estático sem precisar de commit manual.
+  schedule:
+    - cron: '0 8,20 * * *'
 
 jobs:
   conferir:
@@ -185,7 +190,7 @@ jobs:
       # como chegar ao ar: só rodava os testes, e era preciso inventar um
       # commit vazio para publicar.
       - name: guardar o site montado
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
         uses: actions/upload-artifact@v7
         with:
           name: site
@@ -195,7 +200,7 @@ jobs:
 
   publicar:
     needs: conferir
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
