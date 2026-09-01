@@ -27,6 +27,15 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
 | Frete | **de verdade**: Correios e Jadlog, e a cliente escolhe |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
+| Google acha a loja | `sitemap.xml` com 487 endereços e `robots.txt`, gerados na publicação |
+
+**O que ainda não está pronto**, e o documento já chegou a dizer que
+estava:
+
+| O quê | Estado |
+|---|---|
+| A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
+| A conta sobrando no Supabase Auth | existe, e só o painel dela apaga |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
 dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
@@ -42,13 +51,23 @@ Como a loja conta visita, e por que sem cookie:
 Como ligar o frete de verdade, passo a passo:
 [docs/ligar-o-melhor-envio.md](docs/ligar-o-melhor-envio.md).
 
+O que a primeira compra de verdade precisa provar, e o que já foi provado
+sem cobrar ninguém:
+[docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md).
+
+Como o Google acha as 342 páginas, e por que o mapa sai da publicação:
+[docs/o-google-acha-a-loja.md](docs/o-google-acha-a-loja.md).
+
+Por que o cadastro de `/admin` foi fechado sem levar a conta da cliente
+junto: [docs/a-conta-que-sobrou.md](docs/a-conta-que-sobrou.md).
+
 ---
 
 ## Como rodar
 
 ```
 cd loja && npm install
-npm test                      # 357 testes de regra e de tela
+npm test                      # 756 testes de regra e de tela
 npm run build
 
 cd ..
@@ -92,6 +111,14 @@ uma letra de distância da que funciona.
 os produtos publicados antes de gerar as páginas. Isso é o que faz a loja
 abrir rápida no 4G e o Google ler as 342 páginas de produto — e significa
 que publicar no painel só muda o site na publicação seguinte.
+
+**O `sitemap.xml` e o `robots.txt` saem do mesmo catálogo**, no
+`publicar.mjs`, e não à mão: produto que ela despublicar some do site e do
+mapa na mesma publicação. As regras estão em
+[mapaDoSite.mjs](loja/src/dominio/mapaDoSite.mjs), em JavaScript puro
+porque o script de publicação e o vitest precisam carregar o mesmo
+arquivo. O `verificar-links.cjs` abre os 487 endereços do mapa a cada
+conferência: sitemap apontando para 404 é pior do que sitemap nenhum.
 
 As telas da Vivian exigem login. Para rodar os testes de navegação contra
 elas, defina `TESTE_DONA_EMAIL` e `TESTE_DONA_SENHA`; sem isso, elas são
@@ -148,6 +175,18 @@ projeto foi criado com RLS automático ligado.
 **O aviso do Mercado Pago não é a verdade.** Ele diz "vá perguntar sobre o
 pagamento tal"; quem responde é a API deles, e o que volta ainda passa
 pelas regras de [avisoDePagamento.ts](loja/src/dominio/avisoDePagamento.ts).
+
+**Não existe cadastro aberto em `/admin`.** A tela `/admin/criar-conta`
+foi apagada em 01/09: a loja já tem dona, e desde a migração `0004` quem
+se cadastrava ali saía com uma conta que não enxerga nada. Uma segunda
+dona entra pelo convite da `0006`.
+
+**Mas o cadastro do Supabase continua ligado, e tem que continuar.** O
+mesmo `signUp` atende a conta de quem compra, em `/minha-conta`, que é
+como a cliente vê o próprio pedido sem escrever para ela. Desligar
+`disable_signup` no painel fecharia as duas portas. Existe teste que
+reprova se alguém levar a conta da cliente junto
+([cadastroDaDona.test.ts](loja/src/dominio/cadastroDaDona.test.ts)).
 
 **Nada é contratado sem a Vivian autorizar.** Está no contrato.
 

@@ -1,11 +1,17 @@
 # Onde o projeto está
 
-Fechamento de 27/08/2026. A loja está no ar em
+Fechamento de 01/09/2026. A loja está no ar em
 [feitoparavocepapelaria.com.br](https://feitoparavocepapelaria.com.br)
-desde 21/08, e hoje ela vende de verdade em tudo menos numa coisa: as
-credenciais de produção do Mercado Pago.
+desde 21/08, e cobra de verdade em produção desde 01/09.
 
 Registro meu. Não vira PDF.
+
+> **Correção de 01/09.** Este documento chegou a dizer "100% pronto e no
+> ar". Não estava: itens foram apagados da lista de pendências sem terem
+> sido feitos. O que sobrou de verdade está em
+> [o que falta](#o-que-falta-de-verdade), abaixo, e a régua passou a ser
+> outra: só sai da lista o que foi conferido rodando, e o documento diz
+> como foi conferido.
 
 ---
 
@@ -22,44 +28,51 @@ Registro meu. Não vira PDF.
 | E-mail | Resend ligado: aviso de mensagem e recuperar senha |
 | Painel dela | produtos, fotos, mensagens, avaliações, como recebe |
 
-## O que falta, e o que trava cada coisa
+## O que falta de verdade
 
-| O quê | Trava |
+Em ordem de quanto custa deixar como está.
+
+| O quê | Estado | Trava |
+|---|---|---|
+| **A primeira compra de verdade** | nunca foi feita | depende dela comprar. Ver [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md) |
+| **A conta sobrando no Supabase Auth** | existe | depende do painel do Supabase, que é dela. Ver [a-conta-que-sobrou.md](a-conta-que-sobrou.md) |
+| Descrição no cartão | três linhas, e o resto na página do produto | nada, é trabalho meu |
+| Filtro no celular | corre de lado, e o produto sobe para a primeira tela | nada, é trabalho meu |
+
+Feito em 01/09, e conferido rodando:
+
+| O quê | Como foi conferido |
 |---|---|
-| Medição de visita | **no ar**, sem cookie e sem identificar ninguém |
-| Descrição no cartão | três linhas, e o resto na página do produto |
-| Filtro no celular | corre de lado, e o produto sobe para a primeira tela |
+| Mapa do site e robots.txt | `verificar-links.cjs` abriu os 487 endereços do sitemap contra o site montado, e todos respondem. Ver [o-google-acha-a-loja.md](o-google-acha-a-loja.md) |
+| Cadastro público em `/admin` | a rota devolve 404 no site montado, e três testes travam a porta fechada |
+| Cobrança em produção | `conferir-pagamento` responde `producao`, `valido`, conta `207270182` |
 
 ---
 
 ## Quanto falta, em porcentagem
 
-- **Do que foi contratado**: **100% pronto e no ar.**
-- **Do que faz dinheiro entrar**: **100% cobrando em produção.**
+Este documento trazia dois números redondos, e os dois estavam errados.
 
-O segundo número é o que importa. Uma loja 97% pronta que não cobra
-fatura o mesmo que uma loja 0% pronta.
+- **Do que foi contratado**: no ar e funcionando, menos os dois primeiros
+  itens da tabela acima.
+- **Do que faz dinheiro entrar**: a loja **cobra** em produção. Ninguém
+  **comprou** ainda.
 
----
-
-## O caminho até cobrar de verdade
-
-1. **Ela gera as credenciais de produção** no painel de desenvolvedor do
-   Mercado Pago. A aplicação já existe, criada por ela em 25/08.
-2. **A Public Key vai na variável do GitHub**, e o Access Token nos
-   segredos da função. O aviso de "loja em construção" some sozinho quando
-   a chave deixar de começar com `TEST-`.
-3. **Uma compra de teste com cartão real**, de valor baixo, feita por
-   você. É o único jeito de saber que o dinheiro cai na conta dela.
-
-Depois disso a loja vende.
+A distinção da segunda linha é o ponto. Uma loja que cobra e nunca foi
+usada não é uma loja que vende: é uma loja em que a primeira cliente é
+quem descobre o que não funciona.
 
 ---
 
 ## O que decidir com ela, sem pressa
 
-**O frete.** Correios direto exige contrato dela; Melhor Envio e Kangu dão
-preço melhor sem contrato. É o último item grande, e é decisão de negócio.
+**O frete** saiu daqui. Foi resolvido em 31/08 pelo Melhor Envio: a loja
+cota Correios e Jadlog de verdade, e a cliente escolhe. Ver
+[o-frete-da-vivian.md](o-frete-da-vivian.md).
+
+**A primeira compra.** É o único item que depende dela agora, e é o
+maior. Roteiro pronto, com o que ela precisa conferir depois de comprar,
+em [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md).
 
 **A medição de visita** foi resolvida em 27/08, e sem ela precisar
 decidir nada: a loja conta sozinha, sem cookie e sem identificar ninguém,
