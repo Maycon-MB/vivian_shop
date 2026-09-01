@@ -18,6 +18,8 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statS
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
+import { montarMapaDoSite, montarRobots } from '../loja/src/dominio/mapaDoSite.mjs'
+
 const raiz = path.dirname(fileURLToPath(new URL('.', import.meta.url)))
 const dist = path.join(raiz, 'dist')
 const loja = path.join(raiz, 'loja')
@@ -92,6 +94,38 @@ if (dominioProprio) {
   writeFileSync(path.join(dist, 'CNAME'), 'feitoparavocepapelaria.com.br\n')
   console.log('  CNAME escrito: feitoparavocepapelaria.com.br')
 }
+
+/**
+ * O mapa do site e o robots.txt.
+ *
+ * Saem daqui, e não escritos à mão, porque a lista de endereços é o
+ * catálogo: o `baixar-catalogo.mjs` acabou de trazer do banco o que ela
+ * publicou, e as páginas foram geradas a partir do mesmo arquivo. Produto
+ * que ela despublicar no painel some do site e do mapa na mesma
+ * publicação, sem ninguém precisar lembrar de nada.
+ *
+ * O Next tem `app/sitemap.ts` para isso, e ele funciona na exportação
+ * estática. Ficou de fora porque o endereço da loja é decidido aqui, pela
+ * DOMINIO_PRONTO: o mapa precisa de endereço absoluto, e ler a mesma
+ * variável em dois lugares é o tipo de coisa que fica meio certa depois
+ * de uma mudança.
+ */
+const ENDERECO_DA_LOJA = dominioProprio
+  ? 'https://feitoparavocepapelaria.com.br'
+  : 'https://maycon-mb.github.io/vivian_shop'
+
+const catalogoPublicado = JSON.parse(
+  readFileSync(path.join(loja, 'src', 'dados', 'catalogo-publicado.json'), 'utf8'),
+)
+
+writeFileSync(
+  path.join(dist, 'sitemap.xml'),
+  montarMapaDoSite({ base: ENDERECO_DA_LOJA, catalogo: catalogoPublicado }),
+)
+writeFileSync(path.join(dist, 'robots.txt'), montarRobots({ base: ENDERECO_DA_LOJA }))
+
+const noMapa = (catalogoPublicado.produtos?.length ?? 0) + (catalogoPublicado.temas?.length ?? 0)
+console.log(`  sitemap.xml e robots.txt escritos em ${ENDERECO_DA_LOJA} (${noMapa} páginas de catálogo)`)
 
 /**
  * O atalho que o Next pede e não exporta.

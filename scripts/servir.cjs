@@ -35,11 +35,14 @@ const TIPOS = {
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
   '.txt': 'text/plain; charset=utf-8',
+  /* O sitemap. Sem esta linha ele sai como octet-stream, e a conferência
+     local passa enquanto o Google recusa o arquivo no ar. */
+  '.xml': 'application/xml; charset=utf-8',
 }
 
 /* Imagem e fonte já vêm comprimidas no próprio formato: passá-las pelo gzip
    gasta processador e às vezes aumenta o arquivo. */
-const COMPRIMIVEIS = new Set(['.html', '.css', '.js', '.json', '.svg', '.txt'])
+const COMPRIMIVEIS = new Set(['.html', '.css', '.js', '.json', '.svg', '.txt', '.xml'])
 
 const servidor = http.createServer((req, res) => {
   let caminho = decodeURIComponent(req.url.split('?')[0])
