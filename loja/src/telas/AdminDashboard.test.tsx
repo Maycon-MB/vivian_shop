@@ -58,4 +58,22 @@ describe('o painel da Vivian', () => {
     expect(screen.getByText(/esperando você/i)).toBeInTheDocument()
     expect(screen.getByText(/vendas do mês/i)).toBeInTheDocument()
   })
+
+  it('avisa que os números do topo são de exemplo', () => {
+    /* Enquanto a loja não vender, a visão geral mostra números de mostruário.
+       Os gráficos já dizem "exemplo" em cima; os quatro cartões do topo não
+       diziam, e são justamente os maiores da tela: ela abria o painel e lia
+       "VENDAS DO MÊS R$ 16.768,00" como venda dela.
+
+       Um selo a menos aqui não é detalhe de acabamento. É a diferença entre
+       ela conferir o próprio faturamento e ela conferir o meu mostruário. */
+    const { container } = render(<AdminDashboard />)
+
+    const cartoes = container.querySelectorAll('.kpi-card')
+    expect(cartoes.length).toBe(4)
+
+    cartoes.forEach((cartao) => {
+      expect(cartao.querySelector('.selo-exemplo')).not.toBeNull()
+    })
+  })
 })
