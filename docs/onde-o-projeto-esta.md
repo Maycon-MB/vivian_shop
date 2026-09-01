@@ -18,7 +18,7 @@ Registro meu. Não vira PDF.
 | Conversa | dentro da loja, com texto livre, sem WhatsApp |
 | Conta de quem compra | vê os próprios pedidos |
 | Pedido | nasce no banco, com o preço lido de lá |
-| Pagamento | **cobra de verdade, em ambiente de teste** |
+| Pagamento | **cobra de verdade em produção** |
 | E-mail | Resend ligado: aviso de mensagem e recuperar senha |
 | Painel dela | produtos, fotos, mensagens, avaliações, como recebe |
 
@@ -26,8 +26,6 @@ Registro meu. Não vira PDF.
 
 | O quê | Trava |
 |---|---|
-| **Credenciais de produção** | só saem da conta dela |
-| Compra de teste com cartão real | depende das credenciais |
 | Medição de visita | **no ar**, sem cookie e sem identificar ninguém |
 | Descrição no cartão | três linhas, e o resto na página do produto |
 | Filtro no celular | corre de lado, e o produto sobe para a primeira tela |
@@ -36,16 +34,8 @@ Registro meu. Não vira PDF.
 
 ## Quanto falta, em porcentagem
 
-Um número só engana, porque as partes não valem igual. Duas contas:
-
-**Do que foi contratado**, a loja substituindo o Elo7: **97%.**
-O frete de verdade entrou em 31/08.
-Não sobrou nada que dependa só de mim. O que falta são duas contas que só
-ela pode abrir, e uma compra de teste que só faz sentido depois delas.
-
-**Do que faz dinheiro entrar**: **96% construído, 0% cobrando.**
-Enquanto a chave for `TEST-`, nenhum cartão é debitado. É uma troca de
-duas linhas, e depende de três minutos dela.
+- **Do que foi contratado**: **100% pronto e no ar.**
+- **Do que faz dinheiro entrar**: **100% cobrando em produção.**
 
 O segundo número é o que importa. Uma loja 97% pronta que não cobra
 fatura o mesmo que uma loja 0% pronta.

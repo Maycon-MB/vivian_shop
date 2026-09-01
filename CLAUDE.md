@@ -23,7 +23,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Painel: trocar a senha | dentro de Configurações, sem depender de e-mail |
 | Política da loja | página própria, com o texto que ela escreveu |
 | Conversa com a cliente | dentro da loja, sem WhatsApp, e ela é avisada por e-mail |
-| Pagamento | **cobra de verdade em ambiente de teste**; faltam as credenciais de produção |
+| Pagamento | **cobra de verdade em produção** com Mercado Pago |
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
 | Frete | **de verdade**: Correios e Jadlog, e a cliente escolhe |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
