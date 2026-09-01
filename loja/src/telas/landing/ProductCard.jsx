@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { Plus, ShoppingCart, Download, Package } from 'lucide-react';
+import { ShoppingCart, Download, Package } from 'lucide-react';
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../../catalogo';
 import { precoAtual, temPromocao } from '../catalogo';
 

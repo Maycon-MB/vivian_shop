@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import Grafico from './painel/Grafico';
 import { 
   Users, 
   ShoppingBag, 
@@ -11,18 +10,13 @@ import {
   CheckCircle, 
   Eye, 
   Printer,
-  User,
-  Send,
-  Menu,
-  X
+  Menu
 } from 'lucide-react';
-import { Row, Col, Card, Button, Modal, Form, Toast, ToastContainer } from 'react-bootstrap';
+import { Row, Col, Button, Modal, Form, Toast, ToastContainer } from 'react-bootstrap';
 import Sidebar from './dashboard/Sidebar';
-import StatsCard from './dashboard/StatsCard';
 import OrderTable from './dashboard/OrderTable';
 import MarketingIA from './dashboard/MarketingIA';
 import LogisticsCard from './dashboard/LogisticsCard';
-import CatalogSection from './dashboard/sections/CatalogSection';
 import CartaoKpi from './painel/CartaoKpi';
 import CartaoPainel from './painel/CartaoPainel';
 import AbaPedidos from './painel/AbaPedidos';
@@ -136,87 +130,6 @@ const AdminDashboard = () => {
     setShowManualSale(false);
     triggerToast('Venda manual registrada com sucesso!');
   };
-
-  const salesChartOption = {
-    tooltip: { trigger: 'axis' },
-    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-    xAxis: {
-      type: 'category',
-      data: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      axisLine: { lineStyle: { color: '#eee' } }
-    },
-    yAxis: { type: 'value', splitLine: { lineStyle: { color: '#f5f5f5' } } },
-    series: [
-      {
-        name: 'Personalizada (R$)',
-        data: [5200, 6320, 5010, 7340, 8900, 9300],
-        type: 'line',
-        smooth: true,
-        color: 'var(--color-chalk)',
-        lineStyle: { width: 3 },
-        areaStyle: { color: 'rgba(46, 155, 150, 0.1)' }
-      },
-      {
-        name: 'Pedagógica (R$)',
-        data: [3000, 3000, 4000, 4000, 4000, 4000],
-        type: 'line',
-        smooth: true,
-        color: 'var(--color-marker)',
-        lineStyle: { width: 3 },
-        areaStyle: { color: 'rgba(255, 212, 0, 0.1)' }
-      }
-    ]
-  };
-
-  /**
-   * Números da visão geral.
-   *
-   * Zerados de propósito: loja nova começa em zero, e número inventado no
-   * painel da própria dona não ajuda a decidir nada — só cria expectativa
-   * que a primeira semana real desmente.
-   *
-   * Cada um carrega a própria explicação, porque a cliente não é técnica e
-   * painel sem explicação vira enfeite: ela olha, não entende, e volta a
-   * controlar tudo no caderno.
-   */
-  const indicadores = [
-    {
-      rotulo: 'Esperando você',
-      valor: 3,
-      icone: <Package size={20} />,
-      cor: 'var(--color-marker)',
-      nota: '2 em produção, 1 pronto para postar',
-      info: 'Pedidos já pagos que dependem de você produzir ou postar. É por onde começar o dia.',
-    },
-    {
-      rotulo: 'Vendas do mês',
-      valor: 16768,
-      prefixo: 'R$ ',
-      casas: 2,
-      icone: <ShoppingBag size={20} />,
-      cor: 'var(--color-chalk)',
-      nota: 'sem contar o frete',
-      info: 'Soma dos pedidos pagos neste mês, sem contar o frete, o frete é dos Correios, não seu.',
-    },
-    {
-      rotulo: 'Clientes',
-      valor: 47,
-      icone: <Users size={20} />,
-      cor: 'var(--color-ink)',
-      nota: '12 compraram mais de uma vez',
-      info: 'Quantas pessoas diferentes já compraram. Cliente que volta conta uma vez só.',
-    },
-    {
-      rotulo: 'Economizado em taxas',
-      valor: 3186,
-      prefixo: 'R$ ',
-      casas: 2,
-      icone: <TrendingUp size={20} />,
-      cor: 'var(--color-heart)',
-      nota: 'comissão que você não pagou',
-      info: 'Quanto você teria pago de comissão se estas vendas tivessem passado pelo Elo7. É o que a loja própria te devolve.',
-    },
-  ];
 
   return (
     <div className="painel d-flex">

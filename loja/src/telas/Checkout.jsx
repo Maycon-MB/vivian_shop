@@ -28,9 +28,7 @@ import PagamentoMercadoPago from './PagamentoMercadoPago';
 
 import {
   PADRAO as PADRAO_DE_PAGAMENTO,
-  frasePix,
-  frasePorParcelas,
-} from '@/dominio/comoElaRecebe';
+  } from '@/dominio/comoElaRecebe';
 
 /**
  * Fechar a compra.

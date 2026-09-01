@@ -1,9 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { ShoppingCart, Heart, Search, User, ArrowRight, CreditCard, Truck, MessageCircle, MessageSquare, X, Plus, Minus, Check, CheckCircle, Package } from 'lucide-react';
+import { ShoppingCart, Search, User, Truck, MessageCircle, MessageSquare, Check, CheckCircle, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Row, Col, Nav, Navbar, Badge, Button, Toast, ToastContainer } from 'react-bootstrap';
 import ProductCard from './landing/ProductCard';
@@ -11,12 +10,8 @@ import CartModal from './landing/CartModal';
 import {
   PERSONALIZADA,
   PEDAGOGICA,
-  podeAdicionarAoCarrinho,
-  quantidadeMinima,
-  permiteVariasUnidades,
-  totalCarrinho,
-} from '../catalogo';
-import { Instagram, Facebook } from './icones-marca';
+  } from '../catalogo';
+import { Facebook } from './icones-marca';
 import { PUBLICADOS, temasDaVitrine } from './catalogo';
 import { QUANTOS_DE_CARA, quantosProdutos } from '@/dominio/vitrineDeTemas';
 import { paraAHome } from '@/dominio/vitrineDeProdutos';
