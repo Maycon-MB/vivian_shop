@@ -127,9 +127,15 @@ const Entrar = () => {
             <Link href="/admin/trocar-senha/" prefetch={false}>Trocar a minha senha</Link>
           </p>
 
-          <p className="entrar-criar">
-            Primeira vez? <Link href="/admin/criar-conta/" prefetch={false}>Criar a minha conta</Link>
-          </p>
+          {/* Sem "criar a minha conta".
+
+              A loja já tem dona, e desde a migração 0004 quem se cadastra
+              depois da primeira conta fica sem permissão nenhuma. O link
+              só levava a uma tela que criava conta inútil, e foi o que
+              deixou uma sobrando no Supabase em 01/09.
+
+              Uma segunda dona entra pelo convite da migração 0006, que
+              continua valendo. */}
 
           <p className="entrar-seguranca">
             A sua senha fica guardada embaralhada, e nem eu consigo ver.
