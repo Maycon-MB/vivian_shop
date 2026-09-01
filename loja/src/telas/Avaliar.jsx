@@ -66,7 +66,11 @@ const Avaliar = () => {
         setProdutos([]);
         setErro('Não consegui abrir agora. Tente de novo em instantes.');
       });
-  }, []);
+    /* `chave` sai de um `useState` sem setter: ela nunca muda depois da
+       primeira montagem, então o efeito continua rodando uma vez só. A
+       lista precisa dizer isso mesmo assim, senão ela mente sobre o que o
+       efeito lê, e quem confiar nela um dia erra. */
+  }, [chave]);
 
   const enviar = async (evento) => {
     evento.preventDefault();
