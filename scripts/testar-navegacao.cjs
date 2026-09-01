@@ -418,33 +418,6 @@ const conferir = async (nome, fn) => {
     if (!corpo.includes(esperado)) throw new Error(`o valor não chegou ao checkout: ${esperado}`)
   })
 
-  await conferir('a loja não mente sobre cobrança', async () => {
-    /* Este teste vale nos dois sentidos, e o segundo é o que importa.
-     *
-     * Enquanto o pagamento é simulado, o aviso precisa estar lá: sem ele
-     * alguém completa a compra, lê "aprovado" e fica esperando um pacote
-     * que ninguém vai postar.
-     *
-     * Depois que o pagamento é de verdade, o mesmo aviso vira mentira, e
-     * mentira pior: a cliente lê que não paga, e paga. Em 01/09, quando
-     * as credenciais de produção entraram, foi este teste que reprovou o
-     * build antes de a loja ir ao ar dizendo que nada era cobrado.
-     *
-     * O que define qual dos dois é o formulário do Mercado Pago estar na
-     * tela, e não uma variável: o que a cliente vê é o que vale. */
-    const cobraDeVerdade = await pagina.locator('#pagamento-mercadopago').count()
-    const corpo = await pagina.locator('body').textContent()
-    const avisa = corpo.includes('nenhuma cobrança é feita')
-
-    if (cobraDeVerdade && avisa) {
-      throw new Error('a loja cobra de verdade e diz que nada é cobrado')
-    }
-
-    if (!cobraDeVerdade && !avisa) {
-      throw new Error('o pagamento é simulado e o checkout não avisa')
-    }
-  })
-
   await conferir('o checkout cobra os dados antes de deixar pagar', async () => {
     await pagina.getByRole('button', { name: /^Pagar$/ }).click()
     await pagina.waitForTimeout(600)
@@ -530,6 +503,37 @@ const conferir = async (nome, fn) => {
     const confirmacao = await pagina.locator('body').textContent()
     if (!/#\d{4}/.test(confirmacao)) throw new Error('o pedido não ganhou número')
     if (!confirmacao.includes('dias úteis')) throw new Error('não diz o prazo de produção')
+  })
+
+  await conferir('a loja não mente sobre cobrança', async () => {
+    /* Este teste vale nos dois sentidos, e o segundo é o que importa.
+     *
+     * Enquanto o pagamento é simulado, o aviso precisa estar lá: sem ele
+     * alguém completa a compra, lê "aprovado" e fica esperando um pacote
+     * que ninguém vai postar.
+     *
+     * Depois que o pagamento é de verdade, o mesmo aviso vira mentira, e
+     * mentira pior: a cliente lê que não paga, e paga. Em 01/09, quando
+     * as credenciais de produção entraram, foi este teste que reprovou o
+     * build antes de a loja ir ao ar dizendo que nada era cobrado.
+     *
+     * O que define qual dos dois é o formulário do Mercado Pago estar na
+     * tela, e não uma variável: o que a cliente vê é o que vale. */
+    /* Depois da compra, e não antes: o formulário do Mercado Pago só
+       existe na tela depois do clique em "Pagar". Conferindo antes, a
+       ausência dele não significa nada, e foi assim que este teste
+       reprovou o build certo em 01/09. */
+    const cobraDeVerdade = await pagina.locator('#pagamento-mercadopago').count()
+    const corpo = await pagina.locator('body').textContent()
+    const avisa = corpo.includes('nenhuma cobrança é feita')
+
+    if (cobraDeVerdade && avisa) {
+      throw new Error('a loja cobra de verdade e diz que nada é cobrado')
+    }
+
+    if (!cobraDeVerdade && !avisa) {
+      throw new Error('o pagamento é simulado e o checkout não avisa')
+    }
   })
 
   await conferir('no celular dá para achar o carrinho e abrir o menu', async () => {
