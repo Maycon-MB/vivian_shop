@@ -1,7 +1,28 @@
 # Cadastrar a loja no Google Search Console
 
-Escrito em 02/09/2026, depois de o `sitemap.xml` entrar no ar. Ainda não
-foi feito.
+Escrito em 02/09/2026, depois de o `sitemap.xml` entrar no ar. **Feito no
+mesmo dia.**
+
+| | |
+|---|---|
+| Propriedade | de **Domínio**, verificada por TXT no DNS |
+| Registro | `google-site-verification=23jfl0YzwM5rQlgxqThzLF_ZNyuXnzQacTKCcWmWqzU` |
+| Sitemap | enviado como `https://feitoparavocepapelaria.com.br/sitemap.xml` |
+| A Vivian | adicionada como **proprietária**, com `vivianquintellapsico@gmail.com` |
+
+**O sitemap apareceu como "não foi possível buscar" logo depois do envio.
+Isso é normal**, e não é defeito nosso: o Google marca assim enquanto não
+buscou de verdade. Conferido no mesmo dia, como o Googlebot vê:
+
+```
+http=200  tipo=application/xml  487 <loc>  sem redirecionamento
+robots.txt nao bloqueia, e aponta para ele
+```
+
+Se em dois ou três dias continuar vermelho, aí sim é para investigar.
+
+**Não apague o registro TXT.** O Google reconfere de tempos em tempos, e a
+propriedade cai junto.
 
 Registro meu. Não vira PDF.
 
@@ -49,9 +70,18 @@ zona. Ver [o-endereco-da-loja.md](o-endereco-da-loja.md).
 
 ---
 
-## O cuidado que vem antes de tudo
+## O cuidado que valeu, e o que ele achou
 
 **Mexer na zona é mexer no que mantém a loja no ar.**
+
+Na hora de fazer, o editor do registro.br mostrou-se mais manso do que eu
+supunha: ele **acrescenta** uma entrada, e não pede a zona inteira de
+volta. O aviso abaixo continua valendo como cuidado, mas na prática foi um
+campo a mais.
+
+A zona também tinha **13 entradas, e não nove**: as quatro a mais são do
+Resend, do e-mail dela. Conferido depois de salvar, tudo intacto: quatro
+`A`, quatro `AAAA`, o `www`, o DKIM e o `send`, e a loja respondendo 200.
 
 O painel do registro.br edita o endereçamento em MODO AVANÇADO, e é ali
 que estão os nove registros que fazem a loja responder. Se o editor pedir
