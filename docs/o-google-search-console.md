@@ -80,12 +80,11 @@ Nenhum TXT existe hoje. O do Google será o primeiro.
 ## O passo a passo
 
 **1. Abrir** [search.google.com/search-console](https://search.google.com/search-console)
-e entrar com a conta Google que vai administrar isto.
+com a minha conta Google mesmo.
 
-Vale decidir agora de quem é essa conta. Se for a minha, ela some do
-alcance dela no dia em que o contrato acabar. O certo é criar na conta
-Google **dela** e me adicionar como usuário, que é o mesmo desenho do
-domínio: dela, comigo com acesso técnico.
+Não é decisão a tomar agora: dá para adicionar a Vivian depois, em
+Configurações → Usuários e permissões → Adicionar usuário, sem refazer
+nada. O dia de fazer isso é o da entrega, e não hoje.
 
 **2. Adicionar propriedade** → cartão da esquerda, **Domínio**.
 
