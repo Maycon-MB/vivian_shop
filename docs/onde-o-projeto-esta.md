@@ -47,7 +47,7 @@ Feito em 01/09, e conferido rodando:
 | Mapa do site e robots.txt | `verificar-links.cjs` abriu os 487 endereços do sitemap contra o site montado, e todos respondem. Ver [o-google-acha-a-loja.md](o-google-acha-a-loja.md) |
 | Cadastro público em `/admin` | a rota devolve 404 no site montado, e três testes travam a porta fechada |
 | Cobrança em produção | `conferir-pagamento` responde `producao`, `valido`, conta `207270182` |
-| Search Console | propriedade de domínio verificada por TXT, sitemap enviado |
+| Search Console | propriedade de domínio verificada por TXT, sitemap enviado, e a Vivian já é proprietária |
 | Backup diário do banco | primeira execução verde: 400 KB, 343 produtos, cifrado, artifact expirando em 30 dias |
 | Backup diário das fotos | primeira execução verde: 684 arquivos, 15 MB, nenhum vazio |
 
