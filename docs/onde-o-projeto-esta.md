@@ -36,6 +36,7 @@ Em ordem de quanto custa deixar como está.
 |---|---|---|
 | **A primeira compra de verdade** | nunca foi feita | depende dela comprar. Ver [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md) |
 | **A conta sobrando no Supabase Auth** | existe | depende do painel do Supabase, que é dela. Ver [a-conta-que-sobrou.md](a-conta-que-sobrou.md) |
+| **A restauração do backup** | nunca testada | falta um slot de projeto Free para restaurar dentro. Ver [o-backup-do-banco.md](o-backup-do-banco.md) |
 | Descrição no cartão | três linhas, e o resto na página do produto | nada, é trabalho meu |
 | Filtro no celular | corre de lado, e o produto sobe para a primeira tela | nada, é trabalho meu |
 
@@ -46,6 +47,8 @@ Feito em 01/09, e conferido rodando:
 | Mapa do site e robots.txt | `verificar-links.cjs` abriu os 487 endereços do sitemap contra o site montado, e todos respondem. Ver [o-google-acha-a-loja.md](o-google-acha-a-loja.md) |
 | Cadastro público em `/admin` | a rota devolve 404 no site montado, e três testes travam a porta fechada |
 | Cobrança em produção | `conferir-pagamento` responde `producao`, `valido`, conta `207270182` |
+| Search Console | propriedade de domínio verificada por TXT, sitemap enviado |
+| Backup diário do banco | primeira execução verde: 400 KB, 343 produtos, cifrado, artifact expirando em 30 dias |
 
 ---
 

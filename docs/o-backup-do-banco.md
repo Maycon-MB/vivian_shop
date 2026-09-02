@@ -101,37 +101,85 @@ nenhum, mas aquele arquivo é um lugar de passagem, e não de guarda:
 Enquanto o passo 3 não acontecer, quem tiver acesso a essa máquina abre
 todos os backups.
 
-### 2. A conexão do banco
+### 2. A conexão do banco ~~configurar~~ feito em 02/09
 
-No painel do Supabase, projeto `loja`, botão **Connect** no topo, aba
-**Session pooler**. Copia a URI, que tem esta cara:
+O workflow não usa URI. Host, usuário e porta estão escritos dentro dele,
+em claro, porque não são segredo: são o endereço público do pooler e o
+nome do projeto.
 
 ```
-postgresql://postgres.kbvgdnrymwfavgkxqvjh:[SENHA]@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
+PGHOST: aws-0-sa-east-1.pooler.supabase.com
+PGPORT: 5432
+PGUSER: postgres.kbvgdnrymwfavgkxqvjh
 ```
 
-Troca `[SENHA]` pela senha do banco. Se você não a tiver, Settings →
-Database → **Reset database password**.
+O único segredo é a senha, em `SENHA_DO_BANCO`.
+
+**Por que não é uma URI.** A primeira tentativa usava
+`postgresql://usuario:senha@host/banco` num segredo só, e falhou assim:
+
+```
+pg_dump: error: could not translate host name
+  "-1Chaolan@aws-0-sa-east-1.pooler.supabase.com" to address
+```
+
+A senha tinha um `@` dentro. O libpq corta a URI no primeiro `@`, então
+ele achou que o host começava no meio da senha. Até aí seria só um erro de
+escapamento.
+
+O problema de verdade foi a mensagem. **O GitHub mascara o valor exato do
+segredo, e não um pedaço dele**: como a URI foi partida ao meio, o que
+sobrou da senha saiu legível no log do run. O run foi apagado.
+
+Com os campos separados não há URI para escapar, e caractere especial
+nenhum muda o significado de nada. É a diferença entre depender de
+escapamento correto e não precisar de escapamento.
 
 **Session pooler, e não os outros dois.** A conexão direta
 (`db.<ref>.supabase.co`) só responde em IPv6 no plano Free, e runner do
-GitHub é IPv4: a conexão simplesmente não fecha. O Transaction pooler
-responde, mas não aguenta `pg_dump`.
+GitHub é IPv4. Conferido por DNS em 02/09:
 
-### 3. Cadastrar no repositório privado
+```
+db.kbvgdnrymwfavgkxqvjh.supabase.co  ->  nao resolve em IPv4
+```
+
+O Transaction pooler responde, mas na porta 6543 e não aguenta `pg_dump`.
+
+A senha do banco **não é a de login do Supabase**, e não é visível depois
+de criada. Sem ela guardada, o caminho é Database Settings → Reset
+password, e cadastrar a nova no segredo **na mesma hora**: o reset
+invalida a anterior.
+
+### 3. Onde os dois valores moram
 
 Em `github.com/Maycon-MB/vivian_shop_backups` → Settings → Secrets and
 variables → Actions:
 
 | Aba | Nome | Valor |
 |---|---|---|
-| **Secrets** | `URL_DO_BANCO` | a URI do Session pooler, com a senha |
-| **Variables** | `CHAVE_PUBLICA_DO_BACKUP` | o `age1...` do passo 1 |
+| **Secrets** | `SENHA_DO_BANCO` | só a senha, sem `postgresql://`, sem `@`, sem aspas |
+| **Variables** | `CHAVE_PUBLICA_DO_BACKUP` | o `age1...` |
 
 A chave pública vai em Variables e não em Secrets de propósito: ela é
-pública, e guardá-la como segredo daria uma falsa sensação de proteção,
-além de mascarar o valor no log quando você precisar conferir qual chave
-foi usada.
+pública, e guardá-la como segredo daria falsa sensação de proteção, além
+de mascarar o valor no log quando você precisar conferir qual chave foi
+usada.
+
+---
+
+## Que ele funciona, está provado
+
+Primeira execução verde em 02/09/2026, run
+[33633500212](https://github.com/Maycon-MB/vivian_shop_backups/actions/runs/33633500212):
+
+| | |
+|---|---|
+| Dump | 400 KB, **343 produtos** |
+| Cifrado | `banco-2026-09-02.tar.gz.age`, 53 KB |
+| Artifact | guardado, expira **02/10** |
+| Batida | commitada em `ULTIMO-BACKUP.txt` |
+
+São 343 e não 342 porque o banco tem 343 produtos e 342 estão publicados.
 
 ---
 
@@ -169,7 +217,7 @@ psql "postgresql://postgres.<ref>:[SENHA]@aws-0-sa-east-1.pooler.supabase.com:54
 ### 4. Conferir
 
 ```powershell
-psql "$URL" -c "select count(*) from produtos;"    # 342
+psql "$URL" -c "select count(*) from produtos;"    # 343
 psql "$URL" -c "select count(*) from temas;"       # 140
 psql "$URL" -c "select count(*) from pedidos;"
 ```
@@ -186,27 +234,46 @@ pelo e-mail confirmado.
 
 ---
 
-## Testar a restauração sem tocar em produção
+## O teste de restauração: **não foi feito**
 
-**Backup que nunca foi restaurado não é backup.** Este é o teste, e ele
-não chega perto do banco da loja.
+Está aqui em cima de tudo, e não escondido no fim, porque é a parte fraca
+disto.
+
+**Backup que nunca foi restaurado não é backup.** O que está provado é que
+o dump é gerado, tem as tabelas, tem os dados, e é cifrado. O que **não**
+está provado é que ele volta.
+
+Ficou de fora por decisão de 02/09: o teste precisa de um projeto Supabase
+descartável para restaurar dentro, e não há slot livre no plano Free.
+
+### O que isso significa na prática
+
+Se o banco cair amanhã, a restauração vai ser a primeira vez que alguém
+tenta, no pior dia possível. Os riscos conhecidos:
+
+| O que pode dar errado | Por quê |
+|---|---|
+| A chave privada não abre o arquivo | ela nunca foi usada para decifrar nada |
+| O `banco.sql` não aplica limpo | extensões, tipos ou funções do Supabase que o dump referencia |
+| Falta alguma coisa que ninguém notou | o Storage, por exemplo, que já se sabe que fica de fora |
+
+O primeiro é o mais provável e o mais fácil de eliminar: bastaria decifrar
+um backup uma vez, sem restaurar nada em lugar nenhum.
+
+### Como fazer, quando houver slot
 
 Não usa Docker, porque nesta máquina não há e não vai haver.
 
-1. **Criar um projeto Supabase novo**, no plano Free, com um nome que
-   deixe óbvio o que é: `restauracao-de-teste`.
-2. Pegar a URI do **Session pooler** dele.
-3. Rodar os passos 1 a 4 acima contra essa URI.
-4. Conferir que os números batem: 342 produtos, 140 temas.
+1. **Criar um projeto Supabase novo**, Free, com nome óbvio:
+   `restauracao-de-teste`.
+2. Pegar a senha e o **Session pooler** dele.
+3. Rodar os passos de restauração acima contra ele.
+4. Conferir que os números batem: 343 produtos, 140 temas.
 5. **Apagar o projeto de teste.**
 
 O passo 5 não é opcional. Um projeto esquecido com cópia dos dados das
-clientes é exatamente o tipo de coisa que a LGPD trata como incidente, e
-ninguém lembraria dele em três meses.
-
-> O plano Free costuma permitir dois projetos ativos por organização. Se
-> ele reclamar, vale criar uma organização nova só para o teste, e apagá-la
-> junto no passo 5.
+clientes é exatamente o que a LGPD trata como incidente, e ninguém
+lembraria dele em três meses.
 
 ---
 
@@ -218,7 +285,7 @@ parada:
 
 | Se acontecer | O que reprova |
 |---|---|
-| `URL_DO_BANCO` vazio ou apagado | passo do dump, antes de tentar conectar |
+| `SENHA_DO_BANCO` vazio ou apagado | passo do dump, antes de tentar conectar |
 | `pg_dump` falha | `set -euo pipefail` |
 | Dump sai vazio | teste de arquivo vazio |
 | Falta uma tabela | procura por `CREATE TABLE` de cada uma |

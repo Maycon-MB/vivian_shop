@@ -27,7 +27,8 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Medição de visita | **no ar, sem cookie**: quantos, de onde e o que olharam |
 | Frete | **de verdade**: Correios e Jadlog, e a cliente escolhe |
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
-| Google acha a loja | `sitemap.xml` com 487 endereços e `robots.txt`, gerados na publicação |
+| Google acha a loja | `sitemap.xml` com 487 endereços e `robots.txt`; a loja está no Search Console e o sitemap foi enviado |
+| Backup do banco | **diário e cifrado**, em repositório privado, com 30 dias de retenção |
 
 **O que ainda não está pronto**, e o documento já chegou a dizer que
 estava:
@@ -35,7 +36,8 @@ estava:
 | O quê | Estado |
 |---|---|
 | A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
-| A conta sobrando no Supabase Auth | existe, e só o painel dela apaga |
+| A conta sobrando no Supabase Auth | é a Vivian com dois logins de dona, não uma conta órfã. Precisa perguntar a ela qual usa |
+| A restauração do backup | **nunca foi testada**: falta slot de projeto Free para restaurar dentro |
 
 A loja e a área dela são dois lugares: `/` é de quem compra, `/admin` é
 dela. Foi assim que a "cara de demonstração" saiu, e o desenho segue o do
