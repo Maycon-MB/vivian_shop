@@ -49,6 +49,7 @@ Feito em 01/09, e conferido rodando:
 | Cobrança em produção | `conferir-pagamento` responde `producao`, `valido`, conta `207270182` |
 | Search Console | propriedade de domínio verificada por TXT, sitemap enviado |
 | Backup diário do banco | primeira execução verde: 400 KB, 343 produtos, cifrado, artifact expirando em 30 dias |
+| Backup diário das fotos | primeira execução verde: 684 arquivos, 15 MB, nenhum vazio |
 
 ---
 

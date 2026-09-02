@@ -312,10 +312,77 @@ coisas: mantém o repositório ativo, e põe na primeira tela a data do
 
 ---
 
-## O que este backup não cobre
+## As fotos dos produtos
 
-**As fotos dos produtos.** Elas vivem no Storage do Supabase, não no
-banco, e `pg_dump` não as alcança. Os originais estão com a Vivian, e o
-`docs/como-continuar.md` já registra que eles não estão no repositório.
+Elas não estão no banco: vivem no Storage, e o `pg_dump` não as alcança.
+Eram o buraco conhecido do backup, e foram resolvidas em 02/09.
 
-Fica anotado como o próximo item, e não como resolvido.
+São **684 arquivos e 15 MB**: duas fotos por produto, a cheia e a mini.
+
+| | |
+|---|---|
+| Workflow | `backup das fotos`, 03:30 BRT, meia hora depois do banco |
+| Onde ficam | pasta `fotos/` do repositório privado, versionadas no git |
+| Cifradas? | **não**, e é decisão |
+
+### Por que sem criptografia
+
+Porque elas já são públicas. O bucket `produtos` tem leitura aberta desde
+a migração `0003`, e cada URL está dentro da página do produto na loja.
+Cifrar o que qualquer pessoa baixa do site não protege nada, e
+atrapalharia justamente no dia de restaurar.
+
+É o oposto do dump do banco, que tem nome, telefone e endereço de entrega
+das clientes e por isso nunca sai daqui em claro. As duas decisões saem da
+mesma pergunta: **quem mais pode ver isto hoje?**
+
+### Por que git, e não artifact
+
+São 15 MB que quase nunca mudam. Como artifact diário seriam 450 MB em
+trinta dias, contra os **500 MB** de armazenamento que o plano gratuito dá
+para repositório privado: a cota encheria com trinta cópias idênticas.
+
+No git, o que não mudou não ocupa nada a mais, dá para ver em que dia uma
+foto foi trocada, e restaurar é um `git clone`.
+
+### Como restaurar as fotos
+
+```powershell
+git clone https://github.com/Maycon-MB/vivian_shop_backups.git
+```
+
+As fotos estão em `fotos/<slug-do-produto>/`, com os mesmos nomes do
+bucket. Subir de volta é recriar o bucket `produtos` e enviar a pasta.
+
+### Onde ele falha em vermelho
+
+| Se acontecer | O que reprova |
+|---|---|
+| O Storage responde pouco | o script para **antes de apagar**, abaixo de 600 arquivos |
+| Alguma foto vem vazia | conferência de arquivo de zero byte |
+| Sobrou foto que ela apagou no painel | a limpeza tira, e o commit registra |
+
+A primeira linha foi um defeito de verdade, achado testando: a guarda
+estava rodando **depois** da limpeza, e era exatamente a limpeza que ela
+existe para impedir. Um bucket respondendo pouco apagaria as fotos
+guardadas, e o commit registraria isso como se a Vivian as tivesse tirado.
+
+### Primeira execução
+
+Verde em 02/09, run
+[33637958326](https://github.com/Maycon-MB/vivian_shop_backups/actions/runs/33637958326):
+684 arquivos, 15 MB, nenhum vazio.
+
+Os 684 downloads em sequência levavam 7m24s. Em paralelo, no máximo 12 de
+cada vez, levam 35s. O limite existe para não tomar 429 do Storage.
+
+---
+
+## O que continua fora
+
+**Os originais das fotos**, em alta resolução, que estão com a Vivian. O
+que está guardado aqui é o que a loja serve: a versão tratada e reduzida.
+O `docs/como-continuar.md` já registra que os originais não estão no
+repositório.
+
+Não é backup dela: é backup da loja.
