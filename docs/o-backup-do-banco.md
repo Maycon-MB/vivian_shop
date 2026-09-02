@@ -71,26 +71,35 @@ acontece no pior dia possível.
 
 ## O que configurar, uma vez
 
-### 1. Gerar o par de chaves
+### 1. O par de chaves ~~gerar~~ feito em 02/09
 
-Na sua máquina, e não em lugar nenhum compartilhado:
-
-```powershell
-winget install FiloSottile.age
-age-keygen -o chave-do-backup.txt
-```
-
-O arquivo sai assim:
+Já existe. A chave pública está cadastrada como variável do repositório
+privado:
 
 ```
-# created: ...
-# public key: age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-AGE-SECRET-KEY-1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+age13fh9kkfzzny36nkz93840rk2cg3q7hn3a8fsa8fprjenwakrpyas2s9lt6
 ```
 
-A linha `public key:` vai para o GitHub. A linha `AGE-SECRET-KEY-1...`
-vai para o gerenciador de senhas, e uma cópia para a Vivian. Depois
-**apague o arquivo**.
+Ela foi gerada em Node, e não pelo binário `age`, porque esta máquina não
+tem `age` nem `winget`. Bech32 escrito à mão passa o próprio checksum e
+mesmo assim pode não ser o formato que o `age` espera, e isso só
+apareceria na hora de cifrar o dump: o backup daquele dia não existiria.
+
+Por isso existe o workflow `conferir a chave`, que cifra um arquivo
+qualquer com ela e confere o cabeçalho. Rodado em 02/09: passou, e o
+arquivo saiu com `age-encryption.org/v1`. Vale rodar de novo toda vez que
+a chave mudar.
+
+**A chave privada está em `Documentos\chave-do-backup-da-loja.txt`, em
+texto puro.** Ela não passou por log nenhum e não está em repositório
+nenhum, mas aquele arquivo é um lugar de passagem, e não de guarda:
+
+1. copiar a linha `AGE-SECRET-KEY-1...` para o gerenciador de senhas
+2. mandar uma cópia para a Vivian
+3. **apagar o arquivo**
+
+Enquanto o passo 3 não acontecer, quem tiver acesso a essa máquina abre
+todos os backups.
 
 ### 2. A conexão do banco
 
