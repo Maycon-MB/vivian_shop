@@ -61,6 +61,9 @@ Como o Google acha as 342 páginas, e por que o mapa sai da publicação:
 Por que o cadastro de `/admin` foi fechado sem levar a conta da cliente
 junto: [docs/a-conta-que-sobrou.md](docs/a-conta-que-sobrou.md).
 
+Como cadastrar a loja no Google Search Console, e o cuidado com a zona de
+DNS: [docs/o-google-search-console.md](docs/o-google-search-console.md).
+
 ---
 
 ## Como rodar
