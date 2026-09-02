@@ -64,6 +64,9 @@ junto: [docs/a-conta-que-sobrou.md](docs/a-conta-que-sobrou.md).
 Como cadastrar a loja no Google Search Console, e o cuidado com a zona de
 DNS: [docs/o-google-search-console.md](docs/o-google-search-console.md).
 
+Como o banco é copiado todo dia, e como restaurar:
+[docs/o-backup-do-banco.md](docs/o-backup-do-banco.md).
+
 ---
 
 ## Como rodar
@@ -197,6 +200,13 @@ como a cliente vê o próprio pedido sem escrever para ela. Desligar
 `disable_signup` no painel fecharia as duas portas. Existe teste que
 reprova se alguém levar a conta da cliente junto
 ([cadastroDaDona.test.ts](loja/src/dominio/cadastroDaDona.test.ts)).
+
+**O banco não tem backup do Supabase.** O plano Free não copia nada: só
+Pro, Team e Enterprise. A cópia é nossa, diária, e roda em
+`Maycon-MB/vivian_shop_backups`, que é **privado** porque este aqui é
+público e artifact de repositório público qualquer um baixa. O dump é
+cifrado com chave pública `age`, e a chave privada nunca entra no GitHub.
+Ver [docs/o-backup-do-banco.md](docs/o-backup-do-banco.md).
 
 **Nada é contratado sem a Vivian autorizar.** Está no contrato.
 

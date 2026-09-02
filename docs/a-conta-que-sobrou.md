@@ -1,7 +1,8 @@
 # A conta que sobrou, e a porta que ficou aberta
 
-Feito em 01/09/2026. O cadastro público de `/admin` foi fechado. Falta
-apagar uma conta no Supabase, e isso depende do painel dela.
+Feito em 01/09/2026, corrigido em 02/09. O cadastro público de `/admin`
+foi fechado. A "conta sobrando" acabou sendo outra coisa: ver a correção
+mais abaixo.
 
 Registro meu. Não vira PDF.
 
@@ -109,28 +110,46 @@ Isso importa se a Lilian, irmã dela, for mexer na loja. Foi combinado em
 
 ---
 
-## O que falta, e depende do painel dela
+## Correção de 02/09: não era conta órfã
 
-**Apagar a conta que sobrou.** Não consigo fazer daqui: só tenho a chave
-anônima do projeto, que não lista nem apaga usuário. O acesso de
-administrador é dela.
+Consultado o Auth do projeto de produção, o que existe é outra coisa. São
+três contas, e **as três estão em `donas_da_loja`**:
 
-O caminho:
+| Conta | É dona? | Pedidos ligados |
+|---|---|---|
+| `vivianquintellapsico@gmail.com` | sim | 0 |
+| `quintella.vv@gmail.com` | sim | 0 |
+| `testes@feitoparavocepapelaria.com.br` | sim, é a do CI | 0 |
 
-1. Painel do Supabase, projeto `kbvgdnrymwfavgkxqvjh`
-2. Authentication, aba Users
-3. Ordenar por data de criação
-4. Localizar a conta que **não** é a dela e **não** é a conta de teste do
-   CI (`TESTE_DONA_EMAIL`)
-5. Conferir na tabela `donas_da_loja` que aquele id não está lá
-6. Apagar
+Nenhuma é conta sem permissão. O que sobra é a **Vivian com dois logins de
+dona**, com dois Gmails diferentes, criados os dois em 24/08.
 
-### Antes de apagar, o cuidado
+Isso muda a decisão: apagar uma não é limpeza, é tirar um acesso dela.
+Precisa perguntar qual ela usa. A de testes é a do CI (`TESTE_DONA_EMAIL`)
+e fica.
 
-Conferir se a conta é mesmo órfã, e não de uma cliente.
+O resto deste documento continua valendo: a porta de cadastro em `/admin`
+estava aberta e foi fechada, e o cadastro do Supabase continua ligado por
+causa da conta de quem compra.
 
-Uma conta de cliente não aparece em `donas_da_loja` também, e por fora as
-duas são iguais. A diferença está em `pedidos.comprador_id`.
+---
+
+## O que fazer com o login repetido
+
+Não é apagar por conta própria. As duas contas são dela e as duas
+administram a loja, então tirar uma é tirar um acesso, e só ela sabe qual
+usa.
+
+**A pergunta para ela:** "você entra na loja com qual e-mail, o
+`vivianquintellapsico` ou o `quintella.vv`?"
+
+Respondido isso, a outra pode sair. O caminho é Authentication → Users no
+painel do projeto `kbvgdnrymwfavgkxqvjh`.
+
+### O cuidado que continua valendo
+
+Antes de apagar qualquer conta deste banco, conferir que ela não é de uma
+cliente:
 
 ```sql
 select p.numero, p.criado_em, p.total
@@ -143,8 +162,13 @@ pedidos, porque a coluna é `on delete set null`, mas desliga a pessoa
 deles: ela perde o acesso ao próprio histórico em `/minha-conta`, e o
 sintoma chega como "sumiram os meus pedidos".
 
-Se não vier nada e a conta não estiver em `donas_da_loja`, é órfã, e pode
-ir.
+Nas três contas de hoje esse número é zero, então nenhuma delas tem
+pedido de cliente pendurado.
+
+**A conta `testes@feitoparavocepapelaria.com.br` fica.** É a
+`TESTE_DONA_EMAIL` que o CI usa para percorrer as telas dela a cada push.
+Apagá-la faz o teste de navegação pular as telas do painel em silêncio, em
+vez de reprovar.
 
 ---
 
