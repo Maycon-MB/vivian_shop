@@ -29,6 +29,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | E-mail | **funcionando**, pelo Resend: aviso de mensagem e recuperar senha |
 | Google acha a loja | `sitemap.xml` com 487 endereços e `robots.txt`; a loja está no Search Console e o sitemap foi enviado |
 | Backup do banco | **diário e cifrado**, em repositório privado, com 30 dias de retenção |
+| Backup das fotos | **diário**, 684 arquivos versionados no git; sem cifra, porque já são públicas |
 
 **O que ainda não está pronto**, e o documento já chegou a dizer que
 estava:
