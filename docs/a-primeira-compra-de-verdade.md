@@ -1,7 +1,7 @@
 # A primeira compra de verdade
 
-Conferido em 01/09/2026. A loja cobra em produção desde 01/09, e **ninguém
-comprou nada ainda**. Hoje quem descobre se o caminho inteiro funciona é a
+Conferido em 01/09/2026, e atualizado em 02/09. A loja cobra em produção
+desde 01/09, e **ninguém comprou nada ainda**. Hoje quem descobre se o caminho inteiro funciona é a
 primeira cliente dela.
 
 Este documento separa três coisas: o que já está provado sem cobrar
@@ -35,10 +35,13 @@ registrado em [ligar-o-pagamento.md](ligar-o-pagamento.md).
 Então a corrente não é desconhecida. O código dela é o mesmo em teste e em
 produção, e funcionou.
 
-O que muda de teste para produção são três coisas, e só três: **cartão de
-verdade**, **antifraude de verdade**, e **a configuração do painel do
-Mercado Pago, que é separada por ambiente**. As duas primeiras não têm
-como ser exercitadas sem uma compra. A terceira dá para conferir olhando.
+O que muda de teste para produção são duas coisas, e só duas: **cartão de
+verdade** e **antifraude de verdade**. Nenhuma das duas tem como ser
+exercitada sem uma compra.
+
+Havia uma terceira, a configuração do painel deles, e ela foi eliminada em
+02/09: o endereço do aviso passou a ir dentro da própria cobrança. Está
+explicado mais abaixo.
 
 ---
 
@@ -86,40 +89,40 @@ de volta, e não o cabeçalho.
 |---|---|---|
 | A chave pública e o token são do mesmo par | `conferir-pagamento` valida só o token | O cartão é tokenizado e a cobrança falha com "token inválido" na cara da cliente |
 | O antifraude do Mercado Pago | Só existe com cartão real | Conta nova costuma ter a primeira compra barrada ou posta em análise |
-| **O endereço do aviso está preenchido no campo de produção do painel** | O painel do Mercado Pago tem campos separados para teste e para produção. O de teste funcionou em 25/08; o de produção só nasceu em 01/09 | O pagamento aprova, o dinheiro entra, e o pedido fica "esperando o pagamento" para sempre |
 | O e-mail sai no fluxo real | O Resend está ligado e testado, mas nunca disparou por uma compra de verdade | Ela não fica sabendo do pedido |
 | O dinheiro cai na conta dela | Nenhuma consulta mostra isso | Só o extrato dela responde |
 
-### Por que a linha do meio existe, se o aviso já funcionou em teste
+### O elo que morava fora do repositório, e não mora mais
 
-Porque **o endereço do aviso não está no nosso código**.
+Esta lista tinha uma quarta linha, e ela era a pior de todas: **o endereço
+para onde o Mercado Pago avisa**.
 
-A função `cobrar` cria o pagamento sem mandar `notification_url`. Quem
-decide para onde o Mercado Pago avisa é o painel dele, e lá o campo é
-separado por ambiente: um endereço para teste, outro para produção.
+A função `cobrar` criava o pagamento sem mandar `notification_url`, então
+quem decidia era o painel deles, num campo separado por ambiente. O de
+teste foi preenchido e funcionou em 25/08. O de produção não existia
+naquele dia, porque as credenciais de produção só nasceram em 01/09, e
+ninguém conferiu depois da virada.
 
-O de teste foi preenchido e funcionou em 25/08. O de produção não existia
-naquele dia, porque as credenciais de produção só nasceram em 01/09.
-Então não é que a corrente seja duvidosa: é que ela tem um elo que mora
-fora do repositório e que ninguém conferiu depois da virada.
+A falha seria **silenciosa**, que é a pior forma dela: o pagamento aprova,
+o dinheiro entra na conta dela, e o pedido fica "esperando o pagamento"
+para sempre no painel. Nada dá erro, nada fica vermelho, o CI continua
+verde, e quem descobre é ela conferindo o extrato contra os pedidos.
 
-É uma falha **silenciosa**: nada dá erro, nada fica vermelho, o CI
-continua verde, e o sintoma é um pedido pago aparecendo como não pago.
+**Resolvido em 02/09.** O endereço passou a ir na própria cobrança:
 
-O endereço que precisa estar no campo de produção:
-
+```ts
+const ondeAvisar = `${Deno.env.get('SUPABASE_URL')}/functions/v1/aviso-do-pagamento`
 ```
-https://kbvgdnrymwfavgkxqvjh.supabase.co/functions/v1/aviso-do-pagamento
-```
 
-Isso se resolve olhando o painel, em um minuto, e sem depender da compra.
-A compra continua valendo pelas outras duas linhas, que só ela responde.
+Agora ele é o mesmo em teste e em produção, está versionado, e é montado a
+partir do ambiente, para uma cópia da loja não avisar o projeto da outra.
+Quatro testes em
+[paraOndeOMercadoPagoAvisa.test.ts](../loja/src/dominio/paraOndeOMercadoPagoAvisa.test.ts)
+seguram isso, incluindo um que reprova se alguém voltar a mandar o valor
+pelo navegador numa mexida no corpo da cobrança.
 
-**Vale considerar mandar o `notification_url` na própria cobrança.** O
-Mercado Pago aceita, e isso tiraria o elo do painel: o endereço passaria a
-viver no código, versionado, igual em teste e em produção. Não fiz junto
-porque mexe no caminho do dinheiro e merece commit próprio, com o teste
-antes. Fica anotado.
+O que sobra na lista acima depende de cartão real, e é o que a compra
+existe para responder.
 
 ---
 
@@ -143,11 +146,10 @@ escolher um desses.
 
 ## O roteiro
 
-**Antes de ela comprar, eu confiro no painel do Mercado Pago dela** que o
-endereço do aviso está cadastrado em Webhooks, no ambiente de produção.
-Sem isso, a compra não testa a metade que importa.
+Não depende mais de eu conferir nada no painel dela: desde 02/09 o
+endereço do aviso vai dentro da própria cobrança.
 
-Depois disso, o que ela faz:
+O que ela faz:
 
 1. Abre a loja como qualquer cliente, sem estar logada no painel.
 2. Escolhe um Bloquinho Destacável, que tem mínimo 1.
@@ -164,10 +166,13 @@ Depois disso, o que ela faz:
 | Em `/admin`, no pedido | o estado **"Pagamento confirmado"**, e não "esperando" | até uns minutos |
 | No app do Mercado Pago | o valor de R$ 28 mais frete, creditado | conforme o meio |
 
-A quarta linha é a que testa o aviso. Se o pedido aparecer em `/admin` mas
+A quarta linha é a que testa o aviso de ponta a ponta, agora com o
+endereço saindo da própria cobrança. Se o pedido aparecer em `/admin` mas
 ficar preso em "esperando o pagamento" enquanto o Mercado Pago mostra
-aprovado, o endereço do webhook não está cadastrado, e é só isso. Conserto
-em minutos, e é exatamente o que a compra existe para descobrir.
+aprovado, o aviso não chegou ou foi recusado, e o caminho é olhar o
+registro da função `aviso-do-pagamento` no Supabase, que grava o motivo.
+É exatamente o que a compra existe para descobrir, e é conserto de
+minutos.
 
 ### Depois
 
