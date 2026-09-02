@@ -140,5 +140,10 @@ O arquivo existe e responde. Falta **cadastrar a loja no Google Search
 Console** e mandar o sitemap lá, que é o que acelera a leitura e é o único
 lugar onde dá para ver o que ele achou e o que recusou.
 
-Isso exige provar que o domínio é dela, e o domínio está no CPF dela.
-Então é uma coisa a fazer junto com a Vivian, e não por mim sozinho.
+**Correção de 02/09.** Eu tinha escrito aqui que isso dependia da Vivian,
+porque o domínio está no CPF dela. Não depende: eu entrei como contato
+técnico em 21/08, e é esse papel que deixa editar a zona de DNS, que é
+como o Google confere quem é dono.
+
+Passo a passo, e o cuidado de não derrubar a loja mexendo na zona:
+[o-google-search-console.md](o-google-search-console.md).
