@@ -85,6 +85,24 @@ Deno.serve(async (req: Request) => {
     return responder({ estado: 'aprovado', ja_estava: true })
   }
 
+  /**
+   * Para onde o Mercado Pago avisa que este pagamento mudou de estado.
+   *
+   * Vai na própria cobrança, e não no painel deles, porque lá o endereço
+   * é um campo separado por ambiente: um para teste, outro para produção.
+   * O de teste foi preenchido em 25/08 e funcionou; o de produção só
+   * passou a existir em 01/09, e era o único elo desta corrente morando
+   * fora do repositório.
+   *
+   * Sem aviso, a falha é silenciosa e é a pior forma dela: o pagamento
+   * aprova, o dinheiro entra na conta dela, e o pedido fica "esperando o
+   * pagamento" para sempre no painel. Nada dá erro.
+   *
+   * Montado a partir de `SUPABASE_URL`, a mesma que fala com o banco, para
+   * uma cópia da loja não avisar o projeto da outra.
+   */
+  const ondeAvisar = `${Deno.env.get('SUPABASE_URL')}/functions/v1/aviso-do-pagamento`
+
   const resposta = await fetch('https://api.mercadopago.com/v1/payments', {
     method: 'POST',
     headers: {
@@ -110,6 +128,7 @@ Deno.serve(async (req: Request) => {
           : {}),
       },
       external_reference: pedido.id,
+      notification_url: ondeAvisar,
     }),
   })
 

@@ -67,7 +67,7 @@ junto: [docs/a-conta-que-sobrou.md](docs/a-conta-que-sobrou.md).
 
 ```
 cd loja && npm install
-npm test                      # 756 testes de regra e de tela
+npm test                      # 760 testes de regra e de tela
 npm run build
 
 cd ..
@@ -175,6 +175,13 @@ projeto foi criado com RLS automático ligado.
 **O aviso do Mercado Pago não é a verdade.** Ele diz "vá perguntar sobre o
 pagamento tal"; quem responde é a API deles, e o que volta ainda passa
 pelas regras de [avisoDePagamento.ts](loja/src/dominio/avisoDePagamento.ts).
+
+**O endereço do aviso vai na própria cobrança**, em `notification_url`, e
+não no painel do Mercado Pago. Lá o campo é separado por ambiente, e um
+campo de produção vazio é falha silenciosa: o pagamento aprova, o dinheiro
+entra, e o pedido fica "esperando o pagamento" para sempre. Montado a
+partir de `SUPABASE_URL` para uma cópia da loja não avisar o projeto da
+outra ([paraOndeOMercadoPagoAvisa.test.ts](loja/src/dominio/paraOndeOMercadoPagoAvisa.test.ts)).
 
 **Não existe cadastro aberto em `/admin`.** A tela `/admin/criar-conta`
 foi apagada em 01/09: a loja já tem dona, e desde a migração `0004` quem
