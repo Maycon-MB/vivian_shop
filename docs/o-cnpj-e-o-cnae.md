@@ -184,6 +184,11 @@ Levar como três opções para ele escolher, e não como pergunta aberta:
 2. A partir de que faturamento o ME passa a valer?
 3. Qual o risco do que já foi faturado no CNAE 9511-8?
 
+Em 03/09 entrou uma quarta, e é a mais urgente das quatro porque tem data:
+
+4. **A primeira parcela da Vivian vence agora. Recebo pelo MEI ou como
+   PF?** Ver [a chave Pix sai da decisão](#a-chave-pix-sai-da-decisão-e-não-o-contrário).
+
 ### O que não é problema de enquadramento
 
 R$ 200 por mês por cliente não paga a estrutura que o trabalho exige. O
@@ -204,3 +209,50 @@ veio: **se ela tem CNPJ.**
 - Se ela for **pessoa física**: recibo basta, a menos que ela peça nota
 - Se ela tiver **MEI ou empresa**: a nota é obrigatória, e aí o CNAE volta
   a importar
+
+### Como perguntar isso a ela, sem parecer burocracia
+
+Vai junto com qualquer mensagem, e a resposta resolve:
+
+> me manda como você quer no recibo.
+> se você tem cnpj, manda o cnpj e a razão social.
+> se não tem, é só o cpf.
+
+---
+
+## A chave Pix sai da decisão, e não o contrário
+
+Levantado em 03/09, de uma dúvida que apareceu na hora de cobrar a
+primeira parcela: *"mando a chave Pix do meu CNPJ?"*
+
+A ordem natural parece ser mandar a chave e resolver o resto depois. É ao
+contrário: **dinheiro que cai na conta do CNPJ é faturamento do CNPJ**, e o
+registro nasce no instante da transferência, com ou sem ela pedir nota.
+
+| Como você declarar | Que chave mandar |
+|---|---|
+| Pelo MEI | a do CNPJ, e aí o CNAE 9511-8 volta para a mesa |
+| Como PF, com recibo e carnê-leão | a do CPF, e o CNAE sai da história |
+
+Então a decisão de enquadramento vem **antes** da primeira cobrança, e não
+depois de doze.
+
+## Sobre "isso conta para o meu score PJ?"
+
+Vale desfazer, porque a resposta é não do jeito que se imagina.
+
+| O que parece | O que é |
+|---|---|
+| Pix recebido aumenta o score | **Não.** Score PJ, na Serasa e na Boa Vista, olha dívida, protesto e conta paga em dia. Receita não entra |
+| Faturar constrói crédito | Em parte, e em outro lugar: constrói **movimentação e faturamento comprovado**, que o próprio banco usa na análise interna dele, para limite, capital de giro e taxa de maquininha |
+| Basta receber pelo CNPJ | O que formaliza faturamento de MEI é a **DASN-SIMEI** anual. O Pix sozinho é extrato, não é declaração |
+
+E o ponto que fecha o raciocínio: **não existe faturamento que conte para o
+banco e não conte para a Receita.** É o mesmo CNPJ, o mesmo extrato e a
+mesma declaração. Querer que o dinheiro construa histórico é querer que
+ele seja visível, e visível vale para os dois lados.
+
+> Atenção ao teto do MEI, R$ 81 mil por ano. R$ 200 mensais não chegam
+> perto, mas o teto é do CNPJ e não do contrato: se outros recebimentos
+> passam por ali, somam. Esse número já esteve em discussão para aumentar,
+> então confirme o vigente.
