@@ -33,6 +33,7 @@
 
 const DOMINIO = 'feitoparavocepapelaria.com.br'
 const PAINEL = `https://${DOMINIO}/admin/?aba=mensagens`
+const PAINEL_DE_PEDIDOS = `https://${DOMINIO}/admin/?aba=pedidos`
 
 /* O remetente precisa ser do domínio verificado no Resend. Um endereço de
    Gmail aqui faz o e-mail cair em spam ou ser recusado. */
@@ -44,6 +45,29 @@ interface Aviso {
   pergunta: string
   para: string[]
 }
+
+/**
+ * O aviso de venda paga, mandado pelo gatilho da migração 0018.
+ *
+ * Chega no mesmo endereço do aviso de mensagem, e não numa função nova,
+ * porque a chave do Resend, o segredo do gatilho e o remetente verificado
+ * são os mesmos. Duas funções seriam dois lugares para configurar e dois
+ * para esquecer de publicar.
+ */
+interface Venda {
+  tipo: 'venda'
+  numero: string
+  total: number | string
+  comprador?: string
+  para: string[]
+}
+
+const ehVenda = (corpo: Aviso | Venda): corpo is Venda =>
+  (corpo as Venda)?.tipo === 'venda'
+
+/** Em reais, como ela lê no painel e no extrato. */
+const emReais = (valor: number | string) =>
+  Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 /**
  * O texto do aviso.
@@ -68,6 +92,32 @@ export const corpoDoAviso = ({ nome, email, pergunta }: Aviso) => ({
   ].join(String.fromCharCode(10)),
 })
 
+/**
+ * O texto do aviso de venda.
+ *
+ * Número e valor no corpo, e não só no assunto: é o que ela precisa para
+ * decidir do celular se corre produzir agora ou se olha depois, sem abrir
+ * o painel para descobrir do que se trata.
+ *
+ * Sem travessão, como todo texto que ela lê. Existe teste que varre este
+ * arquivo.
+ */
+export const corpoDaVenda = ({ numero, total, comprador }: Venda) => ({
+  assunto: `Venda nova: pedido ${numero}`,
+  texto: [
+    comprador
+      ? `${comprador} acabou de comprar na sua loja.`
+      : 'Você acabou de vender na sua loja.',
+    '',
+    `Pedido ${numero}`,
+    `Valor ${emReais(total)}`,
+    '',
+    'O pagamento já foi confirmado pelo Mercado Pago.',
+    '',
+    `Os detalhes estão no seu painel: ${PAINEL_DE_PEDIDOS}`,
+  ].join(String.fromCharCode(10)),
+})
+
 const responder = (corpo: unknown, status = 200) =>
   new Response(JSON.stringify(corpo), {
     status,
@@ -87,7 +137,7 @@ Deno.serve(async (req: Request) => {
 
   if (!chaveDoResend) return responder({ erro: 'falta a chave do Resend' }, 500)
 
-  let aviso: Aviso
+  let aviso: Aviso | Venda
   try {
     aviso = await req.json()
   } catch {
@@ -96,7 +146,8 @@ Deno.serve(async (req: Request) => {
 
   if (!aviso?.para?.length) return responder({ erro: 'sem destinatária' }, 400)
 
-  const { assunto, texto } = corpoDoAviso(aviso)
+  const daVenda = ehVenda(aviso)
+  const { assunto, texto } = daVenda ? corpoDaVenda(aviso) : corpoDoAviso(aviso)
 
   const resposta = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -107,9 +158,13 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify({
       from: DE,
       to: aviso.para,
-      // A cliente responde no e-mail dela quando a Vivian apertar
-      // "responder", sem precisar copiar endereço nenhum.
-      reply_to: aviso.email,
+      /* A cliente responde no e-mail dela quando a Vivian apertar
+         "responder", sem precisar copiar endereço nenhum.
+
+         No aviso de venda não há para quem responder: o endereço de quem
+         comprou está no painel, junto do pedido, e responder ao aviso
+         mandaria e-mail para a loja dela mesma. */
+      ...(daVenda ? {} : { reply_to: (aviso as Aviso).email }),
       subject: assunto,
       text: texto,
     }),

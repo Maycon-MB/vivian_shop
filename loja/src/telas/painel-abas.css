@@ -390,6 +390,15 @@
   box-shadow: 0 0 0 3px rgba(46, 155, 150, .16);
 }
 
+/* A lista do que a loja avisa sozinha. Não são opções: até 04/09 eram
+   caixas de seleção que não salvavam nada, e uma delas prometia WhatsApp.
+   Agora é a descrição do que já acontece, e por isso não tem controle. */
+.avisos-que-existem { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.avisos-que-existem li { display: grid; gap: 2px; }
+.avisos-que-existem strong { font-size: 14px; }
+.avisos-que-existem small { color: var(--painel-tinta-suave); line-height: 1.45; }
+.aviso-onde { margin: 14px 0 0; font-size: 13px; color: var(--painel-tinta-suave); }
+
 .opcoes { display: grid; gap: 12px; }
 
 .opcao { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
