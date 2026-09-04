@@ -189,14 +189,16 @@ describe('o que a tela promete que muda de verdade', () => {
     expect(await screen.findByText(/não muda o site na hora/i)).toBeInTheDocument()
   })
 
-  it('não promete que o CEP daqui já calcula o frete de quem compra', async () => {
-    /* O cálculo do frete sai da função `cotar-frete`, que lê o CEP de uma
-       variável de ambiente dela, e não desta tabela. Enquanto for assim,
-       dizer "usado para calcular o frete" é a mentira mais cara desta
-       tela: ela sai daqui achando que configurou o frete da loja. */
+  it('avisa que apagar o CEP não deixa a loja sem frete', async () => {
+    /* Este é o único campo da tela que muda a loja na hora: desde a
+       migração 0019, o `cotar-frete` lê `cep_de_origem` daqui, pelo
+       servidor. O que ela não tem como saber é que existe uma variável de
+       ambiente atrás como rede, e que esvaziar o campo faz o frete cair
+       nela em vez de parar. Sem esta linha, ela evita mexer no campo com
+       medo de derrubar as vendas. */
     render(<AbaConfiguracoes />)
 
     await acharCampo(/cep/i)
-    expect(screen.queryByText(/usado para calcular o frete/i)).toBeNull()
+    expect(screen.getByText(/ficar em branco/i)).toBeInTheDocument()
   })
 })
