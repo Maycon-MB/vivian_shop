@@ -240,6 +240,8 @@ h) registro de marca.
 
 13.5. Este contrato não estabelece vínculo empregatício, societário ou de exclusividade entre as partes.
 
+13.6. **Assinatura eletrônica.** As partes reconhecem como válida e suficiente a assinatura eletrônica deste instrumento, inclusive a assinatura eletrônica avançada disponibilizada gratuitamente pelo Governo Federal por meio do portal gov.br, nos termos da Lei nº 14.063/2020 e da MP nº 2.200-2/2001, dispensada a assinatura manuscrita e a via impressa.
+
 ---
 
 ## 14. FORO
