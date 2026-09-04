@@ -70,6 +70,9 @@ DNS: [docs/o-google-search-console.md](docs/o-google-search-console.md).
 Como o banco é copiado todo dia, e como restaurar:
 [docs/o-backup-do-banco.md](docs/o-backup-do-banco.md).
 
+Como o contrato é assinado, de graça e pelo gov.br:
+[docs/assinar-o-contrato.md](docs/assinar-o-contrato.md).
+
 ---
 
 ## Como rodar
