@@ -104,26 +104,63 @@ comprometido do seu lado, e não um pedido para ela se comprometer sozinha.
 
 ## A mensagem para ela
 
+Ela disse ter medo de ser difícil. Então a mensagem é curta de propósito:
+instrução longa já parece difícil antes de a pessoa começar.
+
 Sem travessão, como todo texto que ela lê.
 
-> vivian, o contrato está aqui em anexo, já assinado por mim.
+> oi vivian! o contrato está aqui, já assinei do meu lado.
 >
-> antes preciso de três coisas pra preencher:
-> seu cpf, seu endereço completo com cep, e se você tem cnpj.
-> se não tiver cnpj, é só me dizer que não tem.
+> pra assinar é de graça, no site do governo mesmo, e leva uns dois minutos.
 >
-> pra assinar é de graça, pelo gov.br, e leva dois minutos:
+> no celular:
 >
-> 1. entra em assinador.iti.br
-> 2. entra com o seu cpf e a senha do gov.br
-> 3. clica em escolher arquivo e escolhe o pdf que eu mandei
-> 4. clica em assinar
-> 5. me devolve o arquivo assinado
+> 1. salva o pdf que eu mandei
+> 2. abre o aplicativo gov.br
+> 3. procura "assinatura digital"
+> 4. escolhe o arquivo que você salvou
+> 5. confirma
+> 6. me manda o arquivo de volta aqui
 >
-> se ele pedir pra aumentar o nível da sua conta, dá pra fazer na hora
-> pelo app do seu banco ou pelo aplicativo gov.br com foto do rosto.
+> é a mesma senha que você usa pra ver imposto de renda e essas coisas.
 >
-> qualquer dúvida me chama que eu te acompanho pelo telefone.
+> se preferir no computador, entra em assinador.iti.br, faz login com o seu
+> cpf e escolhe o arquivo. é igual.
+>
+> se travar em qualquer passo me liga que eu faço junto com você.
+
+### Por que essas três frases estão ali
+
+**"no site do governo mesmo"** tira o medo de ser plataforma estranha
+pedindo dado dela.
+
+**"é a mesma senha que você usa pra ver imposto de renda"** é o que
+transforma "vou ter que criar conta" em "já tenho conta". A maioria das
+pessoas tem gov.br e não lembra.
+
+**"me liga que eu faço junto"** porque quem tem medo de travar precisa
+saber, antes de começar, que travar não é problema.
+
+### O que ficou de fora, e por quê
+
+Nível prata ou ouro, Lei 14.063, `validar.iti.gov.br` e a diferença entre
+assinatura avançada e qualificada. Nada disso ajuda ela a assinar, e tudo
+isso faz parecer complicado. Se ela travar no nível da conta, resolve no
+telefone, com você junto.
+
+### Sobre o CNPJ
+
+A assinatura sai no **CPF**, e está certo: o gov.br é identidade de pessoa
+e não existe login por CNPJ. Quem assina é a pessoa; o documento é que diz
+em que condição, e a qualificação no topo já traz o CNPJ.
+
+No caso do MEI isso é ainda mais direto, porque o CNPJ está amarrado ao
+CPF e não há representante legal separado.
+
+Assinatura que carrega o CNPJ dentro do certificado existe, é o e-CNPJ da
+ICP-Brasil, e custa de R$ 200 a R$ 400 por ano. Para um contrato entre
+duas pessoas, com a cláusula 13.6 aceitando a eletrônica, não acrescenta
+nada.
 
 ---
 
