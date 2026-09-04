@@ -8,3 +8,7 @@ dist-ssr
 .brain
 loja/telas-da-falha/
 loja/.env.local
+
+# O contrato preenchido tem CPF, endereco e valores dela. O modelo em
+# docs/contrato-modelo.md fica em branco de proposito; este nao.
+contrato-vivian.md
