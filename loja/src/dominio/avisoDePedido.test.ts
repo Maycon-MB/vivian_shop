@@ -108,9 +108,11 @@ describe('a tela de Configurações', () => {
        acontece dentro do site. Prometer WhatsApp ali era promessa que
        nenhuma parte do sistema podia cumprir.
 
-       O campo de contato "WhatsApp", mais acima na tela, é outra coisa e
-       continua: é o telefone que ela exibe, e não um canal de aviso. Por
-       isso este teste mira na frase, e não na palavra. */
+       O campo de contato "WhatsApp", mais acima na tela, também saiu, em
+       04/09: guardava um número que nada no sistema usaria, e sugeria um
+       canal de atendimento que a loja não tem. Quem cobre a ausência dele
+       é AbaConfiguracoes.test.tsx, que olha a tela desenhada; aqui o teste
+       segue mirando na frase, que é a promessa que doía. */
     expect(configuracoes).not.toMatch(/Mensagem no WhatsApp/i)
   })
 

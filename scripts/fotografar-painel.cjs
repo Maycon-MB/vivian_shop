@@ -97,6 +97,17 @@ const CONVERSAS = [
   },
 ]
 
+const CONFIGURACOES = {
+  nome_da_loja: 'Feito para você! Personalizados',
+  frase_da_loja: 'Papelaria personalizada e material pedagógico para quem ensina.',
+  email_de_contato: 'contato@feitoparavocepapelaria.com.br',
+  cep_de_origem: '21000-000',
+  cidade_de_origem: 'Rio de Janeiro',
+  endereco_de_origem: 'Rua das Acácias, 128, fundos',
+  minimo_padrao: 10,
+  prazo_padrao: 5,
+}
+
 const json = (corpo) => ({
   status: 200,
   contentType: 'application/json',
@@ -144,6 +155,11 @@ const main = async () => {
     if (url.includes('/rpc/resumo_de_visitas')) return rota.fulfill(json(VISITAS_POR_DIA))
     if (url.includes('/rpc/visitas_por_origem')) return rota.fulfill(json(VISITAS_POR_ORIGEM))
     if (url.includes('/rpc/paginas_mais_vistas')) return rota.fulfill(json(PAGINAS_MAIS_VISTAS))
+    /* A linha única de configuração. Sem ela o print mostraria a aba de
+       Configurações com os campos em branco, e campo em branco esconde
+       justamente o que se quer conferir aqui: se o texto dela cabe. */
+    if (url.includes('/configuracoes_da_loja')) return rota.fulfill(json([CONFIGURACOES]))
+
     if (url.includes('/temas')) return rota.fulfill(json(TEMAS))
     if (url.includes('/conversas')) return rota.fulfill(json(CONVERSAS))
 
