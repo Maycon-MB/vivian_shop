@@ -248,23 +248,16 @@ h) registro de marca.
 
 14.1. Fica eleito o foro da comarca do Rio de Janeiro/RJ para dirimir quaisquer questões oriundas deste contrato, com renúncia a qualquer outro, por mais privilegiado que seja.
 
-E por estarem justas e contratadas, as partes assinam o presente instrumento.
+E por estarem justas e contratadas, as partes assinam o presente instrumento **por assinatura eletrônica**, na forma da cláusula 13.6. As assinaturas constam das páginas anexadas a este documento pelo assinador do Governo Federal, e podem ser conferidas em validar.iti.gov.br.
 
+:::local
 **Local e data:** ______________________, ____ de _______________ de 2026.
+:::
 
+:::assinaturas
 **CONTRATADO:** Maycon Bruno Montes Gomes Constancio, CNPJ 62.382.173/0001-79
-
-`_______________________________________`
-
 **CONTRATANTE:** [nome completo], CPF ___.___.___-__
-
-`_______________________________________`
-
-**Testemunhas** (opcional)
-
-`_____________________________`  `_____________________________`
-Nome:                            Nome:
-CPF:                             CPF:
+:::
 
 ---
 

@@ -14,10 +14,16 @@
  * Por isso a função existe. O que a loja manda é CEP e tamanho do pacote,
  * e o que volta é preço. O token nunca sai daqui.
  *
- * ── O CEP de origem também não ─────────────────────────────────────────
+ * ── De onde sai o CEP de origem ────────────────────────────────────────
  *
- * É o endereço da casa dela. Fica na variável da função, junto do resto
- * dos segredos, e não numa tabela que a chave da página alcança.
+ * Da tabela `configuracoes_da_loja`, que ela edita no painel. Antes vinha
+ * só da variável da função, e trocar o CEP dela era tarefa minha: entrar
+ * no painel do Supabase e reiniciar a função.
+ *
+ * A variável continua, como rede de segurança. Se ela apagar o campo sem
+ * querer, ou se a consulta ao banco falhar no meio de uma compra, o frete
+ * não pode parar de calcular: a cliente está na única tela em que ainda
+ * dá para desistir.
  *
  * ── Por que renova antes de vencer ─────────────────────────────────────
  *
@@ -135,13 +141,39 @@ const tokenValido = async (): Promise<string | null> => {
 
 const soNumero = (cep: unknown) => String(cep ?? '').replace(/\D/g, '')
 
+/* O CEP que ela digitou no painel, ou vazio.
+ *
+ * Vazio é tudo o que não serve para cotar: coluna nula, campo apagado,
+ * CEP pela metade e banco fora do ar. Os quatro caem para a variável da
+ * função lá embaixo, porque a diferença entre eles não muda o que a
+ * cliente precisa ver, que é o preço do frete. */
+const cepDeOrigemDoPainel = async (): Promise<string> => {
+  const { url, chave } = banco()
+
+  const r = await fetch(
+    `${url}/rest/v1/configuracoes_da_loja?select=cep_de_origem&limit=1`,
+    { headers: { apikey: chave, Authorization: `Bearer ${chave}` } },
+  ).catch(() => null)
+
+  if (!r || !r.ok) return ''
+
+  const linhas = await r.json().catch(() => [])
+  const cep = soNumero(linhas?.[0]?.cep_de_origem)
+
+  return cep.length === 8 ? cep : ''
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS })
 
   const { cepDestino, pesoG, altCm, largCm, compCm } = await req.json().catch(() => ({}))
 
   const destino = soNumero(cepDestino)
-  const origem = soNumero(Deno.env.get('MELHORENVIO_CEP_ORIGEM'))
+
+  /* O painel manda, a variável segura. Nesta ordem: o que ela digitou é a
+     verdade mais nova, e a variável só entra quando não há o que ler. */
+  const origem =
+    (await cepDeOrigemDoPainel()) || soNumero(Deno.env.get('MELHORENVIO_CEP_ORIGEM'))
 
   if (destino.length !== 8 || origem.length !== 8) {
     return json({ opcoes: [], motivo: 'cep' }, 400)
