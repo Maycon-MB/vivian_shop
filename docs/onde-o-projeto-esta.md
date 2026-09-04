@@ -12,6 +12,15 @@ Registro meu. Não vira PDF.
 > [o que falta](#o-que-falta-de-verdade), abaixo, e a régua passou a ser
 > outra: só sai da lista o que foi conferido rodando, e o documento diz
 > como foi conferido.
+>
+> **Correção de 04/09, na direção oposta.** A lista errava para os dois
+> lados. "Descrição no cartão" e "Filtro no celular" estavam como
+> pendentes e **já estavam prontos** havia semanas. Foram conferidos na
+> tela, e não no código: o corte de três linhas foi medido no navegador, e
+> o filtro do celular saiu em print de 390px.
+>
+> Lista de pendência que mente para menos custa credibilidade. Que mente
+> para mais custa trabalho refeito.
 
 ---
 
@@ -37,8 +46,6 @@ Em ordem de quanto custa deixar como está.
 | **A primeira compra de verdade** | nunca foi feita | depende dela comprar. Ver [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md) |
 | **A conta sobrando no Supabase Auth** | existe | depende do painel do Supabase, que é dela. Ver [a-conta-que-sobrou.md](a-conta-que-sobrou.md) |
 | **A restauração do backup** | nunca testada | falta um slot de projeto Free para restaurar dentro. Ver [o-backup-do-banco.md](o-backup-do-banco.md) |
-| Descrição no cartão | três linhas, e o resto na página do produto | nada, é trabalho meu |
-| Filtro no celular | corre de lado, e o produto sobe para a primeira tela | nada, é trabalho meu |
 
 Feito em 01/09, e conferido rodando:
 
@@ -47,6 +54,10 @@ Feito em 01/09, e conferido rodando:
 | Mapa do site e robots.txt | `verificar-links.cjs` abriu os 487 endereços do sitemap contra o site montado, e todos respondem. Ver [o-google-acha-a-loja.md](o-google-acha-a-loja.md) |
 | Cadastro público em `/admin` | a rota devolve 404 no site montado, e três testes travam a porta fechada |
 | Cobrança em produção | `conferir-pagamento` responde `producao`, `valido`, conta `207270182` |
+| Descrição no cartão | **já estava pronta.** Medido no navegador em 04/09: `line-clamp: 3`, altura 63px, três linhas de 21px, texto cortado |
+| Filtro no celular | **já estava pronto.** Print de 04/09 em 390px: as fichas correm de lado e o produto aparece na primeira tela |
+| Configurações da loja | salva de verdade, e o CEP dela passa a valer na cotação seguinte |
+| Aviso de venda por e-mail | gatilho na aprovação do pagamento, migração `0018` |
 | Search Console | propriedade de domínio verificada por TXT, sitemap enviado, e a Vivian já é proprietária |
 | Backup diário do banco | primeira execução verde: 400 KB, 343 produtos, cifrado, artifact expirando em 30 dias |
 | Backup diário das fotos | primeira execução verde: 684 arquivos, 15 MB, nenhum vazio |
@@ -134,3 +145,8 @@ de verdade.
 **Ouvir quem olha de fora.** Uma auditoria em 26/08 achou que 262 dos 342
 produtos mandavam a cliente conferir o prazo no Elo7. Setenta e sete por
 cento do catálogo, e eu não tinha visto.
+
+**Conferir antes de trabalhar.** Em 04/09 eu ia refazer duas telas que a
+lista dava como pendentes. Fui olhar primeiro: as duas estavam prontas
+havia semanas. Meia hora de conferência economizou meio dia de trabalho
+repetido, e a lista voltou a valer alguma coisa.
