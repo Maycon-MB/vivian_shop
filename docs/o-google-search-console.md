@@ -8,7 +8,7 @@ mesmo dia.**
 | Propriedade | de **Domínio**, verificada por TXT no DNS |
 | Registro | `google-site-verification=23jfl0YzwM5rQlgxqThzLF_ZNyuXnzQacTKCcWmWqzU` |
 | Sitemap | enviado como `https://feitoparavocepapelaria.com.br/sitemap.xml` |
-| A Vivian | adicionada como **proprietária**, com `vivianquintellapsico@gmail.com` |
+| A Vivian | adicionada como **proprietária**, com o gmail que ela usa |
 
 **O sitemap apareceu como "não foi possível buscar" logo depois do envio.
 Isso é normal**, e não é defeito nosso: o Google marca assim enquanto não
