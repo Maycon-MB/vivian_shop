@@ -117,8 +117,8 @@ três contas, e **as três estão em `donas_da_loja`**:
 
 | Conta | É dona? | Pedidos ligados |
 |---|---|---|
-| `[e-mail removido]` | sim | 0 |
-| `[e-mail removido]` | sim | 0 |
+| o gmail que ela usa no dia a dia | sim | 0 |
+| um segundo gmail dela | sim | 0 |
 | `testes@feitoparavocepapelaria.com.br` | sim, é a do CI | 0 |
 
 Nenhuma é conta sem permissão. O que sobra é a **Vivian com dois logins de
@@ -140,8 +140,8 @@ Não é apagar por conta própria. As duas contas são dela e as duas
 administram a loja, então tirar uma é tirar um acesso, e só ela sabe qual
 usa.
 
-**A pergunta para ela:** "você entra na loja com qual e-mail, o
-`[e-mail removido]` ou o `[e-mail removido]`?"
+**A pergunta para ela:** "você entra na loja com qual dos dois e-mails?"
+Os dois estão em Authentication → Users, no painel.
 
 Respondido isso, a outra pode sair. O caminho é Authentication → Users no
 painel do projeto `kbvgdnrymwfavgkxqvjh`.
