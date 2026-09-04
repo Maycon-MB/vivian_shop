@@ -36,10 +36,11 @@ import { configuracoesDaLoja, salvarConfiguracoesDaLoja } from '@/dados/configur
  * continua lendo o do último build. Enquanto o `publicar.mjs` não ler esta
  * tabela, quem troca aquilo sou eu, e a tela fala isso com todas as letras.
  *
- * O mesmo vale para o CEP: o cálculo do frete sai da função `cotar-frete`,
- * que lê o CEP de uma variável de ambiente dela, e não desta tabela. O
- * endereço daqui é o que ela quer como remetente, e o registro do que
- * combinamos.
+ * O CEP é outra história, e mudou junto com a migração 0019: o
+ * `cotar-frete` passou a ler `cep_de_origem` desta tabela, pelo servidor e
+ * com a chave de serviço. O que ela digitar aqui vale na cotação seguinte,
+ * sem passar por mim. A variável `MELHORENVIO_CEP_ORIGEM` ficou como rede:
+ * se o campo esvaziar, o frete continua saindo.
  */
 
 const entrada = 'form-control';
@@ -179,7 +180,7 @@ const AbaConfiguracoes = () => {
 
           <CartaoPainel
             titulo="De onde você envia"
-            subtitulo="O endereço que sai como remetente nas suas etiquetas."
+            subtitulo="Usado para calcular o frete de quem compra."
             cor="var(--color-marker)"
             info="Este endereço aparece como remetente em toda etiqueta. Quem compra consegue ver. Se preferir usar outro, me avise."
           >
@@ -219,14 +220,14 @@ const AbaConfiguracoes = () => {
               </label>
             </div>
 
-            {/* O cálculo do frete sai da função `cotar-frete`, que lê o CEP
-                de uma variável de ambiente. O subtítulo antigo dizia "usado
-                para calcular o frete de quem compra", e era a mentira mais
-                cara desta tela. */}
+            {/* Este é o único campo da tela que muda a loja na hora, e por
+                isso é o único que ganha um aviso do que acontece se ficar
+                em branco. O `cotar-frete` cai na variável de ambiente
+                quando não acha CEP aqui, e ela não tem como saber disso. */}
             <p className="aviso-adiado">
-              O preço do frete que a cliente vê ainda é calculado pelo endereço que
-              ficou guardado na transportadora. Se você mudar de endereço, salve aqui
-              e me avise, para eu trocar lá também.
+              O CEP é o que calcula o frete, e vale já na próxima compra. Se ele
+              ficar em branco, a loja volta para o endereço guardado comigo, e o
+              frete continua saindo.
             </p>
           </CartaoPainel>
 
