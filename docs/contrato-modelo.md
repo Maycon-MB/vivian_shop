@@ -270,30 +270,43 @@ CPF:                             CPF:
 
 # ANEXO I: ETAPAS DE ENTREGA
 
-## Etapa A: Já entregue
+Atualizado em 04/09/2026, na assinatura.
+
+## Etapa A: Já entregue e em operação
 
 | # | Entrega |
 |---|---|
 | 1 | Arquitetura da loja e do painel |
-| 2 | Vitrine pública com organização por tema |
+| 2 | Vitrine pública com organização por tema, busca e filtro |
 | 3 | Página de produto, carrinho e fechamento de compra |
 | 4 | Regras das duas linhas: mínimo por item e prazo de produção; entrega digital automática |
 | 5 | Painel de pedidos, fila de produção e relatórios de fechamento |
-| 6 | Cálculo de frete por peso e destino |
-| 7 | Canal de coleta de informações da CONTRATANTE |
-| 8 | Testes automatizados e publicação contínua |
+| 6 | Canal de coleta de informações da CONTRATANTE |
+| 7 | Testes automatizados e publicação contínua |
+| 8 | **Catálogo completo publicado**: 342 produtos em 140 temas, com fotos |
+| 9 | **Loja em endereço próprio**, no ar desde 21/08/2026 |
+| 10 | **Recebimento por Pix e cartão**, cobrando em produção desde 01/09/2026 |
+| 11 | **Cálculo de frete com tarifa real**, junto às transportadoras, com a compradora escolhendo |
+| 12 | **Envio automático de e-mails**: aviso de mensagem, recuperação de senha e aviso de venda paga |
+| 13 | **Conta da compradora**, com acompanhamento do próprio pedido |
+| 14 | **Conversa dentro da loja**, sem depender de aplicativo de mensagens |
+| 15 | **Avaliações das compradoras**, com convite automático após a entrega |
+| 16 | **Medição de visitas**, sem cookie e sem identificar pessoas |
+| 17 | **Página de políticas** com o texto da CONTRATANTE |
+| 18 | **Presença na busca do Google**: mapa do site com 487 endereços, enviado ao Search Console |
+| 19 | **Cópia de segurança diária** do banco de dados e das fotos, cifrada |
 
-## Etapa B: Depende da CONTRATANTE ou de terceiros
+## Etapa B: Pendente na data da assinatura
 
 | # | Entrega | Depende de |
 |---|---|---|
-| 9 | Catálogo completo publicado | fornecimento do acervo de produtos e fotos (6.1) |
-| 10 | Recebimento por Pix e cartão | abertura de conta em instituição de pagamento (6.3) |
-| 11 | Emissão de etiqueta e declaração de conteúdo | contratação do serviço de fretes (6.3) |
-| 12 | Loja em endereço próprio | registro de domínio (6.3) |
-| 13 | Envio automático de e-mails aos compradores | contratação de serviço de e-mail (6.3) |
-| 14 | Cálculo de frete com tarifa real | itens 10 e 11 |
-| 15 | Textos de política de troca e devolução | validação jurídica pela CONTRATANTE |
+| 20 | Compra de teste em produção, com cartão real | a CONTRATANTE realizar uma compra de valor baixo |
+| 21 | Edição das configurações da loja pelo painel, com gravação | exclusivamente do CONTRATADO |
+| 22 | Descrição resumida do produto no cartão da vitrine | exclusivamente do CONTRATADO |
+| 23 | Ajuste do filtro de temas na tela do celular | exclusivamente do CONTRATADO |
 
-Enquanto pendentes os itens da Etapa B, a loja permanece publicada em modo
-de demonstração, com aviso visível de que não realiza cobranças.
+O item 20 é o único que depende da CONTRATANTE, e existe porque cartão
+real e antifraude não podem ser exercitados sem uma compra verdadeira.
+
+A loja **não está em modo de demonstração**: ela vende, cobra e entrega
+desde 01/09/2026. Os itens acima são ajustes sobre uma loja em operação.
