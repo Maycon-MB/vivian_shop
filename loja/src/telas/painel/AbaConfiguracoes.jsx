@@ -113,34 +113,41 @@ const AbaConfiguracoes = () => (
 
     <CartaoPainel
       titulo="Quando eu te aviso"
-      subtitulo="Escolha o que vale interromper o seu dia."
+      subtitulo="O que a loja manda para o seu e-mail, sozinha."
       cor="var(--color-heart)"
     >
-      <div className="opcoes">
-        <label className="opcao">
-          <input type="checkbox" defaultChecked />
-          <span>
-            <strong>Pedido novo</strong>
-            <small>Mensagem no WhatsApp assim que alguém compra.</small>
-          </span>
-        </label>
+      {/* Isto descreve o que acontece, e não é uma escolha.
 
-        <label className="opcao">
-          <input type="checkbox" defaultChecked />
-          <span>
-            <strong>Prazo chegando</strong>
-            <small>Um dia antes de um pedido vencer, para nada atrasar.</small>
-          </span>
-        </label>
+          Até 04/09 havia aqui tres caixas de selecao marcadas, sem estado
+          e sem nada atras: "Pedido novo", que prometia mensagem no
+          WhatsApp, "Prazo chegando" e "Resumo da semana". Nenhuma das tres
+          existia, e a Vivian perguntou se era avisada de cada compra
+          justamente olhando esta tela.
 
-        <label className="opcao">
-          <input type="checkbox" />
-          <span>
-            <strong>Resumo da semana</strong>
-            <small>Toda segunda, por e-mail: o que vendeu e o que ficou parado.</small>
-          </span>
-        </label>
-      </div>
+          Caixa que nao salva e pior que ausencia de caixa: ela promete e
+          some no proximo carregamento. Enquanto o aviso nao for
+          configuravel de verdade, esta tela diz a verdade do que ja
+          funciona. */}
+      <ul className="avisos-que-existem">
+        <li>
+          <strong>Venda paga</strong>
+          <small>
+            Assim que o pagamento de um pedido é confirmado, com o número e o
+            valor no corpo do e-mail.
+          </small>
+        </li>
+        <li>
+          <strong>Mensagem de cliente</strong>
+          <small>
+            Quando alguém pede para falar com você pela loja, com a pergunta
+            inteira no e-mail.
+          </small>
+        </li>
+      </ul>
+
+      <p className="aviso-onde">
+        Os dois vão para o e-mail com que você entra aqui.
+      </p>
     </CartaoPainel>
 
     <div>
