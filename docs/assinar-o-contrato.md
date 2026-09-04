@@ -32,13 +32,23 @@ O `docs/contrato-modelo.md` é modelo e fica em branco de propósito: ele
 está num repositório público. O preenchido vira `contrato-vivian.md`, na
 raiz, **que não entra no Git**.
 
-| Onde | O que falta |
-|---|---|
-| Qualificação do CONTRATADO | logradouro e número, em Nilópolis |
-| Qualificação da CONTRATANTE | nome completo, CPF, CNPJ se houver, endereço |
-| Cláusula 3.1 | dia do vencimento e mês de início |
-| Cláusula 4.1 | prazo de entrega |
-| Fecho | local e data |
+| Onde | O que falta | Já sabemos? |
+|---|---|---|
+| Qualificação do CONTRATADO | logradouro e número, em Nilópolis | você tem |
+| Nome completo dela | **Vivian Velasco Quintella Fernandes** | **sim**, do RDAP do domínio |
+| CPF dela | | **não**, e não está em lugar nenhum daqui |
+| CNPJ dela, se houver | | **não**, e é a pergunta aberta desde 19/08 |
+| Endereço dela | | **não** |
+| Cláusula 3.1 | dia do vencimento e mês de início | decisão sua |
+| Cláusula 4.1 | prazo do que falta | ver abaixo |
+| Fecho | local e data | |
+
+O nome completo veio do RDAP público do registro.br, porque o domínio está
+no CPF dela: ela consta como `registrant`, e o Maycon como `technical`.
+
+**O CPF não está no repositório, e não pode estar.** Ele é público, e o
+que entra no Git fica no histórico para sempre. Pedir os três dados que
+faltam numa mensagem só é mais rápido do que procurar.
 
 ### A cláusula 4.1 precisa de atenção
 
@@ -97,6 +107,10 @@ comprometido do seu lado, e não um pedido para ela se comprometer sozinha.
 Sem travessão, como todo texto que ela lê.
 
 > vivian, o contrato está aqui em anexo, já assinado por mim.
+>
+> antes preciso de três coisas pra preencher:
+> seu cpf, seu endereço completo com cep, e se você tem cnpj.
+> se não tiver cnpj, é só me dizer que não tem.
 >
 > pra assinar é de graça, pelo gov.br, e leva dois minutos:
 >
