@@ -48,11 +48,32 @@ export const comoElaRecebe = async (): Promise<ComoElaRecebe> => {
   }
 }
 
+/**
+ * Grava o que ela mudou em "Como eu recebo".
+ *
+ * O `.select()` no fim não é enfeite. Quando a política de segurança do
+ * Postgres barra um `update`, ele **não devolve erro**: devolve zero
+ * linhas alteradas. Um código que só olhasse `error` mostraria o visto
+ * verde por cima de nada.
+ *
+ * Aqui isso doeria mais do que em qualquer outra tela, porque esta decide
+ * **quanto sai do bolso de quem compra**: parcelas, juros e desconto no
+ * Pix. Ela ajustaria o parcelamento, veria "salvo", e a loja seguiria
+ * cobrando o de antes. O sintoma chegaria como ela desconfiando da própria
+ * memória, e não do sistema.
+ *
+ * Achado em 04/09, consertando o mesmo defeito na aba de Configurações.
+ */
 export const salvarComoElaRecebe = async (config: ComoElaRecebe): Promise<void> => {
-  const { error } = await bancoDoNavegador()
+  const { data, error } = await bancoDoNavegador()
     .from('configuracoes_de_pagamento')
     .update({ ...config, atualizado_em: new Date().toISOString() })
     .eq('id', true)
+    .select('id')
 
   if (error) throw new Error(error.message)
+
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('O banco não alterou nenhuma linha de configuracoes_de_pagamento.')
+  }
 }
