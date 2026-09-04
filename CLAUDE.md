@@ -30,6 +30,8 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Google acha a loja | `sitemap.xml` com 487 endereços e `robots.txt`; a loja está no Search Console e o sitemap foi enviado |
 | Backup do banco | **diário e cifrado**, em repositório privado, com 30 dias de retenção |
 | Backup das fotos | **diário**, 684 arquivos versionados no git; sem cifra, porque já são públicas |
+| Painel: configurações da loja | **salva de verdade**: nome, frase, contato, CEP de origem e padrões de produto novo |
+| Aviso de venda | **por e-mail**, quando o pagamento é aprovado |
 
 **O que ainda não está pronto**, e o documento já chegou a dizer que
 estava:
@@ -73,13 +75,16 @@ Como o banco é copiado todo dia, e como restaurar:
 Como o contrato é assinado, de graça e pelo gov.br:
 [docs/assinar-o-contrato.md](docs/assinar-o-contrato.md).
 
+Por que toda tela que grava tem que conferir as linhas alteradas:
+[docs/as-telas-que-salvam.md](docs/as-telas-que-salvam.md).
+
 ---
 
 ## Como rodar
 
 ```
 cd loja && npm install
-npm test                      # 760 testes de regra e de tela
+npm test                      # 804 testes de regra e de tela
 npm run build
 
 cd ..
@@ -183,6 +188,12 @@ vivem nas variáveis do GitHub e no painel do Supabase; o código só lê
 em dez segundos. É por isso que `pedidos`, `itens_do_pedido` e
 `eventos_de_pagamento` não têm política de leitura pública, e por isso o
 projeto foi criado com RLS automático ligado.
+
+**`update` barrado por RLS não devolve erro: devolve zero linhas.** Toda
+gravação tem que terminar em `.select()` e reprovar quando volta vazio,
+senão a tela mostra o visto verde por cima de nada. É pior do que botão
+que não faz nada, porque mente com confiança. Ver
+[docs/as-telas-que-salvam.md](docs/as-telas-que-salvam.md).
 
 **O aviso do Mercado Pago não é a verdade.** Ele diz "vá perguntar sobre o
 pagamento tal"; quem responde é a API deles, e o que volta ainda passa
