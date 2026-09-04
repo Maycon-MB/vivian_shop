@@ -264,6 +264,15 @@ const main = async () => {
   await tirar('relatorios-computador', 1280)
   await tirar('relatorios-celular', 390)
 
+  /* A aba de Configurações ficou de fora até 04/09, e foi justamente onde
+     estava o pior defeito de tela do projeto: três caixas marcadas
+     prometendo avisos que não existiam, uma delas por WhatsApp. Ninguém
+     tinha olhado aquela tela. */
+  await pagina.goto(`${base}/admin/?aba=config`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('configuracoes-computador', 1280)
+  await tirar('configuracoes-celular', 390)
+
 
 
   await navegador.close()
