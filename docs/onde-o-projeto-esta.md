@@ -43,6 +43,8 @@ Em ordem de quanto custa deixar como está.
 
 | O quê | Estado | Trava |
 |---|---|---|
+| **A assinatura do contrato** | assinado e enviado por mim em 04/09; **falta a dela** | depende dela assinar no gov.br. Ver [assinar-o-contrato.md](assinar-o-contrato.md) |
+| **A assinatura do contrato** | assinado e enviado por mim em 04/09; **falta a dela** | depende dela assinar no gov.br. Ver [assinar-o-contrato.md](assinar-o-contrato.md) |
 | **A primeira compra de verdade** | nunca foi feita | depende dela comprar. Ver [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md) |
 | **A conta sobrando no Supabase Auth** | existe | depende do painel do Supabase, que é dela. Ver [a-conta-que-sobrou.md](a-conta-que-sobrou.md) |
 | **A restauração do backup** | nunca testada | falta um slot de projeto Free para restaurar dentro. Ver [o-backup-do-banco.md](o-backup-do-banco.md) |

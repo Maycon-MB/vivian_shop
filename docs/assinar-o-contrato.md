@@ -6,6 +6,36 @@ Registro meu. Não vira PDF.
 
 ---
 
+## Onde isto está, em 04/09/2026
+
+| Passo | Estado |
+|---|---|
+| Contrato preenchido e conferido | **feito** |
+| PDF gerado, 10 páginas, olhado página a página | **feito** |
+| Assinado pelo Maycon, no `assinador.iti.br` | **feito** |
+| Enviado para a Vivian | **feito** |
+| **Assinado pela Vivian** | **pendente, esperando ela** |
+| Conferir as duas assinaturas em `validar.iti.gov.br` | pendente |
+| Guardar o PDF com as duas assinaturas | pendente |
+
+**Esta é a pendência aberta do contrato.** Ela recebeu o arquivo já
+assinado de um lado e a mensagem com o passo a passo. Ela disse ter medo
+de ser difícil, então se demorar, o caminho é ligar e fazer junto, e não
+mandar a instrução de novo.
+
+Quando ela devolver, **o arquivo certo é o que ela mandar de volta**, com
+as duas assinaturas. O que está em `Documentsivian-contrato\` hoje tem
+só a do Maycon.
+
+### Como conferir que ficou valendo
+
+Em `validar.iti.gov.br`, subindo o arquivo que ela devolver. Tem que
+aparecer **duas** assinaturas, com os dois nomes. Uma só significa que ela
+assinou o arquivo original em vez do que foi enviado, e aí a do Maycon se
+perdeu: é refazer, assinando por cima do dela.
+
+---
+
 ## Por que gov.br, e não papel nem plataforma paga
 
 | | |

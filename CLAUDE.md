@@ -38,6 +38,7 @@ estava:
 
 | O quê | Estado |
 |---|---|
+| A assinatura do contrato | assinado por mim e enviado em 04/09. **Falta a dela.** Ver [docs/assinar-o-contrato.md](docs/assinar-o-contrato.md) |
 | A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
 | A conta sobrando no Supabase Auth | é a Vivian com dois logins de dona, não uma conta órfã. Precisa perguntar a ela qual usa |
 | A restauração do backup | **nunca foi testada**: falta slot de projeto Free para restaurar dentro |
