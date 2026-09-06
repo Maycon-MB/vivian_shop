@@ -1,0 +1,9 @@
+:HL["/_next/static/chunks/2pv9rul4s78m_.css","style"]
+:HL["/_next/static/chunks/0fxi_h-xzasxo.css","style"]
+:HL["/_next/static/chunks/2dq3c6-twdr8h.css","style"]
+:HL["/_next/static/chunks/0vhb73lapn4o_.css","style"]
+:HL["/_next/static/chunks/2l5nmgfp9c8y7.css","style"]
+:HL["/_next/static/media/03bda585a99c6450-s.p.32sris142tqlb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/40z3p5l10tnnz.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"(loja)","param":null,"prefetchHints":4192,"slots":{"children":{"name":"produto","param":null,"prefetchHints":4192,"slots":{"children":{"name":"slug","param":{"type":"d","key":"revista-para-colorir-sininho","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"Tqe0EhBvdAkE5NU8fBcnB"}
