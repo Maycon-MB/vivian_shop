@@ -2,6 +2,7 @@ import React from 'react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { LINHA_PEDAGOGICA } from '@/dominio/linhas'
 
 /* Como ela configurou o recebimento. Cada teste que depende disso diz
    qual configuração está provando, em vez de herdar um 5% escondido no
@@ -55,7 +56,7 @@ const APOSTILA = {
   id: 5,
   slug: 'apostila',
   name: 'Apostila de alfabetização adaptada',
-  category: 'Papelaria pedagógica',
+  category: LINHA_PEDAGOGICA,
   price: 47,
   quantidade: 1,
 }
