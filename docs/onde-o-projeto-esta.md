@@ -43,8 +43,7 @@ Em ordem de quanto custa deixar como está.
 
 | O quê | Estado | Trava |
 |---|---|---|
-| **A assinatura do contrato** | assinado e enviado por mim em 04/09; **falta a dela** | depende dela assinar no gov.br. Ver [assinar-o-contrato.md](assinar-o-contrato.md) |
-| **A assinatura do contrato** | assinado e enviado por mim em 04/09; **falta a dela** | depende dela assinar no gov.br. Ver [assinar-o-contrato.md](assinar-o-contrato.md) |
+| **A assinatura do contrato** | **feita pelos dois**, ela devolveu em 07/09 | falta só conferir as duas em `validar.iti.gov.br`. Ver [assinar-o-contrato.md](assinar-o-contrato.md) |
 | **A primeira compra de verdade** | nunca foi feita | depende dela comprar. Ver [a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md) |
 | **A conta sobrando no Supabase Auth** | existe | depende do painel do Supabase, que é dela. Ver [a-conta-que-sobrou.md](a-conta-que-sobrou.md) |
 | **A restauração do backup** | nunca testada | falta um slot de projeto Free para restaurar dentro. Ver [o-backup-do-banco.md](o-backup-do-banco.md) |
@@ -63,6 +62,8 @@ Feito em 01/09, e conferido rodando:
 | Search Console | propriedade de domínio verificada por TXT, sitemap enviado, e a Vivian já é proprietária |
 | Backup diário do banco | primeira execução verde: 400 KB, 343 produtos, cifrado, artifact expirando em 30 dias |
 | Backup diário das fotos | primeira execução verde: 684 arquivos, 15 MB, nenhum vazio |
+| Ícone da linha pedagógica | Vivian pediu em 07/09; volta sempre visível, mesmo sem produto, com aviso em vez de vitrine vazia |
+| `$2f` na tag de busca | os 80 produtos com descrição quebrada vazavam "$2f" no resultado do Google e no preview de link; a tela já escondia, a tag de metadata não |
 
 ---
 
