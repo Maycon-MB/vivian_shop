@@ -7,6 +7,7 @@ import {
   permiteVariasUnidades,
   totalCarrinho,
 } from '../catalogo';
+import { LINHA_PEDAGOGICA } from '@/dominio/linhas';
 
 /**
  * O carrinho, vivo entre as páginas.
@@ -125,7 +126,7 @@ export const ProvedorCarrinho = ({ children }) => {
       esvaziar,
       total: totalCarrinho(itens),
       unidades: itens.reduce((soma, item) => soma + item.quantidade, 0),
-      ehDigital: itens.length > 0 && itens[0].category === 'Papelaria pedagógica',
+      ehDigital: itens.length > 0 && itens[0].category === LINHA_PEDAGOGICA,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [itens, aviso, pronto]
