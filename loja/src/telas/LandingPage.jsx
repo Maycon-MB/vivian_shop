@@ -30,17 +30,25 @@ import { BASE } from '../base'
  */
 const products = PUBLICADOS;
 
-/* Só as linhas que têm produto no ar.
+/* As três linhas sempre aparecem, mesmo a que ainda não tem produto.
+   Até 07/09 esta lista escondia a linha vazia, porque botão que só leva a
+   uma tela em branco parece loja quebrada. A Vivian pediu o ícone de
+   volta nessa data, mesmo sabendo que o material pedagógico ainda não
+   foi cadastrado — por isso o aviso em `SEM_PRODUTO_AINDA` avisa quem
+   clica, em vez de mostrar uma vitrine vazia sem explicação. */
+const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA];
 
-   O catálogo dela veio da Elojinha, que recebeu apenas a papelaria
-   personalizada: o material pedagógico ficou no Projeto Educar e nunca
-   migrou. Mostrar o filtro assim mesmo é oferecer um botão que só leva a
-   uma tela vazia, e quem clica conclui que a loja está quebrada.
+/* PEDAGOGICA por dentro continua 'Papelaria pedagógica': é o valor salvo
+   em cada produto, e trocar o texto que aparece não pode desalinhar do
+   que o catálogo grava. Aqui é só o rótulo do botão. */
+const ROTULO_DA_LINHA = {
+  [PEDAGOGICA]: 'Atividades pedagógicas',
+};
 
-   Quando ela cadastrar o material pedagógico, o filtro volta sozinho. */
-const LINHAS_COM_PRODUTO = ['Todas', PERSONALIZADA, PEDAGOGICA].filter(
-  (linha) => linha === 'Todas' || products.some((p) => p.category === linha),
-);
+const SEM_PRODUTO_AINDA = {
+  [PEDAGOGICA]:
+    'As atividades pedagógicas estão a caminho. Fala com a gente pra saber quando chegam.',
+};
 
 /* A mais recente com uma frase inteira, e não só a mais recente: a de
    26/02 diz "Adorai", que é sincera e curta demais para carregar o
@@ -123,7 +131,7 @@ const LandingPage = () => {
                     className={`px-4 py-2 mb-2 mb-lg-0 rounded-pill fw-bold border-0 transition-all ${activeCategory === cat ? 'bg-primary text-white shadow-sm' : 'bg-light text-muted hover:bg-white'}`}
                     style={activeCategory === cat ? { backgroundColor: 'var(--color-chalk)' } : {}}
                 >
-                    {cat}
+                    {ROTULO_DA_LINHA[cat] ?? cat}
                 </button>
               ))}
             </Nav>
@@ -331,20 +339,29 @@ const LandingPage = () => {
                   className="rounded-pill px-4 fw-bold small text-uppercase"
                   style={{ fontSize: '10px' }}
                 >
-                  {cat}
+                  {ROTULO_DA_LINHA[cat] ?? cat}
                 </Button>
               ))}
             </div>
           </div>
-          <Row className="g-4">
-            <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product) => (
-                <Col lg={4} sm={6} key={product.id}>
-                  <ProductCard product={product} addToCart={addToCart} />
-                </Col>
-              ))}
-            </AnimatePresence>
-          </Row>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-5">
+              <p className="text-muted fs-5 mb-3">{SEM_PRODUTO_AINDA[activeCategory]}</p>
+              <Link href="/?conversa=1" className="fw-bold" style={{ color: 'var(--color-chalk)' }}>
+                Falar com a loja
+              </Link>
+            </div>
+          ) : (
+            <Row className="g-4">
+              <AnimatePresence mode="popLayout">
+                {filteredProducts.map((product) => (
+                  <Col lg={4} sm={6} key={product.id}>
+                    <ProductCard product={product} addToCart={addToCart} />
+                  </Col>
+                ))}
+              </AnimatePresence>
+            </Row>
+          )}
 
           {/* O caminho para o catálogo inteiro. Sem ele, a seleção da home
               seria tudo o que a loja parece ter. */}
