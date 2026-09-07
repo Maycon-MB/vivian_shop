@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { descricaoEmLinhas } from './descricaoEmLinhas'
+import { descricaoEmLinhas, paraMetaDescricao } from './descricaoEmLinhas'
 
 const texto = (bruta: string) => descricaoEmLinhas(bruta).map((l) => l.texto)
 
@@ -85,5 +85,27 @@ describe('a descrição que a cliente lê', () => {
   it('devolve lista vazia quando não há descrição', () => {
     expect(descricaoEmLinhas('')).toEqual([])
     expect(descricaoEmLinhas(null as never)).toEqual([])
+  })
+})
+
+describe('a descrição que o Google e o WhatsApp leem', () => {
+  it('some quando é o lixo da importação, para a loja usar a frase genérica', () => {
+    /* Sem isso, os 80 produtos com "$2f" no lugar da descrição mostrariam
+       "$2f" no resultado de busca e no preview de link compartilhado —
+       exatamente o que a tela já esconde, vazando por outra porta. */
+    expect(paraMetaDescricao('$2f')).toBeUndefined()
+    expect(paraMetaDescricao('  $2f  ')).toBeUndefined()
+  })
+
+  it('some quando não há descrição', () => {
+    expect(paraMetaDescricao('')).toBeUndefined()
+    expect(paraMetaDescricao(null as never)).toBeUndefined()
+  })
+
+  it('mantém a descrição normal como está, sem separar em linhas', () => {
+    // A meta tag é uma frase corrida, não a lista que a tela mostra.
+    const bruta = 'Caneca personalizada com o nome. TAMANHO: 350 ml'
+
+    expect(paraMetaDescricao(bruta)).toBe(bruta)
   })
 })
