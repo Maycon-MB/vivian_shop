@@ -84,8 +84,11 @@ const partir = (linha: string): LinhaDaDescricao => {
 /* O que a reconstrução do catálogo gravou no lugar da descrição em 80
    produtos. Oito deles não têm página salva para recuperar e continuam
    assim: melhor a cliente não ver descrição nenhuma do que ver `$2f`
-   impresso na página do produto. */
-const LIXO_DA_IMPORTACAO = /^\$2f$/i
+   impresso na página do produto. Exportada porque a página do produto usa
+   o mesmo texto na tag de descrição para busca e compartilhamento — sem
+   isso, o Google e o preview do WhatsApp mostrariam o `$2f` que a tela já
+   esconde. */
+export const LIXO_DA_IMPORTACAO = /^\$2f$/i
 
 export const descricaoEmLinhas = (bruta: string): LinhaDaDescricao[] => {
   const texto = String(bruta ?? '')
@@ -107,4 +110,18 @@ export const descricaoEmLinhas = (bruta: string): LinhaDaDescricao[] => {
     .map((linha) => comMaiuscula(semGrito(linha.trim().replace(/\s{2,}/g, ' '))))
     .filter((linha) => linha.length > 0)
     .map(partir)
+}
+
+/**
+ * A descrição do produto, para a tag que o Google lê e que aparece no
+ * preview de link do WhatsApp e do Instagram.
+ *
+ * `undefined` faz a página herdar a frase genérica da loja, definida no
+ * layout raiz — o mesmo princípio de "sem descrição nenhuma é melhor que
+ * `$2f`" que `descricaoEmLinhas` já aplica na tela.
+ */
+export const paraMetaDescricao = (bruta: string): string | undefined => {
+  const texto = String(bruta ?? '').trim()
+  if (!texto || LIXO_DA_IMPORTACAO.test(texto)) return undefined
+  return texto
 }
