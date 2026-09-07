@@ -16,6 +16,12 @@ import { join } from 'node:path'
  * Este teste existe porque a correção manual não se sustenta: o nome dela
  * é a palavra mais natural do mundo para escrever no meio de um texto
  * sobre a loja dela, e vai voltar sem ninguém reparar.
+ *
+ * Até 24/08 a varredura via só a primeira camada de `telas/` e
+ * `componentes/`: `telas/painel` e `telas/landing` nunca foram conferidos,
+ * e `servicos/` nunca entrou. Foi assim que `avisosSimulados.ts` assinou
+ * "Um beijo, Vivian" em toda mensagem de pedido sem o teste reprovar.
+ * Segue o mesmo padrão recursivo de `semTravessao.test.ts`.
  */
 
 const RAIZ = new URL('../', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')
@@ -34,10 +40,15 @@ const TELAS_DELA = [
 
 const arquivosDeTela = (pasta: string): string[] => {
   const caminho = join(RAIZ, pasta)
-  return readdirSync(caminho, { withFileTypes: true })
-    .filter((e) => e.isFile() && /\.(jsx|tsx)$/.test(e.name) && !e.name.includes('.test.'))
-    .filter((e) => !TELAS_DELA.includes(e.name))
-    .map((e) => join(caminho, e.name))
+
+  return readdirSync(caminho, { withFileTypes: true }).flatMap((entrada) => {
+    const caminhoFilho = join(pasta, entrada.name)
+    if (entrada.isDirectory()) return arquivosDeTela(caminhoFilho)
+    if (!/\.(jsx|tsx|ts|js)$/.test(entrada.name)) return []
+    if (entrada.name.includes('.test.')) return []
+    if (TELAS_DELA.includes(entrada.name)) return []
+    return [join(RAIZ, caminhoFilho)]
+  })
 }
 
 /**
@@ -53,11 +64,18 @@ const textoVisivel = (fonte: string): string =>
     .replace(/^\s*\/\/.*$/gm, '')
 
 describe('o nome da dona não vaza para quem compra', () => {
-  const telas = [...arquivosDeTela('telas'), ...arquivosDeTela('componentes')]
+  const telas = [
+    ...arquivosDeTela('telas'),
+    ...arquivosDeTela('componentes'),
+    ...arquivosDeTela('servicos'),
+  ]
 
-  it('encontra as telas para conferir', () => {
-    // Se o caminho mudar, o teste passaria sem conferir nada.
-    expect(telas.length).toBeGreaterThan(8)
+  it('encontra os arquivos para conferir, inclusive dentro de subpastas', () => {
+    /* O teste antigo passava verde vendo doze arquivos de mais de
+       cinquenta, porque não descia em `telas/painel` nem `telas/landing`,
+       e nunca entrava em `servicos/`. Se este número cair, é porque a
+       varredura parou de descer nas pastas, e não porque a loja encolheu. */
+    expect(telas.length).toBeGreaterThan(40)
   })
 
   it.each(telas)('%s não mostra o nome dela', (arquivo) => {
