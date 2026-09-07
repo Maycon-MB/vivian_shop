@@ -25,7 +25,7 @@ const CONVERSAS = [
     quando: '2 min',
     naoLidas: 1,
     mensagens: [
-      { de: 'cliente', texto: 'Oi Vivian! Comprei os cadernos ontem. Consegue mandar até sexta?', quando: '09:12' },
+      { de: 'cliente', texto: 'Oi! Comprei os cadernos ontem. Consegue mandar até sexta?', quando: '09:12' },
       { de: 'vivian', texto: 'Oi Ana! Consigo sim, seu pedido está pronto e vou postar hoje.', quando: '09:20' },
       { de: 'cliente', texto: 'Que ótimo, obrigada!', quando: '09:21' },
     ],
