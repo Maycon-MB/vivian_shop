@@ -36,6 +36,7 @@ import FilaProducao from './painel/FilaProducao';
 import './painel.css';
 import './painel-abas.css';
 import { BASE } from '../base'
+import { LINHA_PEDAGOGICA } from '@/dominio/linhas';
 
 const ABAS = ['dashboard', 'pedidos', 'catalogo', 'relatorios', 'mensagens', 'marketing', 'avaliacoes', 'recebo', 'config'];
 
@@ -97,7 +98,7 @@ const AdminDashboard = () => {
    * pedagógica é entregue na hora do pagamento.
    */
   const [orders, setOrders] = useState([
-    { id: '#0003', customer: 'Exemplo: pedido digital', items: 'Apostila de alfabetização adaptada', total: 47.00, status: 'Entregue por e-mail', date: 'Hoje, 14:20', niche: 'Papelaria pedagógica' },
+    { id: '#0003', customer: 'Exemplo: pedido digital', items: 'Apostila de alfabetização adaptada', total: 47.00, status: 'Entregue por e-mail', date: 'Hoje, 14:20', niche: LINHA_PEDAGOGICA },
     { id: '#0002', customer: 'Exemplo: pedido personalizado', items: '10x Caderno personalizado', total: 320.00, status: 'Em produção', date: 'Hoje, 11:05', niche: 'Papelaria personalizada' },
     { id: '#0001', customer: 'Exemplo: pronto para envio', items: '10x Cartela de adesivos', total: 180.00, status: 'Pronto para envio', date: 'Ontem, 19:30', niche: 'Papelaria personalizada' },
   ]);
