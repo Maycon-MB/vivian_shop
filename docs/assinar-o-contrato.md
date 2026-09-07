@@ -1,12 +1,13 @@
 # Assinar o contrato, pelo gov.br
 
 Escrito em 04/09/2026, quando a Vivian leu, aprovou e pediu para assinar.
+**Fechado em 07/09/2026**, quando ela devolveu com a assinatura dela.
 
 Registro meu. Não vira PDF.
 
 ---
 
-## Onde isto está, em 04/09/2026
+## Onde isto está, em 07/09/2026
 
 | Passo | Estado |
 |---|---|
@@ -14,11 +15,16 @@ Registro meu. Não vira PDF.
 | PDF gerado, 10 páginas, olhado página a página | **feito** |
 | Assinado pelo Maycon, no `assinador.iti.br` | **feito** |
 | Enviado para a Vivian | **feito** |
-| **Assinado pela Vivian** | **pendente, esperando ela** |
+| **Assinado pela Vivian**, em 07/09/2026 | **feito** |
 | Conferir as duas assinaturas em `validar.iti.gov.br` | pendente |
-| Guardar o PDF com as duas assinaturas | pendente |
+| Guardar o PDF com as duas assinaturas | **feito**: `Contrato_-_Vivian_Quintella_Fernandes_assinado_assinado.pdf` |
 
-**Esta é a pendência aberta do contrato.** Ela recebeu o arquivo já
+**O contrato está fechado.** Ela mandou o arquivo de volta em 07/09, no
+mesmo dia em que pediu o terceiro ícone de linha (Atividades pedagógicas)
+e perguntou pela chave Pix. Falta só conferir as duas assinaturas em
+`validar.iti.gov.br` antes de arquivar como definitivo.
+
+Registro do que era a pendência antes de fechar: ela recebeu o arquivo já
 assinado de um lado e a mensagem com o passo a passo. Ela disse ter medo
 de ser difícil, então se demorar, o caminho é ligar e fazer junto, e não
 mandar a instrução de novo.
