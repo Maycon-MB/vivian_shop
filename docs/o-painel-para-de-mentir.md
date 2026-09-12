@@ -189,6 +189,48 @@ mentia, o que é a mesma classe de problema vista do outro lado.
 
 ---
 
+## Dois vizinhos, achados pela mesma pergunta
+
+Enquanto o painel era corrigido, a mesma conversa de 12/09 desencavou mais
+dois, que não são do painel mas são exatamente da mesma família: coisa
+errada no ar há semanas porque ninguém olhou.
+
+**A loja se acusava de um defeito que não tinha.** A primeira linha da
+página pública, acima do nome da loja, dizia "Alguns avisos por e-mail
+ainda não são enviados". Quem entrasse para comprar lia isso antes de
+qualquer outra coisa.
+
+A causa era uma variável que nunca existiu. `NEXT_PUBLIC_EMAIL_ATIVO` é
+lida em [`servicos/index.ts`](../loja/src/servicos/index.ts), mas faltava
+no bloco `env:` do workflow e nas variáveis do repositório, onde as outras
+três irmãs estão desde agosto. Com ela falsa, `estaTudoReal` nunca fechava.
+O e-mail funciona desde 25/08, com domínio verificado e teste de ponta a
+ponta ([ligar-o-resend.md](ligar-o-resend.md)): a loja passou dezoito dias
+desmentindo a si mesma.
+
+**A aba do navegador anunciava o framework.** O `favicon.ico` era o padrão
+do Next.js, círculo preto com triângulo branco, desde o primeiro commit do
+projeto. A loja de uma cliente pagante levava a marca da ferramenta que eu
+uso para construí-la.
+
+O ícone novo sai da marca dela, e não de desenho meu: os dois corações
+recortados de `marca-feito-para-voce.webp`, sobre o azul claro da arte. A
+marca inteira é circular e cheia de texto, e a 16×16 vira borrão; os
+corações são o único elemento que sobrevive nesse tamanho.
+
+Os dois ganharam guarda no [teste de
+navegação](../scripts/testar-navegacao.cjs), pelo mesmo motivo: apagar o
+`favicon.ico` faz o Next repor o dele sozinho, sem erro nenhum, e a marca
+sumiria calada outra vez.
+
+E ficou um aviso caro para quem for gerar ícone aqui: o `.ico` tem que
+sair em **RGBA**. Com PNG em RGB dentro dele o Turbopack recusa o arquivo
+e derruba o build inteiro, com `The PNG is not in RGBA format!`. Foi o que
+aconteceu na primeira tentativa, e só apareceu porque o `publicar.mjs`
+rodou antes do commit.
+
+---
+
 ## O que dizer a ela
 
 > Os pedidos, os gráficos e os números que você vê no painel não estão
@@ -203,5 +245,13 @@ mentia, o que é a mesma classe de problema vista do outro lado.
 > venda" dizia "registrada com sucesso" e não guardava nada, e o de
 > agendar post dizia que tinha ido para o seu Instagram. Nenhum dos dois
 > fazia o que prometia. Eles voltam quando funcionarem de verdade.
+>
+> Sua loja também estava dizendo, na primeira linha da página, que alguns
+> avisos por e-mail não eram enviados. Isso estava errado desde agosto: os
+> e-mails funcionam. A frase saiu.
+>
+> E o desenho da abinha do navegador, aquele quadradinho que aparece ao
+> lado do nome do site, era o símbolo do programa que eu uso para construir
+> a loja, não o seu. Agora são os dois corações da sua marca.
 >
 > Foi uma pergunta muito boa. Se tiver outra dessas, manda.

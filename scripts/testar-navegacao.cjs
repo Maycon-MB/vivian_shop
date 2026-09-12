@@ -283,12 +283,36 @@ const conferir = async (nome, fn) => {
 
   const conferirDaDona = podeEntrar ? conferir : async () => {}
 
-  await conferirDaDona('o painel abre e mostra os números', async () => {
+  await conferirDaDona('a visão geral mostra o que é dela, e nenhum mostruário', async () => {
     await pagina.goto(`${BASE}/admin/`, { waitUntil: 'networkidle' })
     await pagina.waitForTimeout(1800)
+
     const corpo = await pagina.locator('body').textContent()
     if (!corpo.includes('Bem-vinda')) throw new Error('painel não abriu')
-    if (corpo.includes('R$ 0,00')) throw new Error('os números pararam em zero')
+
+    /* Até 12/09 a linha daqui era `if (corpo.includes('R$ 0,00'))`, escrita
+       para pegar os quatro números do topo carregando zerados. Aqueles
+       números eram mostruário e saíram da tela: a guarda ficou vigiando
+       uma coisa que não existe mais, e passava sem conferir nada.
+
+       O que ela vigia agora é o contrário, e é o que importa: que nenhum
+       número inventado volte a aparecer no painel de uma loja que vende de
+       verdade. Sem isto, a correção de 12/09 só tem teste de unidade, e os
+       piores defeitos deste projeto passaram por teste de unidade. */
+    const selos = await pagina.locator('.selo-exemplo').count()
+    if (selos > 0) {
+      throw new Error(`a visão geral trouxe ${selos} bloco(s) marcados como exemplo`)
+    }
+
+    const mostruario = await pagina.locator('.kpi-card').count()
+    if (mostruario > 0) {
+      throw new Error(`a visão geral trouxe ${mostruario} número(s) de mostruário`)
+    }
+
+    // O único dado de verdade que esta tela tem antes da primeira venda.
+    if (!corpo.includes('Quem entrou na loja')) {
+      throw new Error('a visão geral não mostrou o movimento da loja')
+    }
   })
 
   await conferirDaDona('o painel tem navegação própria, e não a da loja', async () => {
