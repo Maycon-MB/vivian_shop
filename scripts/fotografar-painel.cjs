@@ -230,13 +230,33 @@ const main = async () => {
   const problemas = []
   pagina.on('pageerror', (e) => problemas.push(String(e)))
 
-  const tirar = async (nome, largura) => {
-    await pagina.setViewportSize({ width: largura, height: 900 })
+  /* O conteúdo do painel vive num `div` com rolagem própria, e `fullPage`
+     só estica a página, não o que rola dentro dela: cartão abaixo da dobra
+     sai branco no print. Por isso a altura é regulável, e as telas longas
+     pedem mais. Foi assim que a Visão Geral passou a 12/09 parecendo
+     vazia quando na verdade estava certa. */
+  const tirar = async (nome, largura, altura = 900) => {
+    await pagina.setViewportSize({ width: largura, height: altura })
     await pagina.waitForTimeout(600)
     const arquivo = path.join(destino, `${nome}.png`)
     await pagina.screenshot({ path: arquivo, fullPage: true })
     console.log(arquivo)
   }
+
+  /* A Visão Geral e os Pedidos ficaram de fora até 12/09, e eram as duas
+     telas mais mentirosas do painel: quatro números de mostruário, sete
+     pedidos de gente que não existe e um botão que dizia ter registrado
+     uma venda sem gravar nada. Ninguém tinha olhado, porque o script não
+     passava por elas. */
+  await pagina.goto(`${base}/admin/`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('visao-geral-computador', 1280, 1500)
+  await tirar('visao-geral-celular', 390, 1800)
+
+  await pagina.goto(`${base}/admin/?aba=pedidos`, { waitUntil: 'networkidle' })
+  await pagina.waitForTimeout(1400)
+  await tirar('pedidos-computador', 1280, 1500)
+  await tirar('pedidos-celular', 390, 1800)
 
   await pagina.goto(`${base}/admin/?aba=catalogo`, { waitUntil: 'networkidle' })
   await pagina.waitForTimeout(1200)
