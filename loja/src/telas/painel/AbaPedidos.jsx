@@ -7,6 +7,7 @@ import InfoBotao from './InfoBotao';
 import { PEDIDOS, ESTADOS, PRECISA_DE_ACAO, totalDe } from './dadosPedidos';
 import { emReais } from './graficos';
 import { carregarPedidosDaLoja } from './pedidosDaLoja';
+import { temBanco } from '@/servicos/autenticacao';
 
 /**
  * Pedidos.
@@ -57,7 +58,16 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
     };
   }, []);
 
-  const todos = useMemo(() => [...daLoja, ...PEDIDOS], [daLoja]);
+  /* Com a loja no ar, exemplo nenhum entra. Somar pedido inventado a
+     venda de verdade faz ela produzir encomenda de gente que não existe,
+     ou desconfiar da tela inteira e não usar mais o painel. O mesmo
+     `temBanco()` já governa Mensagens e Produtos; Pedidos tinha ficado
+     para trás. */
+  const naLoja = temBanco();
+  const todos = useMemo(
+    () => (naLoja ? daLoja : [...daLoja, ...PEDIDOS]),
+    [daLoja, naLoja],
+  );
 
   /* A conta de cada filtro sai da mesma lista que a tela mostra. Contar só
      os exemplos faria o número no filtro discordar do que aparece embaixo
@@ -130,9 +140,20 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
       </nav>
 
       {visiveis.length === 0 ? (
-        <CartaoPainel titulo="Nada aqui" subtitulo="Nenhum pedido neste filtro.">
+        <CartaoPainel
+          titulo={todos.length === 0 ? 'Nenhuma venda ainda' : 'Nada aqui'}
+          subtitulo={
+            todos.length === 0
+              ? 'Assim que alguém comprar, o pedido aparece nesta tela.'
+              : 'Nenhum pedido neste filtro.'
+          }
+        >
+          {/* Sem nenhum pedido no banco, culpar o filtro manda ela caçar
+              uma venda que não existe. */}
           <p className="text-muted mb-0">
-            Experimente “Todos”, ou limpe a busca.
+            {todos.length === 0
+              ? 'Você não precisa fazer nada até lá.'
+              : 'Experimente “Todos”, ou limpe a busca.'}
           </p>
         </CartaoPainel>
       ) : (
@@ -227,27 +248,30 @@ const AbaPedidos = ({ onAbrirEtiqueta }) => {
         </ul>
       )}
 
-      {/* O texto muda quando entra pedido de verdade: dizer que está tudo
-          errado — "são todos exemplo" — com uma venda real na lista faria a
-          Vivian desconfiar da própria tela. */}
-      <p className="aviso-exemplo">
-        {daLoja.length > 0 ? (
-          <>
-            <strong>
-              {daLoja.length === 1
-                ? 'O pedido marcado como “feito agora na loja” veio de uma compra sua'
-                : `Os ${daLoja.length} pedidos marcados como “feito agora na loja” vieram de compras suas`}
-            </strong>{' '}
-            nesta demonstração. Nada foi cobrado, e eles ficam guardados só neste navegador. Os
-            outros são exemplos, com nomes que não são de pessoas reais.
-          </>
-        ) : (
-          <>
-            <strong>Estes pedidos são de exemplo</strong>, para mostrar como a tela se comporta em
-            cada situação. Os nomes não são de pessoas reais.
-          </>
-        )}
-      </p>
+      {/* Com a loja no ar nada disto vale: o pagamento é real, o pedido
+          está no banco e não no navegador, e não há exemplo nenhum na
+          lista. Deixar a frase antiga aqui seria dizer à Vivian que a
+          venda que ela acabou de receber não foi cobrada. */}
+      {!naLoja && (
+        <p className="aviso-exemplo">
+          {daLoja.length > 0 ? (
+            <>
+              <strong>
+                {daLoja.length === 1
+                  ? 'O pedido marcado como “feito agora na loja” veio de uma compra sua'
+                  : `Os ${daLoja.length} pedidos marcados como “feito agora na loja” vieram de compras suas`}
+              </strong>{' '}
+              nesta demonstração. Nada foi cobrado, e eles ficam guardados só neste navegador. Os
+              outros são exemplos, com nomes que não são de pessoas reais.
+            </>
+          ) : (
+            <>
+              <strong>Estes pedidos são de exemplo</strong>, para mostrar como a tela se comporta em
+              cada situação. Os nomes não são de pessoas reais.
+            </>
+          )}
+        </p>
+      )}
     </div>
   );
 };
