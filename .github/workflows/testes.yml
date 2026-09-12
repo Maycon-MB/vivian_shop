@@ -104,6 +104,16 @@ jobs:
           # O token do Melhor Envio vive dentro daquela função e nunca sai
           # de lá, porque quem o tem compra etiqueta na conta dela.
           NEXT_PUBLIC_MELHORENVIO_ATIVO: ${{ vars.NEXT_PUBLIC_MELHORENVIO_ATIVO }}
+          # Diz à loja que os avisos por e-mail saem de verdade. Também não
+          # é segredo: a chave do Resend vive nos segredos da função e nunca
+          # sai do servidor.
+          #
+          # Faltava aqui e nas variáveis do repositório desde 25/08, que é
+          # quando o e-mail passou a funcionar. O efeito ficou na cara de
+          # quem compra: `estaTudoReal` nunca fechava, e a primeira linha
+          # da loja dizia "alguns avisos por e-mail ainda não são
+          # enviados" por dezoito dias, sobre um serviço que funcionava.
+          NEXT_PUBLIC_EMAIL_ATIVO: ${{ vars.NEXT_PUBLIC_EMAIL_ATIVO }}
 
       # Onde a loja mora muda com a variável DOMINIO_PRONTO, e os testes
       # precisam bater no mesmo caminho que a publicação montou. Calcular
