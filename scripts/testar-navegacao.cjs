@@ -350,10 +350,50 @@ const conferir = async (nome, fn) => {
   })
 
   await conferirDaDona('a busca de pedidos filtra', async () => {
-    await pagina.getByLabel('Buscar pedido').fill('caneca')
+    /* O termo sai de um pedido que está na tela, e não de um nome escrito
+       aqui dentro.
+
+       Até 12/09 este teste procurava "caneca" e exigia exatamente 1
+       resultado. "Caneca" era um pedido de exemplo do painel; quando os
+       exemplos deixaram de aparecer com a loja no ar, a busca passou a
+       achar zero e o teste acusou a tela por um defeito que era dele.
+
+       É o mesmo erro já cometido mais abaixo com
+       /produto/caneca-personalizada: valor esperado escrito à mão a partir
+       do meu mostruário. O que se prova aqui é que a busca filtra, e não
+       que exista um pedido de caneca. */
+    const campo = pagina.getByLabel('Buscar pedido')
+
+    await campo.fill('')
+    await pagina.getByRole('button', { name: /^Todos/ }).click()
     await pagina.waitForTimeout(500)
-    const itens = await pagina.locator('.pedido').count()
-    if (itens !== 1) throw new Error(`busca por "caneca" devia achar 1, achou ${itens}`)
+
+    const todos = await pagina.locator('.pedido').count()
+
+    // Loja sem venda nenhuma não tem o que filtrar, e passar direto é
+    // melhor do que reprovar por falta de dado. Igual ao teste do filtro.
+    if (todos === 0) return
+
+    const numero = (await pagina.locator('.pedido-numero').first().textContent())
+      .replace('#', '')
+      .trim()
+
+    await campo.fill(numero)
+    await pagina.waitForTimeout(500)
+    const achados = await pagina.locator('.pedido').count()
+    if (achados < 1) {
+      throw new Error(`busca pelo número ${numero} devia achar o próprio pedido, achou ${achados}`)
+    }
+
+    /* E o outro lado: termo que não existe tem que esvaziar a lista. Sem
+       isto, uma busca quebrada que ignorasse o termo passaria no teste de
+       cima. */
+    await campo.fill('zzzz-nao-existe-zzzz')
+    await pagina.waitForTimeout(500)
+    const nenhum = await pagina.locator('.pedido').count()
+    if (nenhum !== 0) throw new Error(`busca sem resultado devia esvaziar, sobraram ${nenhum}`)
+
+    await campo.fill('')
   })
 
   await conferirDaDona('a barra lateral recolhe', async () => {
