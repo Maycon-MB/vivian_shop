@@ -623,6 +623,30 @@ const conferir = async (nome, fn) => {
     }
   })
 
+  await conferir('a aba do navegador mostra a marca dela, e não a do Next', async () => {
+    /* O ícone padrão do Next.js, círculo preto com triângulo branco, ficou
+       na aba da loja dela do primeiro commit até 12/09. Passou por todo
+       build, todo teste e toda conferida, porque ninguém olha a aba.
+
+       O que se confere aqui é a identidade do arquivo, e não o desenho:
+       se alguém apagar `loja/src/app/favicon.ico`, o Next repõe o dele
+       sozinho e a marca some sem erro nenhum. */
+    const PADRAO_DO_NEXT = 'c30c7d42707a47a3f4591831641e50dc'
+
+    const r = await paginaAtual.request.get(`${BASE}/favicon.ico`)
+    if (!r.ok()) throw new Error(`favicon respondeu ${r.status()}`)
+
+    const bytes = await r.body()
+    const soma = require('node:crypto').createHash('md5').update(bytes).digest('hex')
+
+    if (soma === PADRAO_DO_NEXT) {
+      throw new Error('a aba está com o ícone padrão do Next.js, e não com a marca da loja')
+    }
+    if (bytes.length < 500) {
+      throw new Error(`favicon com ${bytes.length} bytes, pequeno demais para ser ícone`)
+    }
+  })
+
   await conferir('endereço antigo redireciona para o novo', async () => {
     // Dois saltos: /loja/painel é do tempo do protótipo em Vite, e
     // /painel é de antes de a área dela ganhar lugar próprio, em 24/08.
