@@ -1,9 +1,37 @@
 import React from 'react'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import AbaRelatorios from './AbaRelatorios'
+/* Quem decide se os pedidos de exemplo entram na conta. Começa desligado
+   porque a maior parte deste arquivo descreve a demonstração, onde eles
+   existem de propósito. */
+const temBanco = vi.fn(() => false)
+
+vi.mock('@/servicos/autenticacao', () => ({
+  temBanco: () => temBanco(),
+}))
+
+const carregarPedidosDaLoja = vi.fn()
+
+vi.mock('./pedidosDaLoja', () => ({
+  carregarPedidosDaLoja: () => carregarPedidosDaLoja(),
+}))
+
+/* O cartão de visitas mora dentro desta tela e fala com o Supabase assim
+   que monta. Sem isto, todo teste daqui dependeria da rede, e com o banco
+   ligado ele derrubava a suíte por um vizinho que não está sob teste. */
+vi.mock('@/dados/visitasNoBanco', () => ({
+  movimentoDaLoja: async () => null,
+}))
+
+const { default: AbaRelatorios } = await import('./AbaRelatorios')
+
+beforeEach(() => {
+  vi.clearAllMocks()
+  temBanco.mockReturnValue(false)
+  carregarPedidosDaLoja.mockResolvedValue([])
+})
 
 /**
  * O relatório é onde um número plausível e errado faz mais estrago.
@@ -90,5 +118,61 @@ describe('aba de relatórios', () => {
 
     const linhas = await screen.findByText(/Pedagógica:/)
     expect(within(linhas.parentElement as HTMLElement).queryByText(/\b1 pedidos\b/)).toBeNull()
+  })
+})
+
+/**
+ * Com a loja vendendo de verdade, o relatório é dinheiro dela.
+ *
+ * Estes números não são decoração: é com eles que ela decide preço, se
+ * continua pagando o fixo e se volta para um marketplace. Receita inflada
+ * por pedido inventado empurra todas essas decisões para o lado errado, e
+ * o erro só aparece meses depois, no extrato.
+ */
+describe('aba de relatórios, com a loja no ar', () => {
+  beforeEach(() => {
+    temBanco.mockReturnValue(true)
+  })
+
+  it('não soma pedido de exemplo no faturamento', async () => {
+    carregarPedidosDaLoja.mockResolvedValue([
+      {
+        id: '0012',
+        estado: 'producao',
+        linha: 'personalizada',
+        cliente: 'Marina Alves',
+        itens: [{ nome: 'Caderno personalizado', quantidade: 10, preco: 32 }],
+        subtotal: 320,
+        frete: 28.9,
+        criadoEmISO: new Date().toISOString(),
+      },
+    ])
+
+    render(<AbaRelatorios />)
+
+    const receita = await screen.findByText('O que é seu')
+    const bloco = receita.parentElement as HTMLElement
+
+    // Uma venda de R$ 320. Os sete exemplos somam milhares; se entrarem,
+    // este número não é 320.
+    expect(within(bloco).getByText(/320,00/)).toBeInTheDocument()
+    expect(within(bloco).getByText(/1 pedido/)).toBeInTheDocument()
+  })
+
+  it('não avisa sobre exemplo, porque não há exemplo nenhum', async () => {
+    carregarPedidosDaLoja.mockResolvedValue([])
+
+    render(<AbaRelatorios />)
+
+    await screen.findByText('Nenhuma venda este mês')
+    expect(screen.queryByText(/incluem os pedidos de exemplo/)).toBeNull()
+  })
+
+  it('diz que não houve venda em vez de mostrar receita inventada', async () => {
+    carregarPedidosDaLoja.mockResolvedValue([])
+
+    render(<AbaRelatorios />)
+
+    expect(await screen.findByText('Nenhuma venda este mês')).toBeInTheDocument()
   })
 })

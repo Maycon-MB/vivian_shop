@@ -7,6 +7,7 @@ import InfoBotao from './InfoBotao';
 import { emReais } from './graficos';
 import { PEDIDOS, criadoEmDe } from './dadosPedidos';
 import { carregarPedidosDaLoja } from './pedidosDaLoja';
+import { temBanco } from '@/servicos/autenticacao';
 import MovimentoDaLoja from './MovimentoDaLoja';
 import {
   fecharOMes,
@@ -59,12 +60,18 @@ const AbaRelatorios = () => {
     carregarPedidosDaLoja().then(setDaLoja);
   }, []);
 
+  /* Com a loja no ar, faturamento, ticket médio, fila de produção e a
+     comparação com o Elo7 saem só das vendas dela. Somar exemplo aqui é
+     o erro mais caro desta tela: ela decide preço e anunciar ou não em
+     cima de receita que nunca entrou. */
+  const naLoja = temBanco();
+
   const pedidos = useMemo(
     () => [
       ...daLoja.map((p) => ({ ...p, criadoEm: p.criadoEmISO ?? new Date().toISOString() })),
-      ...PEDIDOS.map((p) => ({ ...p, criadoEm: criadoEmDe(p) })),
+      ...(naLoja ? [] : PEDIDOS.map((p) => ({ ...p, criadoEm: criadoEmDe(p) }))),
     ],
-    [daLoja],
+    [daLoja, naLoja],
   );
 
   /* Só os pedidos de verdade, e não os de demonstração.
@@ -282,11 +289,13 @@ const AbaRelatorios = () => {
             )}
           </section>
 
-          <p className="aviso-exemplo">
-            <Info size={15} />{' '}
-            <strong>Estes números incluem os pedidos de exemplo.</strong> Quando a loja abrir de
-            verdade, só as suas vendas entram na conta.
-          </p>
+          {!naLoja && (
+            <p className="aviso-exemplo">
+              <Info size={15} />{' '}
+              <strong>Estes números incluem os pedidos de exemplo.</strong> Quando a loja abrir
+              de verdade, só as suas vendas entram na conta.
+            </p>
+          )}
         </>
       )}
     </div>
