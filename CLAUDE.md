@@ -32,6 +32,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Backup das fotos | **diário**, 684 arquivos versionados no git; sem cifra, porque já são públicas |
 | Painel: configurações da loja | **salva de verdade**: nome, frase, contato, CEP de origem e padrões de produto novo |
 | Aviso de venda | **por e-mail**, quando o pagamento é aprovado |
+| Dado de exemplo no painel | **fora do ar** quando a loja está ligada; só sobra na demonstração |
 
 **O que ainda não está pronto**, e o documento já chegou a dizer que
 estava:
@@ -78,6 +79,9 @@ Como o contrato é assinado, de graça e pelo gov.br:
 
 Por que toda tela que grava tem que conferir as linhas alteradas:
 [docs/as-telas-que-salvam.md](docs/as-telas-que-salvam.md).
+
+Por que o painel mostrava dado de exemplo, e por que ele não zerava
+sozinho: [docs/o-painel-para-de-mentir.md](docs/o-painel-para-de-mentir.md).
 
 ---
 

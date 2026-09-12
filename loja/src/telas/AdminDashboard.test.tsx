@@ -1,8 +1,8 @@
 import React from 'react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import AdminDashboard from './AdminDashboard'
+
 
 /**
  * O painel dela monta.
@@ -30,8 +30,10 @@ import AdminDashboard from './AdminDashboard'
  * interessa.
  */
 
+const temBanco = vi.fn(() => false)
+
 vi.mock('@/servicos/autenticacao', () => ({
-  temBanco: () => false,
+  temBanco: () => temBanco(),
   donaDaVez: async () => null,
 }))
 
@@ -41,6 +43,17 @@ vi.mock('./painel/GraficosVisaoGeral', () => ({
   ProporcaoLinhas: () => <div />,
   MaisVendidos: () => <div />,
 }))
+
+/* O cartão de visitas fala com o Supabase assim que monta. */
+vi.mock('@/dados/visitasNoBanco', () => ({
+  movimentoDaLoja: async () => null,
+}))
+
+const { default: AdminDashboard } = await import('./AdminDashboard')
+
+beforeEach(() => {
+  temBanco.mockReturnValue(false)
+})
 
 describe('o painel da Vivian', () => {
   it('monta sem estourar', () => {
@@ -75,5 +88,74 @@ describe('o painel da Vivian', () => {
     cartoes.forEach((cartao) => {
       expect(cartao.querySelector('.selo-exemplo')).not.toBeNull()
     })
+  })
+})
+
+/**
+ * A Visão Geral com a loja no ar.
+ *
+ * Esta é a primeira tela que ela vê ao entrar, e até 12/09 ela era
+ * inteira de mentira: quatro números de mostruário, gráficos de vendas
+ * que nunca aconteceram, uma fila de produção inventada e uma tabela de
+ * pedidos de gente que não existe. O selo "exemplo" ajudava, mas selo em
+ * tela inteira não resolve, foi o que fez a Vivian perguntar se aquilo
+ * ia zerar quando entrasse venda de verdade.
+ *
+ * Não ia. Nada daquilo está no banco dela, que tem zero pedidos: está
+ * escrito no código. A regra passa a ser a mesma do resto do painel, com
+ * banco ligado não se mostra número inventado, mostra-se o que há.
+ *
+ * Os dois botões que mentiam saem junto, e são o pior pedaço. "Lançar
+ * venda" fabricava um pedido de R$ 150 com número sorteado e dizia
+ * "registrada com sucesso", sem gravar nada em lugar nenhum. "Agendar"
+ * dizia que o post tinha ido para o Instagram dela. Tela que confirma o
+ * que não fez é pior do que botão que não faz nada, porque ela para de
+ * conferir.
+ */
+describe('a visão geral, com a loja no ar', () => {
+  beforeEach(() => {
+    temBanco.mockReturnValue(true)
+  })
+
+  it('não mostra número de mostruário nenhum', () => {
+    const { container } = render(<AdminDashboard />)
+
+    expect(container.querySelectorAll('.kpi-card').length).toBe(0)
+    expect(container.querySelectorAll('.selo-exemplo').length).toBe(0)
+    expect(screen.queryByText(/16\.768/)).toBeNull()
+  })
+
+  it('não oferece lançar venda, que não gravava nada', () => {
+    render(<AdminDashboard />)
+
+    expect(screen.queryByRole('button', { name: /Lançar venda/ })).toBeNull()
+  })
+
+  it('não oferece agendar post, que não ia para o Instagram', () => {
+    render(<AdminDashboard />)
+
+    expect(screen.queryByText(/Post sugerido/)).toBeNull()
+  })
+
+  it('diz que ainda não houve venda, em vez de inventar uma', () => {
+    render(<AdminDashboard />)
+
+    expect(screen.getByText(/Nenhuma venda ainda/)).toBeInTheDocument()
+  })
+
+  it('mostra o movimento da loja, que é dado de verdade', () => {
+    render(<AdminDashboard />)
+
+    // A contagem de visita já está no ar e é medida real: é a única coisa
+    // que esta tela tem para contar antes da primeira venda.
+    expect(screen.getByText('Quem entrou na loja')).toBeInTheDocument()
+  })
+
+  it('continua deixando ela abrir a loja e cadastrar produto', () => {
+    render(<AdminDashboard />)
+
+    // Cortar o que mente não pode cortar o que funciona.
+    expect(screen.getByRole('button', { name: /Novo produto/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Ver a loja/ })).toBeInTheDocument()
   })
 })
