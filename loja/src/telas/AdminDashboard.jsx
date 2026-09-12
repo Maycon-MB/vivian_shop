@@ -33,6 +33,7 @@ import AbaConfiguracoes from './painel/AbaConfiguracoes';
 import AbaRelatorios from './painel/AbaRelatorios';
 import { VendasPorDia, ProporcaoLinhas, MaisVendidos } from './painel/GraficosVisaoGeral';
 import FilaProducao from './painel/FilaProducao';
+import MovimentoDaLoja from './painel/MovimentoDaLoja';
 import './painel.css';
 import './painel-abas.css';
 import { BASE } from '../base'
@@ -148,6 +149,13 @@ const AdminDashboard = () => {
    * painel sem explicação vira enfeite: ela olha, não entende, e volta a
    * controlar tudo no caderno.
    */
+  /* Com a loja no ar, a Visão Geral pára de mostrar mostruário.
+     Nada do que está abaixo vem do banco: são números escritos aqui, de
+     quando a loja ainda não vendia e a tela não podia ficar vazia. Eles
+     não somem sozinhos quando entra venda de verdade, e foi isso que a
+     Vivian perguntou em 12/09. */
+  const naLoja = temBanco();
+
   const indicadores = [
     {
       rotulo: 'Esperando você',
@@ -232,137 +240,170 @@ const AdminDashboard = () => {
                 <Button onClick={() => (temBanco() ? setActiveTab('catalogo') : setShowNewProduct(true))} variant="outline-dark" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small">
                   <Plus size={16} /> <span className="d-none d-sm-inline">Novo produto</span>
                 </Button>
+                {/* Este botão fabrica um pedido de R$ 150 com número sorteado
+                    e responde "venda manual registrada com sucesso", sem
+                    gravar linha nenhuma. Com a loja no ar isso é a pior
+                    coisa que a tela pode fazer: ela lança a venda do
+                    WhatsApp, lê o visto verde, e o pedido não existe. */}
+                {!naLoja && (
                 <Button onClick={() => setShowManualSale(true)} variant="outline-primary" className="px-3 rounded-pill fw-bold d-flex align-items-center gap-2 small" style={{ color: 'var(--color-chalk)', borderColor: 'var(--color-chalk)' }}>
                   <CheckCircle size={16} /> <span className="d-none d-sm-inline">Lançar venda</span>
                 </Button>
+                )}
                 <Button onClick={() => window.open(BASE, '_blank', 'noopener')} variant="primary" className="px-3 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2 small" style={{ backgroundColor: 'var(--color-chalk)', borderColor: 'var(--color-chalk)' }}>
                   <Eye size={16} /> <span className="d-none d-sm-inline">Ver a loja</span>
                 </Button>
               </div>
             </header>
 
-            {/* Grid de 12 colunas: 4 números lado a lado no computador,
-                2 no tablet, 1 no celular. */}
-            <Row className="g-3 mb-4">
-              {indicadores.map((indicador, i) => (
-                <Col xxl={3} lg={6} key={indicador.rotulo}>
-                  <CartaoKpi {...indicador} atraso={i * 60} />
-                </Col>
-              ))}
-            </Row>
+            {naLoja ? (
+              /* Coluna flex, como em Relatórios. Sem ela o cartão de visitas
+                 estica e empurra o resto para fora da tela. */
+              <div className="d-flex flex-column gap-3">
+                {/* O único número de verdade que esta tela tem antes da
+                    primeira venda: a contagem de visita, que já está no ar. */}
+                <MovimentoDaLoja pedidos={[]} />
 
-            <Row className="g-3 mb-3">
-              <Col xxl={8}>
                 <CartaoPainel
-                  titulo="Quanto entrou por dia"
-                  subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
+                  titulo="Nenhuma venda ainda"
+                  subtitulo="A loja está no ar e recebendo visita."
                   cor="var(--color-chalk)"
-                  info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais, dá para postar no Instagram justamente nesse dia."
-                  acao={
-                    <span className="d-flex align-items-center gap-3">
-                      <span className="d-flex gap-3 small fw-bold" style={{ color: 'var(--color-ink-soft)' }}>
-                        <span className="d-flex align-items-center gap-1">
-                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-chalk)' }} />
-                          Personalizada
+                >
+                  {/* Sem venda, a escolha é entre tela vazia e número
+                      inventado. Tela vazia ela desconfia uma vez; número
+                      inventado ela só descobre no extrato. */}
+                  <p className="text-muted mb-0">
+                    Assim que a primeira compra entrar, o resumo do mês, a fila do que produzir
+                    e os pedidos aparecem aqui sozinhos. Até lá você não precisa fazer nada
+                    nesta tela.
+                  </p>
+                </CartaoPainel>
+              </div>
+            ) : (
+              <>
+              {/* Grid de 12 colunas: 4 números lado a lado no computador,
+                  2 no tablet, 1 no celular. */}
+              <Row className="g-3 mb-4">
+                {indicadores.map((indicador, i) => (
+                  <Col xxl={3} lg={6} key={indicador.rotulo}>
+                    <CartaoKpi {...indicador} atraso={i * 60} />
+                  </Col>
+                ))}
+              </Row>
+
+              <Row className="g-3 mb-3">
+                <Col xxl={8}>
+                  <CartaoPainel
+                    titulo="Quanto entrou por dia"
+                    subtitulo="Escolha o período, ou veja em que dias da semana você mais vende."
+                    cor="var(--color-chalk)"
+                    info="Serve para ver se a loja está crescendo ou parando, e para descobrir em que dia da semana você vende mais, dá para postar no Instagram justamente nesse dia."
+                    acao={
+                      <span className="d-flex align-items-center gap-3">
+                        <span className="d-flex gap-3 small fw-bold" style={{ color: 'var(--color-ink-soft)' }}>
+                          <span className="d-flex align-items-center gap-1">
+                            <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-chalk)' }} />
+                            Personalizada
+                          </span>
+                          <span className="d-flex align-items-center gap-1">
+                            <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-marker)' }} />
+                            Pedagógica
+                          </span>
                         </span>
-                        <span className="d-flex align-items-center gap-1">
-                          <span style={{ width: 9, height: 9, borderRadius: '50%', background: 'var(--color-marker)' }} />
-                          Pedagógica
-                        </span>
+                        <span className="selo-exemplo">exemplo</span>
                       </span>
-                      <span className="selo-exemplo">exemplo</span>
-                    </span>
-                  }
-                >
-                  <VendasPorDia />
-                </CartaoPainel>
-              </Col>
+                    }
+                  >
+                    <VendasPorDia />
+                  </CartaoPainel>
+                </Col>
 
-              <Col xxl={4}>
-                <CartaoPainel
-                  titulo="De onde vem o dinheiro"
-                  subtitulo="Peso de cada linha no mês."
-                  cor="var(--color-marker)"
-                  info="A linha pedagógica é digital: não tem frete nem produção, então quase tudo que entra ali é lucro. Se ela crescer, você trabalha menos para ganhar o mesmo."
-                  acao={<span className="selo-exemplo">exemplo</span>}
-                >
-                  <ProporcaoLinhas />
-                </CartaoPainel>
-              </Col>
-            </Row>
+                <Col xxl={4}>
+                  <CartaoPainel
+                    titulo="De onde vem o dinheiro"
+                    subtitulo="Peso de cada linha no mês."
+                    cor="var(--color-marker)"
+                    info="A linha pedagógica é digital: não tem frete nem produção, então quase tudo que entra ali é lucro. Se ela crescer, você trabalha menos para ganhar o mesmo."
+                    acao={<span className="selo-exemplo">exemplo</span>}
+                  >
+                    <ProporcaoLinhas />
+                  </CartaoPainel>
+                </Col>
+              </Row>
 
-            <Row className="g-3 mb-3">
-              <Col xxl={4} lg={6}>
-                <CartaoPainel
-                  titulo="Na sua bancada"
-                  subtitulo="O que produzir primeiro."
-                  cor="var(--color-heart)"
-                  info="A barra mostra quanto do prazo combinado já passou, não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
-                  acao={<span className="selo-exemplo">exemplo</span>}
-                >
-                  <FilaProducao />
-                </CartaoPainel>
-              </Col>
+              <Row className="g-3 mb-3">
+                <Col xxl={4} lg={6}>
+                  <CartaoPainel
+                    titulo="Na sua bancada"
+                    subtitulo="O que produzir primeiro."
+                    cor="var(--color-heart)"
+                    info="A barra mostra quanto do prazo combinado já passou, não quanto do trabalho está feito. Vermelho é pedido que passou do prazo."
+                    acao={<span className="selo-exemplo">exemplo</span>}
+                  >
+                    <FilaProducao />
+                  </CartaoPainel>
+                </Col>
 
-              <Col xxl={4} lg={6}>
-                <CartaoPainel
-                  titulo="O que mais sai"
-                  subtitulo="Unidades vendidas no mês."
-                  cor="var(--color-ink)"
-                  info="Use para decidir o que vale ter pronto e o que fotografar melhor. Produto que quase não aparece aqui talvez precise de foto nova, não de desconto."
-                  acao={<span className="selo-exemplo">exemplo</span>}
-                >
-                  <MaisVendidos />
-                </CartaoPainel>
-              </Col>
+                <Col xxl={4} lg={6}>
+                  <CartaoPainel
+                    titulo="O que mais sai"
+                    subtitulo="Unidades vendidas no mês."
+                    cor="var(--color-ink)"
+                    info="Use para decidir o que vale ter pronto e o que fotografar melhor. Produto que quase não aparece aqui talvez precise de foto nova, não de desconto."
+                    acao={<span className="selo-exemplo">exemplo</span>}
+                  >
+                    <MaisVendidos />
+                  </CartaoPainel>
+                </Col>
 
-              <Col xxl={4}>
-                <CartaoPainel
-                  titulo="Marketing"
-                  subtitulo="Post sugerido para esta semana."
-                  cor="var(--color-chalk)"
-                  info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda, nada vai para o seu Instagram sem você aprovar."
-                  semPadding
-                >
-                  <MarketingIA approving={approving} onApprove={handleApprovePost} />
-                </CartaoPainel>
-              </Col>
-            </Row>
+                <Col xxl={4}>
+                  <CartaoPainel
+                    titulo="Marketing"
+                    subtitulo="Post sugerido para esta semana."
+                    cor="var(--color-chalk)"
+                    info="A sugestão sai do que você já vendeu. Você lê, ajusta o texto se quiser, e agenda, nada vai para o seu Instagram sem você aprovar."
+                    semPadding
+                  >
+                    <MarketingIA approving={approving} onApprove={handleApprovePost} />
+                  </CartaoPainel>
+                </Col>
+              </Row>
 
-            <Row className="g-3 mb-3">
-              <Col xs={12}>
-                <CartaoPainel
-                  titulo="Para despachar"
-                  subtitulo="Etiqueta e declaração de conteúdo saem juntas, prontas para imprimir."
-                  cor="var(--color-marker)"
-                  info="A declaração vale para Correios e Jadlog: como você é MEI, ela substitui a nota fiscal no transporte."
-                  semPadding
-                >
-                  <LogisticsCard onShowLabel={() => setShowLabelPreview(true)} />
-                </CartaoPainel>
-              </Col>
-            </Row>
+              <Row className="g-3 mb-3">
+                <Col xs={12}>
+                  <CartaoPainel
+                    titulo="Para despachar"
+                    subtitulo="Etiqueta e declaração de conteúdo saem juntas, prontas para imprimir."
+                    cor="var(--color-marker)"
+                    info="A declaração vale para Correios e Jadlog: como você é MEI, ela substitui a nota fiscal no transporte."
+                    semPadding
+                  >
+                    <LogisticsCard onShowLabel={() => setShowLabelPreview(true)} />
+                  </CartaoPainel>
+                </Col>
+              </Row>
 
-            <Row className="g-3">
-              <Col xs={12}>
-                <CartaoPainel
-                  titulo="Últimos pedidos"
-                  subtitulo="O que precisa de você aparece primeiro."
-                  cor="var(--color-chalk)"
-                  info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho, sem você fazer nada."
-                  acao={
-                    <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
-                      Ver todos os pedidos
-                    </button>
-                  }
-                >
-                  <div className="table-responsive">
-                    <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
-                  </div>
-                </CartaoPainel>
-              </Col>
-            </Row>
-
+              <Row className="g-3">
+                <Col xs={12}>
+                  <CartaoPainel
+                    titulo="Últimos pedidos"
+                    subtitulo="O que precisa de você aparece primeiro."
+                    cor="var(--color-chalk)"
+                    info="Pedido em produção está com você. Pronto para envio espera a etiqueta. Pedido digital já foi entregue sozinho, sem você fazer nada."
+                    acao={
+                      <button type="button" className="painel-card-acao" onClick={() => setActiveTab('pedidos')}>
+                        Ver todos os pedidos
+                      </button>
+                    }
+                  >
+                    <div className="table-responsive">
+                      <OrderTable orders={orders} onSelectOrder={setSelectedOrder} />
+                    </div>
+                  </CartaoPainel>
+                </Col>
+              </Row>
+              </>
+            )}
           </>
         )}
 
