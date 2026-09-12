@@ -123,6 +123,48 @@ desconfia uma vez e pergunta; número inventado ela só descobre no extrato.
 
 ---
 
+## Por que a chave é `temBanco()`, e não "já tem venda"
+
+A alternativa óbvia, e o Maycon levantou ela na hora: deixar o mostruário
+no ar enquanto não houvesse venda nenhuma, e trocar pelo dado de verdade
+quando a primeira entrasse. Parece melhor — a tela nunca fica vazia, e a
+demonstração vive até o último minuto em que ainda é útil.
+
+Foi descartada por três motivos, em ordem de peso.
+
+**A troca cairia no pior dia possível.** Com a chave em "já tem venda", a
+primeira compra faria a tela pular de "R$ 16.768 este mês" para "R$ 320".
+No dia mais importante do projeto ela leria que perdeu dinheiro, ou que
+alguma coisa quebrou. Com a chave em `temBanco()`, o pulo é de "nenhuma
+venda ainda" para "R$ 320", que é exatamente o que aconteceu na vida dela.
+
+**Painel cheio esconde falha; painel vazio denuncia.** Se uma cliente
+comprar e o pedido não chegar a ser gravado, com mostruário no ar a tela
+continua movimentada e ninguém nota. É a mesma classe do `notification_url`
+vazio descrita em
+[a-primeira-compra-de-verdade.md](a-primeira-compra-de-verdade.md): o pagamento
+aprova, o dinheiro entra, e o painel segue dizendo o que dizia antes. Zero
+na tela é um sinal que funciona; número bonito não é sinal de nada.
+
+**O dado de exemplo já tinha cumprido a função.** Ele existe para ela
+julgar o desenho antes de existir banco. A loja cobra de verdade desde
+agosto: o painel deixou de ser folheto e virou instrumento, e instrumento
+que marca número inventado é pior do que instrumento marcando zero.
+
+O custo dessa escolha é real e não vale esconder: ela perde a sensação de
+painel farto, e tela vazia desanima. Foi por isso que o lugar dos quatro
+números falsos não ficou em branco, e sim com a contagem de visita, que é
+medida de verdade e diz uma coisa que o mostruário estava escondendo dela:
+entrou gente e ninguém comprou.
+
+Se um dia a demonstração fizer falta, o caminho combinado é um botão em
+Configurações, "ver como o painel fica quando estiver vendendo", que liga
+o mostruário de propósito e com tarja. A diferença não é técnica, é de
+quem aperta a chave: ela sabendo, e não ela achando que são os números
+dela. Ficou fora por ora, por decisão de 12/09.
+
+---
+
 ## O que isto ensinou
 
 **Dado de exemplo precisa nascer com a saída escrita.** Quem coloca
