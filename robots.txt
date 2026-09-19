@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /minha-conta/
+Disallow: /pedido-confirmado/
+Disallow: /avaliar/
+Disallow: /baixar/
+
+Sitemap: https://feitoparavocepapelaria.com.br/sitemap.xml
