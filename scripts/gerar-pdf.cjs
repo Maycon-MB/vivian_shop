@@ -456,6 +456,7 @@ const DOCUMENTOS = [
   ['docs/entrega-do-material-digital.md', 'Como entregar o material digital'],
   ['docs/o-elo7-fechou.md', 'O Elo7 fechou - o que muda'],
   ['docs/o-cnpj-e-o-cnae.md', 'O CNPJ e o CNAE - o que verificar'],
+  ['docs/como-trazer-clientes.md', 'Como trazer clientes para a sua loja'],
 ]
 
 ;(async () => {
