@@ -8,6 +8,10 @@ ponto em que a loja própria é **pior** que o marketplace.
 
 Registro meu. Não vira PDF.
 
+A versão para ela, com preço de cada caminho e o anúncio explicado passo a
+passo, é [como-trazer-clientes.md](como-trazer-clientes.md). Os dois
+pré-requisitos da "ordem certa" abaixo, pagamento e medição, já estão no ar.
+
 ---
 
 ## O que ela está perdendo ao sair do Elo7

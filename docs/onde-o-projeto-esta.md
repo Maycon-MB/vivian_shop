@@ -102,6 +102,11 @@ O que sobra dela aqui é uma linha só: **marcar o link do anúncio com
 `?origem=anuncio`**, senão o clique pago aparece misturado com o alcance
 do post.
 
+**A divulgação** é o que falta para a primeira venda. Em 25/09 ela contou
+que ninguém comprou; a loja cobra, mas ninguém foi chamado para ela. O que
+custa cada caminho, e o anúncio do Meta explicado em detalhe, estão em
+[como-trazer-clientes.md](como-trazer-clientes.md), que foi para ela em PDF.
+
 **Como ela recebe.** Parcelas, juros e desconto no Pix já estão na tela
 dela, em "Como eu recebo". Nasce à vista e sem desconto de propósito: um
 padrão que parcelasse sozinho estaria decidindo por ela o que sai do

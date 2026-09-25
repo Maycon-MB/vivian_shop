@@ -41,6 +41,7 @@ estava:
 | O quê | Estado |
 |---|---|
 | A assinatura do contrato | **feita pelos dois**, ela devolveu em 07/09. Falta só conferir as duas em `validar.iti.gov.br`. Ver [docs/assinar-o-contrato.md](docs/assinar-o-contrato.md) |
+| Divulgação | **nenhuma ainda**. Em 25/09 ela relatou zero venda: a loja cobra, mas ninguém foi chamado para ela. O documento com preço de cada caminho foi para ela em PDF ([docs/como-trazer-clientes.md](docs/como-trazer-clientes.md)) |
 | A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
 | A conta sobrando no Supabase Auth | é a Vivian com dois logins de dona, não uma conta órfã. Precisa perguntar a ela qual usa |
 | A restauração do backup | **nunca foi testada**: falta slot de projeto Free para restaurar dentro |
@@ -83,6 +84,10 @@ Por que toda tela que grava tem que conferir as linhas alteradas:
 
 Por que o painel mostrava dado de exemplo, e por que ele não zerava
 sozinho: [docs/o-painel-para-de-mentir.md](docs/o-painel-para-de-mentir.md).
+
+Como trazer clientes, com o preço de cada caminho e o tráfego pago explicado
+para ela: [docs/como-trazer-clientes.md](docs/como-trazer-clientes.md). Vira PDF com
+`node scripts/gerar-pdf.cjs docs/como-trazer-clientes.md "Como trazer clientes para a sua loja"`.
 
 ---
 
