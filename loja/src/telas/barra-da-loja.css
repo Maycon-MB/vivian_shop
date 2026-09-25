@@ -1,0 +1,72 @@
+/* Presa no topo ao rolar, logo abaixo das faixas de aviso, que são fixas. */
+.barra-da-loja {
+  position: sticky;
+  top: var(--faixas, 0);
+  z-index: 1050;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(123, 30, 75, .12);
+}
+
+/* A mesma largura do conteúdo das páginas, para a marca alinhar com o título. */
+.barra-da-loja-conteudo {
+  max-width: 1184px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.barra-da-loja-marca {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(16px, 4.4vw, 22px);
+  line-height: 1.15;
+  color: var(--color-ink);
+  text-decoration: none;
+  min-width: 0;
+}
+
+.barra-da-loja-marca span { color: var(--color-chalk); }
+
+.barra-da-loja-acoes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* 44px é o alvo mínimo de toque; os ícones sozinhos teriam 20. */
+.barra-da-loja-acoes a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.barra-da-loja-acoes a:hover { background: rgba(123, 30, 75, .06); }
+
+.barra-da-loja-acoes a:focus-visible {
+  outline: 2px solid var(--color-chalk);
+  outline-offset: 2px;
+}
+
+.barra-da-loja-carrinho .carrinho-conta { top: 2px; right: 0; }
+
+/* A marca e os três ícones somam uns 330px; o rótulo não cabe no celular. */
+@media (max-width: 575.98px) {
+  .barra-da-loja-rotulo { display: none; }
+  .barra-da-loja-marca span { display: block; }
+  .barra-da-loja-acoes a { padding: 0; }
+}

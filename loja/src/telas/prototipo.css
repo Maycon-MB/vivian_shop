@@ -257,58 +257,6 @@ body {
   }
 }
 
-/* Botão Flutuante (Switcher) */
-.view-switcher {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  padding: 8px;
-  border-radius: 50px;
-  display: flex;
-  gap: 8px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.switcher-btn {
-  /* Sem `nowrap`, o sexto item fez "Como funciona" quebrar em duas linhas e
-     a barra inteira crescer para baixo. Cada rótulo ocupa uma linha só; a
-     folga lateral encolheu para caber. */
-  white-space: nowrap;
-  padding: 10px 18px;
-  border-radius: 50px;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.switcher-btn.active {
-  background: var(--pl-dark);
-  color: white;
-}
-
-.switcher-btn:not(.active) {
-  background: transparent;
-  color: var(--pl-dark);
-}
-
-.switcher-btn:hover:not(.active) {
-  background: white;
-}
-
-.switcher-btn:focus-visible {
-  outline: 2px solid var(--pl-lavender);
-  outline-offset: 2px;
-}
-
 /* Utilitários de Responsividade */
 @media (max-width: 991px) {
   .desktop-only { display: none !important; }
@@ -325,24 +273,6 @@ body {
 
 @media (min-width: 992px) {
   .mobile-only { display: none !important; }
-}
-
-@media (max-width: 767px) {
-  .view-switcher {
-    bottom: 16px;
-    padding: 6px;
-    gap: 4px;
-    width: 90%;
-    max-width: 350px;
-    left: 50%;
-    transform: translateX(-50%);
-    justify-content: center;
-  }
-
-  .switcher-btn {
-    padding: 8px 12px;
-    font-size: 9px;
-  }
 }
 
 /* Sidebar Responsive */
@@ -481,43 +411,6 @@ body {
 }
 
 @media (max-width: 767px) {
-  /* A barra que troca entre as áreas do projeto sai do rodapé no celular.
-     Fixa embaixo, ela cobria o fim de cada página durante a rolagem,
-     vazava 110px pela direita e cortava rótulo no meio da palavra. Vira
-     uma faixa no topo, que rola junto com a página e não esconde nada.
-
-     Ela é do protótipo e some quando a loja abrir de verdade — mas
-     enquanto existe, não pode atrapalhar quem está avaliando as telas. */
-  .view-switcher {
-    position: static;
-    transform: none;
-    width: 100%;
-    max-width: none;
-    border-radius: 0;
-    border: 0;
-    border-bottom: 1px solid rgba(18, 48, 91, .12);
-    box-shadow: none;
-    background: rgba(255, 255, 255, .96);
-    padding: 8px 12px;
-    /* Duas linhas em vez de rolagem lateral. Com sete áreas, as três
-       últimas ficavam fora da tela, e nada indicava que a barra rolava —
-       ela simplesmente não saberia que existem. Duas linhas ocupam uns 30
-       pixels a mais e mostram tudo. */
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .view-switcher::-webkit-scrollbar { display: none; }
-
-  .switcher-btn {
-    flex-shrink: 0;
-    padding: 9px 13px;
-    font-size: 10px;
-    white-space: nowrap;
-    min-height: 40px;
-  }
-
   /* Sem barra fixa embaixo, as páginas não precisam mais reservar o
      espaço que ela ocupava. */
   .produto-pagina,
