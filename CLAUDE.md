@@ -42,6 +42,7 @@ estava:
 |---|---|
 | A assinatura do contrato | **feita pelos dois**, ela devolveu em 07/09. Falta só conferir as duas em `validar.iti.gov.br`. Ver [docs/assinar-o-contrato.md](docs/assinar-o-contrato.md) |
 | Divulgação | **nenhuma ainda**. Em 25/09 ela relatou zero venda: a loja cobra, mas ninguém foi chamado para ela. O documento com preço de cada caminho foi para ela em PDF ([docs/como-trazer-clientes.md](docs/como-trazer-clientes.md)). **Ela decidiu não pagar anúncio por enquanto**, sem verba; o caminho são os canais de graça |
+| Google Shopping gratuito | **lista no ar** em `/google-shopping.xml`, 342 produtos, preço conferido contra a página. Falta ela criar a conta no Merchant Center e decidir o frete. Ver [docs/o-google-shopping.md](docs/o-google-shopping.md) |
 | A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
 | A conta sobrando no Supabase Auth | é a Vivian com dois logins de dona, não uma conta órfã. Precisa perguntar a ela qual usa |
 | A restauração do backup | **nunca foi testada**: falta slot de projeto Free para restaurar dentro |
@@ -85,6 +86,9 @@ Por que toda tela que grava tem que conferir as linhas alteradas:
 Por que o painel mostrava dado de exemplo, e por que ele não zerava
 sozinho: [docs/o-painel-para-de-mentir.md](docs/o-painel-para-de-mentir.md).
 
+Como os produtos vão para o Google Shopping sem custo, e o que falta ligar:
+[docs/o-google-shopping.md](docs/o-google-shopping.md).
+
 Como trazer clientes, com o preço de cada caminho e o tráfego pago explicado
 para ela: [docs/como-trazer-clientes.md](docs/como-trazer-clientes.md). Vira PDF com
 `node scripts/gerar-pdf.cjs docs/como-trazer-clientes.md "Como trazer clientes para a sua loja"`.
@@ -95,7 +99,7 @@ para ela: [docs/como-trazer-clientes.md](docs/como-trazer-clientes.md). Vira PDF
 
 ```
 cd loja && npm install
-npm test                      # 870 testes de regra e de tela
+npm test                      # 886 testes de regra e de tela
 npm run build
 
 cd ..
@@ -147,6 +151,11 @@ mapa na mesma publicação. As regras estão em
 porque o script de publicação e o vitest precisam carregar o mesmo
 arquivo. O `verificar-links.cjs` abre os 487 endereços do mapa a cada
 conferência: sitemap apontando para 404 é pior do que sitemap nenhum.
+
+**O `google-shopping.xml` também sai dali**, pelas regras de
+[listaDoGoogleShopping.mjs](loja/src/dominio/listaDoGoogleShopping.mjs). O
+preço vai como o do pedido mínimo (R$ 135, e não R$ 13,50), porque é o que o
+Google exige e o que o botão da página de produto mostra.
 
 As telas da Vivian exigem login. Para rodar os testes de navegação contra
 elas, defina `TESTE_DONA_EMAIL` e `TESTE_DONA_SENHA`; sem isso, elas são

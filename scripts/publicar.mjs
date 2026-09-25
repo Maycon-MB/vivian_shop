@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
 import { montarMapaDoSite, montarRobots } from '../loja/src/dominio/mapaDoSite.mjs'
+import { montarListaDoGoogleShopping } from '../loja/src/dominio/listaDoGoogleShopping.mjs'
 
 const raiz = path.dirname(fileURLToPath(new URL('.', import.meta.url)))
 const dist = path.join(raiz, 'dist')
@@ -126,6 +127,15 @@ writeFileSync(path.join(dist, 'robots.txt'), montarRobots({ base: ENDERECO_DA_LO
 
 const noMapa = (catalogoPublicado.produtos?.length ?? 0) + (catalogoPublicado.temas?.length ?? 0)
 console.log(`  sitemap.xml e robots.txt escritos em ${ENDERECO_DA_LOJA} (${noMapa} páginas de catálogo)`)
+
+/* A lista que o Merchant Center busca todo dia para o Google Shopping
+   gratuito. Sai do mesmo catálogo pelo mesmo motivo do mapa. */
+const listaDoShopping = montarListaDoGoogleShopping({
+  base: ENDERECO_DA_LOJA,
+  catalogo: catalogoPublicado,
+})
+writeFileSync(path.join(dist, 'google-shopping.xml'), listaDoShopping)
+console.log(`  google-shopping.xml escrito (${listaDoShopping.split('<item>').length - 1} produtos)`)
 
 /**
  * O atalho que o Next pede e não exporta.

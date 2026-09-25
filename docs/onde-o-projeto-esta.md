@@ -109,6 +109,8 @@ custa cada caminho, e o anúncio do Meta explicado em detalhe, estão em
 Ela respondeu no mesmo dia: o teste pago de uns R$ 157 fica para depois,
 porque não tem a verba agora. Até lá, só os caminhos de graça: link na bio,
 stories com link de produto, clientes antigas e o Google Shopping gratuito.
+A lista do Google Shopping já está no ar; falta a conta dela no Merchant
+Center ([o-google-shopping.md](o-google-shopping.md)).
 
 **Como ela recebe.** Parcelas, juros e desconto no Pix já estão na tela
 dela, em "Como eu recebo". Nasce à vista e sem desconto de propósito: um
