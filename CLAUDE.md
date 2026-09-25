@@ -41,7 +41,7 @@ estava:
 | O quê | Estado |
 |---|---|
 | A assinatura do contrato | **feita pelos dois**, ela devolveu em 07/09. Falta só conferir as duas em `validar.iti.gov.br`. Ver [docs/assinar-o-contrato.md](docs/assinar-o-contrato.md) |
-| Divulgação | **nenhuma ainda**. Em 25/09 ela relatou zero venda: a loja cobra, mas ninguém foi chamado para ela. O documento com preço de cada caminho foi para ela em PDF ([docs/como-trazer-clientes.md](docs/como-trazer-clientes.md)) |
+| Divulgação | **nenhuma ainda**. Em 25/09 ela relatou zero venda: a loja cobra, mas ninguém foi chamado para ela. O documento com preço de cada caminho foi para ela em PDF ([docs/como-trazer-clientes.md](docs/como-trazer-clientes.md)). **Ela decidiu não pagar anúncio por enquanto**, sem verba; o caminho são os canais de graça |
 | A primeira compra de verdade | **nunca foi feita**. A loja cobra; ninguém comprou. Roteiro em [docs/a-primeira-compra-de-verdade.md](docs/a-primeira-compra-de-verdade.md) |
 | A conta sobrando no Supabase Auth | é a Vivian com dois logins de dona, não uma conta órfã. Precisa perguntar a ela qual usa |
 | A restauração do backup | **nunca foi testada**: falta slot de projeto Free para restaurar dentro |
