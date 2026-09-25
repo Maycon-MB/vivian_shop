@@ -106,6 +106,9 @@ do post.
 que ninguém comprou; a loja cobra, mas ninguém foi chamado para ela. O que
 custa cada caminho, e o anúncio do Meta explicado em detalhe, estão em
 [como-trazer-clientes.md](como-trazer-clientes.md), que foi para ela em PDF.
+Ela respondeu no mesmo dia: o teste pago de uns R$ 157 fica para depois,
+porque não tem a verba agora. Até lá, só os caminhos de graça: link na bio,
+stories com link de produto, clientes antigas e o Google Shopping gratuito.
 
 **Como ela recebe.** Parcelas, juros e desconto no Pix já estão na tela
 dela, em "Como eu recebo". Nasce à vista e sem desconto de propósito: um
