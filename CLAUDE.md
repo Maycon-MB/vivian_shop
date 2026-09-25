@@ -21,6 +21,7 @@ Cliente real, contrato de R$ 200 x 12 mais manutenção.
 | Painel: criar e editar produto | funciona, com foto de capa e galeria |
 | Painel: ordem da vitrine | ela fixa produto no topo, um a um ou o tipo inteiro |
 | Painel: trocar a senha | dentro de Configurações, sem depender de e-mail |
+| Menu da loja | **em toda página de quem compra**: volta ao início, busca, pedidos e carrinho |
 | Política da loja | página própria, com o texto que ela escreveu |
 | Conversa com a cliente | dentro da loja, sem WhatsApp, e ela é avisada por e-mail |
 | Pagamento | **cobra de verdade em produção** com Mercado Pago |
@@ -89,7 +90,7 @@ sozinho: [docs/o-painel-para-de-mentir.md](docs/o-painel-para-de-mentir.md).
 
 ```
 cd loja && npm install
-npm test                      # 804 testes de regra e de tela
+npm test                      # 870 testes de regra e de tela
 npm run build
 
 cd ..
