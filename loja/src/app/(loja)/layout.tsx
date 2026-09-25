@@ -1,7 +1,9 @@
 import { FaixasDoTopo } from '@/componentes/FaixasDoTopo'
+import { BarraDaLoja } from '@/componentes/BarraDaLoja'
 import { ConversaDaLoja } from '@/componentes/ConversaDaLoja'
 import { ContagemDeVisita } from '@/componentes/ContagemDeVisita'
 import '@/telas/landing/conversa.css'
+import '@/telas/barra-da-loja.css'
 
 /**
  * O que envolve as telas de quem compra.
@@ -25,6 +27,7 @@ export default function LayoutDaLoja({
   return (
     <>
       <FaixasDoTopo />
+      <BarraDaLoja />
       <main>{children}</main>
       <ConversaDaLoja />
       <ContagemDeVisita />
