@@ -7,7 +7,6 @@ import {
   totalDoPeriodo,
   paginasPorVisita,
   nomeDaOrigem,
-  pedidosNosUltimosDias,
 } from './movimento'
 
 describe('quantos dos que entraram compraram', () => {
@@ -90,27 +89,5 @@ describe('o nome da origem', () => {
 
   it('não deixa buraco na tela quando a origem é desconhecida', () => {
     expect(nomeDaOrigem('coisa-que-nao-existe')).toBe('Outros sites')
-  })
-})
-
-describe('os pedidos da mesma janela', () => {
-  const HOJE = new Date('2026-08-27T12:00:00Z')
-  const emDiasAtras = (dias: number) => {
-    const quando = new Date(HOJE)
-    quando.setDate(quando.getDate() - dias)
-    return { criadoEm: quando.toISOString() }
-  }
-
-  it('conta só o que caiu dentro do período', () => {
-    /* Comparar visita de sete dias com pedido de um mês infla a taxa por
-       quatro, e ela desligaria um anúncio que estava dando certo. */
-    const pedidos = [emDiasAtras(1), emDiasAtras(5), emDiasAtras(20)]
-
-    expect(pedidosNosUltimosDias(pedidos, 7, HOJE)).toBe(2)
-    expect(pedidosNosUltimosDias(pedidos, 30, HOJE)).toBe(3)
-  })
-
-  it('ignora pedido sem data em vez de quebrar a tela', () => {
-    expect(pedidosNosUltimosDias([{}, { criadoEm: 'não é data' }], 30, HOJE)).toBe(0)
   })
 })

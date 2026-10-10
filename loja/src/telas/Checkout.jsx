@@ -25,6 +25,7 @@ import { useCompra } from './useCompra';
 import { situacaoDosServicos, estaTudoReal } from '@/servicos';
 import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao';
 import PagamentoMercadoPago from './PagamentoMercadoPago';
+import { marcarEtapa } from '@/dados/marcarEtapa';
 
 import {
   PADRAO as PADRAO_DE_PAGAMENTO,
@@ -229,6 +230,11 @@ const Checkout = () => {
     return () => { valendo = false; };
   }, []);
 
+  const temItens = itens.length > 0;
+  useEffect(() => {
+    if (pronto && temItens) marcarEtapa('checkout');
+  }, [pronto, temItens]);
+
   const pagar = async () => {
     const encontrados = validar({ dados, precisaEndereco, frete });
     setErros(encontrados);
@@ -269,6 +275,8 @@ const Checkout = () => {
     });
 
     if (!pedido) return;
+
+    marcarEtapa('pagamento');
 
     /* Sem pagamento ligado, a compra termina aqui como sempre terminou: a
        loja de demonstração precisa continuar percorrível de ponta a
