@@ -23,6 +23,7 @@ vi.mock('./pedidosDaLoja', () => ({
    ligado ele derrubava a suíte por um vizinho que não está sob teste. */
 vi.mock('@/dados/visitasNoBanco', () => ({
   movimentoDaLoja: async () => null,
+  funilDaLoja: async () => [],
 }))
 
 const { default: AbaRelatorios } = await import('./AbaRelatorios')

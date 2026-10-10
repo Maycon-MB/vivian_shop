@@ -8,6 +8,7 @@ import {
   totalCarrinho,
 } from '../catalogo';
 import { LINHA_PEDAGOGICA } from '@/dominio/linhas';
+import { marcarEtapa } from '@/dados/marcarEtapa';
 
 /**
  * O carrinho, vivo entre as páginas.
@@ -89,6 +90,7 @@ export const ProvedorCarrinho = ({ children }) => {
 
       alterarQuantidade(produto.id, existente.quantidade + quanto);
       setAviso({ tipo: 'ok', texto: 'Quantidade atualizada no carrinho' });
+      marcarEtapa('carrinho');
       return true;
     }
 
@@ -97,6 +99,7 @@ export const ProvedorCarrinho = ({ children }) => {
       tipo: 'ok',
       texto: minimo > 1 ? `${quanto} unidades no carrinho` : 'Material adicionado ao carrinho',
     });
+    marcarEtapa('carrinho');
     return true;
   };
 
