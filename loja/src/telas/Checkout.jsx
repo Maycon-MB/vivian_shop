@@ -24,6 +24,7 @@ import { PRAZO_PRODUCAO, quantidadeMinima } from '../catalogo';
 import { useCompra } from './useCompra';
 import { situacaoDosServicos, estaTudoReal } from '@/servicos';
 import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao';
+import { AvisoDePrivacidade } from '@/componentes/AvisoDePrivacidade';
 import PagamentoMercadoPago from './PagamentoMercadoPago';
 import { marcarEtapa } from '@/dados/marcarEtapa';
 
@@ -755,6 +756,8 @@ const Checkout = () => {
                   )}
                 </button>
               )}
+
+              <AvisoDePrivacidade paraQue="o seu pedido" className="aviso-privacidade" />
 
               <p className="prazo-aviso">
                 {ehDigital ? (

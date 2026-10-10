@@ -12,6 +12,7 @@ import {
   temBanco,
 } from '@/servicos/autenticacao';
 import { pedidos as repositorioDePedidos } from '@/servicos';
+import { AvisoDePrivacidade } from '@/componentes/AvisoDePrivacidade';
 
 /**
  * A conta de quem compra.
@@ -242,6 +243,10 @@ const MinhaConta = () => {
             {enviando ? 'Um instante…' : entrando ? 'Entrar' : 'Criar a conta'}
           </button>
         </form>
+
+        {!entrando && (
+          <AvisoDePrivacidade paraQue="mostrar os seus pedidos" className="conta-nota" />
+        )}
 
         <p className="conta-trocar">
           {entrando ? 'Ainda não tem conta? ' : 'Já tem conta? '}

@@ -19,6 +19,7 @@ import {
   falarComALoja,
   lerConversa,
 } from '@/dados/conversaDaLoja';
+import { AvisoDePrivacidade } from '@/componentes/AvisoDePrivacidade';
 
 /**
  * A conversa, do lado de quem compra.
@@ -242,6 +243,11 @@ const Conversa = ({ aoFechar = () => {} }) => {
               Voltar às perguntas
             </button>
           </div>
+
+          <AvisoDePrivacidade
+            paraQue="a loja responder você"
+            className="conversa-recado-motivo"
+          />
         </form>
       ) : (
         <div className="conversa-botoes">
