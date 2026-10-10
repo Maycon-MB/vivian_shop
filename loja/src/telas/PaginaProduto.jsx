@@ -58,6 +58,7 @@ const PaginaProduto = ({ produto }) => {
   // A página é montada no build, sem navegador: o endereço real só existe depois de abrir.
   const [endereco, setEndereco] = useState(`${ENDERECO_NO_AR}/produto/${produto.slug}/`);
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEndereco(window.location.origin + window.location.pathname);
   }, [produto.slug]);
 
