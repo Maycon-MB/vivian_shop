@@ -13,12 +13,16 @@ import {
   Check,
   Minus,
   Plus,
+  Send,
 } from 'lucide-react';
 import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo';
 import { precoAtual, temPromocao, REGRAS_DO_PERSONALIZADO, acharTema } from './catalogo';
 import { useCarrinho } from './CarrinhoContexto';
 import { descricaoEmLinhas } from '@/dominio/descricaoEmLinhas'
 import { marcarEtapa } from '@/dados/marcarEtapa'
+import { linkDoWhatsApp, textoParaMandar } from '@/dominio/mandarNoWhatsApp'
+
+const ENDERECO_NO_AR = 'https://feitoparavocepapelaria.com.br'
 
 /**
  * Página de um produto.
@@ -50,6 +54,21 @@ const PaginaProduto = ({ produto }) => {
     marcarEtapa('produto');
   }, [produto.slug]);
   const [adicionado, setAdicionado] = useState(false);
+
+  // A página é montada no build, sem navegador: o endereço real só existe depois de abrir.
+  const [endereco, setEndereco] = useState(`${ENDERECO_NO_AR}/produto/${produto.slug}/`);
+  useEffect(() => {
+    setEndereco(window.location.origin + window.location.pathname);
+  }, [produto.slug]);
+
+  const aoMandar = (evento) => {
+    if (typeof navigator.share !== 'function') return;
+    evento.preventDefault();
+    // Fechar a janela do celular sem escolher também rejeita; não é erro para mostrar.
+    navigator
+      .share({ title: produto.name, text: textoParaMandar(produto.name, endereco) })
+      .catch(() => {});
+  };
 
   const total = precoAtual(produto) * quantidade;
 
@@ -231,6 +250,16 @@ const PaginaProduto = ({ produto }) => {
                 No carrinho. <Link href="/checkout/" prefetch={false}>Fechar a compra →</Link>
               </p>
             )}
+
+            <a
+              href={linkDoWhatsApp(produto.name, endereco)}
+              className="produto-mandar"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={aoMandar}
+            >
+              <Send size={16} /> Mandar no WhatsApp
+            </a>
 
             {personalizado && quantidade === minimo && !adicionado && (
               <p className="produto-aviso-minimo">
