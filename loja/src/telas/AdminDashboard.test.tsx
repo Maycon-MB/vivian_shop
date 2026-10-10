@@ -47,6 +47,7 @@ vi.mock('./painel/GraficosVisaoGeral', () => ({
 /* O cartão de visitas fala com o Supabase assim que monta. */
 vi.mock('@/dados/visitasNoBanco', () => ({
   movimentoDaLoja: async () => null,
+  funilDaLoja: async () => [],
 }))
 
 const { default: AdminDashboard } = await import('./AdminDashboard')
