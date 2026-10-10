@@ -13,8 +13,9 @@ falta para ligar.
 | Produtos na lista | 342, todos os publicados |
 | Preço bate com a página | **342 de 342**, conferido em 25/09 |
 | Conta no Merchant Center | **não criada**: depende dela, uns 15 minutos |
-| Regra de frete no Merchant Center | **a decidir com ela** |
-| Fotos que o Google vai reprovar | 54 tubolatas, com 580 x 427 pixels |
+| Regra de frete no Merchant Center | **a decidir com ela**: fixo ou por peso |
+| Dados do produto dentro da página | cada página de produto leva o mesmo preço e o mesmo título da lista |
+| Fotos abaixo do mínimo de 2027 | 54 tubolatas, com 580 x 427 pixels; refazer antes de 31/01/2027 |
 
 Registro meu. Não vira PDF.
 
@@ -56,6 +57,14 @@ GTIN e segura o produto como incompleto.
 O prazo de produção vai como tempo de preparo (`min_handling_time` e
 `max_handling_time`), e o peso do pedido mínimo vai em `shipping_weight`.
 
+**A página diz o mesmo preço em dados estruturados.** A página destaca
+"R$ 13,50 cada unidade", e a lista manda R$ 135,00. O botão já mostrava o
+total, mas cada página de produto também leva um bloco `Product` em
+JSON-LD com o preço do pedido mínimo, o título com "(pedido mínimo de 10
+unidades)" e o mesmo código da lista. Os dois saem da mesma função,
+`camposParaOGoogle`, então não têm como divergir. De quebra, o Google pode
+mostrar preço e disponibilidade no resultado comum da busca.
+
 ---
 
 ## O que falta, e é dela
@@ -65,17 +74,23 @@ faz o site entrar verificado sem mexer no DNS: o Merchant Center considera
 o site verificado "se qualquer um dos seus usuários for um proprietário
 verificado no Search Console".
 
-1. Entrar em `merchants.google.com` e criar a conta: nome da loja, país
-   Brasil, site `feitoparavocepapelaria.com.br`.
+1. Entrar em `merchants.google.com` com esse gmail e criar a conta: nome
+   da loja, país Brasil, site `feitoparavocepapelaria.com.br`.
 2. O site aparece como verificado. Clicar em **reivindicar**, que liga o
    endereço à conta dela.
-3. Criar a regra de frete para o Brasil (ver abaixo). O Google exige frete
-   informado no Brasil, e sem ele os produtos não aparecem.
-4. Adicionar os produtos por **arquivo buscado de um endereço**, com
-   `https://feitoparavocepapelaria.com.br/google-shopping.xml`, buscado
-   todo dia.
-5. Conferir que as listagens gratuitas estão ligadas. Vêm ligadas por
-   padrão na maioria dos casos.
+3. Adicionar os produtos por **arquivo buscado de um endereço**, com
+   `https://feitoparavocepapelaria.com.br/google-shopping.xml`, com busca
+   **diária**.
+4. Criar a regra de frete para o Brasil (ver abaixo). O Google exige frete
+   informado no Brasil, e sem ele os produtos não aparecem. Antes disso ela
+   precisa decidir: valor fixo ou por faixa de peso.
+5. Preencher a política de devolução: prazo e quem paga a volta. Peça
+   personalizada costuma ter regra própria, e o texto tem de bater com o
+   da página de política da loja.
+6. Ligar as **listagens gratuitas**. Vêm ligadas por padrão na maioria dos
+   casos, mas é bom conferir.
+7. Um ou dois dias depois, abrir **Diagnóstico** e ver se algum produto foi
+   reprovado, e por quê.
 
 ---
 
@@ -92,15 +107,21 @@ do frete real de um pedido típico saindo do CEP de origem.
 
 ---
 
-## As 54 fotos que o Google vai reprovar
+## As 54 fotos que ficam abaixo do mínimo em 2027
 
-O mínimo do Google é **500 x 500 pixels**, e produto com foto menor "vai ser
-reprovado". As tubolatas foram publicadas com **580 x 427**. As outras 288
-fotos têm 580 x 580.
+A página oficial do Google, conferida em 10/10/2026, diz: "We recently
+announced new image size requirements of at least 500 x 500 pixels for all
+products beginning January 31, 2027." Ou seja, o mínimo de **500 x 500
+pixels para todo produto vale a partir de 31/01/2027**, e não hoje. Ela
+recomenda fotos de uns 1500 x 1500.
+
+As tubolatas foram publicadas com **580 x 427**: passam hoje e ficam abaixo
+do mínimo em 31/01/2027. As outras 288 fotos têm 580 x 580.
 
 A lista manda as 54 assim mesmo: a reprovação é produto a produto e não
 derruba os outros. O conserto é refazer as fotos das tubolatas em formato
-quadrado. Os originais estão com ela, e não no repositório.
+quadrado **antes de 31/01/2027**. Os originais estão com ela, e não no
+repositório.
 
 ---
 
@@ -109,7 +130,7 @@ quadrado. Os originais estão com ela, e não no repositório.
 Consultados em 25/09/2026, na Ajuda do Google Merchant Center:
 
 - [Preço, com pedido mínimo](https://support.google.com/merchants/answer/6324371?hl=pt-BR)
-- [Link da imagem: formatos e tamanho mínimo](https://support.google.com/merchants/answer/6324350?hl=pt-BR)
+- [Link da imagem: formatos e tamanho mínimo](https://support.google.com/merchants/answer/6324350?hl=pt-BR), conferido de novo em 10/10/2026
 - [Listagens gratuitas: onde aparecem, e frete obrigatório no Brasil](https://support.google.com/merchants/answer/13889434?hl=pt-BR)
 - [Verificação e reivindicação do site](https://support.google.com/merchants/answer/11586344?hl=pt-BR)
 - [Frete da transportadora](https://support.google.com/merchants/answer/15449142?hl=pt-BR)

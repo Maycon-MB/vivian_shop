@@ -80,48 +80,6 @@ const tituloDoProduto = (produto) => {
 }
 
 /**
- * @param {string} nome
- * @param {string | number} valor
- */
-const campo = (nome, valor) => `      <${nome}>${escaparXml(String(valor))}</${nome}>`
-
-/**
- * @param {ProdutoPublicado} produto
- * @param {string} raiz
- */
-const itemDoProduto = (produto, raiz) => {
-  const minimo = quantidadeMinima(produto)
-  const linhas = [
-    campo('g:id', produto.id ?? produto.slug ?? ''),
-    campo('title', tituloDoProduto(produto)),
-    campo('description', cortar(produto.description?.trim() || produto.name || '', TAMANHO_DA_DESCRICAO)),
-    campo('link', `${raiz}/produto/${produto.slug}/`),
-    campo('g:image_link', produto.image ?? ''),
-    ...(produto.galeria ?? []).slice(0, FOTOS_EXTRAS).map((foto) => campo('g:additional_image_link', foto)),
-    campo('g:availability', 'in_stock'),
-    campo('g:condition', 'new'),
-    campo('g:price', emReaisDoGoogle(emCentavos((produto.price ?? 0) * minimo))),
-  ]
-
-  if (temPromocao(produto)) linhas.push(campo('g:sale_price', emReaisDoGoogle(precoDoPedidoMinimo(produto))))
-
-  linhas.push(campo('g:brand', MARCA), campo('g:identifier_exists', 'no'))
-
-  /* Sob encomenda: o prazo de produção é, para o Google, tempo de preparo
-     antes do envio. Sem ele a cliente vê um prazo de entrega curto demais. */
-  if (produto.prazoProducao) {
-    linhas.push(
-      campo('g:min_handling_time', produto.prazoProducao),
-      campo('g:max_handling_time', produto.prazoProducao),
-    )
-  }
-
-  if (produto.pesoG) linhas.push(campo('g:shipping_weight', `${produto.pesoG * minimo} g`))
-
-  return ['    <item>', ...linhas, '    </item>'].join('\n')
-}
-
-/**
  * Produto sem foto, sem preço ou sem página o Google reprova; um só não
  * derruba a lista, mas aparece como erro na conta dela sem ela saber o
  * porquê. Fica de fora até ter o que falta.
@@ -130,6 +88,77 @@ const itemDoProduto = (produto, raiz) => {
  */
 const podeIrAoGoogle = (produto) =>
   Boolean(produto?.slug && produto.image && produto.name && (produto.price ?? 0) > 0)
+
+/**
+ * O que o Google recebe de um produto, valendo para a lista e para a página.
+ *
+ * Entra o produto publicado e o endereço da loja sem barra no fim. Sai
+ * `null` para o produto que o Google reprovaria. Preços em reais.
+ *
+ * @param {ProdutoPublicado} produto
+ * @param {string} raiz
+ */
+export const camposParaOGoogle = (produto, raiz) => {
+  if (!podeIrAoGoogle(produto)) return null
+
+  const minimo = quantidadeMinima(produto)
+
+  return {
+    id: produto.id ?? produto.slug ?? '',
+    titulo: tituloDoProduto(produto),
+    descricao: cortar(produto.description?.trim() || produto.name || '', TAMANHO_DA_DESCRICAO),
+    link: `${raiz}/produto/${produto.slug}/`,
+    imagem: produto.image ?? '',
+    fotosExtras: (produto.galeria ?? []).slice(0, FOTOS_EXTRAS),
+    disponibilidade: 'in_stock',
+    condicao: 'new',
+    preco: emCentavos((produto.price ?? 0) * minimo),
+    precoPromocional: temPromocao(produto) ? precoDoPedidoMinimo(produto) : null,
+    marca: MARCA,
+    /* Sob encomenda: o prazo de produção é, para o Google, tempo de preparo
+       antes do envio. Sem ele a cliente vê um prazo de entrega curto demais. */
+    prazoDePreparo: produto.prazoProducao || null,
+    pesoDoEnvioG: produto.pesoG ? produto.pesoG * minimo : null,
+  }
+}
+
+/**
+ * @param {string} nome
+ * @param {string | number} valor
+ */
+const campo = (nome, valor) => `      <${nome}>${escaparXml(String(valor))}</${nome}>`
+
+/** @param {NonNullable<ReturnType<typeof camposParaOGoogle>>} campos */
+const itemDoProduto = (campos) => {
+  const linhas = [
+    campo('g:id', campos.id),
+    campo('title', campos.titulo),
+    campo('description', campos.descricao),
+    campo('link', campos.link),
+    campo('g:image_link', campos.imagem),
+    ...campos.fotosExtras.map((foto) => campo('g:additional_image_link', foto)),
+    campo('g:availability', campos.disponibilidade),
+    campo('g:condition', campos.condicao),
+    campo('g:price', emReaisDoGoogle(campos.preco)),
+  ]
+
+  if (campos.precoPromocional !== null) {
+    linhas.push(campo('g:sale_price', emReaisDoGoogle(campos.precoPromocional)))
+  }
+
+  linhas.push(campo('g:brand', campos.marca), campo('g:identifier_exists', 'no'))
+
+  if (campos.prazoDePreparo) {
+    linhas.push(
+      campo('g:min_handling_time', campos.prazoDePreparo),
+      campo('g:max_handling_time', campos.prazoDePreparo),
+    )
+  }
+
+  if (campos.pesoDoEnvioG) linhas.push(campo('g:shipping_weight', `${campos.pesoDoEnvioG} g`))
+
+  return ['    <item>', ...linhas, '    </item>'].join('\n')
+}
 
 /**
  * O arquivo pronto para gravar, no formato RSS que o Merchant Center lê.
@@ -147,6 +176,7 @@ export const montarListaDoGoogleShopping = ({ base, catalogo }) => {
     vistos.add(chave)
     return true
   })
+  const campos = itens.map((produto) => camposParaOGoogle(produto, raiz)).filter((c) => c !== null)
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -155,7 +185,7 @@ export const montarListaDoGoogleShopping = ({ base, catalogo }) => {
     `    <title>${MARCA}</title>`,
     `    <link>${escaparXml(raiz)}/</link>`,
     '    <description>Papelaria personalizada feita sob encomenda</description>',
-    ...itens.map((produto) => itemDoProduto(produto, raiz)),
+    ...campos.map(itemDoProduto),
     '  </channel>',
     '</rss>',
     '',
