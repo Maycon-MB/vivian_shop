@@ -38,6 +38,11 @@ export interface AvisoRegistrado {
   texto: string
 }
 
+// Mesma regra de `temBanco`, sem importar o cliente do Supabase para o pacote do checkout.
+// Com banco a loja é a de verdade: contato de cliente não fica no navegador (LGPD).
+const demonstracao = (): boolean =>
+  !(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+
 const armazenamento = (): Storage | null => {
   try {
     if (typeof window === 'undefined') return null
@@ -169,7 +174,7 @@ export const avisosSimulados: ServicoDeAvisos = {
       texto: textoDoAviso(aviso),
     }
 
-    const guarda = armazenamento()
+    const guarda = demonstracao() ? armazenamento() : null
     if (guarda) {
       try {
         guarda.setItem(CHAVE_AVISOS, JSON.stringify([...lerRegistro(), registro]))
