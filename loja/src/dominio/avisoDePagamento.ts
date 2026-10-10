@@ -116,7 +116,7 @@ export interface PagamentoConfirmado {
   id: string
   status: string
   valor: number
-  /** O número do pedido, que mandamos na criação da cobrança. */
+  /** O id do pedido, que `cobrar` manda em `external_reference`. */
   referencia: string
 }
 
@@ -202,4 +202,72 @@ export const decidirSobreAviso = ({
   }
 
   return { acao: 'atualizar', estado: novo }
+}
+
+export interface PedidoLido extends PedidoParaConferir {
+  id: string
+}
+
+/**
+ * O que o aviso precisa do banco. Existe para a função do servidor e o
+ * teste passarem pelo mesmo caminho, um com o Supabase e o outro em memória.
+ *
+ * `mudarEstado` só grava se o pedido ainda estiver em `de`, e devolve se
+ * gravou. Erro de banco sai como exceção.
+ */
+export interface BancoDoAviso {
+  lerPedido(id: string): Promise<PedidoLido | null>
+  avisoJaProcessado(externoId: string, statusExterno: string): Promise<boolean>
+  mudarEstado(pedidoId: string, de: Estado, para: Estado): Promise<boolean>
+  marcarParaConferir(pedidoId: string, motivo: string): Promise<void>
+  registrarAviso(aviso: {
+    pedidoId: string | null
+    externoId: string
+    statusExterno: string
+    corpo: unknown
+    decisao: string
+  }): Promise<void>
+}
+
+/**
+ * Leva o pagamento confirmado até o pedido, pelas regras de `decidirSobreAviso`.
+ *
+ * `tentarDeNovo` quando o pedido mudou entre ler e gravar: a função do
+ * servidor responde erro, o Mercado Pago reenvia, e o reenvio relê o pedido.
+ * O aviso só é registrado depois de gravar, porque registrado é o que faz o
+ * reenvio ser ignorado.
+ */
+export const processarAviso = async ({
+  pagamento,
+  corpo,
+  banco,
+}: {
+  pagamento: PagamentoConfirmado
+  corpo: unknown
+  banco: BancoDoAviso
+}): Promise<{ decisao: Decisao; tentarDeNovo: boolean }> => {
+  const jaProcessado = await banco.avisoJaProcessado(pagamento.id, pagamento.status)
+  const pedido = jaProcessado ? null : await banco.lerPedido(pagamento.referencia)
+  const decisao = decidirSobreAviso({ pagamento, pedido, jaProcessado })
+
+  if (jaProcessado) return { decisao, tentarDeNovo: false }
+
+  if (decisao.acao === 'atualizar' && pedido) {
+    const gravou = await banco.mudarEstado(pedido.id, pedido.estadoPagamento, decisao.estado)
+    if (!gravou) return { decisao, tentarDeNovo: true }
+  }
+
+  if (decisao.acao === 'conferir' && pedido) {
+    await banco.marcarParaConferir(pedido.id, decisao.motivo)
+  }
+
+  await banco.registrarAviso({
+    pedidoId: pedido?.id ?? null,
+    externoId: pagamento.id,
+    statusExterno: pagamento.status,
+    corpo,
+    decisao: decisao.acao === 'atualizar' ? decisao.estado : decisao.motivo,
+  })
+
+  return { decisao, tentarDeNovo: false }
 }
