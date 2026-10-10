@@ -223,6 +223,13 @@ const RodapeConfianca = () => (
               Política da loja
             </Link>
           </div>
+
+          <div style={estiloItem}>
+            <span style={{ width: 18, flexShrink: 0 }} />
+            <Link href="/privacidade/" style={estiloLink}>
+              Política de privacidade
+            </Link>
+          </div>
         </Col>
       </Row>
 

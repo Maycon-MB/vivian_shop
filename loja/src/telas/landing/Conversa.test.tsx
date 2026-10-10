@@ -107,6 +107,19 @@ describe('quando ela quer falar com a loja', () => {
     expect(screen.getByText(/responde por e-mail/i)).toBeInTheDocument()
   })
 
+  it('perto do enviar, diz que nome e e-mail só servem para a resposta', async () => {
+    const usuario = userEvent.setup()
+    await abrir(usuario)
+
+    await usuario.click(screen.getByRole('button', { name: /falar com a loja/i }))
+
+    expect(screen.getByText(/servem só para a loja responder você/i)).toBeInTheDocument()
+    const politica = screen.getByRole('link', { name: /política de privacidade/i })
+    expect(politica).toHaveAttribute('href', '/privacidade/')
+    // Em outra aba, para a dúvida já escrita não se perder.
+    expect(politica).toHaveAttribute('target', '_blank')
+  })
+
   it('manda a dúvida e diz que recebeu', async () => {
     const usuario = userEvent.setup()
     await abrir(usuario)
