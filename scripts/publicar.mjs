@@ -20,6 +20,7 @@ import path from 'node:path'
 
 import { montarMapaDoSite, montarRobots } from '../loja/src/dominio/mapaDoSite.mjs'
 import { montarListaDoGoogleShopping } from '../loja/src/dominio/listaDoGoogleShopping.mjs'
+import { enderecoDaLoja } from '../loja/src/dominio/enderecoDaLoja.mjs'
 
 const raiz = path.dirname(fileURLToPath(new URL('.', import.meta.url)))
 const dist = path.join(raiz, 'dist')
@@ -111,9 +112,7 @@ if (dominioProprio) {
  * variável em dois lugares é o tipo de coisa que fica meio certa depois
  * de uma mudança.
  */
-const ENDERECO_DA_LOJA = dominioProprio
-  ? 'https://feitoparavocepapelaria.com.br'
-  : 'https://maycon-mb.github.io/vivian_shop'
+const ENDERECO_DA_LOJA = enderecoDaLoja()
 
 const catalogoPublicado = JSON.parse(
   readFileSync(path.join(loja, 'src', 'dados', 'catalogo-publicado.json'), 'utf8'),

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Feito para você</title>
+    <link>https://feitoparavocepapelaria.com.br/</link>
+    <description>Papelaria personalizada feita sob encomenda</description>
+    <item>
+      <g:id>495d7f6c</g:id>
+      <title>Álbum de Figurinhas - Chaves (pedido mínimo de 10 unidades)</title>
+      <description>Álbum personalizado com o nome &amp; idade.
+Tamanho: 14 x 20 cm</description>
+      <link>https://feitoparavocepapelaria.com.br/produto/album-de-figurinhas-chaves/</link>
+      <g:image_link>https://exemplo.supabase.co/produtos/album/1-cheia.webp</g:image_link>
+      <g:additional_image_link>https://exemplo.supabase.co/produtos/album/2-cheia.webp</g:additional_image_link>
+      <g:availability>in_stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>135.00 BRL</g:price>
+      <g:brand>Feito para você</g:brand>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:min_handling_time>5</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:shipping_weight>700 g</g:shipping_weight>
+    </item>
+    <item>
+      <g:id>avulso-1</g:id>
+      <title>Álbum de Figurinhas - Chaves</title>
+      <description>Álbum personalizado com o nome &amp; idade.
+Tamanho: 14 x 20 cm</description>
+      <link>https://feitoparavocepapelaria.com.br/produto/topo-de-bolo-chaves/</link>
+      <g:image_link>https://exemplo.supabase.co/produtos/album/1-cheia.webp</g:image_link>
+      <g:additional_image_link>https://exemplo.supabase.co/produtos/album/2-cheia.webp</g:additional_image_link>
+      <g:availability>in_stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>25.00 BRL</g:price>
+      <g:brand>Feito para você</g:brand>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:min_handling_time>5</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:shipping_weight>70 g</g:shipping_weight>
+    </item>
+    <item>
+      <g:id>promo</g:id>
+      <title>Álbum de Figurinhas - Chaves (pedido mínimo de 10 unidades)</title>
+      <description>Álbum personalizado com o nome &amp; idade.
+Tamanho: 14 x 20 cm</description>
+      <link>https://feitoparavocepapelaria.com.br/produto/promo/</link>
+      <g:image_link>https://exemplo.supabase.co/produtos/album/1-cheia.webp</g:image_link>
+      <g:additional_image_link>https://exemplo.supabase.co/produtos/album/2-cheia.webp</g:additional_image_link>
+      <g:availability>in_stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>135.00 BRL</g:price>
+      <g:sale_price>120.00 BRL</g:sale_price>
+      <g:brand>Feito para você</g:brand>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:min_handling_time>5</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:shipping_weight>700 g</g:shipping_weight>
+    </item>
+  </channel>
+</rss>
