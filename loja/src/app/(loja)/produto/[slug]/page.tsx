@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import PaginaProduto from '@/telas/PaginaProduto'
 import { PRODUTOS, acharPorSlug } from '@/telas/catalogo'
 import { paraMetaDescricao } from '@/dominio/descricaoEmLinhas'
+import { dadosDoProdutoParaOGoogle, emJsonLd } from '@/dominio/dadosDoProdutoParaOGoogle.mjs'
+import { enderecoDaLoja } from '@/dominio/enderecoDaLoja.mjs'
 import '@/telas/produto.css'
 
 /** Uma página por produto, geradas no build. */
@@ -33,5 +35,17 @@ export default async function Pagina({ params }: { params: Promise<{ slug: strin
 
   if (!produto) notFound()
 
-  return <PaginaProduto produto={produto} />
+  const dadosParaOGoogle = dadosDoProdutoParaOGoogle(produto, enderecoDaLoja())
+
+  return (
+    <>
+      {dadosParaOGoogle && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: emJsonLd(dadosParaOGoogle) }}
+        />
+      )}
+      <PaginaProduto produto={produto} />
+    </>
+  )
 }

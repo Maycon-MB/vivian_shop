@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
 import { montarListaDoGoogleShopping, precoDoPedidoMinimo } from './listaDoGoogleShopping.mjs'
 
@@ -129,5 +131,23 @@ describe('a lista do Google Shopping', () => {
 
   it('não repete produto, que o Google trataria como dois', () => {
     expect(lista([ALBUM, ALBUM]).match(/<item>/g)).toHaveLength(1)
+  })
+
+  it('sai igual, letra por letra, ao arquivo que o Merchant Center já conhece', () => {
+    /* Gravado antes de a página de produto passar a usar as mesmas regras.
+       Mudar a lista sem querer muda o que o Google já aprovou. */
+    const esperada = readFileSync(
+      fileURLToPath(new URL('./listaDoGoogleShopping.esperada.xml', import.meta.url)),
+      'utf8',
+    ).replace(/\r\n/g, '\n')
+    const produtos = [
+      ALBUM,
+      AVULSO,
+      { ...ALBUM, id: 'promo', slug: 'promo', precoPromocional: 12 },
+      { ...AVULSO, id: 'semfoto', slug: 'semfoto', image: '' },
+      ALBUM,
+    ]
+
+    expect(montarListaDoGoogleShopping({ base: `${BASE}/`, catalogo: { produtos } })).toBe(esperada)
   })
 })
