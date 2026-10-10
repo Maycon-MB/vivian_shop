@@ -103,26 +103,3 @@ const NOME_DA_ORIGEM: Record<string, string> = {
 /** A origem com o nome que ela reconhece, e não a palavra do banco. */
 export const nomeDaOrigem = (origem: string): string =>
   NOME_DA_ORIGEM[origem] ?? 'Outros sites'
-
-/**
- * Quantos pedidos caíram na mesma janela de dias das visitas.
- *
- * Precisa ser a mesma janela, senão a conta compara visitas de sete dias
- * com pedidos de um mês e a taxa sai errada por um fator de quatro. Erro
- * silencioso, e do tipo que faz ela desligar um anúncio que estava dando
- * certo.
- */
-export const pedidosNosUltimosDias = (
-  pedidos: { criadoEm?: string }[],
-  dias: number,
-  hoje: Date = new Date(),
-): number => {
-  const corte = new Date(hoje)
-  corte.setDate(corte.getDate() - dias)
-
-  return pedidos.filter((pedido) => {
-    if (!pedido?.criadoEm) return false
-    const quando = new Date(pedido.criadoEm)
-    return !Number.isNaN(quando.getTime()) && quando >= corte
-  }).length
-}

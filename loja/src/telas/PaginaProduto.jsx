@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import {
@@ -18,6 +18,7 @@ import { PERSONALIZADA, MINIMO_PERSONALIZADO, PRAZO_PRODUCAO } from '../catalogo
 import { precoAtual, temPromocao, REGRAS_DO_PERSONALIZADO, acharTema } from './catalogo';
 import { useCarrinho } from './CarrinhoContexto';
 import { descricaoEmLinhas } from '@/dominio/descricaoEmLinhas'
+import { marcarEtapa } from '@/dados/marcarEtapa'
 
 /**
  * Página de um produto.
@@ -44,6 +45,10 @@ const PaginaProduto = ({ produto }) => {
   const minimo = produto.minimo ?? (personalizado ? MINIMO_PERSONALIZADO : 1);
 
   const [quantidade, setQuantidade] = useState(minimo);
+
+  useEffect(() => {
+    marcarEtapa('produto');
+  }, [produto.slug]);
   const [adicionado, setAdicionado] = useState(false);
 
   const total = precoAtual(produto) * quantidade;

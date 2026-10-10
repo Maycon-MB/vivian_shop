@@ -262,7 +262,7 @@ const AdminDashboard = () => {
               <div className="d-flex flex-column gap-3">
                 {/* O único número de verdade que esta tela tem antes da
                     primeira venda: a contagem de visita, que já está no ar. */}
-                <MovimentoDaLoja pedidos={[]} />
+                <MovimentoDaLoja />
 
                 <CartaoPainel
                   titulo="Nenhuma venda ainda"

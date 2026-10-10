@@ -137,6 +137,15 @@ const PAGINAS_MAIS_VISTAS = [
   { caminho: '/produto/bloquinho-personalizado-peppa-pig', paginas: 54 },
 ]
 
+// Abaixo das 272 pessoas de VISITAS_POR_DIA, e cada etapa abaixo da anterior.
+const FUNIL_DA_LOJA = [
+  { etapa: 'produto', pessoas: 131 },
+  { etapa: 'carrinho', pessoas: 22 },
+  { etapa: 'checkout', pessoas: 11 },
+  { etapa: 'pagamento', pessoas: 7 },
+  { etapa: 'pago', pessoas: 3 },
+]
+
 const main = async () => {
   fs.mkdirSync(destino, { recursive: true })
 
@@ -155,6 +164,7 @@ const main = async () => {
     if (url.includes('/rpc/resumo_de_visitas')) return rota.fulfill(json(VISITAS_POR_DIA))
     if (url.includes('/rpc/visitas_por_origem')) return rota.fulfill(json(VISITAS_POR_ORIGEM))
     if (url.includes('/rpc/paginas_mais_vistas')) return rota.fulfill(json(PAGINAS_MAIS_VISTAS))
+    if (url.includes('/rpc/funil_da_loja')) return rota.fulfill(json(FUNIL_DA_LOJA))
     /* A linha única de configuração. Sem ela o print mostraria a aba de
        Configurações com os campos em branco, e campo em branco esconde
        justamente o que se quer conferir aqui: se o texto dela cabe. */

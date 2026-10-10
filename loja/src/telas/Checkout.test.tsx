@@ -13,6 +13,12 @@ vi.mock('@/dados/comoElaRecebeNoBanco', () => ({
   comoElaRecebe: () => comoElaRecebe(),
 }))
 
+const contarEtapa = vi.fn()
+
+vi.mock('@/dados/visitasNoBanco', () => ({
+  contarEtapa: (etapa: string) => contarEtapa(etapa),
+}))
+
 const { default: Checkout } = await import('./Checkout')
 import { ProvedorCarrinho } from './CarrinhoContexto'
 import { navegacaoFalsa } from '../../vitest.setup'
@@ -79,7 +85,22 @@ beforeEach(() => {
   // O padrão é o dela: sem desconto. Quem testa desconto diz isso.
   comoElaRecebe.mockReset().mockResolvedValue(SEM_DESCONTO)
   navegacaoFalsa.push.mockClear()
+  contarEtapa.mockReset()
 })
+
+const preencherCompraFisica = async () => {
+  await userEvent.type(await screen.findByLabelText(/Nome completo/i), 'Ana Paula Souza')
+  await userEvent.type(screen.getByLabelText(/E-mail/i), 'ana@exemplo.com.br')
+  await userEvent.type(screen.getByLabelText(/WhatsApp/i), '21988887777')
+  await userEvent.type(screen.getByLabelText('CEP'), '01310100')
+
+  await screen.findByText(/Correios PAC/, {}, { timeout: 5000 })
+  await userEvent.type(screen.getByLabelText('Rua'), 'Avenida Paulista')
+  await userEvent.type(screen.getByLabelText('Número'), '1000')
+  await userEvent.type(screen.getByLabelText('Bairro'), 'Bela Vista')
+  await userEvent.type(screen.getByLabelText('Cidade'), 'São Paulo')
+  await userEvent.selectOptions(screen.getByLabelText('Estado'), 'SP')
+}
 
 describe('checkout com carrinho vazio', () => {
   it('manda a pessoa de volta para a loja em vez de mostrar formulário', async () => {
@@ -193,20 +214,7 @@ describe('checkout de produto físico', () => {
     comCarrinho([CADERNO])
     abrir()
 
-    await userEvent.type(await screen.findByLabelText(/Nome completo/i), 'Ana Paula Souza')
-    await userEvent.type(screen.getByLabelText(/E-mail/i), 'ana@exemplo.com.br')
-    await userEvent.type(screen.getByLabelText(/WhatsApp/i), '21988887777')
-    await userEvent.type(screen.getByLabelText('CEP'), '01310100')
-
-    await screen.findByText(/Correios PAC/, {}, { timeout: 5000 })
-    await userEvent.type(screen.getByLabelText('Rua'), 'Avenida Paulista')
-    await userEvent.type(screen.getByLabelText('Número'), '1000')
-    /* Bairro, cidade e estado entraram na tela em 25/08. Faltavam, e
-       ficavam vazios sem ninguém perceber: o pedido era guardado no
-       navegador, que aceita qualquer coisa. Os Correios não. */
-    await userEvent.type(screen.getByLabelText('Bairro'), 'Bela Vista')
-    await userEvent.type(screen.getByLabelText('Cidade'), 'São Paulo')
-    await userEvent.selectOptions(screen.getByLabelText('Estado'), 'SP')
+    await preencherCompraFisica()
 
     await userEvent.click(screen.getByRole('button', { name: /^Pagar$/ }))
 
@@ -366,5 +374,38 @@ describe('mexer no pedido dentro do checkout', () => {
     abrir()
 
     expect(await screen.findByLabelText(/tirar uma unidade/i)).toBeDisabled()
+  })
+})
+
+describe('o funil conta o checkout e o pagamento', () => {
+  it('conta a ida ao checkout de quem chega com produto no carrinho', async () => {
+    comCarrinho([CADERNO])
+    abrir()
+
+    await waitFor(() => expect(contarEtapa).toHaveBeenCalledWith('checkout'))
+  })
+
+  it('não conta checkout de carrinho vazio', async () => {
+    comCarrinho([])
+    abrir()
+
+    await screen.findByText(/carrinho está vazio/i)
+    await new Promise((resolve) => setTimeout(resolve, 30))
+
+    expect(contarEtapa).not.toHaveBeenCalledWith('checkout')
+  })
+
+  it('conta a chegada ao pagamento quando o pedido é criado', async () => {
+    comCarrinho([APOSTILA])
+    abrir()
+
+    await userEvent.type(await screen.findByLabelText(/Nome completo/i), 'Ana Paula Souza')
+    await userEvent.type(screen.getByLabelText(/E-mail/i), 'ana@exemplo.com.br')
+    await userEvent.type(screen.getByLabelText(/WhatsApp/i), '21988887777')
+    expect(contarEtapa).not.toHaveBeenCalledWith('pagamento')
+
+    await userEvent.click(screen.getByRole('button', { name: /^Pagar$/ }))
+
+    await waitFor(() => expect(contarEtapa).toHaveBeenCalledWith('pagamento'), { timeout: 8000 })
   })
 })

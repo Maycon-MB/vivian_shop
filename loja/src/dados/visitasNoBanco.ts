@@ -7,6 +7,7 @@ import {
   origemDaVisita,
   type Origem,
 } from '@/dominio/origemDaVisita'
+import type { Etapa, PessoasNaEtapa } from '@/dominio/funil'
 
 /**
  * A contagem de visita, do lado do navegador.
@@ -31,12 +32,14 @@ import {
  */
 
 const MARCA = 'visita-contada'
+const MARCA_DA_ORIGEM = 'visita-origem'
+const marcaDaEtapa = (etapa: Etapa) => `etapa-contada:${etapa}`
 
-/** Se esta é a primeira página desta visita. */
-const primeiraDaVisita = (): boolean => {
+/** Se esta é a primeira vez que a marca aparece nesta visita. */
+const primeiraVez = (marca: string): boolean => {
   try {
-    if (window.sessionStorage.getItem(MARCA)) return false
-    window.sessionStorage.setItem(MARCA, '1')
+    if (window.sessionStorage.getItem(marca)) return false
+    window.sessionStorage.setItem(marca, '1')
     return true
   } catch {
     /* Navegador anônimo com armazenamento bloqueado cai aqui. A página
@@ -71,14 +74,67 @@ export const contarVisita = async (
     typeof window === 'undefined' ? '' : window.location.hostname,
   )
 
+  const primeira = primeiraVez(MARCA)
+  if (primeira) guardarOrigem(origem)
+
   try {
     await bancoDoNavegador().rpc('contar_visita', {
       p_caminho: caminhoDaVisita(caminho),
       p_origem: origem,
-      p_primeira: primeiraDaVisita(),
+      p_primeira: primeira,
     })
   } catch {
     // Medição que quebra a loja não mede nada.
+  }
+}
+
+/* As etapas acontecem depois de navegar dentro da loja, quando o referrer já é ela mesma. */
+const guardarOrigem = (origem: Origem) => {
+  try {
+    window.sessionStorage.setItem(MARCA_DA_ORIGEM, origem)
+  } catch {
+    // Sem armazenamento, a etapa conta como direto.
+  }
+}
+
+const origemGuardada = (): string => {
+  try {
+    return window.sessionStorage.getItem(MARCA_DA_ORIGEM) ?? 'direto'
+  } catch {
+    return 'direto'
+  }
+}
+
+/**
+ * Conta uma etapa do funil, uma vez por visita.
+ *
+ * Nunca lança, e não conta fora da loja publicada, pelas mesmas guardas de `contarVisita`.
+ */
+export const contarEtapa = async (etapa: Etapa): Promise<void> => {
+  if (!temBanco()) return
+  if (typeof window === 'undefined') return
+  if (!contaComoVisita(window.location.hostname)) return
+  if (!primeiraVez(marcaDaEtapa(etapa))) return
+
+  try {
+    await bancoDoNavegador().rpc('contar_etapa', { p_etapa: etapa, p_origem: origemGuardada() })
+  } catch {
+    // Medição que quebra a loja não mede nada.
+  }
+}
+
+/**
+ * Quantas pessoas chegaram a cada etapa nos últimos `dias`, mais os pedidos pagos
+ * (etapa `pago`). Só responde para a dona; falha vira lista vazia.
+ */
+export const funilDaLoja = async (dias = 30): Promise<PessoasNaEtapa[]> => {
+  if (!temBanco()) return []
+
+  try {
+    const { data } = await bancoDoNavegador().rpc('funil_da_loja', { p_dias: dias })
+    return (data ?? []) as PessoasNaEtapa[]
+  } catch {
+    return []
   }
 }
 
