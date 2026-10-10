@@ -1,3 +1,5 @@
+import { enderecoDaLoja } from '@/dominio/enderecoDaLoja.mjs'
+import { cartaoDaLoja } from '@/dominio/cartaoDoLink.mjs'
 import type { Metadata } from 'next'
 import { Fraunces, Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -38,6 +40,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Feito para você! Personalizados',
   description: 'Papelaria personalizada e material pedagógico para quem ensina.',
+  metadataBase: new URL(`${enderecoDaLoja()}/`),
+  ...cartaoDaLoja(enderecoDaLoja()),
 }
 
 export default function RootLayout({

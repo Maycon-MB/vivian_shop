@@ -4,6 +4,7 @@ import { PRODUTOS, acharPorSlug } from '@/telas/catalogo'
 import { paraMetaDescricao } from '@/dominio/descricaoEmLinhas'
 import { dadosDoProdutoParaOGoogle, emJsonLd } from '@/dominio/dadosDoProdutoParaOGoogle.mjs'
 import { enderecoDaLoja } from '@/dominio/enderecoDaLoja.mjs'
+import { cartaoDoProduto } from '@/dominio/cartaoDoLink.mjs'
 import '@/telas/produto.css'
 
 /** Uma página por produto, geradas no build. */
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${produto.name} · Feito para você! Personalizados`,
     ...(descricao ? { description: descricao } : {}),
+    ...cartaoDoProduto({ ...produto, description: descricao }, enderecoDaLoja()),
   }
 }
 
