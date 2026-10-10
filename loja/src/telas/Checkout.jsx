@@ -65,7 +65,7 @@ const validar = ({ dados, precisaEndereco, frete }) => {
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(dados.email.trim())) {
-    erros.email = 'Confira o e-mail: é para lá que a confirmação vai.';
+    erros.email = 'Confira o e-mail: é com ele que você entra em Minha conta para acompanhar o pedido.';
   }
 
   if (soNumeros(dados.whatsapp).length < 10) {
@@ -355,7 +355,7 @@ const Checkout = () => {
                     data-erro={erros.email ? 'sim' : undefined}
                     isInvalid={Boolean(erros.email)}
                     autoComplete="email"
-                    placeholder="para receber a confirmação"
+                    placeholder="para acompanhar o pedido em Minha conta"
                   />
                   {campoErro('email')}
                 </Form.Group>

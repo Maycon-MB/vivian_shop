@@ -488,10 +488,8 @@ a.entrar-botao:focus-visible {
   padding: 14px 16px;
 }
 
-.politica a { color: var(--color-heart); font-weight: 700; }
-
 /* O coral dá 4,3:1 no papel, abaixo dos 4,5:1 de texto comum; o vinho passa com folga. */
-.politica.privacidade a { color: var(--color-ink); text-decoration: underline; }
+.politica a { color: var(--color-ink); font-weight: 700; text-decoration: underline; }
 
 .politica-lista.itens li::before {
   content: '';
