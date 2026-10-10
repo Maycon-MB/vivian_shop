@@ -6,34 +6,32 @@
  * dizendo que o pedido foi pago. Quem responde de verdade é a API do
  * Mercado Pago, consultada aqui com a chave dela.
  *
- * Depois de perguntar, o que volta ainda passa pelas regras de
- * `avisoDePagamento.ts`, que existem desde antes de haver pagamento:
- * valor que não bate, estado inventado, pedido que não existe.
+ * Depois de perguntar, o que volta passa por `processarAviso`, de
+ * `avisoDePagamento.ts`: aviso repetido, aviso fora de ordem, valor que não
+ * bate, estado inventado, pedido que não existe.
  *
  * Publicar:
  *
- *     supabase functions deploy aviso-do-pagamento --no-verify-jwt
+ *     node scripts/subir-funcoes.mjs aviso-do-pagamento
  *
- * `--no-verify-jwt` porque quem chama é o Mercado Pago, que não tem conta
- * no Supabase. A defesa é perguntar de volta, e não o cabeçalho.
+ * Sem verificação de JWT porque quem chama é o Mercado Pago, que não tem
+ * conta no Supabase. A defesa é perguntar de volta, e não o cabeçalho.
  */
 
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
+import {
+  processarAviso,
+  type BancoDoAviso,
+  type Estado,
+} from '../../../loja/src/dominio/avisoDePagamento.ts'
+
 const responder = (corpo: unknown, status = 200) =>
   new Response(JSON.stringify(corpo), { status, headers: { 'Content-Type': 'application/json' } })
 
-/** O que o Mercado Pago chama de estado, dito como a tabela guarda. */
-const COMO_GUARDAMOS: Record<string, string> = {
-  approved: 'aprovado',
-  pending: 'aguardando',
-  in_process: 'aguardando',
-  authorized: 'aguardando',
-  rejected: 'recusado',
-  cancelled: 'recusado',
-  refunded: 'estornado',
-  charged_back: 'estornado',
-}
+/* `pedidos.id` é uuid: referência de outro formato faria o Postgres
+   responder erro, e erro aqui vira reenvio sem fim do Mercado Pago. */
+const PARECE_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 Deno.serve(async (req: Request) => {
   const chave = Deno.env.get('MERCADOPAGO_ACCESS_TOKEN')
@@ -64,71 +62,98 @@ Deno.serve(async (req: Request) => {
 
   const pagamento = await resposta.json()
 
-  const banco = createClient(
+  const supabase = createClient(
     Deno.env.get('SUPABASE_URL') ?? '',
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
   )
 
-  const { data: pedido } = await banco
-    .from('pedidos')
-    .select('id, numero, total, estado_pagamento')
-    .eq('id', pagamento.external_reference)
-    .maybeSingle()
+  const banco: BancoDoAviso = {
+    lerPedido: async (id) => {
+      if (!PARECE_UUID.test(id)) return null
+      const { data, error } = await supabase
+        .from('pedidos')
+        .select('id, numero, total, estado_pagamento')
+        .eq('id', id)
+        .maybeSingle()
+      if (error) throw error
+      if (!data) return null
+      return {
+        id: data.id,
+        numero: data.numero,
+        total: Number(data.total),
+        estadoPagamento: data.estado_pagamento as Estado,
+      }
+    },
 
-  if (!pedido) {
-    // Pagamento sem pedido nosso. Não é erro do Mercado Pago: é sinal de
-    // que alguém está mandando aviso de outra loja para cá.
-    return responder({ ok: true, ignorado: 'pedido não encontrado' })
+    avisoJaProcessado: async (externoId, statusExterno) => {
+      const { count, error } = await supabase
+        .from('eventos_de_pagamento')
+        .select('id', { count: 'exact', head: true })
+        .eq('provedor', 'mercadopago')
+        .eq('externo_id', externoId)
+        .eq('status_externo', statusExterno)
+      if (error) throw error
+      return (count ?? 0) > 0
+    },
+
+    /* A trava pelo estado lido é o que impede dois avisos simultâneos de
+       gravarem os dois: o segundo encontra zero linhas. */
+    mudarEstado: async (pedidoId, de, para) => {
+      const { data, error } = await supabase
+        .from('pedidos')
+        .update({ estado_pagamento: para, atualizado_em: new Date().toISOString() })
+        .eq('id', pedidoId)
+        .eq('estado_pagamento', de)
+        .select('id')
+      if (error) throw error
+      return (data ?? []).length === 1
+    },
+
+    marcarParaConferir: async (pedidoId, motivo) => {
+      const { error } = await supabase
+        .from('pedidos')
+        .update({ precisa_conferir: motivo })
+        .eq('id', pedidoId)
+      if (error) throw error
+    },
+
+    /* `ignoreDuplicates` porque dois reenvios podem passar juntos pela
+       conferência de "já processado"; a restrição única decide. */
+    registrarAviso: async ({ pedidoId, externoId, statusExterno, corpo, decisao }) => {
+      const { error } = await supabase.from('eventos_de_pagamento').upsert(
+        {
+          pedido_id: pedidoId,
+          externo_id: externoId,
+          status_externo: statusExterno,
+          corpo,
+          decisao,
+        },
+        { onConflict: 'provedor,externo_id,status_externo', ignoreDuplicates: true },
+      )
+      if (error) throw error
+    },
   }
 
-  const estado = COMO_GUARDAMOS[pagamento.status] ?? null
-
-  if (!estado) {
-    await banco
-      .from('pedidos')
-      .update({ precisa_conferir: `estado desconhecido: ${pagamento.status}` })
-      .eq('id', pedido.id)
-
-    return responder({ ok: true, marcado: 'estado desconhecido' })
-  }
-
-  /* O valor pago tem que bater com o pedido. Pagar menos e a loja aprovar
-     é o erro que custa dinheiro dela, e o único jeito de pegar é comparar
-     aqui, com os dois números na mão. */
-  const pagou = Number(pagamento.transaction_amount ?? 0)
-  const devia = Number(pedido.total)
-  const bate = Math.abs(pagou - devia) < 0.01
-
-  if (estado === 'aprovado' && !bate) {
-    await banco
-      .from('pedidos')
-      .update({ precisa_conferir: `pagou ${pagou}, o pedido é ${devia}` })
-      .eq('id', pedido.id)
-
-    return responder({ ok: true, marcado: 'valor não bate' })
-  }
-
-  await banco
-    .from('pedidos')
-    .update({ estado_pagamento: estado, atualizado_em: new Date().toISOString() })
-    .eq('id', pedido.id)
-
-  /* A trinca provedor + externo_id + status_externo é única: o Mercado Pago reenvia o mesmo
-     aviso até receber 200, e sem isso o material digital sairia por
-     e-mail a cada reenvio. `ignoreDuplicates` faz o reenvio ser aceito em
-     silêncio, que é o que ele espera. */
-  await banco
-    .from('eventos_de_pagamento')
-    .upsert(
-      {
-        pedido_id: pedido.id,
-        externo_id: String(pagamento.id),
-        status_externo: pagamento.status,
-        corpo: pagamento,
-        decisao: bate ? estado : 'valor não bate',
+  try {
+    const { decisao, tentarDeNovo } = await processarAviso({
+      pagamento: {
+        id: String(pagamento.id),
+        status: String(pagamento.status ?? ''),
+        valor: Number(pagamento.transaction_amount ?? 0),
+        referencia: String(pagamento.external_reference ?? ''),
       },
-      { onConflict: 'provedor,externo_id,status_externo', ignoreDuplicates: true },
-    )
+      corpo: pagamento,
+      banco,
+    })
 
-  return responder({ ok: true, pedido: pedido.numero, estado })
+    /* 409 em vez de 200: o Mercado Pago só reenvia o que não recebeu 200. */
+    if (tentarDeNovo) return responder({ erro: 'o pedido mudou durante o aviso' }, 409)
+
+    return responder({ ok: true, decisao })
+  } catch (erro) {
+    /* Erro de banco com 200 perderia o pagamento em silêncio; com 500 o
+       Mercado Pago reenvia. */
+    console.error('aviso-do-pagamento falhou:', erro, 'pagamento', idDoPagamento)
+    return responder({ erro: 'não consegui gravar o aviso' }, 500)
+  }
 })
