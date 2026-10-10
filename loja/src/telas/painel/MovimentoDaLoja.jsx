@@ -3,7 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Users, Eye, ArrowRight } from 'lucide-react';
 import CartaoPainel from './CartaoPainel';
-import { movimentoDaLoja } from '@/dados/visitasNoBanco';
+import { movimentoDaLoja, funilDaLoja } from '@/dados/visitasNoBanco';
+import { passosDoFunil, maiorPerda } from '@/dominio/funil';
 import {
   totalDoPeriodo,
   taxaDeConversao,
@@ -11,7 +12,6 @@ import {
   leituraDaConversao,
   paginasPorVisita,
   nomeDaOrigem,
-  pedidosNosUltimosDias,
 } from '@/dominio/movimento';
 
 /**
@@ -28,7 +28,7 @@ import {
  *
  * ── Por que a comparação, e não só o número ────────────────────────────
  *
- * "Entraram 240 pessoas" não decide nada sozinho. Ao lado dos pedidos do
+ * "Entraram 240 pessoas" não decide nada sozinho. Ao lado das vendas pagas do
  * mesmo período, decide: é a diferença entre gastar mais em anúncio e
  * gastar em foto melhor.
  */
@@ -47,7 +47,8 @@ const CONHECIDAS = {
   '/produtos': 'Todos os produtos',
   '/como-funciona': 'Como funciona',
   '/sobre': 'Sobre a loja',
-  '/carrinho': 'Carrinho',
+  '/checkout': 'Finalizar compra',
+  '/pedido-confirmado': 'Pedido confirmado',
   '/minha-conta': 'Minha conta',
 };
 
@@ -64,7 +65,7 @@ const nomeDaPagina = (caminho) => {
   return legivel.charAt(0).toUpperCase() + legivel.slice(1);
 };
 
-const MovimentoDaLoja = ({ pedidos = [] }) => {
+const MovimentoDaLoja = () => {
   const [dias, setDias] = useState(30);
   const [dados, setDados] = useState(null);
 
@@ -72,8 +73,8 @@ const MovimentoDaLoja = ({ pedidos = [] }) => {
     let valeu = true;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDados(null);
-    movimentoDaLoja(dias).then((resposta) => {
-      if (valeu) setDados(resposta);
+    Promise.all([movimentoDaLoja(dias), funilDaLoja(dias)]).then(([movimento, funil]) => {
+      if (valeu) setDados(movimento ? { ...movimento, funil: funil ?? [] } : null);
     });
     return () => {
       valeu = false;
@@ -82,13 +83,13 @@ const MovimentoDaLoja = ({ pedidos = [] }) => {
 
   const total = useMemo(() => totalDoPeriodo(dados?.porDia ?? []), [dados]);
 
-  /* Da mesma janela que as visitas, e não do mês. Comparar visita de sete
-     dias com pedido de trinta infla a taxa por quatro. */
-  const quantosPedidos = useMemo(
-    () => pedidosNosUltimosDias(pedidos, dias),
-    [pedidos, dias],
+  const passos = useMemo(
+    () => passosDoFunil(total.visitantes, dados?.funil ?? []),
+    [total.visitantes, dados],
   );
-  const taxa = taxaDeConversao(total.visitantes, quantosPedidos);
+  const pagos = passos[passos.length - 1].pessoas;
+  const perda = maiorPerda(passos);
+  const taxa = taxaDeConversao(total.visitantes, pagos);
   const porVisita = paginasPorVisita(total.visitantes, total.paginas);
 
   const seletor = (
@@ -109,11 +110,12 @@ const MovimentoDaLoja = ({ pedidos = [] }) => {
   return (
     <CartaoPainel
       titulo="Quem entrou na loja"
-      subtitulo="Quanta gente chegou, de onde veio, e quanto disso virou pedido."
+      subtitulo="Quanta gente chegou, de onde veio, e quanto disso virou venda paga."
       info={
         'A loja conta quantas pessoas abriram cada página e de onde elas vieram. ' +
         'Não guarda nome, e-mail, telefone nem nada que identifique quem visitou: ' +
-        'é só uma contagem. Por isso a loja não precisa daquele aviso de cookies ' +
+        'é só uma contagem. As etapas do caminho até o pagamento também são só ' +
+        'contagens, sem nada que identifique quem visitou. Por isso a loja não precisa daquele aviso de cookies ' +
         'que aparece em outros sites.'
       }
       acao={seletor}
@@ -154,9 +156,9 @@ const MovimentoDaLoja = ({ pedidos = [] }) => {
             <div className="col-6 col-lg-3">
               <div className="d-flex align-items-center gap-2 text-secondary small">
                 <ArrowRight size={16} aria-hidden="true" />
-                Viraram pedido
+                Pagaram
               </div>
-              <strong className="fs-4">{quantosPedidos}</strong>
+              <strong className="fs-4">{pagos}</strong>
             </div>
 
             <div className="col-6 col-lg-3">
@@ -166,6 +168,39 @@ const MovimentoDaLoja = ({ pedidos = [] }) => {
           </div>
 
           <p className="text-secondary mb-0">{leituraDaConversao(taxa)}</p>
+
+          <div>
+            <h4 className="h6 mb-2">Do clique ao pagamento</h4>
+            <ol className="list-unstyled mb-0 d-flex flex-column gap-2">
+              {passos.map((passo) => (
+                <li key={passo.rotulo} data-testid="passo-do-funil">
+                  <div className="d-flex flex-wrap justify-content-between column-gap-2 small">
+                    <span>{passo.rotulo}</span>
+                    <span>
+                      <strong>{passo.pessoas}</strong>
+                      {passo.deCadaCem !== null && (
+                        <span className="text-secondary ms-2">
+                          {`${conversaoEmTexto(passo.deCadaCem)} de quem entrou`}
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="progress mt-1" style={{ height: 6 }} aria-hidden="true">
+                    <div
+                      className="progress-bar bg-dark"
+                      style={{ width: `${Math.min(passo.deCadaCem ?? 0, 100)}%` }}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ol>
+            {perda && (
+              <p className="text-secondary small mt-2 mb-0">
+                {`A maior perda está entre "${perda.de}" e "${perda.para}": ` +
+                  `de cada 100, ${perda.param} param ali.`}
+              </p>
+            )}
+          </div>
 
           <div className="row g-4">
             <div className="col-12 col-lg-6">
