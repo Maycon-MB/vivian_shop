@@ -24,6 +24,7 @@ import { PRAZO_PRODUCAO, quantidadeMinima } from '../catalogo';
 import { useCompra } from './useCompra';
 import { situacaoDosServicos, estaTudoReal } from '@/servicos';
 import { AvisoDemonstracao } from '@/componentes/AvisoDemonstracao';
+import { AvisoDePrivacidade } from '@/componentes/AvisoDePrivacidade';
 import PagamentoMercadoPago from './PagamentoMercadoPago';
 import { marcarEtapa } from '@/dados/marcarEtapa';
 
@@ -64,7 +65,7 @@ const validar = ({ dados, precisaEndereco, frete }) => {
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(dados.email.trim())) {
-    erros.email = 'Confira o e-mail: é para lá que a confirmação vai.';
+    erros.email = 'Confira o e-mail: é com ele que você entra em Minha conta para acompanhar o pedido.';
   }
 
   if (soNumeros(dados.whatsapp).length < 10) {
@@ -354,7 +355,7 @@ const Checkout = () => {
                     data-erro={erros.email ? 'sim' : undefined}
                     isInvalid={Boolean(erros.email)}
                     autoComplete="email"
-                    placeholder="para receber a confirmação"
+                    placeholder="para acompanhar o pedido em Minha conta"
                   />
                   {campoErro('email')}
                 </Form.Group>
@@ -755,6 +756,8 @@ const Checkout = () => {
                   )}
                 </button>
               )}
+
+              <AvisoDePrivacidade paraQue="o seu pedido" className="aviso-privacidade" />
 
               <p className="prazo-aviso">
                 {ehDigital ? (

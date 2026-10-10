@@ -67,6 +67,7 @@ describe('o mapa do site', () => {
     expect(caminhos).toContain('/sobre/')
     expect(caminhos).toContain('/como-funciona/')
     expect(caminhos).toContain('/politicas/')
+    expect(caminhos).toContain('/privacidade/')
   })
 
   it('não manda o painel dela, o checkout nem a conta da cliente para a busca', () => {

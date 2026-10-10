@@ -159,7 +159,7 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
               }
 
               const motivo = RECADOS[resultado.detalhe]
-                ?? 'O pagamento ficou pendente. Assim que o banco confirmar, você recebe um e-mail.';
+                ?? 'O pagamento ficou pendente. Assim que o banco confirmar, o pedido aparece como pago em Minha conta.';
               setErro(motivo);
             },
 
@@ -207,8 +207,8 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
         </button>
 
         <p className="pix-aviso">
-          Assim que o pagamento cair, a produção começa e você recebe um e-mail. Pode fechar
-          esta página.
+          Assim que o pagamento cair, a produção começa. Você acompanha o pedido em Minha conta ou
+          pela conversa com a loja. Pode fechar esta página.
         </p>
       </div>
     );

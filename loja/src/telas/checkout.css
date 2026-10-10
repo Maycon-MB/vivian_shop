@@ -218,6 +218,13 @@
 
 .finalizar.travado:hover { transform: none; color: var(--color-ink-soft); }
 
+.aviso-privacidade {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
 .prazo-aviso {
   display: flex;
   align-items: center;
@@ -370,13 +377,15 @@
   text-decoration: none;
 }
 
-.confirmado-email {
+.confirmado-conta {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin: 18px 0 0 !important;
   font-size: 12.5px !important;
 }
+
+.confirmado-conta svg { flex-shrink: 0; margin-top: 2px; }
 
 /* ── Erros e espera ───────────────────────────────────────────────────────
    Quem está comprando precisa de duas informações quando algo dá errado:

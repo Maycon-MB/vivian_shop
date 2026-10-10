@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Container } from 'react-bootstrap';
-import { Check, Download, Package, MessageCircle, Mail, Clock } from 'lucide-react';
+import { Check, Download, Package, MessageCircle, User, Clock } from 'lucide-react';
 import { useCarrinho } from './CarrinhoContexto';
 import { PRAZO_PRODUCAO } from '../catalogo';
 import { pedidos, estaTudoReal } from '@/servicos';
@@ -65,8 +65,9 @@ const PedidoConfirmado = () => {
             {pedido ? (
               <>
                 Pedido <strong>#{pedido.numero}</strong> · {moeda(pedido.total)}
+                {/* A loja não manda e-mail de confirmação: o pedido fica na conta dela. */}
                 {estaTudoReal
-                  ? ' · a confirmação foi para o seu e-mail.'
+                  ? ' · acompanhe em Minha conta.'
                   : ' · guardado só neste navegador.'}
               </>
             ) : (
@@ -144,7 +145,9 @@ const PedidoConfirmado = () => {
                 </span>
                 <div>
                   <strong>Postagem e código de rastreio</strong>
-                  <p>Assim que sair, o código chega no seu e-mail e no WhatsApp.</p>
+                  <p>
+                    Para saber se já foi postado e pegar o código, pergunte na conversa da loja.
+                  </p>
                 </div>
               </li>
             </ol>
@@ -182,9 +185,15 @@ const PedidoConfirmado = () => {
             </Link>
           </div>
 
-          <p className="confirmado-email">
-            <Mail size={14} /> A confirmação e as próximas novidades chegam no e-mail que você
-            cadastrou.
+          <p className="confirmado-conta">
+            <User size={14} aria-hidden="true" />
+            <span>
+              Para ver os seus pedidos, entre em{' '}
+              <Link href="/minha-conta/" prefetch={false}>
+                Minha conta
+              </Link>{' '}
+              com o e-mail que você usou na compra.
+            </span>
           </p>
         </section>
       </Container>
