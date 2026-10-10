@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import PaginaTema from '@/telas/PaginaTema'
-import { TEMAS, acharTema } from '@/telas/catalogo'
+import { TEMAS, acharTema, produtosDoTema } from '@/telas/catalogo'
+import { cartaoDoTema } from '@/dominio/cartaoDoLink.mjs'
+import { enderecoDaLoja } from '@/dominio/enderecoDaLoja.mjs'
 import '@/telas/produto.css'
 import '@/telas/tema.css'
 
@@ -18,6 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${tema.nome} · Feito para você! Personalizados`,
     description: tema.descricao,
+    ...cartaoDoTema(tema, produtosDoTema(tema.slug)[0], enderecoDaLoja()),
   }
 }
 
