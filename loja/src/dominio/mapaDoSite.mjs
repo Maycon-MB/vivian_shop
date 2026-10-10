@@ -27,7 +27,14 @@
  */
 
 /** As páginas de quem compra que não dependem do catálogo. */
-export const PAGINAS_FIXAS = ['/', '/produtos/', '/sobre/', '/como-funciona/', '/politicas/']
+export const PAGINAS_FIXAS = [
+  '/',
+  '/produtos/',
+  '/sobre/',
+  '/como-funciona/',
+  '/politicas/',
+  '/privacidade/',
+]
 
 /**
  * O que nunca vira resultado de busca.

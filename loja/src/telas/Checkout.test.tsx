@@ -262,6 +262,17 @@ describe('checkout de produto físico', () => {
 
     expect(await screen.findByText(/nenhuma cobrança é feita/i)).toBeInTheDocument()
   })
+
+  it('diz junto do pagar para que servem os dados, e abre a política em outra aba', async () => {
+    // Na mesma aba, sair do checkout apagaria tudo o que ela já preencheu.
+    comCarrinho([CADERNO])
+    abrir()
+
+    const politica = await resumo().findByRole('link', { name: /política de privacidade/i })
+    expect(politica).toHaveAttribute('href', '/privacidade/')
+    expect(politica).toHaveAttribute('target', '_blank')
+    expect(resumo().getByText(/seus dados servem só para o seu pedido/i)).toBeInTheDocument()
+  })
 })
 
 describe('checkout de material digital', () => {
