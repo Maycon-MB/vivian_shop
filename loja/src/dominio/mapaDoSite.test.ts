@@ -6,6 +6,7 @@ import {
   montarRobots,
   FORA_DA_BUSCA,
 } from './mapaDoSite.mjs'
+import catalogoPublicado from '../dados/catalogo-publicado.json'
 
 /**
  * O mapa do site é o que o Google recebe pronto em vez de descobrir
@@ -50,6 +51,15 @@ describe('o mapa do site', () => {
     expect(caminhos).toContain('/produto/album-de-figurinhas-chaves/')
     expect(caminhos).not.toContain('/produto/caderno-de-desenho-stitch/')
     expect(caminhos).not.toContain('/tema/stitch/')
+  })
+
+  it('leva o Google a cada tema do catálogo publicado de verdade', () => {
+    const caminhos = caminhosDoMapa(catalogoPublicado)
+
+    expect(catalogoPublicado.temas.length).toBeGreaterThan(0)
+    for (const tema of catalogoPublicado.temas) {
+      expect(caminhos).toContain(`/tema/${tema.slug}/`)
+    }
   })
 
   it('leva o Google a cada tema que tem produto', () => {

@@ -7,6 +7,7 @@ import { ArrowLeft, Package } from 'lucide-react'
 
 import { produtosDoTema, acharTema, precoAtual, temPromocao, MINIMO_PERSONALIZADO } from './catalogo'
 import { PERSONALIZADA } from '../catalogo'
+import { introducaoDoTema } from '../dominio/paginaDoTema'
 
 /**
  * Tudo de um tema, numa página só.
@@ -47,7 +48,7 @@ export default function PaginaTema({ slug }) {
 
         <header className="tema-topo">
           <h1>{tema.nome}</h1>
-          <p>{tema.descricao}</p>
+          <p>{tema.descricao?.trim() || introducaoDoTema(tema, produtos.length)}</p>
           <span className="tema-conta">
             {produtos.length === 1 ? '1 produto' : `${produtos.length} produtos`} neste tema
           </span>
