@@ -3,6 +3,13 @@ import PaginaTema from '@/telas/PaginaTema'
 import { TEMAS, acharTema, produtosDoTema } from '@/telas/catalogo'
 import { cartaoDoTema } from '@/dominio/cartaoDoLink.mjs'
 import { enderecoDaLoja } from '@/dominio/enderecoDaLoja.mjs'
+import { emJsonLd } from '@/dominio/dadosDoProdutoParaOGoogle.mjs'
+import {
+  tituloDoTema,
+  descricaoDoTema,
+  enderecoDoTema,
+  listaDoTemaParaOGoogle,
+} from '@/dominio/paginaDoTema'
 import '@/telas/produto.css'
 import '@/telas/tema.css'
 
@@ -17,17 +24,29 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!tema) return {}
 
+  const produtos = produtosDoTema(tema.slug)
+
   return {
-    title: `${tema.nome} · Feito para você! Personalizados`,
-    description: tema.descricao,
-    ...cartaoDoTema(tema, produtosDoTema(tema.slug)[0], enderecoDaLoja()),
+    title: tituloDoTema(tema),
+    description: descricaoDoTema(tema, produtos.length),
+    alternates: { canonical: enderecoDoTema(tema, enderecoDaLoja()) },
+    ...cartaoDoTema(tema, produtos[0], enderecoDaLoja()),
   }
 }
 
 export default async function Pagina({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  if (!acharTema(slug)) notFound()
+  const tema = acharTema(slug)
 
-  return <PaginaTema slug={slug} />
+  if (!tema) notFound()
+
+  const lista = listaDoTemaParaOGoogle(tema, produtosDoTema(slug), enderecoDaLoja())
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: emJsonLd(lista) }} />
+      <PaginaTema slug={slug} />
+    </>
+  )
 }
