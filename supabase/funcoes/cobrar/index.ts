@@ -24,6 +24,12 @@
 
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
+import {
+  dadosParaAprovar,
+  dispositivoDaCompra,
+  type ItemParaAprovar,
+} from '../../../loja/src/dominio/dadosParaAprovar.ts'
+
 const responder = (corpo: unknown, status = 200) =>
   new Response(JSON.stringify(corpo), {
     status,
@@ -45,6 +51,8 @@ interface Cobranca {
   /** O e-mail de quem está pagando, exigido pelo Mercado Pago. */
   email: string
   documento?: { tipo: string; numero: string }
+  /** O `MP_DEVICE_SESSION_ID` que o security.js do Mercado Pago gera no navegador. */
+  dispositivo?: string
 }
 
 Deno.serve(async (req: Request) => {
@@ -72,7 +80,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: pedido, error } = await banco
     .from('pedidos')
-    .select('id, numero, total, estado_pagamento, comprador_nome, comprador_email')
+    .select('id, numero, linha, total, estado_pagamento, comprador_nome, comprador_email')
     .eq('id', cobranca.pedido_id)
     .maybeSingle()
 
@@ -84,6 +92,21 @@ Deno.serve(async (req: Request) => {
   if (pedido.estado_pagamento === 'aprovado') {
     return responder({ estado: 'aprovado', ja_estava: true })
   }
+
+  /* Os itens só melhoram a aprovação: se a leitura falhar, a cobrança
+     segue sem eles em vez de a cliente perder a compra. */
+  const { data: itens, error: erroDosItens } = await banco
+    .from('itens_do_pedido')
+    .select('produto_id, nome, preco_unitario, quantidade, produtos(descricao)')
+    .eq('pedido_id', pedido.id)
+  if (erroDosItens) console.error('cobrar: itens do pedido', pedido.numero, erroDosItens.message)
+
+  const paraAprovar = dadosParaAprovar({
+    pedido,
+    itens: (itens ?? []) as ItemParaAprovar[],
+    fatura: Deno.env.get('MERCADOPAGO_NOME_NA_FATURA'),
+  })
+  const dispositivo = dispositivoDaCompra(cobranca.dispositivo)
 
   /**
    * Para onde o Mercado Pago avisa que este pagamento mudou de estado.
@@ -113,6 +136,8 @@ Deno.serve(async (req: Request) => {
          outro. É a rede contra o toque duplo e contra a internet oscilando
          no meio. */
       'X-Idempotency-Key': `pedido-${pedido.id}`,
+      // O aparelho de quem paga, que o antifraude deles cruza com o cartão.
+      ...(dispositivo ? { 'X-meli-session-id': dispositivo } : {}),
     },
     body: JSON.stringify({
       // O valor lido do banco, e nunca o que veio na chamada.
@@ -121,7 +146,9 @@ Deno.serve(async (req: Request) => {
       payment_method_id: cobranca.meio,
       ...(cobranca.token ? { token: cobranca.token } : {}),
       ...(cobranca.parcelas ? { installments: cobranca.parcelas } : {}),
+      ...paraAprovar,
       payer: {
+        ...paraAprovar.payer,
         email: cobranca.email || pedido.comprador_email,
         ...(cobranca.documento
           ? { identification: { type: cobranca.documento.tipo, number: cobranca.documento.numero } }
