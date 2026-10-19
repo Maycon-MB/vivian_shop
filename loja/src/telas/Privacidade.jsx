@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Container, Row, Col } from 'react-bootstrap'
 
-const ATUALIZADA_EM = '18 de outubro de 2026'
+const ATUALIZADA_EM = '19 de outubro de 2026'
 
 const LinkDaConversa = () => (
   <Link href="/?conversa=1" prefetch={false}>
@@ -143,8 +143,9 @@ const Privacidade = () => (
                 conversas e avaliações) e cuida do login. O banco fica em São Paulo.
               </li>
               <li>
-                <strong>Mercado Pago:</strong> faz a cobrança. Recebe o valor, o seu e-mail e os
-                dados de pagamento.
+                <strong>Mercado Pago:</strong> faz a cobrança. Recebe o valor, o seu nome e e-mail,
+                os produtos do pedido, os dados de pagamento e um código do aparelho criado pelo
+                próprio formulário dele, que ajuda o banco a aprovar a compra.
               </li>
               <li>
                 <strong>Resend:</strong> manda os e-mails da loja: os avisos de mensagem e de venda

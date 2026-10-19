@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { recadoDoPagamento } from '@/dominio/recadoDoPagamento';
 
 /**
  * O pagamento, dentro da loja.
@@ -45,15 +46,17 @@ const carregarSdk = () =>
     document.head.appendChild(script);
   });
 
-/** O recado do Mercado Pago dito para a cliente, e não para o sistema. */
-const RECADOS = {
-  cc_rejected_insufficient_amount: 'O cartão não tem saldo para esse valor.',
-  cc_rejected_bad_filled_card_number: 'Confira o número do cartão.',
-  cc_rejected_bad_filled_date: 'Confira a validade do cartão.',
-  cc_rejected_bad_filled_security_code: 'Confira o código de segurança.',
-  cc_rejected_high_risk: 'O banco não autorizou. Tente outro cartão, ou pague no Pix.',
-  cc_rejected_call_for_authorize: 'O seu banco precisa autorizar essa compra. Ligue para eles, ou pague no Pix.',
-  cc_rejected_card_disabled: 'O cartão está desativado. Ligue para o seu banco.',
+/* O SDK v2 não deixa o id do aparelho em `window`; este script do Mercado
+   Pago deixa, em `MP_DEVICE_SESSION_ID`, e é o que vai em X-meli-session-id. */
+const SEGURANCA = 'https://www.mercadopago.com/v2/security.js';
+
+const carregarSeguranca = () => {
+  if (document.querySelector(`script[src="${SEGURANCA}"]`)) return;
+  const script = document.createElement('script');
+  script.src = SEGURANCA;
+  script.async = true;
+  script.setAttribute('view', 'checkout');
+  document.head.appendChild(script);
 };
 
 /* Fora do componente: a chave é a mesma para todo mundo, e lida aqui ela
@@ -73,6 +76,9 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
 
     let brick;
     let valendo = true;
+
+    // Sem ele a cobrança sai do mesmo jeito, só sem o aparelho.
+    carregarSeguranca();
 
     carregarSdk()
       .then(async (MercadoPago) => {
@@ -133,6 +139,9 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
                           numero: formData.payer.identification.number,
                         }
                       : undefined,
+                    // Gerado pelo security.js do Mercado Pago; o antifraude
+                    // deles cruza o aparelho com o cartão.
+                    dispositivo: window.MP_DEVICE_SESSION_ID,
                   }),
                 },
               );
@@ -140,11 +149,13 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
               const resultado = await resposta.json();
 
               if (!resposta.ok) {
-                const motivo = RECADOS[resultado?.detalhe?.status_detail]
-                  ?? 'O pagamento não passou. Tente outro cartão, ou pague no Pix.';
-                setErro(motivo);
-                aoFalhar?.(motivo);
-                throw new Error(motivo);
+                const { texto } = recadoDoPagamento({
+                  estado: 'rejected',
+                  detalhe: resultado?.detalhe?.status_detail,
+                });
+                setErro(texto);
+                aoFalhar?.(texto);
+                throw new Error(texto);
               }
 
               if (resultado.qr) {
@@ -153,14 +164,24 @@ const PagamentoMercadoPago = ({ pedidoId, total, email, comoRecebe, aoAprovar, a
                 return;
               }
 
-              if (resultado.estado === 'approved' || resultado.estado === 'aprovado') {
+              const recado = recadoDoPagamento({
+                estado: resultado.estado,
+                detalhe: resultado.detalhe,
+              });
+
+              if (recado.tipo === 'aprovado' || resultado.estado === 'aprovado') {
                 aoAprovar?.(resultado);
                 return;
               }
 
-              const motivo = RECADOS[resultado.detalhe]
-                ?? 'O pagamento ficou pendente. Assim que o banco confirmar, o pedido aparece como pago em Minha conta.';
-              setErro(motivo);
+              setErro(recado.texto);
+
+              /* Recusa devolvida como erro reabre o formulário do Brick para
+                 ela trocar de cartão; pendente não, porque já foi enviado. */
+              if (recado.tipo === 'recusado') {
+                aoFalhar?.(recado.texto);
+                throw new Error(recado.texto);
+              }
             },
 
             onError: () => {

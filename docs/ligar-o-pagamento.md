@@ -142,8 +142,35 @@ existem e têm teste.
 
 O painel dela mostra "Etapa 1 de 6" e um aviso de "você não passou".
 
-**Não trava nada.** É o checklist de qualidade deles, que melhora a taxa
-de aprovação de cartão: enviar dados do comprador, device fingerprint,
-tratar erro direito. A gente cumpre naturalmente ao integrar.
+**Não trava a cobrança.** É a medição de qualidade deles: nota mínima 73,
+recomendada 100, medida todo mês com pagamentos de produção, ou na hora
+com o id de um pagamento real em Suas integrações → Detalhes da
+aplicação → Medir qualidade. A lista exata do que falta só aparece lá
+([como medir](https://www.mercadopago.com.br/developers/pt/docs/checkout-bricks/how-tos/integration-quality)).
 
-Fica para depois de funcionar, e não antes.
+O que a cobrança manda para a nota:
+
+| Item | Onde |
+|---|---|
+| `external_reference` e `notification_url` | `cobrar` |
+| `additional_info.items`: id, título, descrição, categoria, quantidade, preço | [dadosParaAprovar.ts](../loja/src/dominio/dadosParaAprovar.ts), lido de `itens_do_pedido` |
+| `payer.first_name` e `last_name` | o nome que já está no pedido |
+| `payer.email` e `identification` | o que o Brick pede |
+| aparelho (`X-meli-session-id`) | `MP_DEVICE_SESSION_ID`, gerado pelo `security.js` deles na tela de pagamento |
+| recado para cada recusa | [recadoDoPagamento.ts](../loja/src/dominio/recadoDoPagamento.ts) |
+| `x-signature` no aviso | [assinaturaDoAviso.ts](../loja/src/dominio/assinaturaDoAviso.ts) |
+| `statement_descriptor` | só com `MERCADOPAGO_NOME_NA_FATURA` |
+
+Três segredos novos, todos opcionais e só no painel do Supabase:
+
+| Segredo | Sem ele |
+|---|---|
+| `MERCADOPAGO_SEGREDO_DO_AVISO` | o aviso não confere assinatura, como antes |
+| `MERCADOPAGO_EXIGIR_ASSINATURA=true` | aviso sem assinatura passa e fica no log |
+| `MERCADOPAGO_NOME_NA_FATURA` | a fatura mostra o nome da conta dela |
+
+O segredo do aviso sai de Suas integrações → a aplicação → Webhooks →
+Assinatura secreta. Assinatura falsa é barrada com 401 sempre que ele
+existe. Exigir assinatura em todo aviso só depois de o log mostrar que os
+avisos de verdade chegam assinados: a documentação garante a assinatura
+para o endereço do painel, e o nosso vai na cobrança.
