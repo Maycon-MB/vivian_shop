@@ -75,6 +75,12 @@ describe('a política de privacidade', () => {
     expect(texto).toMatch(/Estados Unidos/)
   })
 
+  it('nomeia a operadora que mantém o site', () => {
+    abrir()
+
+    expect(textoDaPagina()).toMatch(/Constancio Dev, que mantém o site para a loja:\s*é a operadora/)
+  })
+
   it('promete que a loja não vende dados nem usa rastreamento de propaganda', () => {
     abrir()
 
