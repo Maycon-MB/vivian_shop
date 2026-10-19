@@ -192,6 +192,44 @@ const Politicas = () => (
         <Link href="/produtos/">Ver todos os produtos</Link>
       </p>
     </section>
+
+    {/* Fora do texto dela: o resumo de privacidade é da loja e acompanha a página /privacidade. */}
+    <section className="politica-bloco" aria-labelledby="seus-dados">
+      <h2 id="seus-dados">Seus dados pessoais</h2>
+      <p>
+        <strong>O que a loja guarda:</strong> nome, e-mail, WhatsApp, endereço de entrega e os
+        pedidos que você fez. Servem para fazer, cobrar, enviar e acompanhar o seu pedido e para
+        falar com você sobre ele.
+      </p>
+      <p>
+        <strong>Por que pode:</strong> para cumprir a compra que você pediu (execução de contrato,
+        LGPD art. 7º, V) e para cumprir a lei fiscal, que manda guardar os registros de venda
+        (obrigação legal, art. 7º, II).
+      </p>
+      <p>
+        <strong>Quem recebe:</strong> Supabase (banco de dados e login, em São Paulo), Mercado
+        Pago (pagamento), Melhor Envio (cálculo de frete), Correios ou Jadlog (entrega), Resend
+        (e-mails) e GitHub Pages (hospedagem do site). Resend e GitHub ficam nos Estados Unidos,
+        então parte dos dados sai do Brasil.
+      </p>
+      <p>
+        <strong>Quem responde:</strong> a loja Feito para você! Personalizados é a controladora
+        dos dados. A Constancio Dev, que mantém o site, é a operadora: usa os dados só para a loja
+        funcionar, seguindo as instruções da loja.
+      </p>
+      <p>
+        <strong>Por quanto tempo:</strong> os pedidos ficam pelo tempo que a lei exige; conta e
+        conversa, até você pedir para apagar.
+      </p>
+      <p>
+        <strong>Seus direitos:</strong> ver, corrigir, apagar ou levar seus dados, e saber com
+        quem eles são divididos. Para pedir, escreva pela{' '}
+        <Link href="/?conversa=1" prefetch={false}>
+          conversa da loja
+        </Link>
+        . Os detalhes estão na <Link href="/privacidade/">Política de privacidade</Link>.
+      </p>
+    </section>
         </Col>
       </Row>
     </Container>

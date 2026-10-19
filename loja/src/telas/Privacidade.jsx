@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Container, Row, Col } from 'react-bootstrap'
 
-const ATUALIZADA_EM = '10 de outubro de 2026'
+const ATUALIZADA_EM = '18 de outubro de 2026'
 
 const LinkDaConversa = () => (
   <Link href="/?conversa=1" prefetch={false}>
@@ -166,7 +166,8 @@ const Privacidade = () => (
                 visita, por segurança.
               </li>
               <li>
-                <strong>Quem mantém o site para a loja:</strong> pode ver os dados só para fazer a
+                <strong>Constancio Dev, que mantém o site para a loja:</strong> é a operadora
+                dos dados, na palavra da lei. Pode ver os dados só para fazer a
                 loja funcionar e cuidar das cópias de segurança.
               </li>
             </ul>
