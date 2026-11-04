@@ -33,5 +33,23 @@ Este repositório contém a proposta comercial e o protótipo técnico para a tr
 2. `npm install`
 3. `npm run dev`
 
+## Estrutura
+
+```
+loja/src/          a loja em Next.js
+  app/             rotas e layouts (vitrine em (loja), painel da dona em admin)
+  telas/           telas da vitrine e do painel
+  componentes/     peças de interface reaproveitadas
+  dominio/         regras de negócio (pedido, pagamento, avaliação)
+  dados/           acesso ao catálogo, pedidos e conversas (banco e memória)
+  servicos/        integrações externas
+loja/public/       fotos e ícones da loja
+supabase/          migracoes/ (SQL do banco) e funcoes/ (Edge Functions)
+scripts/           publicação, importação do catálogo e conferências automáticas
+docs/              guias e decisões do projeto, em linguagem para a dona da loja
+.github/workflows/ CI: testes, conferências e publicação
+public/            imagens da página de proposta
+```
+
 ---
 Desenvolvido por **Maycon Bruno** - Soluções Autônomas para Empreendedores.
